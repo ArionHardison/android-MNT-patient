@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="#FFFFFF"
-    tools:context="com.eataround.app.activities.SplashActivity">
+    tools:context="com.orderaround.app.activities.SplashActivity">
 
     <ImageView
         android:layout_gravity="center"
         android:layout_width="@dimen/_120sdp"
         android:layout_height="@dimen/_120sdp"
         android:scaleType="centerInside"
-        android:src="@drawable/app_inner_icon" />
+        android:src="@drawable/logo_app" />
 
 </LinearLayout>
 

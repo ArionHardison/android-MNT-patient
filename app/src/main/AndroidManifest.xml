@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.eataround.app">
+    package="com.orderaround.app">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -17,7 +17,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:name=".MyApplication"
+        android:name="com.orderaround.app.MyApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -38,11 +38,11 @@
             android:value="true" />
 
         <activity
-            android:name=".activities.WelcomeScreenActivity"
+            android:name="com.orderaround.app.activities.WelcomeScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.SplashActivity"
+            android:name="com.orderaround.app.activities.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -52,12 +52,12 @@
             </intent-filter>
         </activity>
         <!-- Firebase Notifications -->
-        <service android:name=".fcm.MyFirebaseMessagingService">
+        <service android:name="com.orderaround.app.fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".fcm.MyFirebaseInstanceIDService">
+        <service android:name="com.orderaround.app.fcm.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
@@ -76,7 +76,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name="com.orderaround.app.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing" />
@@ -90,107 +90,107 @@
         <!-- android:exported="false" /> -->
 
         <activity
-            android:name=".activities.LoginActivity"
+            android:name="com.orderaround.app.activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.AddCardActivity"
+            android:name="com.orderaround.app.activities.AddCardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.OtpActivity"
+            android:name="com.orderaround.app.activities.OtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.MobileNumberActivity"
+            android:name="com.orderaround.app.activities.MobileNumberActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.SignUpActivity"
+            android:name="com.orderaround.app.activities.SignUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.ForgotPasswordActivity"
+            android:name="com.orderaround.app.activities.ForgotPasswordActivity"
             android:label="@string/forgot_password"
-            android:parentActivityName=".activities.LoginActivity"
+            android:parentActivityName="com.orderaround.app.activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.HotelViewActivity"
+            android:name="com.orderaround.app.activities.HotelViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.ChangePasswordActivity"
+            android:name="com.orderaround.app.activities.ChangePasswordActivity"
             android:label="Change Password"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.FavouritesActivity"
+            android:name="com.orderaround.app.activities.FavouritesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.RecommendedListActivity"
+            android:name="com.orderaround.app.activities.RecommendedListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.EditAccountActivity"
+            android:name="com.orderaround.app.activities.EditAccountActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.SetDeliveryLocationActivity"
+            android:name="com.orderaround.app.activities.SetDeliveryLocationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.SaveDeliveryLocationActivity"
+            android:name="com.orderaround.app.activities.SaveDeliveryLocationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.ManageAddressActivity"
+            android:name="com.orderaround.app.activities.ManageAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.AccountPaymentActivity"
+            android:name="com.orderaround.app.activities.AccountPaymentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.OrdersActivity"
+            android:name="com.orderaround.app.activities.OrdersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.FilterActivity"
+            android:name="com.orderaround.app.activities.FilterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.ViewCartActivity"
+            android:name="com.orderaround.app.activities.ViewCartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.PastOrderDetailActivity"
+            android:name="com.orderaround.app.activities.PastOrderDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.OtherHelpActivity"
+            android:name="com.orderaround.app.activities.OtherHelpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.NotificationActivity"
+            android:name="com.orderaround.app.activities.NotificationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.PromotionActivity"
+            android:name="com.orderaround.app.activities.PromotionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.CurrentOrderDetailActivity"
+            android:name="com.orderaround.app.activities.CurrentOrderDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.AddMoneyActivity"
+            android:name="com.orderaround.app.activities.AddMoneyActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.WalletActivity"
+            android:name="com.orderaround.app.activities.WalletActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
@@ -199,10 +199,10 @@
             android:value="3aef7a5b05836cf8166f23c95e43c52517bee917" />
 
         <activity
-            android:name=".activities.ResetPasswordActivity"
+            android:name="com.orderaround.app.activities.ResetPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.SecretKeyActivity"
+            android:name="com.orderaround.app.activities.SecretKeyActivity"
             android:screenOrientation="portrait" />
 
         <!--<provider-->
@@ -216,10 +216,10 @@
         <!--</provider>-->
 
         <activity
-            android:name=".activities.ProductDetailActivity"
+            android:name="com.orderaround.app.activities.ProductDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan"
-            android:parentActivityName=".activities.HotelViewActivity"/>
+            android:parentActivityName="com.orderaround.app.activities.HotelViewActivity"/>
     </application>
 
 </manifest>
