@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -22,9 +24,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-/**
- * Created by santhosh@appoets.com on 22-08-2017.
- */
 
 public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.MyViewHolder> {
     private List<Shop> list;
@@ -73,6 +72,8 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
             holder.offer.setVisibility(View.VISIBLE);
             holder.offer.setText("Flat " + shops.getOfferPercent().toString() + "% offer on all Orders");
         }
+        if(shops.getShopstatus()!=null)
+        holder.closedLay.setVisibility(shops.getShopstatus().equalsIgnoreCase("CLOSED")?View.VISIBLE:View.GONE);
 //        if(shops.getav().equalsIgnoreCase("")){
 //            holder.offer.setVisibility(View.GONE);
 //            holder.restaurantInfo.setVisibility(View.GONE);
@@ -82,8 +83,8 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
 //            holder.restaurantInfo.setText(shops.getAvailability());
 //        }
 
-        if (shops.getRatings() != null) {
-            Double rating = new BigDecimal(shops.getRatings().getRating()).setScale(1, RoundingMode.HALF_UP).doubleValue();
+        if (shops.getRating() != null) {
+            Double rating = new BigDecimal(shops.getRating()).setScale(1, RoundingMode.HALF_UP).doubleValue();
             holder.rating.setText("" + rating);
         } else
             holder.rating.setText("No Rating");
@@ -99,6 +100,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private LinearLayout itemView;
+        RelativeLayout closedLay;
         private ImageView dishImg;
         private TextView restaurantName, category, offer, rating, restaurantInfo, price, distanceTime;
 
@@ -106,6 +108,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         private MyViewHolder(View view) {
             super(view);
             itemView = (LinearLayout) view.findViewById(R.id.item_view);
+            closedLay = view.findViewById(R.id.closed_lay);
             dishImg = (ImageView) view.findViewById(R.id.dish_img);
             restaurantName = (TextView) view.findViewById(R.id.restaurant_name);
             category = (TextView) view.findViewById(R.id.category);
@@ -119,10 +122,15 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
 
         public void onClick(View v) {
             if (v.getId() == itemView.getId()) {
-                context.startActivity(new Intent(context, HotelViewActivity.class).putExtra("position", getAdapterPosition()).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 GlobalData.selectedShop = list.get(getAdapterPosition());
-                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
-                list.get(getAdapterPosition()).getCuisines();
+                if(!GlobalData.selectedShop.getShopstatus().equalsIgnoreCase("CLOSED")){
+                    context.startActivity(new Intent(context, HotelViewActivity.class).putExtra("position", getAdapterPosition()).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
+                    list.get(getAdapterPosition()).getCuisines();
+                }else {
+                    Toast.makeText(context, "The Shop is closed", Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         }

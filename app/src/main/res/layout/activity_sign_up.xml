@@ -64,6 +64,8 @@
                 android:drawablePadding="@dimen/_10sdp"
                 android:drawableStart="@drawable/login_left"
                 android:hint="@string/name"
+                android:singleLine="true"
+                android:inputType="textPersonName"
                 android:imeOptions="actionNext"
                 android:maxLines="1"
                 android:paddingEnd="@dimen/_10sdp"
@@ -80,6 +82,7 @@
                 android:drawableStart="@drawable/ic_mail"
                 android:hint="@string/email_address"
                 android:imeOptions="actionNext"
+                android:singleLine="true"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:paddingEnd="@dimen/_10sdp"
@@ -146,6 +149,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="textPassword"
                     android:maxLines="1"
+                    android:singleLine="true"
                     android:paddingEnd="@dimen/_10sdp"
                     android:paddingStart="@dimen/_10sdp"
                     app:theme="@style/MyEditTextTheme" />
@@ -178,6 +182,7 @@
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:maxLines="1"
+                    android:singleLine="true"
                     android:paddingEnd="@dimen/_10sdp"
                     android:paddingStart="@dimen/_10sdp"
                     app:theme="@style/MyEditTextTheme" />

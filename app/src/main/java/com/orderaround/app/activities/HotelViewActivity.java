@@ -173,10 +173,9 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
                 offer.setVisibility(View.VISIBLE);
                 offer.setText("Flat " + shops.getOfferPercent().toString() + "% offer on all Orders");
             }
-
-            if (shops.getRatings() != null&&shops.getRatings().equals("")) {
-                Double ratingvalue = new BigDecimal(shops.getRatings().getRating()).setScale(1, RoundingMode.HALF_UP).doubleValue();
-                rating.setText(String.valueOf(ratingvalue));
+            if (shops.getRating() != null) {
+                Double ratingValue = new BigDecimal(shops.getRating()).setScale(1, RoundingMode.HALF_UP).doubleValue();
+                rating.setText("" + ratingValue);
             } else
                 rating.setText("No Rating");
 

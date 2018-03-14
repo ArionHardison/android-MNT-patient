@@ -4,7 +4,6 @@ package com.orderaround.app.models;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 public class Shop {
 
     @SerializedName("id")
@@ -64,6 +63,12 @@ public class Shop {
     @SerializedName("distance")
     @Expose
     private Double distance;
+    @SerializedName("shopstatus")
+    @Expose
+    private String shopstatus;
+    @SerializedName("rating")
+    @Expose
+    private Double rating;
     @SerializedName("cuisines")
     @Expose
     private List<Cuisine> cuisines = null;
@@ -272,5 +277,19 @@ public class Shop {
     public void setFavorite(Favorite favorite) {
         this.favorite = favorite;
     }
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public String getShopstatus() {
+        return shopstatus;
+    }
+
+    public void setShopstatus(String shopstatus) {
+        this.shopstatus = shopstatus;}
 
 }

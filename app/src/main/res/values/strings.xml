@@ -63,6 +63,7 @@
     <string name="bookmark">B o o k m a r k</string>
     <string name="bookmark_description">Add places you want to visit in the future to your bookmark</string>
     <string name="already_you_have_account">Already you have an account?</string>
+    <string name="register_using">Register using</string>
     <string name="signin_here">SIGN IN here</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -212,6 +213,8 @@
 
     <string name="no_restaurant_found">No Restaurants!</string>
     <string name="no_restaurant_found_in_your_location">See if any other filter works.</string>
+    <string name="something_went_wrong">Something went wrong!</string>
+    <string name="closed">Closed</string>
 
 
     <plurals name="item">

@@ -103,11 +103,48 @@
     <!--  Social Login Layout-->
 
     <RelativeLayout
+        android:id="@+id/social_login_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin">
 
-        <include layout="@layout/social_login_layout" />
+        <TextView
+            android:id="@+id/connect_with"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_20sdp"
+            android:gravity="center"
+            android:text="@string/register_using"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/text_medium" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/connect_with"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/facebook_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/ic_facebook_login" />
+
+            <ImageButton
+                android:visibility="gone"
+                android:id="@+id/google_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_vertical_margin"
+                android:background="@null"
+                android:padding="@dimen/_3sdp"
+                android:src="@drawable/ic_google_login" />
+
+        </LinearLayout>
+
+
 
     </RelativeLayout>
 

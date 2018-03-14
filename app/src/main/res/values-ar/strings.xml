@@ -211,6 +211,8 @@
 
     <string name="no_restaurant_found">No Restaurants!</string>
     <string name="no_restaurant_found_in_your_location">See if any other filter works.</string>
+    <string name="something_went_wrong">Something went wrong!</string>
+    <string name="closed">Closed</string>
 
 
     <plurals name="item" tools:ignore="MissingQuantity">

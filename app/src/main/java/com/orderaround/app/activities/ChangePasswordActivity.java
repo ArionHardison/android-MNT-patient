@@ -117,7 +117,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
+                        if(jObjError.has("password"))
+                            Toast.makeText(context, jObjError.optJSONArray("password").get(0).toString(), Toast.LENGTH_LONG).show();
+                        else
+                            Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
@@ -126,6 +129,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ChangePassword> call, @NonNull Throwable t) {
+                customDialog.dismiss();
+                Toast.makeText(context, getResources().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
 
             }
         });

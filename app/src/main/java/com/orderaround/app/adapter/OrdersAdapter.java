@@ -148,17 +148,16 @@ public class OrdersAdapter extends SectionedRecyclerViewAdapter<OrdersAdapter.Vi
             holder.dividerLine.setVisibility(View.VISIBLE);
         }
 
-        if(object.getDispute()!=null){
+        if (object.getDispute() != null && !object.getDispute().equalsIgnoreCase("NODISPUTE")) {
             holder.disputeLayout.setVisibility(View.VISIBLE);
-            if(object.getDispute().equalsIgnoreCase("CREATED")){
+            if (object.getDispute().equalsIgnoreCase("CREATED")) {
                 holder.disputeStatusImage.setBackgroundResource(R.drawable.dispute);
-                holder.disputeTxt.setText(context1.getResources().getString(R.string.dispute)+" "+object.getDispute());
-            }else {
+                holder.disputeTxt.setText(context1.getResources().getString(R.string.dispute) + " " + object.getDispute());
+            } else {
                 holder.disputeStatusImage.setBackgroundResource(R.drawable.dispute_success);
-                holder.disputeTxt.setText(context1.getResources().getString(R.string.dispute)+" "+object.getDispute());
+                holder.disputeTxt.setText(context1.getResources().getString(R.string.dispute) + " " + object.getDispute());
             }
-        }
-        else {
+        } else {
             holder.disputeLayout.setVisibility(View.GONE);
         }
         holder.disputeTxt.setOnClickListener(new View.OnClickListener() {
@@ -170,8 +169,10 @@ public class OrdersAdapter extends SectionedRecyclerViewAdapter<OrdersAdapter.Vi
 //                        ViewGroup.LayoutParams.WRAP_CONTENT);
             }
         });
-
-        holder.totalAmount.setText(GlobalData.currencySymbol + object.getInvoice().getNet().toString());
+        if (object.getItems().get(0) != null)
+            holder.totalAmount.setText(object.getItems().get(0).getProduct().getPrices().getCurrency() + object.getInvoice().getNet().toString());
+        else
+            holder.totalAmount.setText(GlobalData.currencySymbol + object.getInvoice().getNet().toString());
         //set Item List Values
         itemList = new ArrayList<>();
         itemList.addAll(object.getItems());
