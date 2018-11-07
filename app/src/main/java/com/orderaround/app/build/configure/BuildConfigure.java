@@ -13,7 +13,7 @@ public class BuildConfigure {
 //    public static final String PUBNUB_SUBSCRIBE_KEY = "sub-c-046e0baa-bb01-11e7-b0ca-ee8767eb9c7d";
 
     /*   Dev Mode*/
-    public static String BASE_URL = "https://orderaround.deliveryventure.com/";
+    public static String BASE_URL = "https://foodie.deliveryventure.com/";
     public static String CLIENT_SECRET = "Xbe0mfn3DZslxO2oReCxvDZEhqHzaBbfHKEywClW";
     public static String CLIENT_ID = "2";
 

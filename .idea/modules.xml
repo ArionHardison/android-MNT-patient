@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://D:\Base APP\Foodie\foodie_android_user\Foodie.iml" filepath="D:\Base APP\Foodie\foodie_android_user\Foodie.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://D:\CakeSquare\cakesquare_foodie_android_user\cakeSquare_android_user.iml" filepath="D:\CakeSquare\cakesquare_foodie_android_user\cakeSquare_android_user.iml" />
-      <module fileurl="file://$PROJECT_DIR$/eataround_android_user.iml" filepath="$PROJECT_DIR$/eataround_android_user.iml" />
+      <module fileurl="file://$PROJECT_DIR$/orderaround_android.iml" filepath="$PROJECT_DIR$/orderaround_android.iml" />
     </modules>
   </component>
 </project>

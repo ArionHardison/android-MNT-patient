@@ -1,16 +1,22 @@
 package com.orderaround.app.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.orderaround.app.BuildConfig;
 import com.orderaround.app.HomeActivity;
 import com.orderaround.app.R;
 import com.orderaround.app.build.api.ApiClient;
@@ -26,6 +32,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 import io.fabric.sdk.android.Fabric;
@@ -76,6 +84,23 @@ public class SplashActivity extends AppCompatActivity {
 
             }
         }, 3000);
+
+        getHashKey();
+    }
+
+    private void getHashKey() {
+        try {
+            @SuppressLint("PackageManagerGetSignatures") PackageInfo info = getPackageManager().getPackageInfo(
+                    BuildConfig.APPLICATION_ID,
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 
     public void getDeviceToken() {
