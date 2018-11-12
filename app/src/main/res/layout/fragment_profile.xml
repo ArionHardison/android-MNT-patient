@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:scrollbars="none"
-        tools:context="com.orderaround.app.activities.ProfileActivity">
+        tools:context="com.orderaround.user.activities.ProfileActivity">
 
         <LinearLayout
 

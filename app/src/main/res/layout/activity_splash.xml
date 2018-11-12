@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="#FFFFFF"
-    tools:context="com.orderaround.app.activities.SplashActivity">
+    tools:context="com.orderaround.user.activities.SplashActivity">
 
     <ImageView
         android:layout_gravity="center"

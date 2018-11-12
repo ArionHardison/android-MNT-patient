@@ -73,8 +73,8 @@
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:maxLines="1"
-                android:paddingEnd="@dimen/_10sdp"
                 android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
                 android:textSize="@dimen/text_normal" />
         </RelativeLayout>
 
@@ -133,17 +133,16 @@
                 android:src="@drawable/ic_facebook_login" />
 
             <ImageButton
-                android:visibility="gone"
                 android:id="@+id/google_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_vertical_margin"
                 android:background="@null"
                 android:padding="@dimen/_3sdp"
-                android:src="@drawable/ic_google_login" />
+                android:src="@drawable/ic_google_login"
+                android:visibility="visible" />
 
         </LinearLayout>
-
 
 
     </RelativeLayout>
