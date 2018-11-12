@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.orderaround.app.R;
 import com.orderaround.app.activities.HotelViewActivity;
 import com.orderaround.app.helper.GlobalData;
@@ -28,7 +30,7 @@ import java.util.List;
 public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.MyViewHolder> {
     private List<Banner> list;
     Context context;
-    Activity activity;
+    private Activity activity;
 
     public BannerAdapter(List<Banner> list, Context con, Activity activity) {
         this.list = list;
@@ -36,27 +38,23 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.MyViewHold
         this.activity = activity;
     }
 
-
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.impressive_list_item, parent, false);
-
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         Banner banner = list.get(position);
-
-        Glide.with(context).load(banner.getUrl()).placeholder(R.drawable.ic_banner).dontAnimate()
-                .error(R.drawable.ic_banner).into(holder.bannerImg);
-//        Glide.with(context).load(banner.getUrl())
-//                .thumbnail(0.5f)
-//                .crossFade()
-//                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                .error((R.drawable.ic_banner))
-//                .into(holder.bannerImg);
+        Glide.with(context)
+                .load(banner.getUrl())
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.ic_banner)
+                        .error(R.drawable.ic_banner))
+                .into(holder.bannerImg);
         holder.bannerImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,19 +73,12 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.MyViewHold
         return list.size();
     }
 
-
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        public ImageView bannerImg;
-
-
+        ImageView bannerImg;
         public MyViewHolder(View view) {
             super(view);
-            bannerImg = (ImageView) view.findViewById(R.id.banner_img);
-
+            bannerImg = view.findViewById(R.id.banner_img);
         }
-
-
     }
-
 
 }

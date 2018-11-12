@@ -466,7 +466,7 @@
         android:paddingLeft="@dimen/activity_vertical_margin"
         android:paddingRight="@dimen/activity_vertical_margin"
         android:paddingTop="@dimen/_5sdp"
-        android:visibility="v">
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="wrap_content"

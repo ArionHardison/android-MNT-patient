@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.orderaround.app.R;
 import com.orderaround.app.build.api.ApiClient;
 import com.orderaround.app.build.api.ApiInterface;
@@ -121,11 +122,12 @@ public class EditAccountActivity extends AppCompatActivity {
             email.setText(GlobalData.profileModel.getEmail());
             phone.setText(GlobalData.profileModel.getPhone());
             System.out.println(GlobalData.profileModel.getAvatar());
-            Glide.with(context).load(GlobalData.profileModel.getAvatar())
-                    .thumbnail(0.5f)
-                    .crossFade()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .error((R.drawable.man))
+            Glide.with(context)
+                    .load(GlobalData.profileModel.getAvatar())
+                    .apply(new RequestOptions()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.man)
+                            .error(R.drawable.man))
                     .into(userProfileImg);
         }
     }
@@ -164,9 +166,7 @@ public class EditAccountActivity extends AppCompatActivity {
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-                if (response.isSuccessful()) {
-                    GlobalData.profileModel = response.body();
-                }
+                if (response.isSuccessful()) GlobalData.profileModel = response.body();
             }
 
             @Override
@@ -204,13 +204,11 @@ public class EditAccountActivity extends AppCompatActivity {
                     GlobalData.profileModel = response.body();
                     finish();
                     Toast.makeText(context, getResources().getString(R.string.profile_updated_successfully), Toast.LENGTH_SHORT).show();
-                } else {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().toString());
-                        Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
+                } else try {
+                    JSONObject jObjError = new JSONObject(response.errorBody().toString());
+                    Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -246,8 +244,14 @@ public class EditAccountActivity extends AppCompatActivity {
             String imgDecodableString = cursor.getString(columnIndex);
             cursor.close();
             // Set the Image in ImageView after decoding the String
-            //userAvatar.setImageBitmap(BitmapFactory.decodeFile(imgDecodableString));
-            Glide.with(this).load(imgDecodableString).into(userProfileImg);
+            Glide.with(this)
+                    .load(imgDecodableString)
+                    .apply(new RequestOptions()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.man)
+                            .error(R.drawable.man))
+                    .into(userProfileImg);
+
             imgFile = new File(imgDecodableString);
         } else if (resultCode == Activity.RESULT_CANCELED) {
 //            Toast.makeText(this, "You haven't picked Image",Toast.LENGTH_SHORT).show();

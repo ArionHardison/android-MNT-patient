@@ -25,7 +25,6 @@ import com.orderaround.app.models.Message;
 import com.orderaround.app.utils.Utils;
 import com.stripe.android.Stripe;
 import com.stripe.android.TokenCallback;
-import com.stripe.android.exception.AuthenticationException;
 import com.stripe.android.model.Card;
 import com.stripe.android.model.Token;
 
@@ -41,7 +40,6 @@ import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class AddCardActivity extends AppCompatActivity {
-
 
     String Card_Token = "";
     CustomDialog customDialog;
@@ -110,7 +108,7 @@ public class AddCardActivity extends AppCompatActivity {
 
                         Card card = new Card(cardNumber, month, year, cvv);
                         try {
-                            Stripe stripe = new Stripe(BuildConfigure.STRIPE_PK);
+                            Stripe stripe = new Stripe(AddCardActivity.this, BuildConfigure.STRIPE_PK);
                             stripe.createToken(
                                     card,
                                     new TokenCallback() {
@@ -130,7 +128,7 @@ public class AddCardActivity extends AppCompatActivity {
                                         }
                                     }
                             );
-                        } catch (AuthenticationException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                             if ((customDialog != null) && (customDialog.isShowing()))
                                 customDialog.dismiss();

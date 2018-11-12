@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.orderaround.app.R;
 import com.orderaround.app.activities.HotelViewActivity;
 import com.orderaround.app.helper.GlobalData;
@@ -23,7 +24,6 @@ import com.orderaround.app.models.Shop;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-
 
 public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.MyViewHolder> {
     private List<Shop> list;
@@ -58,11 +58,12 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Shop shops = list.get(position);
-        Glide.with(context).load(shops.getAvatar())
-                .thumbnail(0.5f)
-                .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .error((R.drawable.ic_restaurant_place_holder))
+        Glide.with(context)
+                .load(shops.getAvatar())
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.ic_restaurant_place_holder)
+                        .error(R.drawable.ic_restaurant_place_holder))
                 .into(holder.dishImg);
         holder.restaurantName.setText(shops.getName());
         holder.category.setText(shops.getDescription());
@@ -72,16 +73,8 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
             holder.offer.setVisibility(View.VISIBLE);
             holder.offer.setText("Flat " + shops.getOfferPercent().toString() + "% offer on all Orders");
         }
-        if(shops.getShopstatus()!=null)
-        holder.closedLay.setVisibility(shops.getShopstatus().equalsIgnoreCase("CLOSED")?View.VISIBLE:View.GONE);
-//        if(shops.getav().equalsIgnoreCase("")){
-//            holder.offer.setVisibility(View.GONE);
-//            holder.restaurantInfo.setVisibility(View.GONE);
-//
-//        }else {
-//            holder.restaurantInfo.setVisibility(View.VISIBLE);
-//            holder.restaurantInfo.setText(shops.getAvailability());
-//        }
+        if (shops.getShopstatus() != null)
+            holder.closedLay.setVisibility(shops.getShopstatus().equalsIgnoreCase("CLOSED") ? View.VISIBLE : View.GONE);
 
         if (shops.getRating() != null) {
             Double rating = new BigDecimal(shops.getRating()).setScale(1, RoundingMode.HALF_UP).doubleValue();
@@ -107,35 +100,29 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
 
         private MyViewHolder(View view) {
             super(view);
-            itemView = (LinearLayout) view.findViewById(R.id.item_view);
+            itemView = view.findViewById(R.id.item_view);
             closedLay = view.findViewById(R.id.closed_lay);
-            dishImg = (ImageView) view.findViewById(R.id.dish_img);
-            restaurantName = (TextView) view.findViewById(R.id.restaurant_name);
-            category = (TextView) view.findViewById(R.id.category);
-            offer = (TextView) view.findViewById(R.id.offer);
-            rating = (TextView) view.findViewById(R.id.rating);
-            restaurantInfo = (TextView) view.findViewById(R.id.restaurant_info);
-            distanceTime = (TextView) view.findViewById(R.id.distance_time);
-            price = (TextView) view.findViewById(R.id.price);
+            dishImg = view.findViewById(R.id.dish_img);
+            restaurantName = view.findViewById(R.id.restaurant_name);
+            category = view.findViewById(R.id.category);
+            offer = view.findViewById(R.id.offer);
+            rating = view.findViewById(R.id.rating);
+            restaurantInfo = view.findViewById(R.id.restaurant_info);
+            distanceTime = view.findViewById(R.id.distance_time);
+            price = view.findViewById(R.id.price);
             itemView.setOnClickListener(this);
         }
 
         public void onClick(View v) {
             if (v.getId() == itemView.getId()) {
                 GlobalData.selectedShop = list.get(getAdapterPosition());
-                if(!GlobalData.selectedShop.getShopstatus().equalsIgnoreCase("CLOSED")){
-                    context.startActivity(new Intent(context, HotelViewActivity.class).putExtra("position", getAdapterPosition()).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                if (!GlobalData.selectedShop.getShopstatus().equalsIgnoreCase("CLOSED")) {
+                    context.startActivity(new Intent(context, HotelViewActivity.class)
+                            .putExtra("position", getAdapterPosition()).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                     list.get(getAdapterPosition()).getCuisines();
-                }else {
-                    Toast.makeText(context, "The Shop is closed", Toast.LENGTH_SHORT).show();
-                }
-
-
+                } else Toast.makeText(context, "The Shop is closed", Toast.LENGTH_SHORT).show();
             }
         }
-
     }
-
-
 }

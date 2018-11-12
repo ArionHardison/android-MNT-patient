@@ -27,6 +27,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.orderaround.app.BuildConfig;
 import com.orderaround.app.HomeActivity;
 import com.orderaround.app.R;
@@ -288,8 +290,13 @@ public class ProfileFragment extends Fragment {
     }
     private void initView() {
         if (GlobalData.profileModel != null) {
-            Glide.with(context).load(GlobalData.profileModel.getAvatar()).placeholder(R.drawable.man).dontAnimate()
-                    .error(R.drawable.man).into(userImage);
+            Glide.with(context)
+                    .load(GlobalData.profileModel.getAvatar())
+                    .apply(new RequestOptions()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.man)
+                            .error(R.drawable.man))
+                    .into(userImage);
             userPhone.setText(GlobalData.profileModel.getPhone());
             userName.setText(GlobalData.profileModel.getName());
             userEmail.setText(" - " + GlobalData.profileModel.getEmail());

@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.orderaround.app.R;
 import com.orderaround.app.fragments.SliderDialogFragment;
 import com.orderaround.app.models.Image;
@@ -37,17 +39,21 @@ public class SliderPagerAdapter extends PagerAdapter {
 
         View view = layoutInflater.inflate(R.layout.layout_slider, container, false);
         ImageView im_slider = view.findViewById(R.id.im_slider);
-        Glide.with(activity.getApplicationContext()).load(image_arraylist.get(position).getUrl()).placeholder(R.drawable.ic_restaurant_place_holder).into(im_slider);
-        if (isClickable) {
-            im_slider.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FragmentManager manager = activity.getFragmentManager();
-                    SliderDialogFragment sliderDialogFragment = new SliderDialogFragment();
-                    sliderDialogFragment.show(manager, "slider_dialog");
-                }
-            });
-        }
+        Glide.with(activity.getApplicationContext())
+                .load(image_arraylist.get(position).getUrl())
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .placeholder(R.drawable.ic_restaurant_place_holder)
+                        .error(R.drawable.ic_restaurant_place_holder))
+                .into(im_slider);
+        if (isClickable) im_slider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = activity.getFragmentManager();
+                SliderDialogFragment sliderDialogFragment = new SliderDialogFragment();
+                sliderDialogFragment.show(manager, "slider_dialog");
+            }
+        });
         container.addView(view);
 
         return view;

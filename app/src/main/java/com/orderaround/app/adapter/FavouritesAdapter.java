@@ -35,7 +35,6 @@ public class FavouritesAdapter extends SectionedRecyclerViewAdapter<FavouritesAd
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.list = list;
-
     }
 
     @Override
@@ -94,7 +93,6 @@ public class FavouritesAdapter extends SectionedRecyclerViewAdapter<FavouritesAd
 
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView header;
         TextView shopAddress;
@@ -105,12 +103,12 @@ public class FavouritesAdapter extends SectionedRecyclerViewAdapter<FavouritesAd
         public ViewHolder(View itemView, boolean isHeader) {
             super(itemView);
             if (isHeader) {
-                header = (TextView) itemView.findViewById(R.id.header);
+                header = itemView.findViewById(R.id.header);
             } else {
-                itemLayout = (RelativeLayout) itemView.findViewById(R.id.item_layout);
-                shopName = (TextView) itemView.findViewById(R.id.shop_name);
-                shopAddress = (TextView) itemView.findViewById(R.id.shop_address);
-                shopAvatar = (ImageView) itemView.findViewById(R.id.shop_avatar);
+                itemLayout = itemView.findViewById(R.id.item_layout);
+                shopName = itemView.findViewById(R.id.shop_name);
+                shopAddress = itemView.findViewById(R.id.shop_address);
+                shopAvatar = itemView.findViewById(R.id.shop_avatar);
             }
 
         }

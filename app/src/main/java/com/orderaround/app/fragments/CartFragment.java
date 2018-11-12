@@ -27,6 +27,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.ViewSkeletonScreen;
 import com.orderaround.app.HomeActivity;
@@ -282,10 +284,16 @@ public class CartFragment extends Fragment {
                         restaurantName.setText(response.body().getProductList().get(0).getProduct().getShop().getName());
                         restaurantDescription.setText(response.body().getProductList().get(0).getProduct().getShop().getDescription());
                         String image_url = response.body().getProductList().get(0).getProduct().getShop().getAvatar();
-                        Glide.with(context).load(image_url).placeholder(R.drawable.ic_restaurant_place_holder).dontAnimate()
-                                .error(R.drawable.ic_restaurant_place_holder).into(restaurantImage);
+                        Glide.with(context)
+                                .load(image_url)
+                                .apply(new RequestOptions()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.ic_restaurant_place_holder)
+                                        .error(R.drawable.ic_restaurant_place_holder))
+                                .into(restaurantImage);
                         deliveryChargeValue = response.body().getDeliveryCharges();
-                        deliveryCharges.setText(response.body().getProductList().get(0).getProduct().getPrices().getCurrency() + "" + response.body().getDeliveryCharges().toString());
+                        deliveryCharges.setText(response.body().getProductList().get(0).getProduct().getPrices().getCurrency()
+                                + "" + response.body().getDeliveryCharges().toString());
                         viewCartItemList.clear();
                         viewCartItemList=response.body().getProductList();
                         viewCartAdapter = new ViewCartAdapter(viewCartItemList, context);

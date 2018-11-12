@@ -30,6 +30,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.ViewSkeletonScreen;
 import com.orderaround.app.HeaderView;
@@ -37,8 +38,8 @@ import com.orderaround.app.R;
 import com.orderaround.app.adapter.HotelCatagoeryAdapter;
 import com.orderaround.app.build.api.ApiClient;
 import com.orderaround.app.build.api.ApiInterface;
-import com.orderaround.app.helper.GlobalData;
 import com.orderaround.app.helper.ConnectionHelper;
+import com.orderaround.app.helper.GlobalData;
 import com.orderaround.app.models.AddCart;
 import com.orderaround.app.models.Category;
 import com.orderaround.app.models.Favorite;
@@ -152,7 +153,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
         appBarLayout.addOnOffsetChangedListener(this);
         categoryList = new ArrayList<>();
         shops = GlobalData.selectedShop;
-        if(shops!=null){
+        if (shops != null) {
             //Load animation
             slide_down = AnimationUtils.loadAnimation(context,
                     R.anim.slide_down);
@@ -181,10 +182,10 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
 
             deliveryTime.setText(shops.getEstimatedDeliveryTime().toString() + "Mins");
 
-            itemText = (TextView) findViewById(R.id.item_text);
-            viewCartShopName = (TextView) findViewById(R.id.view_cart_shop_name);
-            viewCart = (TextView) findViewById(R.id.view_cart);
-            viewCartLayout = (RelativeLayout) findViewById(R.id.view_cart_layout);
+            itemText = findViewById(R.id.item_text);
+            viewCartShopName = findViewById(R.id.view_cart_shop_name);
+            viewCart = findViewById(R.id.view_cart);
+            viewCartLayout = findViewById(R.id.view_cart_layout);
 
             viewCartLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -194,19 +195,15 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
                 }
             });
 
-            Glide.with(context).load(shops.getAvatar())
-                    .thumbnail(0.5f)
-                    .crossFade()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.ic_restaurant_place_holder)
-                    .error((R.drawable.ic_restaurant_place_holder))
+            Glide.with(context)
+                    .load(shops.getAvatar())
+                    .apply(new RequestOptions()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.ic_restaurant_place_holder)
+                            .error(R.drawable.ic_restaurant_place_holder))
                     .into(restaurantImage);
 
-//        Glide.with(context).load(shops.getAvatar()).placeholder(R.drawable.ic_restaurant_place_holder).dontAnimate()
-//                .error(R.drawable.ic_restaurant_place_holder).into(restaurantImage);
-
-            //Set Palette color
-            Picasso.with(HotelViewActivity.this)
+            Picasso.get()
                     .load(shops.getAvatar())
                     .into(new Target() {
                         @Override
@@ -247,7 +244,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
                         }
 
                         @Override
-                        public void onBitmapFailed(Drawable errorDrawable) {
+                        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
 
                         }
 
@@ -268,34 +265,6 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
             accompanimentDishesRv.setItemAnimator(new DefaultItemAnimator());
             accompanimentDishesRv.setAdapter(catagoeryAdapter);
 
-//        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-//            @Override
-//            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-//                Log.e("scrollX", "" + scrollX);
-//                Log.e("scrollY", "" + scrollY);
-//                Log.e("oldScrollX", "" + oldScrollX);
-//                Log.e("oldScrollY", "" + oldScrollY);
-//
-//                if (scrollY >= 50 && scrollY <= 280) {
-//                    int staticData = 280;
-//                    float alphaValue = (float) scrollY / staticData;
-//                    heartBtn.setAlpha(1 - alphaValue);
-//                    titleLayout.setAlpha(alphaValue);
-//                    viewLine.setAlpha(alphaValue);
-//                } else if (scrollY >= 280) {
-//                    heartBtn.setAlpha(0);
-//                    viewLine.setAlpha(1.0f);
-//                    titleLayout.setAlpha(1.0f);
-//                } else if (scrollY <= 50) {
-//                    viewLine.setAlpha(0);
-//                    titleLayout.setAlpha(0);
-//                    heartBtn.setAlpha(1.0f);
-//                }
-//
-//            }
-//        });
-
-            //Heart Animation Button
             if (heartBtn != null)
                 heartBtn.init(this);
             if (shops.getFavorite() != null || isFavourite) {
@@ -342,14 +311,11 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
                     .load(R.layout.skeleton_hotel_view)
                     .show();
 
-        }else {
-            startActivity( new Intent(context,SplashActivity.class));
+        } else {
+            startActivity(new Intent(context, SplashActivity.class));
             finish();
         }
-
-
     }
-
 
     private void deleteFavorite(Integer id) {
         Call<Favorite> call = apiInterface.deleteFavorite(id);
@@ -445,7 +411,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
             @Override
             public void onResponse(@NonNull Call<ShopDetail> call, @NonNull Response<ShopDetail> response) {
                 skeleton.hide();
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     categoryList = new ArrayList<>();
                     categoryList.clear();
                     Category category = new Category();
