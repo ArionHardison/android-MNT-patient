@@ -16,6 +16,9 @@ public class Order {
     @SerializedName("user_id")
     @Expose
     private Integer userId;
+    @SerializedName("shift_id")
+    @Expose
+    private Integer shiftId;
     @SerializedName("user_address_id")
     @Expose
     private Integer userAddressId;
@@ -24,19 +27,40 @@ public class Order {
     private Integer shopId;
     @SerializedName("transporter_id")
     @Expose
-    private Object transporterId;
+    private Integer transporterId;
     @SerializedName("transporter_vehicle_id")
     @Expose
-    private Object transporterVehicleId;
+    private Integer transporterVehicleId;
+    @SerializedName("reason")
+    @Expose
+    private Object reason;
+    @SerializedName("note")
+    @Expose
+    private Object note;
     @SerializedName("route_key")
     @Expose
     private String routeKey;
     @SerializedName("dispute")
     @Expose
     private String dispute;
+    @SerializedName("delivery_date")
+    @Expose
+    private String deliveryDate;
+    @SerializedName("order_otp")
+    @Expose
+    private Integer orderOtp;
+    @SerializedName("order_ready_time")
+    @Expose
+    private Integer orderReadyTime;
+    @SerializedName("order_ready_status")
+    @Expose
+    private Integer orderReadyStatus;
     @SerializedName("status")
     @Expose
     private String status;
+    @SerializedName("schedule_status")
+    @Expose
+    private Integer scheduleStatus;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -45,10 +69,10 @@ public class Order {
     private User user;
     @SerializedName("transporter")
     @Expose
-    private Transporter  transporter;
+    private Transporter transporter;
     @SerializedName("vehicles")
     @Expose
-    private Object vehicles;
+    private Vehicles vehicles;
     @SerializedName("invoice")
     @Expose
     private Invoice invoice;
@@ -63,10 +87,13 @@ public class Order {
     private List<Item> items = null;
     @SerializedName("ordertiming")
     @Expose
-    private List<Ordertiming> ordertiming = null;
+    private List<Ordertiming> ordertiming;
     @SerializedName("disputes")
     @Expose
     private List<Object> disputes = null;
+    @SerializedName("reviewrating")
+    @Expose
+    private Object reviewrating;
 
     public Integer getId() {
         return id;
@@ -92,6 +119,14 @@ public class Order {
         this.userId = userId;
     }
 
+    public Integer getShiftId() {
+        return shiftId;
+    }
+
+    public void setShiftId(Integer shiftId) {
+        this.shiftId = shiftId;
+    }
+
     public Integer getUserAddressId() {
         return userAddressId;
     }
@@ -108,20 +143,36 @@ public class Order {
         this.shopId = shopId;
     }
 
-    public Object getTransporterId() {
+    public Integer getTransporterId() {
         return transporterId;
     }
 
-    public void setTransporterId(Object transporterId) {
+    public void setTransporterId(Integer transporterId) {
         this.transporterId = transporterId;
     }
 
-    public Object getTransporterVehicleId() {
+    public Integer getTransporterVehicleId() {
         return transporterVehicleId;
     }
 
-    public void setTransporterVehicleId(Object transporterVehicleId) {
+    public void setTransporterVehicleId(Integer transporterVehicleId) {
         this.transporterVehicleId = transporterVehicleId;
+    }
+
+    public Object getReason() {
+        return reason;
+    }
+
+    public void setReason(Object reason) {
+        this.reason = reason;
+    }
+
+    public Object getNote() {
+        return note;
+    }
+
+    public void setNote(Object note) {
+        this.note = note;
     }
 
     public String getRouteKey() {
@@ -140,12 +191,52 @@ public class Order {
         this.dispute = dispute;
     }
 
+    public String getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(String deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public Integer getOrderOtp() {
+        return orderOtp;
+    }
+
+    public void setOrderOtp(Integer orderOtp) {
+        this.orderOtp = orderOtp;
+    }
+
+    public Integer getOrderReadyTime() {
+        return orderReadyTime;
+    }
+
+    public void setOrderReadyTime(Integer orderReadyTime) {
+        this.orderReadyTime = orderReadyTime;
+    }
+
+    public Integer getOrderReadyStatus() {
+        return orderReadyStatus;
+    }
+
+    public void setOrderReadyStatus(Integer orderReadyStatus) {
+        this.orderReadyStatus = orderReadyStatus;
+    }
+
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Integer getScheduleStatus() {
+        return scheduleStatus;
+    }
+
+    public void setScheduleStatus(Integer scheduleStatus) {
+        this.scheduleStatus = scheduleStatus;
     }
 
     public String getCreatedAt() {
@@ -164,7 +255,7 @@ public class Order {
         this.user = user;
     }
 
-    public Transporter  getTransporter() {
+    public Transporter getTransporter() {
         return transporter;
     }
 
@@ -172,11 +263,11 @@ public class Order {
         this.transporter = transporter;
     }
 
-    public Object getVehicles() {
+    public Vehicles getVehicles() {
         return vehicles;
     }
 
-    public void setVehicles(Object vehicles) {
+    public void setVehicles(Vehicles vehicles) {
         this.vehicles = vehicles;
     }
 
@@ -228,4 +319,11 @@ public class Order {
         this.disputes = disputes;
     }
 
+    public Object getReviewrating() {
+        return reviewrating;
+    }
+
+    public void setReviewrating(Object reviewrating) {
+        this.reviewrating = reviewrating;
+    }
 }

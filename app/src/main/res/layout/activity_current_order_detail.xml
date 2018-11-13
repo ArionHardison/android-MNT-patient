@@ -62,6 +62,17 @@
                 android:textSize="@dimen/text_small"
                 android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/order_otp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/activity_vertical_margin_half"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/theme"
+                android:textSize="@dimen/text_small"
+                android:visibility="gone" />
+
         </LinearLayout>
 
     </android.support.v7.widget.Toolbar>

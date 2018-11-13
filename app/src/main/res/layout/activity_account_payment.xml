@@ -213,8 +213,6 @@
                 android:textColor="@color/colorTextWhite"
                 android:visibility="gone" />
         </RelativeLayout>
-
-
     </ScrollView>
 
 </LinearLayout>

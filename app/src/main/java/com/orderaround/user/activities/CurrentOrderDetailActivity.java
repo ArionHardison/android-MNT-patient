@@ -113,6 +113,8 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
     TextView orderItemTxt;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.order_otp)
+    TextView orderOtp;
     @BindView(R.id.order_status_txt)
     TextView orderStatusTxt;
     @BindView(R.id.order_status_layout)
@@ -657,17 +659,26 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
     private void getParticularOrders(int order_id) {
         Call<Order> call = apiInterface.getParticularOrders(order_id);
         call.enqueue(new Callback<Order>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(@NonNull Call<Order> call, @NonNull Response<Order> response) {
                 if (response.isSuccessful()) {
                     isSelectedOrder = response.body();
                     Log.i("isSelectedOrder : ", isSelectedOrder.toString());
-                    if (isSelectedOrder.getStatus().equals("PICKEDUP") || isSelectedOrder.getStatus().equals("ARRIVED") || isSelectedOrder.getStatus().equals("ASSIGNED")) {
+                    if (isSelectedOrder.getStatus().equals("PICKEDUP") ||
+                            isSelectedOrder.getStatus().equals("ARRIVED") || isSelectedOrder.getStatus().equals("ASSIGNED")) {
                         liveNavigation(isSelectedOrder.getTransporter().getLatitude(),
                                 isSelectedOrder.getTransporter().getLongitude());
                     }
                     if (!isSelectedOrder.getStatus().equalsIgnoreCase(previousStatus)) {
-                        previousStatus = isSelectedOrder.getStatus();
+                        previousStatus = isSelectedOrder.getStatus(); if (isSelectedOrder.getStatus().equals("PICKEDUP") ||
+                                isSelectedOrder.getStatus().equals("ARRIVED")) {
+                            orderOtp.setVisibility(View.VISIBLE);
+                            orderOtp.setText(getString(R.string.otp) + ": " + isSelectedOrder.getOrderOtp());
+                        } else {
+                            orderOtp.setVisibility(View.GONE);
+                        }
+
                         adapter.notifyDataSetChanged();
                     }
                 } else {
@@ -895,6 +906,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
         super.onPause();
         handler.removeCallbacks(orderStatusRunnable);
     }
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
