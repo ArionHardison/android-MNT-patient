@@ -255,6 +255,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                 orderItemTxt.setText(String.valueOf(itemQuantity) + " Items, " + currency + String.valueOf(priceAmount));
 
             orderIdTxt2.setText("#000" + order.getId().toString());
+            orderOtp.setText(" : " + isSelectedOrder.getOrderOtp());
             orderPlacedTime.setText(getTimeFromString(order.getCreatedAt()));
 
             //set Fragment
@@ -665,20 +666,14 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                 if (response.isSuccessful()) {
                     isSelectedOrder = response.body();
                     Log.i("isSelectedOrder : ", isSelectedOrder.toString());
+
                     if (isSelectedOrder.getStatus().equals("PICKEDUP") ||
                             isSelectedOrder.getStatus().equals("ARRIVED") || isSelectedOrder.getStatus().equals("ASSIGNED")) {
                         liveNavigation(isSelectedOrder.getTransporter().getLatitude(),
                                 isSelectedOrder.getTransporter().getLongitude());
                     }
                     if (!isSelectedOrder.getStatus().equalsIgnoreCase(previousStatus)) {
-                        previousStatus = isSelectedOrder.getStatus(); if (isSelectedOrder.getStatus().equals("PICKEDUP") ||
-                                isSelectedOrder.getStatus().equals("ARRIVED")) {
-                            orderOtp.setVisibility(View.VISIBLE);
-                            orderOtp.setText(getString(R.string.otp) + ": " + isSelectedOrder.getOrderOtp());
-                        } else {
-                            orderOtp.setVisibility(View.GONE);
-                        }
-
+                        previousStatus = isSelectedOrder.getStatus();
                         adapter.notifyDataSetChanged();
                     }
                 } else {
