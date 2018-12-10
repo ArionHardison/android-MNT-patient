@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="facebook_app_id">290984818086469</string>
+    <string name="facebook_app_id">1118602991646229</string>
 
     <string name="login">Login</string>
     <string name="logout">Logout</string>

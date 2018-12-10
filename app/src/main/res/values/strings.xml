@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name" translatable="false">"Order Around"</string>
+    <string name="app_name" translatable="false">"GetEat"</string>
 
-    <string name="facebook_app_id">290984818086469</string>
+    <string name="facebook_app_id">1118602991646229</string>
     <string name="fb_login_protocol_scheme">fb290984818086469</string>
 
     <string name="login">Login</string>

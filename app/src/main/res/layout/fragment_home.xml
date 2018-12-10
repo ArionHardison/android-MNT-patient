@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:stickyHeader="@+id/title"
-    tools:context="com.orderaround.user.HomeActivity">
+    tools:context="com.geteat.user.HomeActivity">
 
         <RelativeLayout
             android:layout_width="match_parent"

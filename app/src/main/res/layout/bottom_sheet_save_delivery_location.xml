@@ -50,7 +50,7 @@
                 android:gravity="end"
                 android:text="Skip"
                 android:textAllCaps="true"
-                android:textColor="@color/theme"
+                android:textColor="#000000"
                 android:textSize="@dimen/text_small" />
 
         </LinearLayout>

@@ -1,51 +1,27 @@
 {
   "project_info": {
-    "project_number": "984481555319",
-    "firebase_url": "https://orderaround-222311.firebaseio.com",
-    "project_id": "orderaround-222311",
-    "storage_bucket": "orderaround-222311.appspot.com"
+    "project_number": "1048723724446",
+    "firebase_url": "https://geteat-224809.firebaseio.com",
+    "project_id": "geteat-224809",
+    "storage_bucket": "geteat-224809.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:984481555319:android:8403f0f0027bbd0a",
+        "mobilesdk_app_id": "1:1048723724446:android:d8ac243ec1f42a55",
         "android_client_info": {
-          "package_name": "com.deliveraround.delivery"
+          "package_name": "com.geteat.user"
         }
       },
       "oauth_client": [
         {
-          "client_id": "984481555319-qq11ief0s9olqmimfrnhhcaobdm04c2a.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.deliveraround.delivery",
-            "certificate_hash": "96019ad28bc6388ef77f526b2d2e1a116af3ad37"
-          }
-        },
-        {
-          "client_id": "984481555319-p237mq0drd48kd8ida9gtflupl4bk809.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.deliveraround.delivery",
-            "certificate_hash": "d2575a524819fec07230682dc9f4b6449f689c8f"
-          }
-        },
-        {
-          "client_id": "984481555319-rddf168jtpvg3bdgmsdvc0cdic4qvft5.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.deliveraround.delivery",
-            "certificate_hash": "d9bde3c7a50376ca6c38005e7146eff24e0c62f7"
-          }
-        },
-        {
-          "client_id": "984481555319-lic9v3dng51arq481t34tj62ro1tnbra.apps.googleusercontent.com",
+          "client_id": "1048723724446-0k33kd48phpjrftg4sp3bsg861ejoutj.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA_--4I4R7vDskcaZ2lbV5EwMGOJobyurw"
+          "current_key": "AIzaSyDjkI4IEKxAGj8G9bDIN1YKBGdHq4DUWZc"
         }
       ],
       "services": {
@@ -53,130 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "984481555319-3ell4ke6nbaqr2n319lo9oj5gbbd9g3d.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "984481555319-uqdrnqh0blrkcrvcdsnh0fmoc8ks01il.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.restaurantaround.restaurant"
-              }
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:984481555319:android:92a880309d264537",
-        "android_client_info": {
-          "package_name": "com.orderaround.user"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "984481555319-0071jr82fiof06jtfs932dr7vs9ltjp6.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.orderaround.user",
-            "certificate_hash": "d9bde3c7a50376ca6c38005e7146eff24e0c62f7"
-          }
-        },
-        {
-          "client_id": "984481555319-9mchlat2cdqpgb1uke5kgmr170t69hg1.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.orderaround.user",
-            "certificate_hash": "dabad0aabeba0d137ec131a6c2549b6942511b8d"
-          }
-        },
-        {
-          "client_id": "984481555319-lic9v3dng51arq481t34tj62ro1tnbra.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA_--4I4R7vDskcaZ2lbV5EwMGOJobyurw"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "984481555319-3ell4ke6nbaqr2n319lo9oj5gbbd9g3d.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "984481555319-uqdrnqh0blrkcrvcdsnh0fmoc8ks01il.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.restaurantaround.restaurant"
-              }
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:984481555319:android:1ee02187c231c5c4",
-        "android_client_info": {
-          "package_name": "com.restaurantaround.restaurant"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "984481555319-n53p6o13rdqsddcp7ige2s9uufkhd0uc.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.restaurantaround.restaurant",
-            "certificate_hash": "d9bde3c7a50376ca6c38005e7146eff24e0c62f7"
-          }
-        },
-        {
-          "client_id": "984481555319-lic9v3dng51arq481t34tj62ro1tnbra.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA_--4I4R7vDskcaZ2lbV5EwMGOJobyurw"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "984481555319-3ell4ke6nbaqr2n319lo9oj5gbbd9g3d.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "984481555319-uqdrnqh0blrkcrvcdsnh0fmoc8ks01il.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.restaurantaround.restaurant"
-              }
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
