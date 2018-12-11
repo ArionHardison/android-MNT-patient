@@ -15,6 +15,8 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+
 
 /**
  * Created by tamil@appoets.com on 30-08-2017.
@@ -42,6 +44,7 @@ public class ApiClient {
         OkHttpClient client = new OkHttpClient.Builder()
                 .addNetworkInterceptor(interceptor)
                 .addNetworkInterceptor(new AddHeaderInterceptor())
+                .addNetworkInterceptor(new StethoInterceptor())
                 .connectTimeout(1, TimeUnit.MINUTES)
                 .readTimeout(1, TimeUnit.MINUTES)
                 .retryOnConnectionFailure(true)

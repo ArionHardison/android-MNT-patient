@@ -11,6 +11,8 @@ import com.geteat.user.utils.LocaleUtils;
 import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
+import com.facebook.stetho.Stetho;
+
 /**
  * Created by santhosh@appoets.com on 28-08-2017.
  */
@@ -21,8 +23,9 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
+        Stetho.initializeWithDefaults(this);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/Baumans-Regular.ttf")
+                .setDefaultFontPath("fonts/Nunito-Regular.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );

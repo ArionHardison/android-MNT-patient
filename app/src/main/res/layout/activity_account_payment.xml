@@ -99,7 +99,8 @@
                     android:text="@string/card"
                     android:textAllCaps="true"
                     android:textColor="@color/colorSecondaryText"
-                    android:textSize="@dimen/text_medium" />
+                    android:textSize="@dimen/text_medium"
+                    android:visibility="gone"/>
 
 
                 <ListView
@@ -113,7 +114,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/white">
+                    android:background="@android:color/white"
+                    android:visibility="gone">
 
                     <View
                         android:layout_width="match_parent"
