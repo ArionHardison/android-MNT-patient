@@ -168,7 +168,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
             }
             isFavourite = getIntent().getBooleanExtra("is_fav", false);
 
-            if (shops.getOfferPercent() == null) {
+            if (shops.getOfferPercent() == null || shops.getOfferPercent() == 0) {
                 offer.setVisibility(View.GONE);
             } else {
                 offer.setVisibility(View.VISIBLE);

@@ -8,7 +8,7 @@
         <!--<item>"Notifications"</item>-->
         <item>"Promotion Details"</item>
         <!--<item>"Change Language"</item>-->
-        <item>"Change Password"</item>
+        <!--<item>"Change Password"</item>-->
     </string-array>
 
     <string-array name="languages">

@@ -158,14 +158,20 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
         holder.cardTextValueTicker.setVisibility(View.GONE);
         holder.cardTextValue.setVisibility(View.VISIBLE);
         if (category.getName().equalsIgnoreCase(context.getResources().getString(R.string.featured_products))) {
-            holder.featuredImage.setVisibility(View.VISIBLE);
-            Glide.with(context)
-                    .load(product.getFeaturedImages().get(0).getUrl())
-                    .apply(new RequestOptions()
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .placeholder(R.drawable.ic_banner)
-                            .error(R.drawable.ic_banner))
-                    .into(holder.featuredImage);
+            if (product.getFeaturedImages() != null && product.getFeaturedImages().size() > 0) {
+                holder.featuredImage.setVisibility(View.VISIBLE);
+                Glide.with(context)
+                        .load(product.getFeaturedImages().get(0).getUrl())
+                        .apply(new RequestOptions()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .placeholder(R.drawable.ic_banner)
+                                .error(R.drawable.ic_banner))
+                        .into(holder.featuredImage);
+
+            } else {
+                holder.featuredImage.setVisibility(View.GONE);
+
+            }
         } else holder.featuredImage.setVisibility(View.GONE);
         //Check if product is already added
         if (product.getCart() != null && product.getCart().size() != 0) {

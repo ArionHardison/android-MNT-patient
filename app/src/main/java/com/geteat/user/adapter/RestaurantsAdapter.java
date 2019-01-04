@@ -67,7 +67,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
                 .into(holder.dishImg);
         holder.restaurantName.setText(shops.getName());
         holder.category.setText(shops.getDescription());
-        if (shops.getOfferPercent() == null) {
+        if (shops.getOfferPercent() == null || shops.getOfferPercent()== 0) {
             holder.offer.setVisibility(View.GONE);
         } else {
             holder.offer.setVisibility(View.VISIBLE);

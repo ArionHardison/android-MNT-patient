@@ -148,7 +148,7 @@ public class ProfileFragment extends Fragment {
                 startActivity(new Intent(context, FavouritesActivity.class));
                 break;
             case 2:
-                startActivity(new Intent(context, AccountPaymentActivity.class).putExtra("is_show_wallet",true).putExtra("is_show_cash",false));
+                startActivity(new Intent(context, AccountPaymentActivity.class).putExtra("is_show_wallet", true).putExtra("is_show_cash", false));
                 break;
             case 3:
                 startActivity(new Intent(context, OrdersActivity.class));
@@ -206,7 +206,9 @@ public class ProfileFragment extends Fragment {
             toolbar.setVisibility(View.VISIBLE);
 
             errorLayout.setVisibility(View.GONE);
-            final List<String> list = Arrays.asList(getResources().getStringArray(R.array.profile_settings));
+            final List<String> list = new ArrayList(Arrays.asList(getResources().getStringArray(R.array.profile_settings)));
+            String loginBy = GlobalData.profileModel.getLoginBy();
+
             List<Integer> listIcons = new ArrayList<>();
             listIcons.add(R.drawable.home);
             listIcons.add(R.drawable.heart);
@@ -214,7 +216,14 @@ public class ProfileFragment extends Fragment {
             listIcons.add(R.drawable.ic_myorders);
             listIcons.add(R.drawable.ic_promotion_details);
 //            listIcons.add(R.drawable.ic_translate);
-            listIcons.add(R.drawable.padlock);
+
+            if (!loginBy.equalsIgnoreCase("facebook") &&
+                    !loginBy.equalsIgnoreCase("google")) {
+                list.add("Change Password");
+                listIcons.add(R.drawable.padlock);
+
+            }
+
             ProfileSettingsAdapter adbPerson = new ProfileSettingsAdapter(context, list, listIcons);
             profileSettingLv.setAdapter(adbPerson);
             ListViewSizeHelper.getListViewSize(profileSettingLv);
@@ -230,7 +239,7 @@ public class ProfileFragment extends Fragment {
 
             String VERSION_NAME = BuildConfig.VERSION_NAME;
             int versionCode = BuildConfig.VERSION_CODE;
-            appVersion.setText("App version " + VERSION_NAME + " ("+String.valueOf(versionCode)+ ")");
+            appVersion.setText("App version " + VERSION_NAME + " (" + String.valueOf(versionCode) + ")");
 
         } else {
             toolbar.setVisibility(View.GONE);
@@ -284,10 +293,11 @@ public class ProfileFragment extends Fragment {
                 LocaleUtils.setLocale(getActivity(), "en");
                 break;
         }
-        startActivity(new Intent(getActivity(),HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).putExtra("change_language",true));
+        startActivity(new Intent(getActivity(), HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).putExtra("change_language", true));
         getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
     }
+
     private void initView() {
         if (GlobalData.profileModel != null) {
             Glide.with(context)
@@ -401,7 +411,7 @@ public class ProfileFragment extends Fragment {
             public void onConnected(@Nullable Bundle bundle) {
 
 //                FirebaseAuth.getInstance().signOut();
-                if(mGoogleApiClient.isConnected()) {
+                if (mGoogleApiClient.isConnected()) {
                     Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
                         @Override
                         public void onResult(@NonNull Status status) {
@@ -422,21 +432,22 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
+
     public void alertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage("Are you sure you want to logout?")
                 .setPositiveButton(getResources().getString(R.string.logout), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
-                        if (SharedHelper.getKey(context,"login_by").equals("facebook"))
+                        if (SharedHelper.getKey(context, "login_by").equals("facebook"))
                             LoginManager.getInstance().logOut();
-                        if (SharedHelper.getKey(context,"login_by").equals("google"))
+                        if (SharedHelper.getKey(context, "login_by").equals("google"))
                             signOut();
                         SharedHelper.putKey(context, "logged", "false");
                         startActivity(new Intent(context, WelcomeScreenActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         GlobalData.profileModel = null;
                         GlobalData.addCart = null;
-                        GlobalData.notificationCount=0;
+                        GlobalData.notificationCount = 0;
                         getActivity().finish();
 
                     }

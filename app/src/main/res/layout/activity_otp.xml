@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
         android:contentDescription="@string/verification_code_txt"
-        android:src="@drawable/otp_bg" />
+        android:src="@drawable/logo_app" />
 
     <TextView
         android:id="@+id/verification_code_txt"
