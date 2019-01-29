@@ -35,7 +35,7 @@ import java.util.List;
 public class CartAddOnsAdapter extends RecyclerView.Adapter<CartAddOnsAdapter.MyViewHolder> {
     public static List<Addon> list;
     private Context context;
-    int priceAmount = 0;
+    double priceAmount = 0;
     int discount = 0;
     int itemCount = 0;
     int itemQuantity = 0;

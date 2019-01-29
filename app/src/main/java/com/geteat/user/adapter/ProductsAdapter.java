@@ -66,7 +66,7 @@ public class ProductsAdapter extends SectionedRecyclerViewAdapter<ProductsAdapte
     public static Context context;
     public static Activity activity;
     public static int lastPosition = -1;
-    public static int priceAmount = 0;
+    public static double priceAmount = 0;
     public static int itemCount = 0;
     public static int itemQuantity = 0;
     public static Product product;

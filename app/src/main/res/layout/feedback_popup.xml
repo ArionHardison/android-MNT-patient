@@ -6,107 +6,109 @@
     android:orientation="vertical">
 
     <TextView
+        fontPath="fonts/Nunito-Bold.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="FEEDBACK"
         android:textSize="16sp"
-        fontPath="fonts/Nunito-Bold.ttf"
         tools:ignore="MissingPrefix" />
 
     <TextView
+        fontPath="fonts/Nunito-Bold.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="How was the delivery?"
-        fontPath="fonts/Nunito-Bold.ttf"
-        tools:ignore="MissingPrefix"
         android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="MissingPrefix" />
 
 
+    <RadioGroup
+        android:id="@+id/rate_radiogroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="horizontal">
 
-        <RadioGroup
-            android:id="@+id/rate_radiogroup"
+        <RadioButton
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_margin="16dp"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/radio_button"
+            android:button="@null"
+            android:drawableTop="@drawable/sad72"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="Terrible"
+            android:textAllCaps="true"
+            android:textSize="8sp" />
 
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:button="@null"
-                android:drawableTop="@drawable/sad72"
-                android:gravity="center"
-                android:textSize="8sp"
-                android:textAllCaps="true"
-                android:layout_weight="1"
-                android:padding="8dp"
-                android:background="@drawable/radio_button"
-                android:text="Terrible" />
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/radio_button"
+            android:button="@null"
+            android:drawableTop="@drawable/emotion72"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="Bad"
+            android:textAllCaps="true"
+            android:textSize="8sp" />
 
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:button="@null"
-                android:drawableTop="@drawable/emotion72"
-                android:gravity="center"
-                android:textSize="8sp"
-                android:layout_weight="1"
-                android:padding="8dp"
-                android:background="@drawable/radio_button"
-                android:textAllCaps="true"
-                android:text="Bad" />
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:button="@null"
-                android:drawableTop="@drawable/happyy72"
-                android:gravity="center"
-                android:textSize="8sp"
-                android:padding="8dp"
-                android:background="@drawable/radio_button"
-                android:layout_weight="1"
-                android:textAllCaps="true"
-                android:text="Okay" />
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:button="@null"
-                android:drawableTop="@drawable/happy72"
-                android:gravity="center"
-                android:textSize="8sp"
-                android:padding="8dp"
-                android:background="@drawable/radio_button"
-                android:layout_weight="1"
-                android:textAllCaps="true"
-                android:text="Good" />
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:button="@null"
-                android:drawableTop="@drawable/smille"
-                android:gravity="center"
-                android:textSize="8sp"
-                android:padding="8dp"
-                android:background="@drawable/radio_button"
-                android:layout_weight="1"
-                android:textAllCaps="true"
-                android:text="Superb" />
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/radio_button"
+            android:button="@null"
+            android:drawableTop="@drawable/happyy72"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="Okay"
+            android:textAllCaps="true"
+            android:textSize="8sp" />
 
-        </RadioGroup>
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/radio_button"
+            android:button="@null"
+            android:drawableTop="@drawable/happy72"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="Good"
+            android:textAllCaps="true"
+            android:textSize="8sp" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/radio_button"
+            android:button="@null"
+            android:drawableTop="@drawable/smille"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="Superb"
+            android:textAllCaps="true"
+            android:textSize="8sp" />
+
+    </RadioGroup>
 
 
     <TextView
+        fontPath="fonts/Nunito-Bold.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:text="Give some feedbak in words."
-        fontPath="fonts/Nunito-Bold.ttf"
-        tools:ignore="MissingPrefix"
+        android:text="Give some feedback in words."
         android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="MissingPrefix" />
 
     <EditText
         android:id="@+id/comment"
@@ -114,9 +116,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:background="@drawable/shadow_view"
+        android:inputType="textMultiLine"
         android:lines="3"
-        android:padding="8dp"
-        android:inputType="textMultiLine" />
+        android:padding="8dp" />
 
     <Button
         android:id="@+id/feedback_submit"

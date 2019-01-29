@@ -67,7 +67,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
                 .into(holder.dishImg);
         holder.restaurantName.setText(shops.getName());
         holder.category.setText(shops.getDescription());
-        if (shops.getOfferPercent() == null || shops.getOfferPercent()== 0) {
+        if (shops.getOfferPercent() == null || shops.getOfferPercent() == 0) {
             holder.offer.setVisibility(View.GONE);
         } else {
             holder.offer.setVisibility(View.VISIBLE);
@@ -81,7 +81,8 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
             holder.rating.setText("" + rating);
         } else
             holder.rating.setText("No Rating");
-        holder.distanceTime.setText(shops.getEstimatedDeliveryTime().toString() + " Mins");
+        if (shops.getEstimatedDeliveryTime() != null)
+            holder.distanceTime.setText(shops.getEstimatedDeliveryTime().toString() + " Mins");
 
     }
 

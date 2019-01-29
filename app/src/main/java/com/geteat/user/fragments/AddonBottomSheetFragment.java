@@ -148,7 +148,7 @@ public class AddonBottomSheetFragment extends BottomSheetDialogFragment {
 
     private void setAddOnsText() {
         int quantity = 0;
-        int priceAmount = 0;
+        double priceAmount = 0;
         boolean once=true;
         AddonBottomSheetFragment.addons.setText("");
         if (selectedCart != null) {

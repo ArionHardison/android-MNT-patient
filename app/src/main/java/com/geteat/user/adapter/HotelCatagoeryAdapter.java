@@ -74,7 +74,7 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
     public static Context context;
     Activity activity;
     int lastPosition = -1;
-    public static int priceAmount = 0;
+    public static double priceAmount = 0;
     public static int itemCount = 0;
     public static int itemQuantity = 0;
     public static Product product;
@@ -250,9 +250,11 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
                         holder.cardTextValue.setVisibility(View.GONE);
                         holder.animationLineCartAdd.setVisibility(View.VISIBLE);
                         int cartId = 0;
-                        for (int i = 0; i < addCart.getProductList().size(); i++) {
-                            if (addCart.getProductList().get(i).getProductId().equals(product.getId())) {
-                                cartId = addCart.getProductList().get(i).getId();
+                        if (addCart.getProductList() != null && addCart.getProductList().size() > 0) {
+                            for (int i = 0; i < addCart.getProductList().size(); i++) {
+                                if (addCart.getProductList().get(i).getProductId().equals(product.getId())) {
+                                    cartId = addCart.getProductList().get(i).getId();
+                                }
                             }
                         }
                         int countValue = Integer.parseInt(holder.cardTextValue.getText().toString()) + 1;

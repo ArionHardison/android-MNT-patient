@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +51,7 @@ public class WalletActivity extends AppCompatActivity {
     TextView walletAmountTxt;
     @BindView(R.id.wallet_history_recycler_view)
     RecyclerView walletHistoryRecyclerView;
+
 
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
     Context context = WalletActivity.this;

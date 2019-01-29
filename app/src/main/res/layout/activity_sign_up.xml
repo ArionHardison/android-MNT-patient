@@ -36,8 +36,8 @@
 
             <ImageView
                 android:id="@+id/app_logo"
-                android:layout_width="@dimen/_120sdp"
-                android:layout_height="@dimen/_120sdp"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_150sdp"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:contentDescription="@string/login"
@@ -61,15 +61,15 @@
                 android:layout_height="@dimen/edit_text_size"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:background="@drawable/shadow_view"
-                android:drawablePadding="@dimen/_10sdp"
                 android:drawableStart="@drawable/login_left"
+                android:drawablePadding="@dimen/_10sdp"
                 android:hint="@string/name"
-                android:singleLine="true"
-                android:inputType="textPersonName"
                 android:imeOptions="actionNext"
+                android:inputType="textPersonName|textCapCharacters"
                 android:maxLines="1"
-                android:paddingEnd="@dimen/_10sdp"
                 android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:singleLine="true"
                 app:theme="@style/MyEditTextTheme" />
 
             <EditText
@@ -78,15 +78,15 @@
                 android:layout_height="@dimen/edit_text_size"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:background="@drawable/shadow_view"
-                android:drawablePadding="@dimen/_10sdp"
                 android:drawableStart="@drawable/ic_mail"
+                android:drawablePadding="@dimen/_10sdp"
                 android:hint="@string/email_address"
                 android:imeOptions="actionNext"
-                android:singleLine="true"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:paddingEnd="@dimen/_10sdp"
                 android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:singleLine="true"
                 app:theme="@style/MyEditTextTheme" />
 
             <RelativeLayout
@@ -126,8 +126,8 @@
                     android:imeOptions="actionDone"
                     android:inputType="number"
                     android:maxLines="1"
-                    android:paddingEnd="@dimen/_10sdp"
                     android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
                     android:textSize="@dimen/text_normal" />
             </RelativeLayout>
 
@@ -143,15 +143,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edit_text_size"
                     android:background="@drawable/shadow_view"
-                    android:drawablePadding="@dimen/_10sdp"
                     android:drawableStart="@drawable/password_left"
+                    android:drawablePadding="@dimen/_10sdp"
                     android:hint="@string/password"
                     android:imeOptions="actionNext"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true"
-                    android:paddingEnd="@dimen/_10sdp"
                     android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:singleLine="true"
                     app:theme="@style/MyEditTextTheme" />
 
                 <ImageView
@@ -176,15 +176,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edit_text_size"
                     android:background="@drawable/shadow_view"
-                    android:drawablePadding="@dimen/_10sdp"
                     android:drawableStart="@drawable/password_left"
+                    android:drawablePadding="@dimen/_10sdp"
                     android:hint="@string/confirm_password"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true"
-                    android:paddingEnd="@dimen/_10sdp"
                     android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:singleLine="true"
                     app:theme="@style/MyEditTextTheme" />
 
                 <ImageView

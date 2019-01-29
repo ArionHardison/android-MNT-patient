@@ -67,6 +67,15 @@ public class FavouritesActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        modelListReference.clear();
+        modelList.clear();
         LinearLayoutManager manager = new LinearLayoutManager(this);
         favoritesRv.setLayoutManager(manager);
         adapter = new FavouritesAdapter(this, modelListReference);
@@ -74,7 +83,6 @@ public class FavouritesActivity extends AppCompatActivity {
         getFavorites();
 
     }
-
 
     private void getFavorites() {
 

@@ -136,7 +136,7 @@ public class CartFragment extends Fragment {
     //Orderitem List
     public  static List<Cart> viewCartItemList;
 
-    int priceAmount = 0;
+    double priceAmount = 0;
     int discount = 0;
     public static int deliveryChargeValue = 0;
     public static int tax = 0;
@@ -275,7 +275,7 @@ public class CartFragment extends Fragment {
                             }
                         }
                         discountAmount.setText("- " + currency + "" + discount);
-                        int topPayAmount = priceAmount - discount;
+                        double topPayAmount = priceAmount - discount;
                         int tax = (int) Math.round(topPayAmount * (response.body().getTaxPercentage() * 0.01));
                         serviceTax.setText(currency +String.valueOf(tax));
                         topPayAmount = topPayAmount + response.body().getDeliveryCharges() + tax;

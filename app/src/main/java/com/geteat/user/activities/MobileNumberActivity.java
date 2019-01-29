@@ -139,7 +139,7 @@ public class MobileNumberActivity extends AppCompatActivity implements GoogleApi
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-                    /*----------Google Login---------------*/
+        /*----------Google Login---------------*/
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -162,7 +162,7 @@ public class MobileNumberActivity extends AppCompatActivity implements GoogleApi
             isSignUp = bundle.getBoolean("signup", true);
         }
         // You can limit the displayed countries
-        List<Country> countryList=Country.getAllCountries();
+        List<Country> countryList = Country.getAllCountries();
         Collections.sort(countryList, new Comparator<Country>() {
             @Override
             public int compare(Country s1, Country s2) {
@@ -343,11 +343,10 @@ public class MobileNumberActivity extends AppCompatActivity implements GoogleApi
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        if (jObjError.has("phone")){
-                            if(jObjError.optJSONArray("phone")!=null)
-                            Toast.makeText(context, jObjError.optJSONArray("phone").get(0).toString(), Toast.LENGTH_LONG).show();
-                        }
-                        else if (jObjError.has("email"))
+                        if (jObjError.has("phone")) {
+                            if (jObjError.optJSONArray("phone") != null)
+                                Toast.makeText(context, jObjError.optJSONArray("phone").get(0).toString(), Toast.LENGTH_LONG).show();
+                        } else if (jObjError.has("email"))
                             Toast.makeText(context, jObjError.optString("email"), Toast.LENGTH_LONG).show();
                         else
                             Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
@@ -372,7 +371,7 @@ public class MobileNumberActivity extends AppCompatActivity implements GoogleApi
             public void onSelectCountry(String name, String code, String dialCode,
                                         int flagDrawableResID) {
                 mCountryDialCodeTextView.setText(dialCode);
-                country_code=dialCode;
+                country_code = dialCode;
                 mCountryFlagImageView.setImageResource(flagDrawableResID);
                 mCountryPicker.dismiss();
             }
@@ -400,10 +399,10 @@ public class MobileNumberActivity extends AppCompatActivity implements GoogleApi
             mCountryDialCodeTextView.setText(country.getDialCode());
             country_code = country.getDialCode();
         } else {
-            Country us = new Country("US", "United States", "+1", R.drawable.flag_us);
-            mCountryFlagImageView.setImageResource(us.getFlag());
-            mCountryDialCodeTextView.setText(us.getDialCode());
-            country_code = us.getDialCode();
+            Country india = new Country("IN", "India", "+91", R.drawable.flag_in);
+            mCountryFlagImageView.setImageResource(india.getFlag());
+            mCountryDialCodeTextView.setText(india.getDialCode());
+            country_code = india.getDialCode();
             //Toast.makeText(MobileNumberActivity.this, "Required Sim", Toast.LENGTH_SHORT).show();
         }
     }

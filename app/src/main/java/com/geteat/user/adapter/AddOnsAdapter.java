@@ -173,7 +173,7 @@ public class AddOnsAdapter extends RecyclerView.Adapter<AddOnsAdapter.MyViewHold
     }
 
     private void setAddOnsText() {
-        int totalAmount = isSelectedProduct.getPrices().getPrice();
+        Double totalAmount = isSelectedProduct.getPrices().getPrice();
         for (int i = 0; i < list.size(); i++) {
             Addon addon = list.get(i);
             if (addon.getAddon().getChecked()) {

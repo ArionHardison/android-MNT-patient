@@ -83,6 +83,10 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
     TextView restaurantTitle2;
     @BindView(R.id.restaurant_subtitle2)
     TextView restaurantSubtitle2;
+    @BindView(R.id.resturantname_tv)
+    TextView resturantname_tv;
+    @BindView(R.id.resturant_descb_tv)
+    TextView resturant_descb_tv;
     //    @BindView(R.id.scroll_view)
 //    NestedScrollView scrollView;
     public static TextView itemText;
@@ -116,7 +120,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
     HeaderView floatHeaderView;
     int restaurantPosition = 0;
     boolean isShopIsChanged = true;
-    int priceAmount = 0;
+    double priceAmount = 0;
     int itemCount = 0;
     int itemQuantity = 0;
     Animation slide_down, slide_up;
@@ -153,6 +157,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
         appBarLayout.addOnOffsetChangedListener(this);
         categoryList = new ArrayList<>();
         shops = GlobalData.selectedShop;
+
         if (shops != null) {
             //Load animation
             slide_down = AnimationUtils.loadAnimation(context,
@@ -257,7 +262,10 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
             //Set title
             collapsingToolbar.setTitle(" ");
             toolbarHeaderView.bindTo(shops.getName(), shops.getDescription());
-            floatHeaderView.bindTo(shops.getName(), shops.getDescription());
+            resturantname_tv.setText(shops.getName());
+            resturant_descb_tv.setText(shops.getDescription());
+            
+//            floatHeaderView.bindTo(shops.getName(), shops.getDescription());
 
             //Set Categoery shopList adapter
             catagoeryAdapter = new HotelCatagoeryAdapter(this, activity, categoryList);

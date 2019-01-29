@@ -84,7 +84,7 @@ public class OtpActivity extends AppCompatActivity {
             isSignUp = bundle.getBoolean("signup", true);
         }
         mobileNumberTxt.setText(GlobalData.mobile);
-        otpValue1.setText(String.valueOf(GlobalData.otpValue));
+//        otpValue1.setText(String.valueOf(GlobalData.otpValue));
         getDeviceToken();
     }
 
@@ -194,6 +194,7 @@ public class OtpActivity extends AppCompatActivity {
                     GlobalData.addCart.setProductList(response.body().getCart());
                     GlobalData.addressList = new AddressList();
                     GlobalData.addressList.setAddresses(response.body().getAddresses());
+                    Toast.makeText(context, "Registred sucesfully", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(context, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     finish();
                 } else {
@@ -231,7 +232,7 @@ public class OtpActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Toast.makeText(context, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     GlobalData.otpValue = response.body().getOtp();
-                    otpValue1.setText(String.valueOf(GlobalData.otpValue));
+//                    otpValue1.setText(String.valueOf(GlobalData.otpValue));
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
@@ -279,7 +280,7 @@ public class OtpActivity extends AppCompatActivity {
                 break;
             case R.id.resend_otp:
                 HashMap<String, String> map1 = new HashMap<>();
-                map1.put("phone", GlobalData.mobileNumber);
+                map1.put("phone", GlobalData.mobile);
                 getOtpVerification(map1);
                 break;
         }

@@ -103,7 +103,7 @@ public class WelcomeScreenActivity extends AppCompatActivity implements GoogleAp
             public void onClick(View v) {
                 startActivity(new Intent(WelcomeScreenActivity.this, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
-                finish();
+//                finish();
             }
         });
         signUpButton.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +111,7 @@ public class WelcomeScreenActivity extends AppCompatActivity implements GoogleAp
             public void onClick(View v) {
                 startActivity(new Intent(WelcomeScreenActivity.this, MobileNumberActivity.class).putExtra("signup", true).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
-                finish();
+//                finish();
             }
         });
         overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);

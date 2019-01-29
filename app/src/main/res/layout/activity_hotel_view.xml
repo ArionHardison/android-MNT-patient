@@ -39,11 +39,41 @@
                     android:fitsSystemWindows="true"
                     android:scaleType="fitXY" />
 
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/transparent_bg_bottom"
                     android:fitsSystemWindows="true" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:padding="@dimen/_4sdp"
+                    android:background="#26000000">
+
+                    <TextView
+                        android:id="@+id/resturantname_tv"
+                        fontPath="fonts/Nunito-Regular.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Resturant Name"
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/_13sdp" />
+
+                    <TextView
+                        android:id="@+id/resturant_descb_tv"
+                        fontPath="fonts/Nunito-Regular.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/resturantname_tv"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:text="Description"
+                        android:textColor="#ffffff"
+                        android:layout_marginBottom="@dimen/_3sdp"
+                        android:textSize="@dimen/_12sdp" />
+                </RelativeLayout>
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -92,6 +122,7 @@
                             android:layout_gravity="center"
                             android:contentDescription="@string/search"
                             android:tint="#e7e8e9"
+                            android:visibility="gone"
                             app:srcCompat="@drawable/ic_search_icon" />
                     </LinearLayout>
 
@@ -184,8 +215,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="4dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
                         android:layout_marginTop="16dp"
+                        android:layout_marginRight="10dp"
                         android:background="@drawable/horizantal_dotted_line"
                         android:layerType="software"
                         android:visibility="gone" />
@@ -236,7 +267,8 @@
                                     android:maxLines="1"
                                     android:text="0 Rating"
                                     android:textColor="@color/colorSecondaryText"
-                                    android:textSize="@dimen/text_tiny" />
+                                    android:textSize="@dimen/text_tiny"
+                                    android:visibility="gone" />
 
                             </LinearLayout>
 
@@ -334,8 +366,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
                         android:layout_marginTop="16dp"
+                        android:layout_marginRight="10dp"
                         android:background="@color/light_grey"
                         android:visibility="gone" />
 
@@ -386,12 +418,12 @@
                         android:id="@+id/offer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawablePadding="10dp"
                         android:drawableStart="@drawable/ic_offers"
+                        android:drawablePadding="10dp"
                         android:gravity="center_vertical"
                         android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:paddingRight="@dimen/activity_horizontal_margin"
                         android:paddingTop="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
                         android:text="Flat 20% offer on all orders"
                         android:textColor="@color/colorRed"
                         android:textSize="@dimen/text_small"
@@ -462,10 +494,10 @@
         android:layout_gravity="bottom"
         android:background="@color/theme"
         android:gravity="center_vertical"
-        android:paddingBottom="@dimen/_5sdp"
         android:paddingLeft="@dimen/activity_vertical_margin"
-        android:paddingRight="@dimen/activity_vertical_margin"
         android:paddingTop="@dimen/_5sdp"
+        android:paddingRight="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/_5sdp"
         android:visibility="gone">
 
         <RelativeLayout
@@ -474,11 +506,11 @@
             android:layout_centerVertical="true">
 
             <TextView
-                android:ellipsize="end"
                 android:id="@+id/item_text"
                 fontPath="fonts/Nunito-Bold.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:gravity="center"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="@dimen/text_small_large" />

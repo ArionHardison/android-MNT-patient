@@ -11,13 +11,13 @@ public class Prices {
     private Integer id;
     @SerializedName("price")
     @Expose
-    private Integer price;
+    private Double price;
     @SerializedName("currency")
     @Expose
     private String currency;
     @SerializedName("discount")
     @Expose
-    private Integer discount;
+    private Double discount;
     @SerializedName("discount_type")
     @Expose
     private String discountType;
@@ -30,11 +30,11 @@ public class Prices {
         this.id = id;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -46,11 +46,11 @@ public class Prices {
         this.currency = currency;
     }
 
-    public Integer getDiscount() {
+    public Double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Integer discount) {
+    public void setDiscount(Double discount) {
         this.discount = discount;
     }
 

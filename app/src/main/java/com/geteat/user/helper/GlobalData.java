@@ -33,22 +33,22 @@ public class GlobalData {
 
     public Otp otpModel = null;
 
-    public static double latitude ;
-    public static double longitude ;
-    public static String addressHeader ="";
+    public static double latitude;
+    public static double longitude;
+    public static String addressHeader = "";
     public static Location CURRENT_LOCATION = null;
 
     /*------------Filter--------*/
-    public static boolean isPureVegApplied=false;
-    public static boolean isOfferApplied=false;
-    public static boolean shouldContinueService=false;
-    public static ArrayList<Integer> cuisineIdArrayList=null;
+    public static boolean isPureVegApplied = false;
+    public static boolean isOfferApplied = false;
+    public static boolean shouldContinueService = false;
+    public static ArrayList<Integer> cuisineIdArrayList = null;
     public static ArrayList<Card> cardArrayList;
     public static boolean isCardChecked = false;
     public static String loginBy = "manual";
-   public static String name,email,access_token,mobileNumber,imageUrl;
+    public static String name, email, access_token, mobileNumber, imageUrl;
     public static String address = "";
-    public static int addCartShopId =0;
+    public static int addCartShopId = 0;
     public static User profileModel = null;
     public static Address selectedAddress = null;
     public static Order isSelectedOrder = null;
@@ -59,11 +59,11 @@ public class GlobalData {
 
     public static List<Shop> shopList;
     public static List<Cuisine> cuisineList;
-    public static List<Category> categoryList=null;
+    public static List<Category> categoryList = null;
     public static List<Order> onGoingOrderList;
     public static List<DisputeMessage> disputeMessageList;
     public static List<Order> pastOrderList;
-    public static AddressList addressList=null;
+    public static AddressList addressList = null;
     public static List<String> ORDER_STATUS = Arrays.asList("ORDERED", "RECEIVED", "ASSIGNED", "PROCESSING", "REACHED", "PICKEDUP", "ARRIVED", "COMPLETED");
 
     public static Shop selectedShop;
@@ -71,10 +71,10 @@ public class GlobalData {
 
     public static int otpValue = 0;
     public static String mobile = "";
-    public static String currencySymbol = "$";
+    public static String currencySymbol = "₹";
     public static int notificationCount = 0;
 
-//Search Fragment
+    //Search Fragment
     public static List<Shop> searchShopList;
     public static List<Product> searchProductList;
 

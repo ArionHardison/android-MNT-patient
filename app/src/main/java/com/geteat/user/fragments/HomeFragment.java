@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.app.Fragment;
@@ -52,11 +53,13 @@ import com.geteat.user.utils.Utils;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -146,37 +149,37 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             String message = intent.getStringExtra("message");
             Log.d("receiver", "Got message: " + message);
 
-                errorLoadingLayout.setVisibility(View.GONE);
-                locationAddressLayout.setVisibility(View.VISIBLE);
-                if (selectedAddress != null && GlobalData.profileModel != null) {
-                    GlobalData.addressHeader= selectedAddress.getType();
-                    addressLabel.setText(selectedAddress.getType());
-                    addressTxt.setText(selectedAddress.getMapAddress());
-                    latitude = selectedAddress.getLatitude();
-                    longitude = selectedAddress.getLongitude();
-                    GlobalData.addressHeader = selectedAddress.getMapAddress();
-                } else if (addressList != null && addressList.getAddresses().size() != 0 && GlobalData.profileModel != null) {
-                    for (int i = 0; i < addressList.getAddresses().size(); i++) {
-                        Address address1 = addressList.getAddresses().get(i);
-                        if (getDoubleThreeDigits(latitude) == getDoubleThreeDigits(address1.getLatitude()) && getDoubleThreeDigits(longitude) == getDoubleThreeDigits(address1.getLongitude())) {
-                            selectedAddress = address1;
-                            addressLabel.setText(GlobalData.addressHeader);
-                            addressTxt.setText(GlobalData.address);
-                            addressLabel.setText(selectedAddress.getType());
-                            addressTxt.setText(selectedAddress.getMapAddress());
-                            latitude = selectedAddress.getLatitude();
-                            longitude = selectedAddress.getLongitude();
-                            break;
-                        } else {
-                            addressLabel.setText(GlobalData.addressHeader);
-                            addressTxt.setText(GlobalData.address);
-                        }
+            errorLoadingLayout.setVisibility(View.GONE);
+            locationAddressLayout.setVisibility(View.VISIBLE);
+            if (selectedAddress != null && GlobalData.profileModel != null) {
+                GlobalData.addressHeader = selectedAddress.getType();
+                addressLabel.setText(selectedAddress.getType());
+                addressTxt.setText(selectedAddress.getMapAddress());
+                latitude = selectedAddress.getLatitude();
+                longitude = selectedAddress.getLongitude();
+                GlobalData.addressHeader = selectedAddress.getMapAddress();
+            } else if (addressList != null && addressList.getAddresses().size() != 0 && GlobalData.profileModel != null) {
+                for (int i = 0; i < addressList.getAddresses().size(); i++) {
+                    Address address1 = addressList.getAddresses().get(i);
+                    if (getDoubleThreeDigits(latitude) == getDoubleThreeDigits(address1.getLatitude()) && getDoubleThreeDigits(longitude) == getDoubleThreeDigits(address1.getLongitude())) {
+                        selectedAddress = address1;
+                        addressLabel.setText(GlobalData.addressHeader);
+                        addressTxt.setText(GlobalData.address);
+                        addressLabel.setText(selectedAddress.getType());
+                        addressTxt.setText(selectedAddress.getMapAddress());
+                        latitude = selectedAddress.getLatitude();
+                        longitude = selectedAddress.getLongitude();
+                        break;
+                    } else {
+                        addressLabel.setText(GlobalData.addressHeader);
+                        addressTxt.setText(GlobalData.address);
                     }
-                } else {
-                    addressLabel.setText(GlobalData.addressHeader);
-                    addressTxt.setText(GlobalData.address);
                 }
-                findRestaurant();
+            } else {
+                addressLabel.setText(GlobalData.addressHeader);
+                addressTxt.setText(GlobalData.address);
+            }
+            findRestaurant();
         }
     };
 
@@ -376,7 +379,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                     }
 
                     //Check Banner list
-                    if (response.body().getBanners().size() == 0||isFilterApplied)
+                    if (response.body().getBanners().size() == 0 || isFilterApplied)
                         impressiveDishesLayout.setVisibility(View.GONE);
                     else
                         impressiveDishesLayout.setVisibility(View.VISIBLE);
@@ -469,7 +472,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             errorLoadingLayout.setVisibility(View.GONE);
             locationAddressLayout.setVisibility(View.VISIBLE);
             if (selectedAddress != null && GlobalData.profileModel != null) {
-                GlobalData.addressHeader= selectedAddress.getType();
+                GlobalData.addressHeader = selectedAddress.getType();
                 addressLabel.setText(selectedAddress.getType());
                 addressTxt.setText(selectedAddress.getMapAddress());
                 latitude = selectedAddress.getLatitude();
@@ -488,19 +491,65 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                         longitude = selectedAddress.getLongitude();
                         break;
                     } else {
-                        addressLabel.setText(GlobalData.addressHeader);
-                        addressTxt.setText(GlobalData.address);
+                        String address = getAddress(latitude, longitude);
+                        if (address != null) {
+                            addressLabel.setText(address);
+                            addressTxt.setText(address);
+                        } else {
+
+                            addressLabel.setText(GlobalData.addressHeader);
+                            addressTxt.setText(GlobalData.address);
+                        }
                     }
                 }
             } else {
-                addressLabel.setText(GlobalData.addressHeader);
-                addressTxt.setText(GlobalData.address);
+                String address = getAddress(latitude, longitude);
+                if (address != null) {
+                    addressLabel.setText(address);
+                    addressTxt.setText(address);
+                } else {
+
+                    addressLabel.setText(GlobalData.addressHeader);
+                    addressTxt.setText(GlobalData.address);
+                }
             }
             findRestaurant();
 
         }
 
+    }
+
+
+    public String getAddress(double lat, double lng) {
+        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+        try {
+            List<android.location.Address> addresses = geocoder.getFromLocation(lat, lng, 1);
+            android.location.Address address = addresses.get(0);
+            String addressLine = address.getAddressLine(0);
+
+
+/*                String add = obj.getAddressLine(0);
+                add = add + "\n" + obj.getCountryName();
+                add = add + "\n" + obj.getCountryCode();
+                add = add + "\n" + obj.getAdminArea();
+                add = add + "\n" + obj.getPostalCode();
+                add = add + "\n" + obj.getSubAdminArea();
+                add = add + "\n" + obj.getLocality();
+                add = add + "\n" + obj.getSubThoroughfare();*/
+
+            Log.v("IGA", "Address" + addressLine);
+            return addressLine;
+            // Toast.makeText(this, "Address=>" + add,
+            // Toast.LENGTH_SHORT).show();
+
+            // TennisAppActivity.showDialog(add);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+        return null;
+    }
 
 
     @Override

@@ -219,10 +219,10 @@ public class SignUpActivity extends AppCompatActivity {
             countryNumber.setText(country.getDialCode());
             country_code = country.getDialCode();
         } else {
-            Country us = new Country("US", "United States", "+1", R.drawable.flag_us);
-            countryImage.setImageResource(us.getFlag());
-            countryNumber.setText(us.getDialCode());
-            country_code = us.getDialCode();
+            Country india = new Country("IN", "India", "+91", R.drawable.flag_in);
+            countryImage.setImageResource(india.getFlag());
+            countryNumber.setText(india.getDialCode());
+            country_code = india.getDialCode();
         }
     }
 

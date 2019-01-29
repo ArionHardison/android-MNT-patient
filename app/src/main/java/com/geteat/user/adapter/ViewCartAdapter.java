@@ -47,7 +47,7 @@ import retrofit2.Response;
 public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyViewHolder> {
     private List<Cart> list;
     public static Context context;
-    public static int priceAmount = 0;
+    public static double priceAmount = 0;
     public static int discount = 0;
     public static int itemCount = 0;
     public static int itemQuantity = 0;
@@ -124,9 +124,9 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
         }
 
         List<CartAddon> cartAddonList = list.get(position).getCartAddons();
-        if(cartAddonList.isEmpty()){
+        if (cartAddonList.isEmpty()) {
             holder.addons.setText("");
-        }else {
+        } else {
             for (int i = 0; i < cartAddonList.size(); i++) {
                 if (i == 0)
                     holder.addons.setText(cartAddonList.get(i).getAddonProduct().getAddon().getName());
@@ -134,7 +134,6 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     holder.addons.append(", " + cartAddonList.get(i).getAddonProduct().getAddon().getName());
             }
         }
-
 
 
         holder.cardAddBtn.setOnClickListener(new View.OnClickListener() {
@@ -230,7 +229,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     map.put("product_id", product.getId().toString());
                     map.put("quantity", String.valueOf(countMinusValue));
                     map.put("cart_id", String.valueOf(list.get(position).getId()));
-                    List<CartAddon> cartAddonList=list.get(position).getCartAddons();
+                    List<CartAddon> cartAddonList = list.get(position).getCartAddons();
                     for (int i = 0; i < cartAddonList.size(); i++) {
                         CartAddon cartAddon = cartAddonList.get(i);
                         map.put("product_addons[" + "" + i + "]", cartAddon.getAddonProduct().getId().toString());
@@ -248,7 +247,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     map.put("product_id", product.getId().toString());
                     map.put("quantity", String.valueOf(countMinusValue));
                     map.put("cart_id", String.valueOf(list.get(position).getId()));
-                    List<CartAddon> cartAddonList=list.get(position).getCartAddons();
+                    List<CartAddon> cartAddonList = list.get(position).getCartAddons();
                     for (int i = 0; i < cartAddonList.size(); i++) {
                         CartAddon cartAddon = cartAddonList.get(i);
                         map.put("product_addons[" + "" + i + "]", cartAddon.getAddonProduct().getId().toString());
@@ -318,7 +317,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
             customizableTxt = (TextView) itemView.findViewById(R.id.customizable_txt);
             addons = (TextView) itemView.findViewById(R.id.addons);
             customize = (TextView) itemView.findViewById(R.id.customize);
-         /*    Add card Button Layout*/
+            /*    Add card Button Layout*/
             cardAddDetailLayout = (RelativeLayout) itemView.findViewById(R.id.add_card_layout);
             cardAddTextLayout = (RelativeLayout) itemView.findViewById(R.id.add_card_text_layout);
             cardAddInfoText = (TextView) itemView.findViewById(R.id.avialablity_time);
@@ -390,7 +389,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                         String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
                         CartFragment.itemTotalAmount.setText(currency + "" + priceAmount);
                         CartFragment.discountAmount.setText("- " + currency + "" + discount);
-                        int topPayAmount = priceAmount - discount;
+                        Double topPayAmount = priceAmount - discount;
                         int tax = (int) Math.round(topPayAmount * (response.body().getTaxPercentage() * 0.01));
                         topPayAmount = topPayAmount + tax;
                         topPayAmount = topPayAmount + response.body().getDeliveryCharges();

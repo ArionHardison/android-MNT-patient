@@ -86,6 +86,7 @@
                 android:layout_margin="@dimen/activity_vertical_margin"
                 android:background="#eee"
                 android:gravity="start"
+                android:inputType="textCapCharacters"
                 android:hint="@string/write_something"
                 android:padding="@dimen/activity_vertical_margin_half"
                 android:textSize="@dimen/text_small" />
