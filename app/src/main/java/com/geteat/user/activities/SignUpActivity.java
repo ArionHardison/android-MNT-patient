@@ -313,7 +313,7 @@ public class SignUpActivity extends AppCompatActivity {
                         else
                             Toast.makeText(context, "Invalid", Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -452,7 +452,7 @@ public class SignUpActivity extends AppCompatActivity {
                         else
                             Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
                     }
                 }
 
@@ -496,7 +496,7 @@ public class SignUpActivity extends AppCompatActivity {
                         JSONObject jObjError = new JSONObject(response.errorBody().toString());
                         Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
                     }
                 }
 

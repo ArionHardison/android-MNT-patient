@@ -19,9 +19,17 @@ import com.facebook.stetho.Stetho;
 
 public class MyApplication extends Application {
 
+    private static Context context;
+
+    public static Object getContext() {
+        return MyApplication.context;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        MyApplication.context = getApplicationContext();
+
         Fabric.with(this, new Crashlytics());
         Stetho.initializeWithDefaults(this);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()

@@ -417,7 +417,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
                         signOut();
                     } catch (Exception e) {
-                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
                     }
                 }
             }

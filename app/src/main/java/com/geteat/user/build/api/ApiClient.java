@@ -1,7 +1,9 @@
 package com.geteat.user.build.api;
 
+import android.content.Context;
 import android.util.Log;
 
+import com.geteat.user.MyApplication;
 import com.geteat.user.build.configure.BuildConfigure;
 import com.geteat.user.helper.GlobalData;
 
@@ -16,6 +18,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.geteat.user.helper.SharedHelper;
 
 
 /**
@@ -59,8 +62,9 @@ public class ApiClient {
         public Response intercept(Chain chain) throws IOException {
             Request.Builder builder = chain.request().newBuilder();
             builder.addHeader("X-Requested-With", "XMLHttpRequest");
-            builder.addHeader("Authorization", "" + GlobalData.accessToken);
-            Log.e("access_token", GlobalData.accessToken);
+            builder.addHeader("Authorization", "" + SharedHelper.getKey((Context) MyApplication.getContext(),"access_token"));
+
+            Log.e("access_token", SharedHelper.getKey((Context) MyApplication.getContext(),"access_token"));
 
             return chain.proceed(builder.build());
         }

@@ -14,6 +14,10 @@ import android.util.Log;
 
 import com.geteat.user.HomeActivity;
 import com.geteat.user.R;
+import com.geteat.user.activities.CurrentOrderDetailActivity;
+import com.geteat.user.activities.OrdersActivity;
+import com.geteat.user.helper.GlobalData;
+import com.geteat.user.helper.SharedHelper;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -37,7 +41,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private void sendNotification(String messageBody) {
         Log.d(TAG, "messageBody " + messageBody);
-        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+        GlobalData.access_token = SharedHelper.getKey(getApplicationContext(),"access_token");
+        Intent intent = new Intent(getApplicationContext(), OrdersActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("Notification", messageBody);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
