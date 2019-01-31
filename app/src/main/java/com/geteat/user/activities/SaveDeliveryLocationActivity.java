@@ -2,7 +2,9 @@ package com.geteat.user.activities;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -572,11 +574,11 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    private void saveAddress() {
+    private void saveAddress(String update) {
         if (address != null && address.getMapAddress() != null && validate()) {
             customDialog.show();
             apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
-            Call<com.geteat.user.models.Address> call = apiInterface.saveAddress(address);
+            Call<com.geteat.user.models.Address> call = apiInterface.saveAddress(address, update);
             call.enqueue(new Callback<com.geteat.user.models.Address>() {
                 @Override
                 public void onResponse(@NonNull Call<com.geteat.user.models.Address> call, @NonNull Response<com.geteat.user.models.Address> response) {
@@ -596,7 +598,10 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                         }
                     } else {
                         APIError error = ErrorUtils.parseError(response);
-                        Toast.makeText(SaveDeliveryLocationActivity.this, error.getType().get(0), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(SaveDeliveryLocationActivity.this, error.getType().get(0), Toast.LENGTH_SHORT).show();
+                        if (error.getType().get(0).equalsIgnoreCase("replace"))
+                            showUpdateAddressAlert();
+
                     }
                 }
 
@@ -608,6 +613,30 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                 }
             });
         }
+    }
+
+    private void showUpdateAddressAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Update Address");
+        builder.setMessage("Are you sure want to update your saved address?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                saveAddress("YES");
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
     }
 
     private void updateAddress() {
@@ -711,7 +740,7 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                     if (address.getId() != null)
                         updateAddress();
                     else
-                        saveAddress();
+                        saveAddress("NO");
                 }
                 break;
             case R.id.skip_txt:

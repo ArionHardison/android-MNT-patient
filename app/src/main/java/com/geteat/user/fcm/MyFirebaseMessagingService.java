@@ -16,15 +16,23 @@ import com.geteat.user.HomeActivity;
 import com.geteat.user.R;
 import com.geteat.user.activities.CurrentOrderDetailActivity;
 import com.geteat.user.activities.OrdersActivity;
+import com.geteat.user.activities.SplashActivity;
 import com.geteat.user.helper.GlobalData;
 import com.geteat.user.helper.SharedHelper;
+import com.geteat.user.models.NotificationData;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
+
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMsgService";
+    NotificationData customdata;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -32,6 +40,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData() != null) {
             Log.d(TAG, "From: " + remoteMessage.getFrom());
             Log.d(TAG, "Notification Message Body: " + remoteMessage.getData());
+            Log.d(TAG, "CustomData" + remoteMessage.getData().get("custom"));
+            customdata = new Gson().fromJson(remoteMessage.getData().get("custom"), NotificationData.class);
+            Log.d(TAG, "onMessageReceived: " + customdata.getCustomData().get(0).getOrderId());
+
             //Calling method to generate notification
             sendNotification(remoteMessage.getData().get("message"));
         } else {
@@ -41,8 +53,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private void sendNotification(String messageBody) {
         Log.d(TAG, "messageBody " + messageBody);
-        GlobalData.access_token = SharedHelper.getKey(getApplicationContext(),"access_token");
-        Intent intent = new Intent(getApplicationContext(), OrdersActivity.class);
+        GlobalData.access_token = SharedHelper.getKey(getApplicationContext(), "access_token");
+        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+
+        if (customdata != null && customdata.getCustomData().get(0).getOrderId() != null) {
+
+            GlobalData.ORDER_STATUS = Arrays.asList("ORDERED", "RECEIVED", "ASSIGNED", "PROCESSING", "REACHED", "PICKEDUP", "ARRIVED", "COMPLETED");
+            intent.putExtra("customdata", (Serializable) customdata);
+            intent.putExtra("order_staus", "ongoing");
+
+        } else {
+            intent.putExtra("order_staus", "dispute");
+
+
+        }
+
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("Notification", messageBody);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,

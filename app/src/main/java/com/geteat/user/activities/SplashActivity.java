@@ -74,6 +74,7 @@ public class SplashActivity extends AppCompatActivity {
                     if (connectionHelper.isConnectingToInternet()) getProfile();
                     else displayMessage(getString(R.string.oops_connect_your_internet));
                 } else {
+
                     startActivity(new Intent(SplashActivity.this, WelcomeScreenActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     finish();
                 }
@@ -144,8 +145,8 @@ public class SplashActivity extends AppCompatActivity {
                     GlobalData.addressList.setAddresses(response.body().getAddresses());
                     if (addCart.getProductList() != null && addCart.getProductList().size() != 0)
                         GlobalData.addCartShopId = addCart.getProductList().get(0).getProduct().getShopId();
-                    startActivity(new Intent(context, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                    finish();
+                    checkActivty();
+
                 } else {
                     if (response.code() == 401) {
                         SharedHelper.putKey(context, "logged", "false");
@@ -171,6 +172,25 @@ public class SplashActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void checkActivty() {
+
+        if (getIntent().getSerializableExtra("customdata") != null &&
+                getIntent().getStringExtra("order_staus").equalsIgnoreCase("ongoing")) {
+
+            startActivity(new Intent(SplashActivity.this, CurrentOrderDetailActivity.class)
+                    .putExtra("customdata", getIntent().getSerializableExtra("customdata")));
+            finish();
+        } else if (getIntent().getStringExtra("order_staus") != null && getIntent().getStringExtra("order_staus").equalsIgnoreCase("dispute")) {
+            startActivity(new Intent(SplashActivity.this, OrdersActivity.class)
+                    .putExtra("customdata", getIntent().getSerializableExtra("customdata")));
+            finish();
+        } else {
+            startActivity(new Intent(context, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            finish();
+        }
+
     }
 
     public void displayMessage(String toastString) {

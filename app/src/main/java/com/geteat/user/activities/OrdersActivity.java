@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.geteat.user.HomeActivity;
 import com.geteat.user.R;
 import com.geteat.user.adapter.OrdersAdapter;
 import com.geteat.user.build.api.ApiClient;
@@ -137,7 +138,7 @@ public class OrdersActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     onGoingOrderList.clear();
                     modelListReference.clear();
-                    onGoingOrderList=response.body();
+                    onGoingOrderList = response.body();
                     modelList.clear();
                     OrderModel model = new OrderModel();
                     model.setHeader("Current Orders");
@@ -189,8 +190,10 @@ public class OrdersActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        startActivity(new Intent(OrdersActivity.this, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         overridePendingTransition(R.anim.anim_nothing, R.anim.slide_out_right);
+        finish();
+
     }
 
     @Override

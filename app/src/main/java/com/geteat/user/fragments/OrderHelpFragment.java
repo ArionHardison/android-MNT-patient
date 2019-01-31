@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +32,14 @@ import com.geteat.user.build.api.ApiClient;
 import com.geteat.user.build.api.ApiInterface;
 import com.geteat.user.helper.CustomDialog;
 import com.geteat.user.helper.GlobalData;
+import com.geteat.user.models.DisputeMessage;
 import com.geteat.user.models.Order;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -97,7 +101,14 @@ public class OrderHelpFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         customDialog = new CustomDialog(context);
 
-        if(disputeMessageList!=null){
+        getDisputeMessage();
+
+
+        return view;
+    }
+
+    private void updateDiputeLayout() {
+        if (disputeMessageList != null) {
             helpRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
             helpRv.setItemAnimator(new DefaultItemAnimator());
             helpRv.setHasFixedSize(true);
@@ -108,14 +119,10 @@ public class OrderHelpFragment extends Fragment {
             } else {
                 otherHelpLayout.setVisibility(View.VISIBLE);
             }
-        }else {
+        } else {
             startActivity(new Intent(context, SplashActivity.class));
             getActivity().finish();
         }
-
-
-
-        return view;
     }
 
 
@@ -202,7 +209,7 @@ public class OrderHelpFragment extends Fragment {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        Toast.makeText(context,R.string.something_went_wrong, Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -213,6 +220,41 @@ public class OrderHelpFragment extends Fragment {
                 Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+
+    private void getDisputeMessage() {
+        Call<List<DisputeMessage>> call = apiInterface.getDisputeList();
+        call.enqueue(new Callback<List<DisputeMessage>>() {
+            @Override
+            public void onResponse(Call<List<DisputeMessage>> call, Response<List<DisputeMessage>> response) {
+                if (response.isSuccessful()) {
+                    Log.e("Dispute List : ", response.toString());
+                    disputeMessageList = new ArrayList<>();
+                    disputeMessageList.addAll(response.body());
+                    updateDiputeLayout();
+
+                } else {
+                    updateDiputeLayout();
+
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().toString());
+                        Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<DisputeMessage>> call, Throwable t) {
+                updateDiputeLayout();
+                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
 
     }
 

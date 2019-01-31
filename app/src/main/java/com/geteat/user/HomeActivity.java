@@ -245,11 +245,11 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
                 return true;
             }
         });
-        if (profileModel != null)
-            getDisputeMessage();
+//        if (profileModel != null)
+//            getDisputeMessage();
     }
 
-    private void getDisputeMessage() {
+/*    private void getDisputeMessage() {
         Call<List<DisputeMessage>> call = apiInterface.getDisputeList();
         call.enqueue(new Callback<List<DisputeMessage>>() {
             @Override
@@ -276,7 +276,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
         });
 
 
-    }
+    }*/
 
     /**
      * Method to display the location on UI

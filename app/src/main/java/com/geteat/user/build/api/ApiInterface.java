@@ -131,7 +131,7 @@ public interface ApiInterface {
     Call<List<Address>> getAddresses();
 
     @POST("api/user/address")
-    Call<Address> saveAddress(@Body Address address);
+    Call<Address> saveAddress(@Body Address address,@Query("update") String update);
 
     @PATCH("api/user/address/{id}")
     Call<Address> updateAddress(@Path("id") int id, @Body Address address);
