@@ -154,7 +154,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 
         // You can limit the displayed countries
-        List<Country> countryList=Country.getAllCountries();
+        List<Country> countryList = Country.getAllCountries();
         Collections.sort(countryList, new Comparator<Country>() {
             @Override
             public int compare(Country s1, Country s2) {
@@ -168,7 +168,7 @@ public class SignUpActivity extends AppCompatActivity {
         LoginManager.getInstance().logOut();
 
 
-           /*----------------Face Integration---------------*/
+        /*----------------Face Integration---------------*/
         try {
             @SuppressLint("PackageManagerGetSignatures") PackageInfo info = getPackageManager().getPackageInfo(
                     "com.foodie.user",
@@ -191,7 +191,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onSelectCountry(String name, String code, String dialCode,
                                         int flagDrawableResID) {
                 countryNumber.setText(dialCode);
-                country_code=dialCode;
+                country_code = dialCode;
                 countryImage.setImageResource(flagDrawableResID);
                 mCountryPicker.dismiss();
             }
@@ -293,7 +293,8 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<RegisterModel> call, @NonNull Response<RegisterModel> response) {
                 if (response.body() != null) {
-                    HashMap<String, String> map = new HashMap<>();
+                    HashMap<String, String> map = new HashMap<>()
+                            ;
                     map.put("username", GlobalData.mobile);
                     map.put("password", password);
                     map.put("grant_type", GRANT_TYPE);
@@ -522,16 +523,16 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private boolean isValidMobile(String phone) {
-        boolean check=false;
-        if(!Pattern.matches("[a-zA-Z]+", phone)) {
-            if(phone.length() < 6 || phone.length() > 13) {
-                // if(phone.length() != 10) {
+        boolean check = false;
+        if (!Pattern.matches("[a-zA-Z]+", phone)) {
+//            if( phone.length() > 10) {
+            if (phone.length() != 10) {
                 check = false;
             } else {
                 check = true;
             }
         } else {
-            check=false;
+            check = false;
         }
         return check;
     }
