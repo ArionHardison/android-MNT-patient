@@ -73,6 +73,7 @@
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:maxLines="1"
+                android:maxLength="10"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:textSize="@dimen/text_normal" />

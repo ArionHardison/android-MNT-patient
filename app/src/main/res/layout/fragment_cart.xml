@@ -191,7 +191,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/activity_vertical_margin"
                         android:orientation="horizontal"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -232,6 +232,27 @@
                             android:text="- $30"
                             android:textColor="@color/colorSecondaryText" />
                     </LinearLayout>
+<!--
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:orientation="horizontal"
+                        android:background="ba">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Apply Coupon"
+                            android:textSize="@dimen/_14sdp"
+                            android:drawableLeft="@drawable/ic_coupon_voucher"
+                            android:drawablePadding="@dimen/_8sdp"
+                            android:textColor="@color/colorTextBlack" />
+
+
+                    </LinearLayout>
+-->
 
 
                     <View

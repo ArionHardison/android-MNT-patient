@@ -21,6 +21,89 @@ public class AddCart {
     @Expose
     private List<Cart> products = new ArrayList<>();
 
+
+
+    @SerializedName("total_price")
+    @Expose
+    private Double totalPrice;
+
+    public Integer getShopDiscount() {
+        return shopDiscount;
+    }
+
+    public void setShopDiscount(Integer shopDiscount) {
+        this.shopDiscount = shopDiscount;
+    }
+
+    @SerializedName("shop_discount")
+    @Expose
+    private Integer shopDiscount;
+    @SerializedName("tax")
+    @Expose
+    private Double tax;
+    @SerializedName("promocode_amount")
+    @Expose
+    private Double promocodeAmount;
+    @SerializedName("net")
+    @Expose
+    private Double net;
+    @SerializedName("wallet_balance")
+    @Expose
+    private Integer walletBalance;
+    @SerializedName("payable")
+    @Expose
+    private Double payable;
+
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public Double getTax() {
+        return tax;
+    }
+
+    public void setTax(Double tax) {
+        this.tax = tax;
+    }
+
+    public Double getPromocodeAmount() {
+        return promocodeAmount;
+    }
+
+    public void setPromocodeAmount(Double promocodeAmount) {
+        this.promocodeAmount = promocodeAmount;
+    }
+
+    public Double getNet() {
+        return net;
+    }
+
+    public void setNet(Double net) {
+        this.net = net;
+    }
+
+    public Integer getWalletBalance() {
+        return walletBalance;
+    }
+
+    public void setWalletBalance(Integer walletBalance) {
+        this.walletBalance = walletBalance;
+    }
+
+    public Double getPayable() {
+        return payable;
+    }
+
+    public void setPayable(Double payable) {
+        this.payable = payable;
+    }
+
+
     public Integer getDeliveryCharges() {
         return deliveryCharges;
     }

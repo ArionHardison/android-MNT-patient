@@ -108,6 +108,7 @@
                 android:background="@drawable/edt_bg_selector"
                 android:inputType="phone"
                 android:enabled="false"
+                android:maxLength="10"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/text_medium" />
 

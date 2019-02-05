@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -18,8 +19,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -27,17 +26,16 @@ import android.widget.Toast;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
+import com.facebook.FacebookSdk;
 import com.geteat.user.build.api.ApiClient;
 import com.geteat.user.build.api.ApiInterface;
 import com.geteat.user.fragments.CartFragment;
 import com.geteat.user.fragments.HomeFragment;
 import com.geteat.user.fragments.ProfileFragment;
 import com.geteat.user.fragments.SearchFragment;
-import com.geteat.user.helper.GlobalData;
 import com.geteat.user.helper.ConnectionHelper;
+import com.geteat.user.helper.GlobalData;
 import com.geteat.user.helper.SharedHelper;
-import com.geteat.user.models.DisputeMessage;
-import com.facebook.FacebookSdk;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -58,8 +56,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -69,7 +65,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-import static com.geteat.user.helper.GlobalData.disputeMessageList;
 import static com.geteat.user.helper.GlobalData.notificationCount;
 import static com.geteat.user.helper.GlobalData.profileModel;
 
@@ -104,7 +99,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
     private static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE = 0;
 
     FusedLocationProviderClient mFusedLocationClient;
-    boolean isChangePassword=false;
+    boolean isChangePassword = false;
     Retrofit retrofit;
     FragmentTransaction transaction;
 
@@ -209,13 +204,11 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
 
 
         // Set current item programmatically
-        if(isChangePassword){
+        if (isChangePassword) {
             fragment = new ProfileFragment();
             transaction.add(R.id.main_container, fragment).commit();
             bottomNavigation.setCurrentItem(3);
-        }
-        else
-        {
+        } else {
             fragment = new HomeFragment();
             transaction.add(R.id.main_container, fragment).commit();
             bottomNavigation.setCurrentItem(0);
@@ -284,7 +277,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
 
     private void getLocation() {
         try {
-                mLastLocation = LocationServices.FusedLocationApi
+            mLastLocation = LocationServices.FusedLocationApi
                     .getLastLocation(mGoogleApiClient);
         } catch (SecurityException e) {
             e.printStackTrace();
@@ -316,19 +309,19 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
 
     }
 
-    public void getAddress(){
-         retrofit = new Retrofit.Builder()
+    public void getAddress() {
+        retrofit = new Retrofit.Builder()
                 .baseUrl("https://maps.googleapis.com/maps/api/geocode/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-         apiInterface=retrofit.create(ApiInterface.class);
-        Call<ResponseBody> call = apiInterface.getResponse(latitude+","+longitude,
+        apiInterface = retrofit.create(ApiInterface.class);
+        Call<ResponseBody> call = apiInterface.getResponse(latitude + "," + longitude,
                 context.getResources().getString(R.string.google_api_key));
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.e("sUCESS","SUCESS"+response.body());
-                if (response.body() != null){
+                Log.e("sUCESS", "SUCESS" + response.body());
+                if (response.body() != null) {
                     //BroadCast Listner
                     Intent intent = new Intent("location");
                     // You can also include some extra data.
@@ -337,7 +330,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
 
                     try {
                         String bodyString = new String(response.body().bytes());
-                        Log.e("sUCESS","bodyString"+bodyString);
+                        Log.e("sUCESS", "bodyString" + bodyString);
                         JSONObject jsonObj = null;
                         try {
                             jsonObj = new JSONObject(bodyString);
@@ -345,17 +338,17 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
                             e.printStackTrace();
                         }
                         JSONArray jsonArray = jsonObj.optJSONArray("results");
-                        if (jsonArray.length() > 0){
-                            if(GlobalData.addressHeader.equalsIgnoreCase("")){
+                        if (jsonArray.length() > 0) {
+                            if (GlobalData.addressHeader.equalsIgnoreCase("")) {
                                 GlobalData.addressHeader = jsonArray.optJSONObject(0).optString("formatted_address");
                                 GlobalData.address = jsonArray.optJSONObject(0).optString("formatted_address");
-                                Log.v("Formatted Address", ""+ GlobalData.addressHeader );
+                                Log.v("Formatted Address", "" + GlobalData.addressHeader);
                             }
 
-                        }else{
-                            if(GlobalData.addressHeader.equalsIgnoreCase("")){
-                                GlobalData.addressHeader=""+latitude+""+longitude;
-                                GlobalData.address=""+latitude+""+longitude;
+                        } else {
+                            if (GlobalData.addressHeader.equalsIgnoreCase("")) {
+                                GlobalData.addressHeader = "" + latitude + "" + longitude;
+                                GlobalData.address = "" + latitude + "" + longitude;
                             }
 
                         }
@@ -363,15 +356,15 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
                         e.printStackTrace();
 
                     }
-                }else{
-                    GlobalData.addressHeader=""+latitude+""+longitude;
-                    GlobalData.address=""+latitude+""+longitude;
+                } else {
+                    GlobalData.addressHeader = "" + latitude + "" + longitude;
+                    GlobalData.address = "" + latitude + "" + longitude;
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("onFailure","onFailure"+call.request().url());
+                Log.e("onFailure", "onFailure" + call.request().url());
 
             }
         });
@@ -574,7 +567,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
         if (itemCount == 0) {
             notification = null;
             if (bottomNavigation != null)
-            bottomNavigation.setNotification(notification, 2);
+                bottomNavigation.setNotification(notification, 2);
         } else if (bottomNavigation != null) {
             bottomNavigation.setNotificationBackgroundColor(ContextCompat.getColor(context, R.color.theme));
             bottomNavigation.setNotification(String.valueOf(itemCount), 2);

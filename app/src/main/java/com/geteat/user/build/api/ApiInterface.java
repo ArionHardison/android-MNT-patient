@@ -8,6 +8,7 @@ import com.geteat.user.models.AddCart;
 import com.geteat.user.models.AddMoney;
 import com.geteat.user.models.Address;
 import com.geteat.user.models.Card;
+import com.geteat.user.models.Cart;
 import com.geteat.user.models.Message;
 import com.geteat.user.models.ChangePassword;
 import com.geteat.user.models.ClearCart;
@@ -197,6 +198,10 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("api/user/wallet/promocode")
     Call<PromotionResponse> applyWalletPromoCode(@Field("promocode_id") String id);
+
+
+    @GET("api/user/apply/promocode")
+    Call<AddCart> applyPromocode(@Query("promocode_id") String param1);
 
 
     @GET("json?")

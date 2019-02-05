@@ -20,6 +20,8 @@ import com.geteat.user.build.api.ApiClient;
 import com.geteat.user.build.api.ApiInterface;
 import com.geteat.user.helper.CustomDialog;
 import com.geteat.user.helper.GlobalData;
+import com.geteat.user.models.AddCart;
+import com.geteat.user.models.Cart;
 import com.geteat.user.models.PromotionResponse;
 import com.geteat.user.models.Promotions;
 
@@ -30,6 +32,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -80,6 +83,7 @@ public class PromotionActivity extends AppCompatActivity implements PromotionsAd
 
     private void getPromoDetails() {
         customDialog.show();
+
         Call<List<Promotions>> call = apiInterface.getWalletPromoCode();
         call.enqueue(new Callback<List<Promotions>>() {
             @Override
@@ -134,17 +138,19 @@ public class PromotionActivity extends AppCompatActivity implements PromotionsAd
 
 
     @Override
-    public void onApplyBtnClick(Promotions promotions) {
+    public void onApplyBtnClick(final Promotions promotions) {
         customDialog.show();
-        Call<PromotionResponse> call = apiInterface.applyWalletPromoCode(String.valueOf(promotions.getId()));
-        call.enqueue(new Callback<PromotionResponse>() {
+        Call<AddCart> call = apiInterface.applyPromocode(String.valueOf(promotions.getId()));
+        call.enqueue(new Callback<AddCart>() {
             @Override
-            public void onResponse(@NonNull Call<PromotionResponse> call, @NonNull Response<PromotionResponse> response) {
+            public void onResponse(@NonNull Call<AddCart> call, @NonNull Response<AddCart> response) {
                 customDialog.dismiss();
                 if (response.isSuccessful()) {
                     Toast.makeText(PromotionActivity.this, getResources().getString(R.string.promo_code_apply_successfully), Toast.LENGTH_SHORT).show();
-                    GlobalData.profileModel.setWalletBalance(response.body().getWalletMoney());
-                    gotoFlow();
+//                    GlobalData.profileModel.setWalletBalance(response.body().getWalletMoney());
+                    GlobalData.addCart = null;
+                    GlobalData.addCart = response.body();
+                    gotoFlow(String.valueOf(promotions.getId()));
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
@@ -156,15 +162,20 @@ public class PromotionActivity extends AppCompatActivity implements PromotionsAd
             }
 
             @Override
-            public void onFailure(@NonNull Call<PromotionResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<AddCart> call, @NonNull Throwable t) {
                 customDialog.dismiss();
             }
         });
     }
 
-    private void gotoFlow() {
-        startActivity(new Intent(this, AccountPaymentActivity.class).putExtra("is_show_wallet", true).putExtra("is_show_cash", false));
+    private void gotoFlow(String walletMoney) {
+      /*  startActivity(new Intent(this, AccountPaymentActivity.class).putExtra("is_show_wallet", true).putExtra("is_show_cash", false));
         overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
+        finish();*/
+
+        Intent intent = new Intent();
+        intent.putExtra("promotion", walletMoney);
+        setResult(201, intent);
         finish();
     }
 

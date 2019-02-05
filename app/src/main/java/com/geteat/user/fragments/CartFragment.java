@@ -34,6 +34,7 @@ import com.ethanhua.skeleton.ViewSkeletonScreen;
 import com.geteat.user.HomeActivity;
 import com.geteat.user.R;
 import com.geteat.user.activities.AccountPaymentActivity;
+import com.geteat.user.activities.PromotionActivity;
 import com.geteat.user.activities.SaveDeliveryLocationActivity;
 import com.geteat.user.activities.SetDeliveryLocationActivity;
 import com.geteat.user.adapter.ViewCartAdapter;
@@ -48,6 +49,7 @@ import com.geteat.user.utils.Utils;
 import com.robinhood.ticker.TickerUtils;
 
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,6 +69,7 @@ import static com.geteat.user.adapter.ViewCartAdapter.bottomSheetDialogFragment;
  */
 public class CartFragment extends Fragment {
 
+    private static final int PROMOCODE_APPLY = 201;
     @BindView(R.id.re)
     RelativeLayout re;
     @BindView(R.id.order_item_rv)
@@ -94,6 +97,8 @@ public class CartFragment extends Fragment {
     TextView addressDeliveryTime;
     @BindView(R.id.add_address_txt)
     TextView addAddressTxt;
+    @BindView(R.id.promo_code_apply)
+    TextView promoCodeApply;
     @BindView(R.id.bottom_layout)
     LinearLayout bottomLayout;
     public static RelativeLayout dataLayout;
@@ -129,12 +134,12 @@ public class CartFragment extends Fragment {
     //Animation number
     private static final char[] NUMBER_LIST = TickerUtils.getDefaultNumberList();
 
-    public static TextView itemTotalAmount, deliveryCharges, promoCodeApply, discountAmount, serviceTax, payAmount;
+    public static TextView itemTotalAmount, deliveryCharges, discountAmount, serviceTax, payAmount;
 
     Fragment orderFullViewFragment;
     FragmentManager fragmentManager;
     //Orderitem List
-    public  static List<Cart> viewCartItemList;
+    public static List<Cart> viewCartItemList;
 
     double priceAmount = 0;
     int discount = 0;
@@ -145,13 +150,13 @@ public class CartFragment extends Fragment {
     int ADDRESS_SELECTION = 1;
 
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
-    public  static ViewCartAdapter viewCartAdapter;
+    public static ViewCartAdapter viewCartAdapter;
     CustomDialog customDialog;
     ViewSkeletonScreen skeleton;
     ConnectionHelper connectionHelper;
     Activity activity;
 
-    public static HashMap<String,String> checkoutMap;
+    public static HashMap<String, String> checkoutMap;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -166,15 +171,18 @@ public class CartFragment extends Fragment {
         ButterKnife.bind(this, view);
         connectionHelper = new ConnectionHelper(context);
 
-      /*  Intialize Global Values*/
+
+
+        /*  Intialize Global Values*/
         itemTotalAmount = (TextView) view.findViewById(R.id.item_total_amount);
         deliveryCharges = (TextView) view.findViewById(R.id.delivery_charges);
-        promoCodeApply = (TextView) view.findViewById(R.id.promo_code_apply);
         discountAmount = (TextView) view.findViewById(R.id.discount_amount);
         serviceTax = (TextView) view.findViewById(R.id.service_tax);
         payAmount = (TextView) view.findViewById(R.id.total_amount);
         dataLayout = (RelativeLayout) view.findViewById(R.id.data_layout);
         errorLayout = (RelativeLayout) view.findViewById(R.id.error_layout);
+
+        GlobalData.addCart = null;
 
         HomeActivity.updateNotificationCount(context, 0);
         customDialog = new CustomDialog(context);
@@ -239,14 +247,14 @@ public class CartFragment extends Fragment {
                     customDialog.dismiss();
                     //get Item Count
                     itemCount = response.body().getProductList().size();
-                    GlobalData.getInstance().notificationCount=response.body().getProductList().size();
+                    GlobalData.getInstance().notificationCount = response.body().getProductList().size();
                     if (itemCount == 0) {
                         errorLayout.setVisibility(View.VISIBLE);
                         dataLayout.setVisibility(View.GONE);
-                        GlobalData.addCart=response.body();
-                        GlobalData.addCart=null;
+                        GlobalData.addCart = response.body();
+                        GlobalData.addCart = null;
                     } else {
-                        AddCart addCart=response.body();
+                        AddCart addCart = response.body();
                         errorLayout.setVisibility(View.GONE);
                         dataLayout.setVisibility(View.VISIBLE);
                         for (int i = 0; i < itemCount; i++) {
@@ -263,12 +271,12 @@ public class CartFragment extends Fragment {
                                 }
                             }
                         }
-                        GlobalData.notificationCount=itemQuantity;
+                        GlobalData.notificationCount = itemQuantity;
                         GlobalData.getInstance().addCartShopId = response.body().getProductList().get(0).getProduct().getShopId();
                         //Set Payment details
                         String currency = response.body().getProductList().get(0).getProduct().getPrices().getCurrency();
                         itemTotalAmount.setText(currency + "" + priceAmount);
-                        if(response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount()!=null){
+                        if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() != null) {
                             if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() < priceAmount) {
                                 int offerPercentage = response.body().getProductList().get(0).getProduct().getShop().getOfferPercent();
                                 discount = (int) (priceAmount * (offerPercentage * 0.01));
@@ -277,9 +285,9 @@ public class CartFragment extends Fragment {
                         discountAmount.setText("- " + currency + "" + discount);
                         double topPayAmount = priceAmount - discount;
                         int tax = (int) Math.round(topPayAmount * (response.body().getTaxPercentage() * 0.01));
-                        serviceTax.setText(currency +String.valueOf(tax));
+                        serviceTax.setText(currency + String.valueOf(tax));
                         topPayAmount = topPayAmount + response.body().getDeliveryCharges() + tax;
-                        payAmount.setText(currency + "" + topPayAmount);
+                        payAmount.setText(currency + "" + response.body().getPayable());
                         //Set Restaurant Details
                         restaurantName.setText(response.body().getProductList().get(0).getProduct().getShop().getName());
                         restaurantDescription.setText(response.body().getProductList().get(0).getProduct().getShop().getDescription());
@@ -295,7 +303,7 @@ public class CartFragment extends Fragment {
                         deliveryCharges.setText(response.body().getProductList().get(0).getProduct().getPrices().getCurrency()
                                 + "" + response.body().getDeliveryCharges().toString());
                         viewCartItemList.clear();
-                        viewCartItemList=response.body().getProductList();
+                        viewCartItemList = response.body().getProductList();
                         viewCartAdapter = new ViewCartAdapter(viewCartItemList, context);
                         orderItemRv.setAdapter(viewCartAdapter);
                     }
@@ -325,25 +333,37 @@ public class CartFragment extends Fragment {
             errorLayout.setVisibility(View.GONE);
             skeleton.show();
             errorLayoutDescription.setText(getResources().getString(R.string.cart_error_description));
-            if (connectionHelper.isConnectingToInternet()) {
+            if (connectionHelper.isConnectingToInternet() && GlobalData.addCart == null) {
                 getViewCart();
+            } else if (GlobalData.addCart != null) {
+                String currency = GlobalData.addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
+
+                itemTotalAmount.setText(currency + " " + GlobalData.addCart.getTotalPrice().toString());
+                deliveryCharges.setText(currency + " " + GlobalData.addCart.getDeliveryCharges().toString());
+                discountAmount.setText("- " + currency + "" + GlobalData.addCart.getShopDiscount());
+                serviceTax.setText(currency + " " + GlobalData.addCart.getTax() + "");
+                payAmount.setText(currency + " " + GlobalData.addCart.getPayable().toString());
+                dataLayout.setVisibility(View.VISIBLE);
+                errorLayout.setVisibility(View.GONE);
+                skeleton.hide();
+
+
             } else {
                 Utils.displayMessage(activity, context, getString(R.string.oops_connect_your_internet));
             }
             if (money > 0) {
 //                amountTxt.setText(numberFormat.format(money));
-                amountTxt.setText(GlobalData.currencySymbol+" "+money);
+                amountTxt.setText(GlobalData.currencySymbol + " " + money);
                 walletLayout.setVisibility(View.VISIBLE);
             } else {
                 walletLayout.setVisibility(View.INVISIBLE);
             }
-        }
-        else {
+        } else {
             dataLayout.setVisibility(View.GONE);
             errorLayout.setVisibility(View.VISIBLE);
             errorLayoutDescription.setText(getResources().getString(R.string.please_login_and_order_dishes));
         }
-        if(bottomSheetDialogFragment!=null)
+        if (bottomSheetDialogFragment != null)
             bottomSheetDialogFragment.dismiss();
 
     }
@@ -400,7 +420,7 @@ public class CartFragment extends Fragment {
     }
 
 
-    @OnClick({R.id.add_address_txt, R.id.add_address_btn, R.id.selected_address_btn, R.id.proceed_to_pay_btn})
+    @OnClick({R.id.add_address_txt, R.id.add_address_btn, R.id.selected_address_btn, R.id.proceed_to_pay_btn, R.id.promo_code_apply})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.add_address_txt:
@@ -427,27 +447,33 @@ public class CartFragment extends Fragment {
 
                 break;
 
+
             case R.id.proceed_to_pay_btn:
                 /**  If address is filled */
                 if (connectionHelper.isConnectingToInternet()) {
 //                    checkOut(GlobalData.getInstance().selectedAddress.getId());
-                    checkoutMap= new HashMap<>();
-                    checkoutMap.put("user_address_id",""+GlobalData.getInstance().selectedAddress.getId());
-                    checkoutMap.put("note",""+customNotes.getText());
-                    if(useWalletChkBox.isChecked())
-                        checkoutMap.put("wallet","1");
+                    checkoutMap = new HashMap<>();
+                    checkoutMap.put("user_address_id", "" + GlobalData.getInstance().selectedAddress.getId());
+                    checkoutMap.put("note", "" + customNotes.getText());
+                    if (useWalletChkBox.isChecked())
+                        checkoutMap.put("wallet", "1");
                     else
-                        checkoutMap.put("wallet","0");
-                    startActivity(new Intent(context, AccountPaymentActivity.class).putExtra("is_show_wallet",false).putExtra("is_show_cash",true));
+                        checkoutMap.put("wallet", "0");
+                    startActivity(new Intent(context, AccountPaymentActivity.class).putExtra("is_show_wallet", false).putExtra("is_show_cash", true));
                     activity.overridePendingTransition(R.anim.anim_nothing, R.anim.slide_out_right);
                 } else {
                     Utils.displayMessage(activity, context, getString(R.string.oops_connect_your_internet));
                 }
                 break;
 
+            case R.id.promo_code_apply:
+                startActivity(new Intent(activity, PromotionActivity.class).putExtra("tag", "CartFragment"));
+                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
+//                activity.finish();
+                break;
+
         }
     }
-
 
 
     @Override
@@ -475,6 +501,10 @@ public class CartFragment extends Fragment {
         } else if (requestCode == ADDRESS_SELECTION && resultCode == Activity.RESULT_CANCELED) {
             System.out.print("CartFragment : Failure");
 
+        } else if (requestCode == PROMOCODE_APPLY) {
+            if (data != null) {
+//                data.getExtras("promotion");
+            }
         }
     }
 
