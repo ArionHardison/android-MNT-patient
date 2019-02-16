@@ -293,7 +293,7 @@ public class ProfileFragment extends Fragment {
                 LocaleUtils.setLocale(getActivity(), "en");
                 break;
         }
-        startActivity(new Intent(getActivity(), HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).putExtra("change_language", true));
+        startActivity(new Intent(getActivity(), HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK).putExtra("change_language", true));
         getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
     }

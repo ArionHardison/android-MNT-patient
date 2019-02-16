@@ -484,7 +484,7 @@ public class SignUpActivity extends AppCompatActivity {
                     GlobalData.addCart.setProductList(response.body().getCart());
                     GlobalData.addressList = new AddressList();
                     GlobalData.addressList.setAddresses(response.body().getAddresses());
-                    startActivity(new Intent(context, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    startActivity(new Intent(context, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     finish();
                 } else {
                     if (response.code() == 401) {

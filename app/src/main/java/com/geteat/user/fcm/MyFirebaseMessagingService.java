@@ -94,6 +94,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setStyle(inboxStyle)
                 .setWhen(when)
+                .setAutoCancel(true)
                 .setSmallIcon(getNotificationIcon(mBuilder))
                 .setContentText(messageBody)
                 .setChannelId(CHANNEL_ID)

@@ -2,7 +2,7 @@
     <string name="app_name" translatable="false">"GetEat"</string>
 
     <string name="facebook_app_id">1118602991646229</string>
-    <string name="fb_login_protocol_scheme">fb290984818086469</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb1118602991646229</string>
 
     <string name="login">Login</string>
     <string name="logout">Logout</string>

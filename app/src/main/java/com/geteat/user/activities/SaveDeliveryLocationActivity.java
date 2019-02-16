@@ -460,7 +460,7 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                 .build();
         apiInterface = retrofit.create(ApiInterface.class);
         Call<ResponseBody> call = apiInterface.getResponse(latitude + "," + longitude,
-                context.getResources().getString(R.string.google_api_key));
+                context.getResources().getString(R.string.google_maps_key));
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -747,7 +747,7 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                 address.setMapAddress(addressEdit.getText().toString());
                 address.setType(addressHeader);
                 GlobalData.selectedAddress = address;
-                startActivity(new Intent(context, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                startActivity(new Intent(context, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 finish();
                 break;
 

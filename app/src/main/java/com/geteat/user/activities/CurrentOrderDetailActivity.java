@@ -576,7 +576,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                         final int width = getResources().getDisplayMetrics().widthPixels;
                         final int height = getResources().getDisplayMetrics().heightPixels;
                         final int padding = (int) (width * 0.20); // offset from edges of the map in pixels
-                        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
+                        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds,120);
                         mMap.moveCamera(cu);
                         // Adding all the points in the route to LineOptions
                         lineOptions.addAll(points);
@@ -624,7 +624,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
 
         // Building the url to the web service
 
-        return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
+        return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters+"&key="+getString(R.string.google_maps_key);
     }
 
     private void showDialog() {
@@ -699,7 +699,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
         if (isOrderPage) {
             finish();
         } else {
-            startActivity(new Intent(CurrentOrderDetailActivity.this, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            startActivity(new Intent(CurrentOrderDetailActivity.this, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
             overridePendingTransition(R.anim.anim_nothing, R.anim.slide_out_right);
         }
     }
@@ -879,7 +879,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                 } else if (response.isSuccessful()) {
                     Message message = response.body();
                     Toast.makeText(context, message.getMessage(), Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(context, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    startActivity(new Intent(context, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     finish();
                 }
             }

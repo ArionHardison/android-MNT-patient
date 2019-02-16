@@ -118,7 +118,7 @@ public class WelcomeScreenActivity extends AppCompatActivity implements GoogleAp
         skipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(WelcomeScreenActivity.this, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                startActivity(new Intent(WelcomeScreenActivity.this, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                 finish();
 

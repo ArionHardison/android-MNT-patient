@@ -150,7 +150,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 customDialog.dismiss();
                 if (response.isSuccessful()) {
                     Toast.makeText(ResetPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(context, HomeActivity.class));
+                    startActivity(new Intent(context, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                 } else {
                     try {

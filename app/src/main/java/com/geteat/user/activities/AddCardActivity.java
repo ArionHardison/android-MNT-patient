@@ -240,7 +240,7 @@ public class AddCardActivity extends AppCompatActivity {
 
     public void GoToBeginActivity() {
         Intent mainIntent = new Intent(activity, HomeActivity.class);
-        mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainIntent);
         activity.finish();
     }

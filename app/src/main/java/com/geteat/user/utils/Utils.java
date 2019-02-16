@@ -72,7 +72,7 @@ public class Utils {
                 .build();
         apiInterface = retrofit.create(ApiInterface.class);
         Call<ResponseBody> call = apiInterface.getResponse(latitude + "," + longitude,
-                context.getResources().getString(R.string.google_api_key));
+                context.getResources().getString(R.string.google_maps_key));
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

@@ -446,7 +446,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 GlobalData.addCart.setProductList(response.body().getCart());
                 GlobalData.addressList = new AddressList();
                 GlobalData.addressList.setAddresses(response.body().getAddresses());
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                startActivity(new Intent(LoginActivity.this, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 finish();
             }
 
