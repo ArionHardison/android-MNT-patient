@@ -128,6 +128,7 @@
     <string name="use_wallet">Use wallet</string>
     <string name="google_login_failed">Google login failed</string>
     <string name="dispute">Dispute</string>
+    <string name="email_us">Email Us</string>
 
     <!--    Check Internet Conneciton  -->
     <string name="oops_connect_your_internet">Oops ! Connect your Internet.</string>

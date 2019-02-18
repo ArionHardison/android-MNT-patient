@@ -17,6 +17,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -59,6 +60,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     ViewPager productSlider;
     @BindView(R.id.product_slider_dots)
     LinearLayout productSliderDots;
+    @BindView(R.id.custom_notes)
+    EditText custom_notes;
 
     SliderPagerAdapter sliderPagerAdapter;
     List<Image> slider_image_list;
@@ -152,6 +155,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                 } else {
                     final HashMap<String, String> map = new HashMap<>();
                     map.put("product_id", product.getId().toString());
+                    map.put("note", custom_notes.getText().toString());
                     if (product.getCart() != null && product.getCart().size() == 1 && product.getAddons().isEmpty()) {
                         map.put("quantity", String.valueOf(product.getCart().get(0).getQuantity() + 1));
                         map.put("cart_id", String.valueOf(product.getCart().get(0).getId()));

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string-array name="profile_settings">
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string-array name="profile_settings" tools:ignore="InconsistentArrays">
         <item>"Manage Address"</item>
         <item>"Favorites"</item>
-        <item>"Payment"</item>
+        <!--<item>"Payment"</item>-->
         <item>"My Orders"</item>
         <!--<item>"Notifications"</item>-->
         <item>"Promotion Details"</item>

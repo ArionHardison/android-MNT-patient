@@ -147,19 +147,19 @@ public class ProfileFragment extends Fragment {
             case 1:
                 startActivity(new Intent(context, FavouritesActivity.class));
                 break;
-            case 2:
+            /*case 2:
                 startActivity(new Intent(context, AccountPaymentActivity.class).putExtra("is_show_wallet", true).putExtra("is_show_cash", false));
-                break;
-            case 3:
+                break;*/
+            case 2:
                 startActivity(new Intent(context, OrdersActivity.class));
                 break;
-            case 4:
+            case 3:
                 startActivity(new Intent(context, PromotionActivity.class));
                 break;
 //            case 5:
 //                changeLanguage();
 //                break;
-            case 5:
+            case 4:
                 startActivity(new Intent(context, ChangePasswordActivity.class));
                 break;
 //            case 4:
@@ -212,7 +212,7 @@ public class ProfileFragment extends Fragment {
             List<Integer> listIcons = new ArrayList<>();
             listIcons.add(R.drawable.home);
             listIcons.add(R.drawable.heart);
-            listIcons.add(R.drawable.payment);
+            /*listIcons.add(R.drawable.payment);*/
             listIcons.add(R.drawable.ic_myorders);
             listIcons.add(R.drawable.ic_promotion_details);
 //            listIcons.add(R.drawable.ic_translate);

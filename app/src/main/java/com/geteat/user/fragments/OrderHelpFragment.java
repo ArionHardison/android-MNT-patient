@@ -70,6 +70,8 @@ public class OrderHelpFragment extends Fragment {
     Button dispute;
     @BindView(R.id.chat_us)
     Button chatUs;
+    @BindView(R.id.email_us)
+    Button emailUs;
 
 
     Double priceAmount = 0.0;
@@ -259,7 +261,7 @@ public class OrderHelpFragment extends Fragment {
     }
 
 
-    @OnClick({R.id.chat_us, R.id.dispute})
+    @OnClick({R.id.chat_us, R.id.dispute,R.id.email_us})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.chat_us:
@@ -268,6 +270,18 @@ public class OrderHelpFragment extends Fragment {
             case R.id.dispute:
                 showDialog();
                 break;
+            case R.id.email_us:
+                goGmail();
+                break;
         }
+    }
+
+    private void goGmail() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_EMAIL, "");
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name) + "-" + getString(R.string.help));
+        intent.putExtra(Intent.EXTRA_TEXT, "Hello team");
+        startActivity(Intent.createChooser(intent, "Send Email"));
     }
 }

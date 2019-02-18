@@ -80,13 +80,14 @@
 
 
             <EditText
+                android:id="@+id/custom_notes"
                 android:layout_marginBottom="@dimen/_60sdp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_60sdp"
                 android:layout_margin="@dimen/activity_vertical_margin"
                 android:background="#eee"
                 android:gravity="start"
-                android:inputType="textCapCharacters"
+                android:inputType="text"
                 android:hint="@string/write_something"
                 android:padding="@dimen/activity_vertical_margin_half"
                 android:textSize="@dimen/text_small" />

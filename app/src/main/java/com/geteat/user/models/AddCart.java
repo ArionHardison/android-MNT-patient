@@ -27,17 +27,17 @@ public class AddCart {
     @Expose
     private Double totalPrice;
 
-    public Integer getShopDiscount() {
+    public String getShopDiscount() {
         return shopDiscount;
     }
 
-    public void setShopDiscount(Integer shopDiscount) {
+    public void setShopDiscount(String shopDiscount) {
         this.shopDiscount = shopDiscount;
     }
 
     @SerializedName("shop_discount")
     @Expose
-    private Integer shopDiscount;
+    private String shopDiscount;
     @SerializedName("tax")
     @Expose
     private Double tax;

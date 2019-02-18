@@ -91,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="House / Flat No"
-                    android:inputType="textPostalAddress|textCapCharacters"
+                    android:inputType="textPostalAddress"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/text_medium" />
 
@@ -110,7 +110,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Landmark"
                     android:imeOptions="actionDone"
-                    android:inputType="textPostalAddress|textCapCharacters"
+                    android:inputType="textPostalAddress"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/text_medium" />
 
@@ -194,7 +194,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/address_hint"
-                    android:inputType="textCapCharacters"
+                    android:inputType="text"
                     android:textColor="@color/colorPrimaryText" />
 
                 <TextView

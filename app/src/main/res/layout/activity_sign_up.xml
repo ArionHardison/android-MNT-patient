@@ -65,7 +65,7 @@
                 android:drawablePadding="@dimen/_10sdp"
                 android:hint="@string/name"
                 android:imeOptions="actionNext"
-                android:inputType="textPersonName|textCapWords"
+                android:inputType="textPersonName"
                 android:maxLines="1"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
