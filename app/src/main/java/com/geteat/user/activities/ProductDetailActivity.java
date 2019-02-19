@@ -122,7 +122,10 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         }
 
-        productName.setText(product.getName() + "\n" + product.getPrices().getCurrency() + product.getPrices().getPrice());
+        if (product.getName()!=null) {
+            productName.setText(product.getName() + "\n" + product.getPrices().getCurrency() + product.getPrices().getPrice());
+        }
+
         itemText.setText("1 Item | " + product.getPrices().getCurrency() + product.getPrices().getPrice());
         productDescription.setText(product.getDescription());
         slider_image_list = new ArrayList<>();

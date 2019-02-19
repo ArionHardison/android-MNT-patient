@@ -149,9 +149,9 @@ public class SplashActivity extends AppCompatActivity {
 
                 } else {
                     if (response.code() == 401) {
-                        SharedHelper.putKey(context, "logged", "false");
+                        /*SharedHelper.putKey(context, "logged", "false");
                         startActivity(new Intent(context, LoginActivity.class));
-                        finish();
+                        finish();*/
                     }
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().toString());
