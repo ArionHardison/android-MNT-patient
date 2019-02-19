@@ -132,6 +132,8 @@
     <string name="google_login_failed">Google login failed</string>
     <string name="dispute">Dispute</string>
     <string name="email_us">Email Us</string>
+    <string name="canelled">Canelled</string>
+
 
 
     <!--    Check Internet Conneciton  -->

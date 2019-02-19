@@ -95,7 +95,6 @@
                 android:paddingStart="@dimen/_5sdp"
                 android:text="Dispute Created"
                 android:textAllCaps="true"
-                android:textColor="@color/colorRed"
                 android:textSize="@dimen/text_small" />
 
         </LinearLayout>

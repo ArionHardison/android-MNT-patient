@@ -119,6 +119,8 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
     TextView orderOtp;
     @BindView(R.id.order_status_txt)
     TextView orderStatusTxt;
+    @BindView(R.id.order_succeess_image)
+    ImageView order_succeess_image;
     @BindView(R.id.order_status_layout)
     RelativeLayout orderStatusLayout;
     @BindView(R.id.order_id_txt_2)
@@ -726,6 +728,19 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                         previousStatus = isSelectedOrder.getStatus();
                         adapter.notifyDataSetChanged();
                     }
+
+                    if (isSelectedOrder.getStatus().equals("CANCELLED")) {
+                        orderStatusLayout.setVisibility(View.VISIBLE);
+                        orderFlowRv.setVisibility(View.GONE);
+                        orderStatusTxt.setText(getResources().getString(R.string.order_cancelled));
+                        order_succeess_image.setImageResource(R.drawable.order_cancelled_img);
+//                        dotLineImg.setBackgroundResource(R.drawable.order_cancelled_line);
+                        orderStatusTxt.setTextColor(ContextCompat.getColor(context, R.color.colorRed));
+                    }else {
+                        orderStatusLayout.setVisibility(View.GONE);
+                        orderFlowRv.setVisibility(View.VISIBLE);
+                    }
+
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());

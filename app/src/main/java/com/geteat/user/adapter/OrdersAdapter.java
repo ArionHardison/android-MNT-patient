@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -152,11 +153,23 @@ public class OrdersAdapter extends SectionedRecyclerViewAdapter<OrdersAdapter.Vi
             holder.disputeLayout.setVisibility(View.VISIBLE);
             if (object.getDispute().equalsIgnoreCase("CREATED")) {
                 holder.disputeStatusImage.setBackgroundResource(R.drawable.dispute);
+                holder.disputeTxt.setTextColor(ContextCompat.getColor(context1,R.color.colorRed));
                 holder.disputeTxt.setText(context1.getResources().getString(R.string.dispute) + " " + object.getDispute());
             } else {
                 holder.disputeStatusImage.setBackgroundResource(R.drawable.dispute_success);
+                holder.disputeTxt.setTextColor(ContextCompat.getColor(context1,R.color.colorGreen));
                 holder.disputeTxt.setText(context1.getResources().getString(R.string.dispute) + " " + object.getDispute());
             }
+        } else if (object.getDispute().equalsIgnoreCase("NODISPUTE") && object.getStatus().equalsIgnoreCase("COMPLETED") ){
+            holder.disputeLayout.setVisibility(View.VISIBLE);
+            holder.disputeStatusImage.setBackgroundResource(R.drawable.dispute_success);
+            holder.disputeTxt.setTextColor(ContextCompat.getColor(context1,R.color.colorGreen));
+            holder.disputeTxt.setText(object.getStatus());
+        } else if (object.getDispute().equalsIgnoreCase("NODISPUTE") && object.getStatus().equalsIgnoreCase("CANCELLED") ){
+            holder.disputeLayout.setVisibility(View.VISIBLE);
+            holder.disputeStatusImage.setBackgroundResource(R.drawable.dispute);
+            holder.disputeTxt.setTextColor(ContextCompat.getColor(context1,R.color.colorRed));
+            holder.disputeTxt.setText(object.getStatus());
         } else {
             holder.disputeLayout.setVisibility(View.GONE);
         }
