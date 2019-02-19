@@ -49,6 +49,9 @@ public class Order {
     @SerializedName("order_otp")
     @Expose
     private Integer orderOtp;
+    @SerializedName("eta")
+    @Expose
+    private String eta;
     @SerializedName("order_ready_time")
     @Expose
     private Integer orderReadyTime;
@@ -201,6 +204,14 @@ public class Order {
 
     public Integer getOrderOtp() {
         return orderOtp;
+    }
+
+    public String getEta() {
+        return eta;
+    }
+
+    public void setEta(String eta) {
+        this.eta = eta;
     }
 
     public void setOrderOtp(Integer orderOtp) {

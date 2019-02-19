@@ -117,6 +117,8 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
     Toolbar toolbar;
     @BindView(R.id.order_otp)
     TextView orderOtp;
+    @BindView(R.id.order_eta)
+    TextView order_eta;
     @BindView(R.id.order_status_txt)
     TextView orderStatusTxt;
     @BindView(R.id.order_succeess_image)
@@ -305,6 +307,15 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
 
             orderIdTxt2.setText("#000" + order.getId().toString());
             orderOtp.setText(" : " + isSelectedOrder.getOrderOtp());
+            if (isSelectedOrder!=null) {
+                if (isSelectedOrder.getEta()!=null) {
+                    order_eta.setText(" : " + isSelectedOrder.getEta() + "Mins");
+                } else {
+                    order_eta.setText(" : " + 0 + "Min");
+                }
+            } else {
+                order_eta.setText(" : " + 0 + "Min");
+            }
             orderPlacedTime.setText(getTimeFromString(order.getCreatedAt()));
 
             //set Fragment

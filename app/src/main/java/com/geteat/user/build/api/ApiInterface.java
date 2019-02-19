@@ -199,6 +199,9 @@ public interface ApiInterface {
     @POST("api/user/wallet/promocode")
     Call<PromotionResponse> applyWalletPromoCode(@Field("promocode_id") String id);
 
+    @FormUrlEncoded
+    @POST("api/user/wallet/promocode")
+    Call<PromotionResponse> applyWalletPromoCode(@Field("promocode_id") String id,@Field("promocode_code") String promocode_code);
 
     @GET("api/user/apply/promocode")
     Call<AddCart> applyPromocode(@Query("promocode_id") String param1);

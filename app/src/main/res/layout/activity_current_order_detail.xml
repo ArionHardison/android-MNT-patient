@@ -124,6 +124,32 @@
 
             </RelativeLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/eta"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="@dimen/text_small_large" />
+
+                <TextView
+                    android:id="@+id/order_eta"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:text=""
+                    android:layout_weight="1"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="@dimen/text_small_large" />
+
+            </LinearLayout>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/order_flow_rv"
                 android:layout_width="match_parent"

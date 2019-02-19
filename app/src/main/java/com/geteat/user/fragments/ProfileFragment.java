@@ -153,13 +153,13 @@ public class ProfileFragment extends Fragment {
             case 2:
                 startActivity(new Intent(context, OrdersActivity.class));
                 break;
-            case 3:
+            /*case 3:
                 startActivity(new Intent(context, PromotionActivity.class));
-                break;
+                break;*/
 //            case 5:
 //                changeLanguage();
 //                break;
-            case 4:
+            case 3:
                 startActivity(new Intent(context, ChangePasswordActivity.class));
                 break;
 //            case 4:
@@ -214,7 +214,7 @@ public class ProfileFragment extends Fragment {
             listIcons.add(R.drawable.heart);
             /*listIcons.add(R.drawable.payment);*/
             listIcons.add(R.drawable.ic_myorders);
-            listIcons.add(R.drawable.ic_promotion_details);
+            /*listIcons.add(R.drawable.ic_promotion_details);*/
 //            listIcons.add(R.drawable.ic_translate);
 
             if (!loginBy.equalsIgnoreCase("facebook") &&

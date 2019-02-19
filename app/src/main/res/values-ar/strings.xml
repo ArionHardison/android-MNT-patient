@@ -130,6 +130,8 @@
     <string name="dispute">Dispute</string>
     <string name="email_us">Email Us</string>
     <string name="canelled">Canelled</string>
+    <string name="otp">Otp</string>
+    <string name="eta">ETA</string>
 
     <!--    Check Internet Conneciton  -->
     <string name="oops_connect_your_internet">Oops ! Connect your Internet.</string>

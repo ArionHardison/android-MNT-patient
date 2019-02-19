@@ -136,8 +136,38 @@ public class PromotionActivity extends AppCompatActivity implements PromotionsAd
         finish();
     }
 
-
     @Override
+    public void onApplyBtnClick(final Promotions promotions) {
+        customDialog.show();
+        Call<PromotionResponse> call = apiInterface.applyWalletPromoCode(String.valueOf(promotions.getId()),promotions.getPromoCode());
+        call.enqueue(new Callback<PromotionResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<PromotionResponse> call, @NonNull Response<PromotionResponse> response) {
+                customDialog.dismiss();
+                if (response.isSuccessful()) {
+                    Toast.makeText(PromotionActivity.this, getResources().getString(R.string.promo_code_apply_successfully), Toast.LENGTH_SHORT).show();
+                    GlobalData.profileModel.setWalletBalance(response.body().getWalletMoney());
+                    /*GlobalData.addCart = null;
+                    GlobalData.addCart = response.body();*/
+                    gotoFlow(String.valueOf(promotions.getId()));
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<PromotionResponse> call, @NonNull Throwable t) {
+                customDialog.dismiss();
+            }
+        });
+    }
+
+    /*@Override
     public void onApplyBtnClick(final Promotions promotions) {
         customDialog.show();
         Call<AddCart> call = apiInterface.applyPromocode(String.valueOf(promotions.getId()));
@@ -166,7 +196,7 @@ public class PromotionActivity extends AppCompatActivity implements PromotionsAd
                 customDialog.dismiss();
             }
         });
-    }
+    }*/
 
     private void gotoFlow(String walletMoney) {
       /*  startActivity(new Intent(this, AccountPaymentActivity.class).putExtra("is_show_wallet", true).putExtra("is_show_cash", false));

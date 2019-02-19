@@ -402,7 +402,8 @@
                             android:layout_height="wrap_content"
                             android:text="50 mins"
                             android:textAllCaps="true"
-                            android:textSize="@dimen/text_tiny" />
+                            android:textSize="@dimen/text_tiny"
+                            android:visibility="gone"/>
 
                     </LinearLayout>
 
