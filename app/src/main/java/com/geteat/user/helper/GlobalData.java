@@ -90,7 +90,7 @@ public class GlobalData {
     public static NumberFormat getNumberFormat() {
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
         numberFormat.setCurrency(Currency.getInstance("INR"));
-        numberFormat.setMinimumFractionDigits(0);
+        numberFormat.setMinimumFractionDigits(2);
         return numberFormat;
     }
 

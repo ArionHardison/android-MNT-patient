@@ -307,15 +307,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
 
             orderIdTxt2.setText("#000" + order.getId().toString());
             orderOtp.setText(" : " + isSelectedOrder.getOrderOtp());
-            if (isSelectedOrder!=null) {
-                if (isSelectedOrder.getEta()!=null) {
-                    order_eta.setText(" : " + isSelectedOrder.getEta() + "Mins");
-                } else {
-                    order_eta.setText(" : " + 0 + "Min");
-                }
-            } else {
-                order_eta.setText(" : " + 0 + "Min");
-            }
             orderPlacedTime.setText(getTimeFromString(order.getCreatedAt()));
 
             //set Fragment
@@ -729,6 +720,8 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                         updateOrderDeatail();
                     } else isSelectedOrder = response.body();
                     Log.i("isSelectedOrder : ", isSelectedOrder.toString());
+
+                    order_eta.setText(" : " + isSelectedOrder.getEta() + "Mins");
 
                     if (isSelectedOrder.getStatus().equals("PICKEDUP") ||
                             isSelectedOrder.getStatus().equals("ARRIVED") || isSelectedOrder.getStatus().equals("ASSIGNED")) {

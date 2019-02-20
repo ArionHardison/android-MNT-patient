@@ -366,7 +366,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 } else if (response.isSuccessful()) {
                     //Check Restaurant list
@@ -546,7 +546,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         return null;
     }

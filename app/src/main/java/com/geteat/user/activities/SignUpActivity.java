@@ -488,9 +488,10 @@ public class SignUpActivity extends AppCompatActivity {
                     finish();
                 } else {
                     if (response.code() == 401) {
-                        /*SharedHelper.putKey(context, "logged", "false");
-                        startActivity(new Intent(context, LoginActivity.class));
-                        finish();*/
+                        Toast.makeText(context, "UnAuthenticated", Toast.LENGTH_LONG).show();
+                        SharedHelper.putKey(context, "logged", "false");
+                        startActivity(new Intent(context, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finish();
                     }
 
                     try {

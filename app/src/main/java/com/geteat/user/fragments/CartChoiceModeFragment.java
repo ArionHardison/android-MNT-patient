@@ -191,7 +191,7 @@ public class CartChoiceModeFragment extends BottomSheetDialogFragment {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             }

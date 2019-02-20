@@ -224,7 +224,7 @@ public class SearchFragment extends Fragment {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 } else if (response.isSuccessful()) {
                     progressBar.setVisibility(View.GONE);

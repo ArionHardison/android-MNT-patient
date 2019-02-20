@@ -153,9 +153,9 @@ public class ProductDetailActivity extends AppCompatActivity {
         addItemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (GlobalData.profileModel == null) {
+               /* if (GlobalData.profileModel == null) {
                     Toast.makeText(context, "Please login", Toast.LENGTH_SHORT).show();
-                } else {
+                } else {*/
                     final HashMap<String, String> map = new HashMap<>();
                     map.put("product_id", product.getId().toString());
                     map.put("note", custom_notes.getText().toString());
@@ -211,7 +211,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     }
 
 
-                }
+//                }
 
 
             }
@@ -247,7 +247,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 } else if (response.isSuccessful()) {
                     selectedShop = HotelViewActivity.shops;
@@ -282,7 +282,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+//                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             }

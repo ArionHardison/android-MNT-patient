@@ -128,11 +128,11 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
                                                 JSONObject jObjError = new JSONObject(response.errorBody().string());
                                                 Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
                                             } catch (Exception e) {
-                                                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+//                                                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                                             }
                                         } else if (response != null && response.isSuccessful()) {
                                             Message message = response.body();
-                                            Toast.makeText(context, message.getMessage(), Toast.LENGTH_LONG).show();
+//                                            Toast.makeText(context, message.getMessage(), Toast.LENGTH_LONG).show();
                                             list.remove(position);
                                             if(list.size()==0)
                                                 ManageAddressActivity.errorLayout.setVisibility(View.VISIBLE);
