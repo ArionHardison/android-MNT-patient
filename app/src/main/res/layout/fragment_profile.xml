@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:scrollbars="none"
-        tools:context="com.geteat.user.activities.ProfileActivity">
+        tools:context="com.comida.user.activities.ProfileActivity">
 
         <LinearLayout
 

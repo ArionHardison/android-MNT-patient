@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
-    tools:context="com.geteat.user.activities.WelcomeScreenActivity">
+    tools:context="com.comida.user.activities.WelcomeScreenActivity">
 
     <RelativeLayout
         android:background="@color/background_color"
