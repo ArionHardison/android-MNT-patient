@@ -38,7 +38,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Notification Message Body: " + remoteMessage.getData());
             Log.d(TAG, "CustomData" + remoteMessage.getData().get("custom"));
             customdata = new Gson().fromJson(remoteMessage.getData().get("custom"), NotificationData.class);
-            Log.d(TAG, "onMessageReceived: " + customdata.getCustomData().get(0).getOrderId());
+//            Log.d(TAG, "onMessageReceived: " + customdata.getCustomData().get(0).getOrderId());
 
             //Calling method to generate notification
             sendNotification(remoteMessage.getData().get("message"));
@@ -82,8 +82,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             importance = NotificationManager.IMPORTANCE_HIGH;
 
         Notification notification;
-        notification = mBuilder.setSmallIcon(R.mipmap.ic_launcher).setTicker(getString(R.string.app_name)).
-                setWhen(when)
+        notification = mBuilder
+                .setWhen(when)
                 //                .setAutoCancel(true)
                 .setContentTitle(getString(R.string.app_name))
                 .setContentIntent(pendingIntent)
@@ -108,11 +108,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationManager.notify(0, notification);
     }
 
-    private int getNotificationIcon(NotificationCompat.Builder notificationBuilder) {
+    /*private int getNotificationIcon(NotificationCompat.Builder notificationBuilder) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             notificationBuilder.setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
             return R.drawable.ic_stat_push;
         } else return R.drawable.ic_stat_push;
+    }*/
+
+    private int getNotificationIcon(NotificationCompat.Builder notificationBuilder) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            notificationBuilder.setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+            return R.drawable.ic_stat_push;
+        } else {
+            notificationBuilder.setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
+            return R.drawable.ic_stat_push;
+        }
     }
 
 }

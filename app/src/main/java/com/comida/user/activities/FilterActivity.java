@@ -60,7 +60,8 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
         closeImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+//                finish();
+                onBackPressed();
                 overridePendingTransition(R.anim.anim_nothing, R.anim.slide_down);
             }
         });
@@ -110,9 +111,25 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        FilterAdapter.cuisineIdList.clear();
+        /*FilterAdapter.cuisineIdList.clear();
         isReset = true;
+        finish();*/
+
+        isPureVegApplied = FilterAdapter.isPureVegApplied;
+        isOfferApplied = FilterAdapter.isOfferApplied;
+        cuisineIdArrayList = new ArrayList<>();
+        GlobalData.cuisineIdArrayList.addAll(FilterAdapter.cuisineIdList);
+        isFilterApplied = false;
+        if (isOfferApplied)
+            isFilterApplied = true;
+        if (isPureVegApplied)
+            isFilterApplied = true;
+        if (cuisineIdArrayList != null && cuisineIdArrayList.size() != 0)
+            isFilterApplied = true;
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK, returnIntent);
         finish();
+
         overridePendingTransition(R.anim.anim_nothing, R.anim.slide_down);
 
     }

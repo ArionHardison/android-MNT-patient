@@ -46,8 +46,8 @@ public class AccountPaymentAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
-//        return this.list.size();
+//        return 0;
+        return this.list.size();
     }
 
     @Override

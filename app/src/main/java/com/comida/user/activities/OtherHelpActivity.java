@@ -224,7 +224,7 @@ public class OtherHelpActivity extends AppCompatActivity {
     private void goGmail() {
 
         Intent intent=new Intent(Intent.ACTION_SEND);
-        String[] recipients={"vikidx@appoets.com"};
+        String[] recipients={""};
         intent.putExtra(Intent.EXTRA_EMAIL, recipients);
         intent.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.app_name) + "-" + getString(R.string.help));
         intent.putExtra(Intent.EXTRA_TEXT,"Hello team");

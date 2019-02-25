@@ -392,7 +392,7 @@ public class AccountPaymentActivity extends AppCompatActivity  {
     @Override
     protected void onResume() {
         super.onResume();
-        int walletMoney = GlobalData.profileModel.getWalletBalance();
+        String walletMoney = GlobalData.profileModel.getWalletBalance();
         walletAmtTxt.setText(currencySymbol + " " + String.valueOf(walletMoney));
         getCardList();
 //        if (mPurchased) {

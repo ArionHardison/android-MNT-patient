@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "220553011635-0r3mu08q856j2vpb6m4rglplfpg2dojq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.comida.deliver",
+            "certificate_hash": "5b9ef4619290504a0400dc60cf627cbb871b5cc0"
+          }
+        },
+        {
           "client_id": "220553011635-fo4q5ij92n5c2fo7lnjbiunafd1d5mra.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -74,6 +82,14 @@
           }
         },
         {
+          "client_id": "220553011635-edhnsl8tp2eof1bfqggipvtm7rgdfcgb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.comida.outlet",
+            "certificate_hash": "12c79d71acbee4eda4de3bafad6520bd5de876e0"
+          }
+        },
+        {
           "client_id": "220553011635-fo4q5ij92n5c2fo7lnjbiunafd1d5mra.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -122,6 +138,14 @@
           "android_info": {
             "package_name": "com.comida.user",
             "certificate_hash": "8cf37960e11bc0f20d54fc52f14aae89f6bf6937"
+          }
+        },
+        {
+          "client_id": "220553011635-gtdrfhbphtuk5b9rccrj8b3llg0so7jn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.comida.user",
+            "certificate_hash": "3919532a1f0842b1c3bb5af869895856478c3f3e"
           }
         },
         {

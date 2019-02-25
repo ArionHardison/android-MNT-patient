@@ -32,6 +32,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.comida.user.BuildConfig;
 import com.comida.user.HomeActivity;
 import com.comida.user.R;
+import com.comida.user.activities.AccountPaymentActivity;
 import com.comida.user.activities.ChangePasswordActivity;
 import com.comida.user.activities.EditAccountActivity;
 import com.comida.user.activities.FavouritesActivity;
@@ -145,10 +146,10 @@ public class ProfileFragment extends Fragment {
             case 1:
                 startActivity(new Intent(context, FavouritesActivity.class));
                 break;
-            /*case 2:
-                startActivity(new Intent(context, AccountPaymentActivity.class).putExtra("is_show_wallet", true).putExtra("is_show_cash", false));
-                break;*/
             case 2:
+                startActivity(new Intent(context, AccountPaymentActivity.class).putExtra("is_show_wallet", true).putExtra("is_show_cash", false));
+                break;
+            case 3:
                 startActivity(new Intent(context, OrdersActivity.class));
                 break;
             /*case 3:
@@ -157,7 +158,7 @@ public class ProfileFragment extends Fragment {
 //            case 5:
 //                changeLanguage();
 //                break;
-            case 3:
+            case 4:
                 startActivity(new Intent(context, ChangePasswordActivity.class));
                 break;
 //            case 4:
@@ -210,7 +211,7 @@ public class ProfileFragment extends Fragment {
             List<Integer> listIcons = new ArrayList<>();
             listIcons.add(R.drawable.home);
             listIcons.add(R.drawable.heart);
-            /*listIcons.add(R.drawable.payment);*/
+            listIcons.add(R.drawable.payment);
             listIcons.add(R.drawable.ic_myorders);
             /*listIcons.add(R.drawable.ic_promotion_details);*/
 //            listIcons.add(R.drawable.ic_translate);

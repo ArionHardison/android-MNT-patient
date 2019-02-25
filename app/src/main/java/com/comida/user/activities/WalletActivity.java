@@ -9,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,12 +23,18 @@ import com.comida.user.build.api.ApiClient;
 import com.comida.user.build.api.ApiInterface;
 import com.comida.user.helper.CustomDialog;
 import com.comida.user.helper.GlobalData;
+import com.comida.user.helper.SharedHelper;
+import com.comida.user.models.AddCart;
+import com.comida.user.models.AddressList;
+import com.comida.user.models.User;
 import com.comida.user.models.WalletHistory;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -38,10 +45,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static com.comida.user.helper.GlobalData.addCart;
 import static com.comida.user.helper.GlobalData.currencySymbol;
 
 public class WalletActivity extends AppCompatActivity {
 
+    String TAG = "WalletActivity";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.add_btn)
@@ -50,6 +59,7 @@ public class WalletActivity extends AppCompatActivity {
     TextView walletAmountTxt;
     @BindView(R.id.wallet_history_recycler_view)
     RecyclerView walletHistoryRecyclerView;
+    String device_token, device_UDID;
 
 
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
@@ -90,9 +100,88 @@ public class WalletActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        int walletMoney = GlobalData.profileModel.getWalletBalance();
-        walletAmountTxt.setText(currencySymbol + " " + String.valueOf(walletMoney));
+        /*String walletMoney = GlobalData.profileModel.getWalletBalance();
+        walletAmountTxt.setText(currencySymbol + " " + String.valueOf(walletMoney));*/
+
+        getDeviceToken();
         getWalletHistory();
+        getProfile();
+    }
+
+    public void getDeviceToken() {
+        try {
+            if (!SharedHelper.getKey(context, "device_token").equals("") && SharedHelper.getKey(context, "device_token") != null) {
+                device_token = SharedHelper.getKey(context, "device_token");
+                Log.d(TAG, "GCM Registration Token: " + device_token);
+            } else {
+                device_token = "" + FirebaseInstanceId.getInstance().getToken();
+                SharedHelper.putKey(context, "device_token", "" + FirebaseInstanceId.getInstance().getToken());
+                Log.d(TAG, "Failed to complete token refresh: " + device_token);
+            }
+        } catch (Exception e) {
+            device_token = "COULD NOT GET FCM TOKEN";
+            Log.d(TAG, "Failed to complete token refresh");
+        }
+
+        try {
+            device_UDID = android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+            Log.d(TAG, "Device UDID:" + device_UDID);
+        } catch (Exception e) {
+            device_UDID = "COULD NOT GET UDID";
+            e.printStackTrace();
+            Log.d(TAG, "Failed to complete device UDID");
+        }
+    }
+
+    private void getProfile() {
+//        retryCount++;
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("device_type", "android");
+        map.put("device_id", device_UDID);
+        map.put("device_token", device_token);
+        Call<User> getprofile = apiInterface.getProfile(map);
+        getprofile.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                if (response.isSuccessful()) {
+                    SharedHelper.putKey(context, "logged", "true");
+                    GlobalData.profileModel = response.body();
+                    addCart = new AddCart();
+                    addCart.setProductList(response.body().getCart());
+                    GlobalData.addressList = new AddressList();
+                    GlobalData.addressList.setAddresses(response.body().getAddresses());
+                    if (addCart.getProductList() != null && addCart.getProductList().size() != 0)
+                        GlobalData.addCartShopId = addCart.getProductList().get(0).getProduct().getShopId();
+
+                    String walletMoney = GlobalData.profileModel.getWalletBalance();
+                    walletAmountTxt.setText(currencySymbol + " " + String.valueOf(walletMoney));
+
+//                    checkActivty();
+
+                } else {
+                    if (response.code() == 401) {
+                        Toast.makeText(context, "UnAuthenticated", Toast.LENGTH_LONG).show();
+                        SharedHelper.putKey(context, "logged", "false");
+                        startActivity(new Intent(context, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finish();
+                    }
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().toString());
+                        Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+
+            }
+        });
     }
 
     private void getWalletHistory() {

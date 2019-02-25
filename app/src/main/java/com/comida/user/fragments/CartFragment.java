@@ -328,7 +328,7 @@ public class CartFragment extends Fragment {
         itemCount = 0;
         itemQuantity = 0;
         if (GlobalData.profileModel != null) {
-            int money = GlobalData.profileModel.getWalletBalance();
+            String money = GlobalData.profileModel.getWalletBalance();
             dataLayout.setVisibility(View.VISIBLE);
             errorLayout.setVisibility(View.GONE);
             skeleton.show();
@@ -351,7 +351,10 @@ public class CartFragment extends Fragment {
             } else {
                 Utils.displayMessage(activity, context, getString(R.string.oops_connect_your_internet));
             }
-            if (money > 0) {
+
+            int fd = Integer.parseInt(GlobalData.profileModel.getWalletBalance());
+
+            if (fd > 0) {
 //                amountTxt.setText(numberFormat.format(money));
                 amountTxt.setText(GlobalData.currencySymbol + " " + money);
                 walletLayout.setVisibility(View.VISIBLE);

@@ -11,13 +11,13 @@ public class PromotionResponse {
 
     @SerializedName("wallet_balance")
     @Expose
-    private Integer walletMoney;
+    private String walletMoney;
 
-    public Integer getWalletMoney() {
+    public String getWalletMoney() {
         return walletMoney;
     }
 
-    public void setWalletMoney(Integer walletMoney) {
+    public void setWalletMoney(String walletMoney) {
         this.walletMoney = walletMoney;
     }
 }
