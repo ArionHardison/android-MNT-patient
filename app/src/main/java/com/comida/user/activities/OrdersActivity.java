@@ -96,7 +96,6 @@ public class OrdersActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<Order>>() {
             @Override
             public void onResponse(@NonNull Call<List<Order>> call, @NonNull Response<List<Order>> response) {
-                customDialog.dismiss();
                 if (response.isSuccessful()) {
                     pastOrderList.clear();
                     pastOrderList = response.body();
@@ -119,6 +118,7 @@ public class OrdersActivity extends AppCompatActivity {
                         Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
                     }
                 }
+                customDialog.dismiss();
             }
 
             @Override

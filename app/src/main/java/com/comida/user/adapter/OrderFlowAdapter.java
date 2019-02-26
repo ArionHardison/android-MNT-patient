@@ -27,6 +27,7 @@ public class OrderFlowAdapter extends RecyclerView.Adapter<OrderFlowAdapter.MyVi
     private List<OrderFlow> list;
     private Context context;
     public String orderStatus = "";
+    boolean isRateOpened = true;
 
 
     public OrderFlowAdapter(List<OrderFlow> list, Context con) {
@@ -67,9 +68,13 @@ public class OrderFlowAdapter extends RecyclerView.Adapter<OrderFlowAdapter.MyVi
                     @Override
                     public void run() {
                         //Do something after 100ms
-                        ((CurrentOrderDetailActivity) context).rate();
+                        if (isRateOpened){
+                            ((CurrentOrderDetailActivity) context).rate();
+                            isRateOpened = false;
+                        }
+
                     }
-                }, 2000);
+                }, 5000);
 
             }
             if (isSelectedOrder.getStatus().equals(GlobalData.ORDER_STATUS.get(0))) {

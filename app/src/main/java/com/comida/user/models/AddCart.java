@@ -40,7 +40,7 @@ public class AddCart {
     private String shopDiscount;
     @SerializedName("tax")
     @Expose
-    private Double tax;
+    private String tax;
     @SerializedName("promocode_amount")
     @Expose
     private Double promocodeAmount;
@@ -63,11 +63,11 @@ public class AddCart {
         this.totalPrice = totalPrice;
     }
 
-    public Double getTax() {
+    public String getTax() {
         return tax;
     }
 
-    public void setTax(Double tax) {
+    public void setTax(String tax) {
         this.tax = tax;
     }
 

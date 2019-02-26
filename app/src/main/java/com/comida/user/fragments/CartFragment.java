@@ -284,8 +284,9 @@ public class CartFragment extends Fragment {
                         }
                         discountAmount.setText("- " + currency + "" + discount);
                         double topPayAmount = priceAmount - discount;
-                        int tax = (int) Math.round(topPayAmount * (response.body().getTaxPercentage() * 0.01));
-                        serviceTax.setText(currency + String.valueOf(tax));
+//                        int tax = (int) Math.round(topPayAmount * (response.body().getTaxPercentage() * 0.01));
+                        double tax = topPayAmount * (response.body().getTaxPercentage() * 0.01);
+                        serviceTax.setText(currency + String.format("%.2f", tax));
                         topPayAmount = topPayAmount + response.body().getDeliveryCharges() + tax;
                         payAmount.setText(currency + "" + response.body().getPayable());
                         //Set Restaurant Details
@@ -352,7 +353,7 @@ public class CartFragment extends Fragment {
                 Utils.displayMessage(activity, context, getString(R.string.oops_connect_your_internet));
             }
 
-            int fd = Integer.parseInt(GlobalData.profileModel.getWalletBalance());
+            float fd = Float.parseFloat(GlobalData.profileModel.getWalletBalance());
 
             if (fd > 0) {
 //                amountTxt.setText(numberFormat.format(money));
