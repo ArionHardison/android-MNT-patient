@@ -389,11 +389,19 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                         String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
                         CartFragment.itemTotalAmount.setText(currency + "" + priceAmount);
                         CartFragment.discountAmount.setText("- " + currency + "" + discount);
-                        Double topPayAmount = priceAmount - discount;
-                        int tax = (int) Math.round(topPayAmount * (response.body().getTaxPercentage() * 0.01));
+//                        Double topPayAmount = priceAmount - discount;
+//                        int tax = (int) Math.round(topPayAmount * (response.body().getTaxPercentage() * 0.01));
+//                        topPayAmount = topPayAmount + tax;
+//                        topPayAmount = topPayAmount + response.body().getDeliveryCharges();
+
+                        double topPayAmount = priceAmount - discount;
+//                        int tax = (int) Math.round(topPayAmount * (response.body().getTaxPercentage() * 0.01));
+                        double tax = topPayAmount * (response.body().getTaxPercentage() * 0.01);
                         topPayAmount = topPayAmount + tax;
                         topPayAmount = topPayAmount + response.body().getDeliveryCharges();
-                        CartFragment.serviceTax.setText(response.body().getProductList().get(0).getProduct().getPrices().getCurrency() + "" + String.valueOf(tax));
+                        CartFragment.serviceTax.setText(currency + response.body().getTax());
+
+//                        CartFragment.serviceTax.setText(response.body().getProductList().get(0).getProduct().getPrices().getCurrency() + "" + String.valueOf(tax));
                         CartFragment.payAmount.setText(currency + "" + topPayAmount);
 
                     } else {

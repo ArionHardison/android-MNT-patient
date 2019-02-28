@@ -286,7 +286,7 @@ public class CartFragment extends Fragment {
                         double topPayAmount = priceAmount - discount;
 //                        int tax = (int) Math.round(topPayAmount * (response.body().getTaxPercentage() * 0.01));
                         double tax = topPayAmount * (response.body().getTaxPercentage() * 0.01);
-                        serviceTax.setText(currency + String.format("%.2f", tax));
+                        serviceTax.setText(currency + response.body().getTax());
                         topPayAmount = topPayAmount + response.body().getDeliveryCharges() + tax;
                         payAmount.setText(currency + "" + response.body().getPayable());
                         //Set Restaurant Details

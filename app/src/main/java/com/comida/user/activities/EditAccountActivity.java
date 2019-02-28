@@ -42,6 +42,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -252,7 +253,14 @@ public class EditAccountActivity extends AppCompatActivity {
                             .error(R.drawable.man))
                     .into(userProfileImg);
 
-            imgFile = new File(imgDecodableString);
+//            imgFile = new File(imgDecodableString);
+
+            try {
+                imgFile = new id.zelory.compressor.Compressor(EditAccountActivity.this).compressToFile(new File(imgDecodableString));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         } else if (resultCode == Activity.RESULT_CANCELED) {
 //            Toast.makeText(this, "You haven't picked Image",Toast.LENGTH_SHORT).show();
         }

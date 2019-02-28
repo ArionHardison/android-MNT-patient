@@ -102,6 +102,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.google.firebase:firebase-core:16.0.5'
     implementation 'com.github.stfalcon:smsverifycatcher:0.3.2'
+    implementation 'id.zelory:compressor:2.1.0'
 
 //    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 
