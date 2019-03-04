@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="facebook_app_id">1118602991646229</string>
+    <string name="facebook_app_id">373720729876682</string>
 
     <string name="login">Login</string>
     <string name="logout">Logout</string>
@@ -132,6 +132,7 @@
     <string name="canelled">Canelled</string>
     <string name="otp">Otp</string>
     <string name="eta">ETA</string>
+    <string name="call">Call</string>
 
     <!--    Check Internet Conneciton  -->
     <string name="oops_connect_your_internet">Oops ! Connect your Internet.</string>
@@ -200,6 +201,7 @@
     <string name="reason">Reason</string>
     <string name="dispute_reason_description">Are you facing any issue which we can assist with? Please reach out to us we will be happy to help !</string>
     <string name="chat_us">Chat us</string>
+    <string name="call_us">Call us</string>
     <string name="please_type_verification_code">Please type the verification code</string>
     <string name="did_not_get_otp">Didn\'t get the OTP</string>
     <string name="resend_otp">Resend OTP</string>

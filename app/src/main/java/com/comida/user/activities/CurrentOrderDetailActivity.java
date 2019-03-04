@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,12 +41,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.comida.user.HomeActivity;
 import com.comida.user.R;
 import com.comida.user.adapter.OrderFlowAdapter;
@@ -96,6 +101,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -118,6 +124,16 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
     TextView orderOtp;
     @BindView(R.id.order_eta)
     TextView order_eta;
+    @BindView(R.id.transporter_image)
+    CircleImageView transporter_image;
+    @BindView(R.id.transporter_call)
+    ImageView transporter_call;
+    @BindView(R.id.transporter_details)
+    LinearLayout transporter_details;
+    @BindView(R.id.transporter_name)
+    TextView transporterName;
+    @BindView(R.id.call_transporter)
+    Button callTransporter;
     @BindView(R.id.order_status_txt)
     TextView orderStatusTxt;
     @BindView(R.id.order_succeess_image)
@@ -166,6 +182,9 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
     private LatLng sourceLatLng;
     private LatLng destLatLng;
 
+    String TransporterNumber = "";
+    private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -194,6 +213,20 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             @Override
             public void onClick(View v) {
                 showDialog();
+            }
+        });
+
+        callTransporter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToCall();
+            }
+        });
+
+        transporter_call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToCall();
             }
         });
 
@@ -273,6 +306,24 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
         }
 
     }
+
+    private void goToCall() {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                    if (TransporterNumber != null && !TransporterNumber.isEmpty()) {
+                        Intent intent = new Intent(Intent.ACTION_CALL);
+                        intent.setData(Uri.parse("tel:" + TransporterNumber));
+                        startActivity(intent);
+                    }
+                } else {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
+                }
+            } else if (TransporterNumber != null && !TransporterNumber.isEmpty()) {
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:" + TransporterNumber));
+                startActivity(intent);
+            }
+        }
 
     public void updateOrderDeatail() {
         List<OrderFlow> orderFlowList = new ArrayList<>();
@@ -722,6 +773,24 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
 
                     order_eta.setText(" : " + isSelectedOrder.getEta() + "Mins");
 
+                    if (isSelectedOrder.getTransporter()!=null){
+
+                        transporter_details.setVisibility(View.VISIBLE);
+
+                        Glide.with(context)
+                                .load(isSelectedOrder.getTransporter().getAvatar())
+                                .apply(new RequestOptions()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.man)
+                                        .error(R.drawable.man))
+                                .into(transporter_image);
+                        transporterName.setText(isSelectedOrder.getTransporter().getName());
+                        TransporterNumber = isSelectedOrder.getTransporter().getPhone();
+
+                    }else {
+                        transporter_details.setVisibility(View.GONE);
+                    }
+
                     if (isSelectedOrder.getStatus().equals("PICKEDUP") ||
                             isSelectedOrder.getStatus().equals("ARRIVED") || isSelectedOrder.getStatus().equals("ASSIGNED")) {
                         liveNavigation(isSelectedOrder.getTransporter().getLatitude(),
@@ -909,6 +978,19 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CALL_PHONE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    goToCall();
+                } else
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+
+            }
+        }
     }
 
     public void rate() {

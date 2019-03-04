@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">"Comida"</string>
 
-    <string name="facebook_app_id">1118602991646229</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb1118602991646229</string>
+    <string name="facebook_app_id">373720729876682</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb373720729876682</string>
 
     <string name="login">Login</string>
     <string name="logout">Logout</string>
@@ -19,6 +19,7 @@
     <string name="discover">"Discover"</string>
     <string name="otp">Otp</string>
     <string name="eta">ETA</string>
+    <string name="call">Call</string>
     <string name="offers_near_you">"Offers Near You"</string>
     <string name="filter">Filter</string>
     <string name="forgot_password">Forgot Password?</string>
@@ -204,6 +205,7 @@
     <string name="reason">Reason</string>
     <string name="dispute_reason_description">Are you facing any issue which we can assist with? Please reach out to us we will be happy to help !</string>
     <string name="chat_us">Chat us</string>
+    <string name="call_us">Call us</string>
     <string name="please_type_verification_code">Please type the verification code</string>
     <string name="did_not_get_otp">Didn\'t get the OTP</string>
     <string name="resend_otp">Resend OTP</string>
