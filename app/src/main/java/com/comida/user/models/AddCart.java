@@ -49,7 +49,7 @@ public class AddCart {
     private Double net;
     @SerializedName("wallet_balance")
     @Expose
-    private Integer walletBalance;
+    private String walletBalance;
     @SerializedName("payable")
     @Expose
     private Double payable;
@@ -87,11 +87,11 @@ public class AddCart {
         this.net = net;
     }
 
-    public Integer getWalletBalance() {
+    public String getWalletBalance() {
         return walletBalance;
     }
 
-    public void setWalletBalance(Integer walletBalance) {
+    public void setWalletBalance(String walletBalance) {
         this.walletBalance = walletBalance;
     }
 

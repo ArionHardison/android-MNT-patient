@@ -50,6 +50,9 @@ public class User {
     @SerializedName("otp")
     @Expose
     private String otp;
+    @SerializedName("customer_support")
+    @Expose
+    private String customer_support;
     @SerializedName("addresses")
     @Expose
     private List<Address> addresses = null;
@@ -155,6 +158,14 @@ public class User {
 
     public String getOtp() {
         return otp;
+    }
+
+    public String getCustomer_support() {
+        return customer_support;
+    }
+
+    public void setCustomer_support(String customer_support) {
+        this.customer_support = customer_support;
     }
 
     public void setOtp(String otp) {

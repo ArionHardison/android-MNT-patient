@@ -65,6 +65,7 @@ import static com.comida.user.helper.GlobalData.isSelectedOrder;
 public class OrderHelpFragment extends Fragment {
 
 
+    private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     Unbinder unbinder;
     Context context;
     DisputeMessageAdapter disputeMessageAdapter;
@@ -285,19 +286,25 @@ public class OrderHelpFragment extends Fragment {
 
     private void goToCall() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-                    if (phone != null && !phone.isEmpty()) {
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                    if (isSelectedOrder.getUser().getCustomer_support() != null && !isSelectedOrder.getUser().getCustomer_support().isEmpty()) {
                         Intent intent = new Intent(Intent.ACTION_CALL);
-                        intent.setData(Uri.parse("tel:" + phone));
+                        intent.setData(Uri.parse("tel:" + isSelectedOrder.getUser().getCustomer_support()));
                         startActivity(intent);
+                    }else {
+                        Toast.makeText(context,"No Number Available",Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
                 }
-            } else if (phone != null && !phone.isEmpty()) {
-                Intent intent = new Intent(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:" + phone));
-                startActivity(intent);
+            } else {
+                if (isSelectedOrder.getUser().getCustomer_support() != null && !isSelectedOrder.getUser().getCustomer_support().isEmpty()) {
+                    Intent intent = new Intent(Intent.ACTION_CALL);
+                    intent.setData(Uri.parse("tel:" + isSelectedOrder.getUser().getCustomer_support()));
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(context,"No Number Available",Toast.LENGTH_LONG).show();
+                }
             }
         }
 
@@ -309,4 +316,18 @@ public class OrderHelpFragment extends Fragment {
         intent.putExtra(Intent.EXTRA_TEXT, "Hello team");
         startActivity(Intent.createChooser(intent, "Send Email"));
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CALL_PHONE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    goToCall();
+                } else
+                    Toast.makeText(context, "Permission Denied", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
+
 }
