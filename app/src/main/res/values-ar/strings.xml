@@ -162,7 +162,7 @@
 
     <!-- PROMOCODE  -->
 
-    <string name="promo_code_apply_successfully">Promocode is applied and offer amount is added to your wallet.</string>
+    <string name="promo_code_apply_successfully">Promocode is applied.</string>
 
     <!--  SIGN UP  -->
     <string name="please_enter_username">Please enter your username</string>

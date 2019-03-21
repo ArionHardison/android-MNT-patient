@@ -48,7 +48,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
     private List<Cart> list;
     public static Context context;
     public static double priceAmount = 0;
-    public static int discount = 0;
+    public static double discount = 0;
     public static int itemCount = 0;
     public static int itemQuantity = 0;
     public static Product product;
@@ -100,7 +100,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
         holder.dishNameTxt.setText(product.getName());
         holder.cardTextValue.setText(list.get(position).getQuantity().toString());
         holder.cardTextValueTicker.setText(list.get(position).getQuantity().toString());
-        priceAmount = list.get(position).getQuantity() * product.getPrices().getPrice();
+        priceAmount = list.get(position).getQuantity() * product.getPrices().getOrignalPrice();
         if (list.get(position).getCartAddons() != null && !list.get(position).getCartAddons().isEmpty()) {
             for (int j = 0; j < list.get(position).getCartAddons().size(); j++) {
                 priceAmount = priceAmount + (list.get(position).getQuantity() * (list.get(position).getCartAddons().get(j).getQuantity() *
@@ -177,7 +177,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     Log.e("AddCart_add", map.toString());
                     addCart(map);
                     int quantity = Integer.parseInt(holder.cardTextValue.getText().toString());
-                    priceAmount = quantity * product.getPrices().getPrice();
+                    priceAmount = quantity * product.getPrices().getOrignalPrice();
                     if (list.get(position).getCartAddons() != null && !list.get(position).getCartAddons().isEmpty()) {
                         for (int j = 0; j < list.get(position).getCartAddons().size(); j++) {
                             priceAmount = priceAmount + (list.get(position).getQuantity() * (list.get(position).getCartAddons().get(j).getQuantity() *
@@ -212,7 +212,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                 /** Press Add Card Minus button */
                 product = list.get(position).getProduct();
                 int quantity = Integer.parseInt(holder.cardTextValue.getText().toString());
-                priceAmount = quantity * product.getPrices().getPrice();
+                priceAmount = quantity * product.getPrices().getOrignalPrice();
                 if (list.get(position).getCartAddons() != null && !list.get(position).getCartAddons().isEmpty()) {
                     for (int j = 0; j < list.get(position).getCartAddons().size(); j++) {
                         priceAmount = priceAmount + (list.get(position).getQuantity() * (list.get(position).getCartAddons().get(j).getQuantity() *
@@ -369,8 +369,8 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                             //Get Total item Quantity
                             itemQuantity = itemQuantity + addCart.getProductList().get(i).getQuantity();
                             //Get addon price
-                            if (addCart.getProductList().get(i).getProduct().getPrices().getPrice() != null)
-                                priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * addCart.getProductList().get(i).getProduct().getPrices().getPrice());
+                            if (addCart.getProductList().get(i).getProduct().getPrices().getOrignalPrice() != null)
+                                priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * addCart.getProductList().get(i).getProduct().getPrices().getOrignalPrice());
                             if (addCart.getProductList().get(i).getCartAddons() != null && !addCart.getProductList().get(i).getCartAddons().isEmpty()) {
                                 for (int j = 0; j < addCart.getProductList().get(i).getCartAddons().size(); j++) {
                                     priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * (addCart.getProductList().get(i).getCartAddons().get(j).getQuantity() *
@@ -381,13 +381,13 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                         if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() != null) {
                             if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() < priceAmount) {
                                 int offerPercentage = response.body().getProductList().get(0).getProduct().getShop().getOfferPercent();
-                                discount = (int) (priceAmount * (offerPercentage * 0.01));
+                                discount = priceAmount * (offerPercentage * 0.01);
                             }
                         }
                         GlobalData.notificationCount = itemQuantity;
                         //Set Payment details
                         String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
-                        CartFragment.itemTotalAmount.setText(currency + "" + priceAmount);
+                        CartFragment.itemTotalAmount.setText(currency + "" + String.format("%.2f", priceAmount));
                         CartFragment.discountAmount.setText("- " + currency + "" + discount);
 //                        Double topPayAmount = priceAmount - discount;
 //                        int tax = (int) Math.round(topPayAmount * (response.body().getTaxPercentage() * 0.01));
@@ -402,7 +402,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                         CartFragment.serviceTax.setText(currency + response.body().getTax());
 
 //                        CartFragment.serviceTax.setText(response.body().getProductList().get(0).getProduct().getPrices().getCurrency() + "" + String.valueOf(tax));
-                        CartFragment.payAmount.setText(currency + "" + topPayAmount);
+                        CartFragment.payAmount.setText(currency + "" + String.format("%.2f", topPayAmount));
 
                     } else {
                         GlobalData.notificationCount = itemQuantity;

@@ -27,6 +27,10 @@ public class AddCart {
     @Expose
     private Double totalPrice;
 
+    @SerializedName("orignal_price")
+    @Expose
+    private Double orignal_price;
+
     public String getShopDiscount() {
         return shopDiscount;
     }
@@ -55,12 +59,22 @@ public class AddCart {
     private Double payable;
 
 
+
     public Double getTotalPrice() {
         return totalPrice;
     }
 
     public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+
+    public Double getOrignalPrice() {
+        return orignal_price;
+    }
+
+    public void setOriginalPrice(Double orignal_price) {
+        this.orignal_price = orignal_price;
     }
 
     public String getTax() {

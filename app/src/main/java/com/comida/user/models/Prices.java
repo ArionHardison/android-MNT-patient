@@ -22,6 +22,10 @@ public class Prices {
     @Expose
     private String discountType;
 
+    @SerializedName("orignal_price")
+    @Expose
+    private Double orignal_price;
+
     public Integer getId() {
         return id;
     }
@@ -32,6 +36,14 @@ public class Prices {
 
     public Double getPrice() {
         return price;
+    }
+
+    public Double getOrignalPrice() {
+        return orignal_price;
+    }
+
+    public void setOriginalPrice(Double orignal_price) {
+        this.orignal_price = orignal_price;
     }
 
     public void setPrice(Double price) {

@@ -347,7 +347,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
 //            updateOrderDeatail();
             Order order = GlobalData.isSelectedOrder;
             orderIdTxt.setText("ORDER #000" + order.getId().toString());
-            itemQuantity = order.getInvoice().getQuantity();
+            itemQuantity = order.getItems().size();
             priceAmount = order.getInvoice().getPayable();
             currency = order.getItems().get(0).getProduct().getPrices().getCurrency();
             if (itemQuantity == 1)
@@ -465,7 +465,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
-            mMap.setMyLocationEnabled(false);
+            mMap.setMyLocationEnabled(true);
             mMap.setOnMarkerDragListener(this);
             mMap.setOnCameraMoveListener(this);
             mMap.getUiSettings().setRotateGesturesEnabled(false);

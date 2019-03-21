@@ -103,6 +103,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.5'
     implementation 'com.github.stfalcon:smsverifycatcher:0.3.2'
     implementation 'id.zelory:compressor:2.1.0'
+    //Paypal
+//    implementation('com.paypal.sdk:paypal-android-sdk:2.14.6') {
+//        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+//        exclude group: 'io.card'
+//    }
 
 //    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
 

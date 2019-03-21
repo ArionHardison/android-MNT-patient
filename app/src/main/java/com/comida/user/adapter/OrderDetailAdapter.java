@@ -51,7 +51,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Item item = list.get(position);
         holder.dishName.setText(item.getProduct().getName() + " x " + String.valueOf(item.getQuantity()));
-        Double priceAmount = item.getProduct().getPrices().getPrice()*item.getQuantity();
+        Double priceAmount = item.getProduct().getPrices().getOrignalPrice()*item.getQuantity();
         if (list.get(position).getCartAddons() != null && !list.get(position).getCartAddons().isEmpty()) {
             for (int j = 0; j < list.get(position).getCartAddons().size(); j++) {
                 priceAmount = priceAmount + (list.get(position).getQuantity() * (list.get(position).getCartAddons().get(j).getQuantity() *

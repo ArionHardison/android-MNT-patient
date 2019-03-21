@@ -212,6 +212,31 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/lnrPromocodeAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:visibility="gone"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Promocode amount"
+                            android:textColor="@color/colorSecondaryText" />
+
+                        <TextView
+                            android:id="@+id/promocode_amount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="$0"
+                            android:textColor="@color/colorSecondaryText" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -221,7 +246,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Discount"
+                            android:text="Shop Discount"
                             android:textColor="@color/colorSecondaryText" />
 
                         <TextView

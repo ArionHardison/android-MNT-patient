@@ -46,7 +46,7 @@ public class OrderDetailFragment extends Fragment {
     List<Item> itemList;
 
     int totalAmountValue = 0;
-    int discount = 0;
+    double discount = 0;
     int itemCount = 0;
     int itemQuantity = 0;
     String currency = "";
@@ -54,6 +54,8 @@ public class OrderDetailFragment extends Fragment {
     TextView discountAmount;
     @BindView(R.id.wallet_amount_detection)
     TextView walletAmountDetection;
+    @BindView(R.id.promocode_amount)
+    TextView promocodeAmount;
 
 
     public OrderDetailFragment() {
@@ -83,10 +85,15 @@ public class OrderDetailFragment extends Fragment {
 
             currency = order.getItems().get(0).getProduct().getPrices().getCurrency();
             itemQuantity = order.getInvoice().getQuantity();
-            itemTotalAmount.setText(currency + order.getInvoice().getGross().toString());
+            itemTotalAmount.setText(currency + String.format("%.2f", order.getInvoice().getGross()));
             serviceTax.setText(currency + order.getInvoice().getTax().toString());
             deliveryCharges.setText(currency + order.getInvoice().getDeliveryCharge().toString());
-            discountAmount.setText("-"+currency + order.getInvoice().getDiscount().toString());
+
+            discount = order.getInvoice().getDiscount();
+
+            discountAmount.setText(currency+"-"+discount);
+
+            promocodeAmount.setText(""+currency+"-"+order.getInvoice().getPromocode_amount());
             walletAmountDetection.setText(currency + order.getInvoice().getWalletAmount().toString());
             totalAmount.setText(currency + String.valueOf(order.getInvoice().getPayable()));
         }
