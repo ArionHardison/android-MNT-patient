@@ -236,7 +236,11 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             public void run() {
                 if (customdata != null) {
                     getParticularOrders(customdata.getCustomData().get(0).getOrderId());
-                } else getParticularOrders(isSelectedOrder.getId());
+                } else{
+//                    if (isSelectedOrder!=null) {
+                        getParticularOrders(isSelectedOrder.getId());
+//                    }
+                }
 
                 handler.postDelayed(this, 5000);
             }
@@ -731,7 +735,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                     customDialog.dismiss();
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
                     }
@@ -816,7 +820,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
                     }
