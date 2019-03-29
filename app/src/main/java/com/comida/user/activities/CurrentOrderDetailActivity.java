@@ -152,7 +152,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
     String currency = "";
     @BindView(R.id.order_flow_rv)
     RecyclerView orderFlowRv;
-
+    int rating = 5;
     SupportMapFragment mapFragment;
     public static TextView orderCancelTxt;
 
@@ -796,6 +796,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                         liveNavigation(isSelectedOrder.getTransporter().getLatitude(),
                                 isSelectedOrder.getTransporter().getLongitude());
                     }
+
                     if (!isSelectedOrder.getStatus().equalsIgnoreCase(previousStatus)) {
                         previousStatus = isSelectedOrder.getStatus();
                         adapter.notifyDataSetChanged();
@@ -1005,13 +1006,29 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             View dialogView = inflater.inflate(R.layout.feedback_popup, frameView);
             alertDialog.show();
 
-            final Integer[] rating = {5};
             final RadioGroup rateRadioGroup = (RadioGroup) dialogView.findViewById(R.id.rate_radiogroup);
             ((RadioButton) rateRadioGroup.getChildAt(4)).setChecked(true);
+            rateRadioGroup.setOnCheckedChangeListener(null);
             rateRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                    rating[0] = i;
+                    if (i == R.id.one) {
+                        //do work when radioButton1 is active
+                        rating = 1;
+                    } else  if (i == R.id.two) {
+                        //do work when radioButton2 is active
+                        rating = 2;
+                    } else  if (i == R.id.three) {
+                        //do work when radioButton3 is active
+                        rating = 3;
+                    } else  if (i == R.id.four) {
+                        //do work when radioButton3 is active
+                        rating = 4;
+                    } else  if (i == R.id.five) {
+                        //do work when radioButton3 is active
+                        rating = 5;
+                    }
+                    Log.d("gfgfgf", "onCheckedChanged: "+rating);
                 }
             });
 
@@ -1023,7 +1040,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                     if (GlobalData.isSelectedOrder != null && GlobalData.isSelectedOrder.getId() != null) {
                         HashMap<String, String> map = new HashMap<>();
                         map.put("order_id", String.valueOf(GlobalData.isSelectedOrder.getId()));
-                        map.put("rating", String.valueOf(rating[0]));
+                        map.put("rating", String.valueOf(rating));
                         map.put("comment", comment.getText().toString());
                         map.put("type", "transporter");
                         rateTransporter(map);

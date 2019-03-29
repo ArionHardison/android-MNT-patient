@@ -27,10 +27,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.comida.user.adapter.ViewCartAdapter;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.ViewSkeletonScreen;
 import com.comida.user.HeaderView;
@@ -50,6 +52,8 @@ import com.comida.user.utils.Utils;
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+
+import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -154,6 +158,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
                 onBackPressed();
             }
         });
+
         appBarLayout.addOnOffsetChangedListener(this);
         categoryList = new ArrayList<>();
         shops = GlobalData.selectedShop;
@@ -315,14 +320,71 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
                     }
                 }
             });
-            skeleton = Skeleton.bind(rootLayout)
-                    .load(R.layout.skeleton_hotel_view)
-                    .show();
+
 
         } else {
             startActivity(new Intent(context, SplashActivity.class));
             finish();
         }
+
+        skeleton = Skeleton.bind(rootLayout)
+                .load(R.layout.skeleton_hotel_view)
+                .show();
+
+        getViewCart();
+    }
+
+
+    private void getViewCart() {
+        skeleton.show();
+        Call<AddCart> call = apiInterface.getViewCart();
+        call.enqueue(new Callback<AddCart>() {
+            @Override
+            public void onResponse(Call<AddCart> call, Response<AddCart> response) {
+                skeleton.hide();
+                if (response != null && !response.isSuccessful() && response.errorBody() != null) {
+                    GlobalData.addCart = null;
+                } else if (response.isSuccessful()) {
+                    //get Item Count
+                    itemCount = response.body().getProductList().size();
+                    GlobalData.getInstance().notificationCount = response.body().getProductList().size();
+                    if (itemCount == 0) {
+                        GlobalData.addCart = response.body();
+                    } else {
+                        AddCart addCart = response.body();
+                        GlobalData.addCart = response.body();
+                        for (int i = 0; i < itemCount; i++) {
+                            //Get Total item Quantity
+                            itemQuantity = itemQuantity + response.body().getProductList().get(i).getQuantity();
+                            //Get product price
+                            if (response.body().getProductList().get(i).getProduct().getPrices().getOrignalPrice() != null)
+                                priceAmount = priceAmount + (response.body().getProductList().get(i).getQuantity() * response.body().getProductList().get(i).getProduct().getPrices().getOrignalPrice());
+
+                            if (addCart.getProductList().get(i).getCartAddons() != null && !addCart.getProductList().get(i).getCartAddons().isEmpty()) {
+                                for (int j = 0; j < addCart.getProductList().get(i).getCartAddons().size(); j++) {
+                                    priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * (addCart.getProductList().get(i).getCartAddons().get(j).getQuantity() *
+                                            addCart.getProductList().get(i).getCartAddons().get(j).getAddonProduct().getPrice()));
+                                }
+                            }
+                        }
+                        GlobalData.notificationCount = itemQuantity;
+                        GlobalData.getInstance().addCartShopId = response.body().getProductList().get(0).getProduct().getShopId();
+                        //Set Payment details
+                        String currency = response.body().getProductList().get(0).getProduct().getPrices().getCurrency();
+                        if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() != null) {
+                            if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() < priceAmount) {
+                                int offerPercentage = response.body().getProductList().get(0).getProduct().getShop().getOfferPercent();
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddCart> call, Throwable t) {
+
+            }
+        });
     }
 
     private void deleteFavorite(Integer id) {

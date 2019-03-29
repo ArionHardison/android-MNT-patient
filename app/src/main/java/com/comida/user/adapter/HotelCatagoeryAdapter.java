@@ -511,6 +511,7 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
 //                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 } else if (response.isSuccessful()) {
+                    dialog.dismiss();
                     if (selectedShop != null)
                         GlobalData.addCartShopId = selectedShop.getId();
                     addCart = response.body();
