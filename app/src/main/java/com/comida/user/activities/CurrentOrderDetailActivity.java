@@ -155,7 +155,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
     int rating = 5;
     SupportMapFragment mapFragment;
     public static TextView orderCancelTxt;
-
+    public static Location prevLoc;
     Context context;
     Intent orderIntent;
     OrderFlowAdapter adapter;
@@ -868,6 +868,13 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
 
             final float startRotation = marker.getRotation();
 
+            if (prevLoc == null){
+                prevLoc = destination;
+            }
+            final float bearing = prevLoc.bearingTo(destination) ;
+
+            prevLoc = destination;
+
             final LatLngInterpolator latLngInterpolator = new LatLngInterpolator.LinearFixed();
             ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
             valueAnimator.setDuration(1000); // duration 1 second
@@ -879,7 +886,8 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                         float v = animation.getAnimatedFraction();
                         LatLng newPosition = latLngInterpolator.interpolate(v, startPosition, endPosition);
                         marker.setPosition(newPosition);
-                        marker.setRotation(computeRotation(v, startRotation, destination.getBearing()));
+//                        marker.setRotation(computeRotation(v, startRotation, destination.getBearing()));
+                        marker.setRotation(bearing);
                     } catch (Exception ex) {
                         // I don't care atm..
                     }
