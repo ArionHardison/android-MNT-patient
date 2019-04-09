@@ -1,185 +1,56 @@
 {
   "project_info": {
-    "project_number": "220553011635",
-    "firebase_url": "https://comida-95a57.firebaseio.com",
-    "project_id": "comida-95a57",
-    "storage_bucket": "comida-95a57.appspot.com"
+    "project_number": "651382341166",
+    "firebase_url": "https://snabbmaten-1551800631790.firebaseio.com",
+    "project_id": "snabbmaten-1551800631790",
+    "storage_bucket": "snabbmaten-1551800631790.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:220553011635:android:85580b3b2581593d",
+        "mobilesdk_app_id": "1:651382341166:android:d6f1a24aa982875a",
         "android_client_info": {
-          "package_name": "com.comida.deliver"
+          "package_name": "com.snabbmaten.deliver"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "220553011635-aqrai5ur98rr7jh4lmm2609hfpidsmsb.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.comida.deliver",
-            "certificate_hash": "8cf37960e11bc0f20d54fc52f14aae89f6bf6937"
-          }
-        },
-        {
-          "client_id": "220553011635-0r3mu08q856j2vpb6m4rglplfpg2dojq.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.comida.deliver",
-            "certificate_hash": "5b9ef4619290504a0400dc60cf627cbb871b5cc0"
-          }
-        },
-        {
-          "client_id": "220553011635-fo4q5ij92n5c2fo7lnjbiunafd1d5mra.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBKBYvi9eonk07evEhl4isqX7tgy5SGhbY"
+          "current_key": "AIzaSyARuTp-AxbWcADTsIHlPoTmldGx8nRqe7w"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "220553011635-kjrq5hvet1m3thkf9mmu978barqrptar.apps.googleusercontent.com",
+              "client_id": "651382341166-o8j735r8e3q3u7h5mpcdm4ggm4qchuv2.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "220553011635-hp8pacd86r3127tbdepl32jg4p4n5a8q.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.app.comidaRestaurant"
-              }
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:220553011635:android:5dac24766a4d0002",
+        "mobilesdk_app_id": "1:651382341166:android:f7ac8ec8f264bdc8",
         "android_client_info": {
-          "package_name": "com.comida.outlet"
+          "package_name": "com.snabbmaten.user"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "220553011635-868ak9smut005odlhrmtkhi6pa3s4fb1.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.comida.outlet",
-            "certificate_hash": "8cf37960e11bc0f20d54fc52f14aae89f6bf6937"
-          }
-        },
-        {
-          "client_id": "220553011635-edhnsl8tp2eof1bfqggipvtm7rgdfcgb.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.comida.outlet",
-            "certificate_hash": "12c79d71acbee4eda4de3bafad6520bd5de876e0"
-          }
-        },
-        {
-          "client_id": "220553011635-fo4q5ij92n5c2fo7lnjbiunafd1d5mra.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBKBYvi9eonk07evEhl4isqX7tgy5SGhbY"
+          "current_key": "AIzaSyARuTp-AxbWcADTsIHlPoTmldGx8nRqe7w"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "220553011635-kjrq5hvet1m3thkf9mmu978barqrptar.apps.googleusercontent.com",
+              "client_id": "651382341166-o8j735r8e3q3u7h5mpcdm4ggm4qchuv2.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "220553011635-hp8pacd86r3127tbdepl32jg4p4n5a8q.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.app.comidaRestaurant"
-              }
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:220553011635:android:8b4777ced56f2679",
-        "android_client_info": {
-          "package_name": "com.comida.user"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "220553011635-ht165am3j7iqk0opnd9jrfglh10307cl.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.comida.user",
-            "certificate_hash": "8cf37960e11bc0f20d54fc52f14aae89f6bf6937"
-          }
-        },
-        {
-          "client_id": "220553011635-gtdrfhbphtuk5b9rccrj8b3llg0so7jn.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.comida.user",
-            "certificate_hash": "3919532a1f0842b1c3bb5af869895856478c3f3e"
-          }
-        },
-        {
-          "client_id": "220553011635-fo4q5ij92n5c2fo7lnjbiunafd1d5mra.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBKBYvi9eonk07evEhl4isqX7tgy5SGhbY"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "220553011635-kjrq5hvet1m3thkf9mmu978barqrptar.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "220553011635-hp8pacd86r3127tbdepl32jg4p4n5a8q.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.app.comidaRestaurant"
-              }
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

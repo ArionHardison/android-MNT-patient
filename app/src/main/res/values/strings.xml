@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">"Comida"</string>
+    <string name="app_name" translatable="false">"Snabbmaten"</string>
 
     <string name="facebook_app_id">373720729876682</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb373720729876682</string>

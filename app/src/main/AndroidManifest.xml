@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.comida.user">
+    package="com.snabbmaten.user">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -16,7 +16,7 @@
 
 
     <application
-        android:name=".MyApplication"
+        android:name="com.snabbmaten.user.MyApplication"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
@@ -48,11 +48,11 @@
             android:value="true" />
 
         <activity
-            android:name=".activities.WelcomeScreenActivity"
+            android:name="com.snabbmaten.user.activities.WelcomeScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.SplashActivity"
+            android:name="com.snabbmaten.user.activities.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -62,12 +62,12 @@
             </intent-filter>
         </activity>
         <!-- Firebase Notifications -->
-        <service android:name=".fcm.MyFirebaseMessagingService">
+        <service android:name="com.snabbmaten.user.fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".fcm.MyFirebaseInstanceIDService">
+        <service android:name="com.snabbmaten.user.fcm.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
@@ -86,7 +86,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name="com.snabbmaten.user.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing" />
@@ -96,107 +96,107 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".activities.LoginActivity"
+            android:name="com.snabbmaten.user.activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.AddCardActivity"
+            android:name="com.snabbmaten.user.activities.AddCardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.OtpActivity"
+            android:name="com.snabbmaten.user.activities.OtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.MobileNumberActivity"
+            android:name="com.snabbmaten.user.activities.MobileNumberActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.SignUpActivity"
+            android:name="com.snabbmaten.user.activities.SignUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.ForgotPasswordActivity"
+            android:name="com.snabbmaten.user.activities.ForgotPasswordActivity"
             android:label="@string/forgot_password"
-            android:parentActivityName=".activities.LoginActivity"
+            android:parentActivityName="com.snabbmaten.user.activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.HotelViewActivity"
+            android:name="com.snabbmaten.user.activities.HotelViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.ChangePasswordActivity"
+            android:name="com.snabbmaten.user.activities.ChangePasswordActivity"
             android:label="Change Password"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.FavouritesActivity"
+            android:name="com.snabbmaten.user.activities.FavouritesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.RecommendedListActivity"
+            android:name="com.snabbmaten.user.activities.RecommendedListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.EditAccountActivity"
+            android:name="com.snabbmaten.user.activities.EditAccountActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.SetDeliveryLocationActivity"
+            android:name="com.snabbmaten.user.activities.SetDeliveryLocationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.SaveDeliveryLocationActivity"
+            android:name="com.snabbmaten.user.activities.SaveDeliveryLocationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.ManageAddressActivity"
+            android:name="com.snabbmaten.user.activities.ManageAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.AccountPaymentActivity"
+            android:name="com.snabbmaten.user.activities.AccountPaymentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.OrdersActivity"
+            android:name="com.snabbmaten.user.activities.OrdersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.FilterActivity"
+            android:name="com.snabbmaten.user.activities.FilterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.ViewCartActivity"
+            android:name="com.snabbmaten.user.activities.ViewCartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.PastOrderDetailActivity"
+            android:name="com.snabbmaten.user.activities.PastOrderDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.OtherHelpActivity"
+            android:name="com.snabbmaten.user.activities.OtherHelpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.NotificationActivity"
+            android:name="com.snabbmaten.user.activities.NotificationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.PromotionActivity"
+            android:name="com.snabbmaten.user.activities.PromotionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.CurrentOrderDetailActivity"
+            android:name="com.snabbmaten.user.activities.CurrentOrderDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.AddMoneyActivity"
+            android:name="com.snabbmaten.user.activities.AddMoneyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".activities.WalletActivity"
+            android:name="com.snabbmaten.user.activities.WalletActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
@@ -205,10 +205,10 @@
             android:value="3aef7a5b05836cf8166f23c95e43c52517bee917" />
 
         <activity
-            android:name=".activities.ResetPasswordActivity"
+            android:name="com.snabbmaten.user.activities.ResetPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.SecretKeyActivity"
+            android:name="com.snabbmaten.user.activities.SecretKeyActivity"
             android:screenOrientation="portrait" />
 
         <!--<provider-->
@@ -222,8 +222,8 @@
         <!--</provider>-->
 
         <activity
-            android:name=".activities.ProductDetailActivity"
-            android:parentActivityName=".activities.HotelViewActivity"
+            android:name="com.snabbmaten.user.activities.ProductDetailActivity"
+            android:parentActivityName="com.snabbmaten.user.activities.HotelViewActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
     </application>

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:background="#eee"
     android:layout_height="match_parent"
-    tools:context="com.comida.user.fragments.RestaurantSearchFragment">
+    tools:context="com.snabbmaten.user.fragments.RestaurantSearchFragment">
 
 
     <android.support.v7.widget.RecyclerView

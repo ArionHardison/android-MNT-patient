@@ -21,7 +21,7 @@ android {
     buildToolsVersion '28.0.3'
     defaultConfig {
 
-        applicationId "com.comida.user"
+        applicationId "com.snabbmaten.user"
         minSdkVersion 19
         targetSdkVersion 28
         vectorDrawables.useSupportLibrary = true

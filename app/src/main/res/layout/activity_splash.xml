@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="#FFFFFF"
-    tools:context="com.comida.user.activities.SplashActivity">
+    tools:context="com.snabbmaten.user.activities.SplashActivity">
 
     <ImageView
         android:layout_gravity="center"
-        android:layout_width="@dimen/_120sdp"
-        android:layout_height="@dimen/_120sdp"
+        android:layout_width="@dimen/_220sdp"
+        android:layout_height="@dimen/_220sdp"
         android:scaleType="centerInside"
         android:src="@drawable/logo_app" />
 
