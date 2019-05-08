@@ -14,7 +14,8 @@ public class BuildConfigure {
 
     /*   Dev Mode*/
     public static String BASE_URL = "https://snabbmaten.com/";
-    public static String CLIENT_SECRET = "AFs5pLpNd1W9hbgRMl5UfXoQBG1rGAfV4BUpRzv5";
+
+    public static String CLIENT_SECRET = "9yGKG3xgtICyINUrEgsSxSzeZIeZ0dol6ALSIB5k";
     public static String CLIENT_ID = "2";
 
     //Pubnub for Chat

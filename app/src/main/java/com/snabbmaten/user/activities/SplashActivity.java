@@ -6,35 +6,37 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.snabbmaten.user.BuildConfig;
 import com.snabbmaten.user.HomeActivity;
 import com.snabbmaten.user.R;
+import com.snabbmaten.user.SmsRetrive.AppSignatureHelper;
 import com.snabbmaten.user.build.api.ApiClient;
 import com.snabbmaten.user.build.api.ApiInterface;
-import com.snabbmaten.user.helper.GlobalData;
 import com.snabbmaten.user.helper.ConnectionHelper;
+import com.snabbmaten.user.helper.GlobalData;
 import com.snabbmaten.user.helper.SharedHelper;
 import com.snabbmaten.user.models.AddCart;
 import com.snabbmaten.user.models.AddressList;
 import com.snabbmaten.user.models.User;
 import com.snabbmaten.user.utils.Utils;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
@@ -43,6 +45,7 @@ import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.snabbmaten.user.helper.GlobalData.addCart;
+import static com.snabbmaten.user.helper.GlobalData.profileModel;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -63,6 +66,26 @@ public class SplashActivity extends AppCompatActivity {
         context = SplashActivity.this;
         connectionHelper = new ConnectionHelper(context);
         getDeviceToken();
+        // OTP REtriver
+        List<String> list = new AppSignatureHelper(this).getAppSignatures();
+        Log.d(TAG, "HASH " + list.toString());
+        GlobalData.hashcode = list.get(0);
+        /*SmsRetrieverClient client = SmsRetriever.getClient(this);
+        Task<Void> task = client.startSmsRetriever();
+        task.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "Successfully started retriever");
+            }
+        });
+
+        task.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, e.getLocalizedMessage());
+                Log.d(TAG, " started retriever failed");
+            }
+        });*/
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -71,7 +94,10 @@ public class SplashActivity extends AppCompatActivity {
                 //Do something after 3000ms
                 if (SharedHelper.getKey(context, "logged").equalsIgnoreCase("true") && SharedHelper.getKey(context, "logged") != null) {
                     GlobalData.accessToken = SharedHelper.getKey(context, "access_token");
-                    if (connectionHelper.isConnectingToInternet()) getProfile();
+                    if (connectionHelper.isConnectingToInternet()) {
+                        getDeviceToken();
+                        getProfile();
+                    }
                     else displayMessage(getString(R.string.oops_connect_your_internet));
                 } else {
 
@@ -139,6 +165,11 @@ public class SplashActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     SharedHelper.putKey(context, "logged", "true");
                     GlobalData.profileModel = response.body();
+                    GlobalData.currencySymbol = profileModel.getCurrency();
+                    GlobalData.currency = profileModel.getCurrency_code();
+                    GlobalData.terms = profileModel.getTerms();
+                    GlobalData.privacy = profileModel.getPrivacy();
+
                     addCart = new AddCart();
                     addCart.setProductList(response.body().getCart());
                     GlobalData.addressList = new AddressList();

@@ -31,6 +31,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.ViewSkeletonScreen;
+import com.robinhood.ticker.TickerUtils;
 import com.snabbmaten.user.HomeActivity;
 import com.snabbmaten.user.R;
 import com.snabbmaten.user.activities.AccountPaymentActivity;
@@ -40,13 +41,12 @@ import com.snabbmaten.user.activities.SetDeliveryLocationActivity;
 import com.snabbmaten.user.adapter.ViewCartAdapter;
 import com.snabbmaten.user.build.api.ApiClient;
 import com.snabbmaten.user.build.api.ApiInterface;
-import com.snabbmaten.user.helper.GlobalData;
 import com.snabbmaten.user.helper.ConnectionHelper;
 import com.snabbmaten.user.helper.CustomDialog;
+import com.snabbmaten.user.helper.GlobalData;
 import com.snabbmaten.user.models.AddCart;
 import com.snabbmaten.user.models.Cart;
 import com.snabbmaten.user.utils.Utils;
-import com.robinhood.ticker.TickerUtils;
 
 import org.json.JSONObject;
 
@@ -175,15 +175,15 @@ public class CartFragment extends Fragment {
 
 
         /*  Intialize Global Values*/
-        itemTotalAmount = (TextView) view.findViewById(R.id.item_total_amount);
-        deliveryCharges = (TextView) view.findViewById(R.id.delivery_charges);
-        discountAmount = (TextView) view.findViewById(R.id.discount_amount);
-        promocode_amount = (TextView) view.findViewById(R.id.promocode_amount);
-        serviceTax = (TextView) view.findViewById(R.id.service_tax);
-        payAmount = (TextView) view.findViewById(R.id.total_amount);
-        dataLayout = (RelativeLayout) view.findViewById(R.id.data_layout);
-        lnrPromocodeAmount = (LinearLayout) view.findViewById(R.id.lnrPromocodeAmount);
-        errorLayout = (RelativeLayout) view.findViewById(R.id.error_layout);
+        itemTotalAmount = view.findViewById(R.id.item_total_amount);
+        deliveryCharges = view.findViewById(R.id.delivery_charges);
+        discountAmount = view.findViewById(R.id.discount_amount);
+        promocode_amount = view.findViewById(R.id.promocode_amount);
+        serviceTax = view.findViewById(R.id.service_tax);
+        payAmount = view.findViewById(R.id.total_amount);
+        dataLayout = view.findViewById(R.id.data_layout);
+        lnrPromocodeAmount = view.findViewById(R.id.lnrPromocodeAmount);
+        errorLayout = view.findViewById(R.id.error_layout);
 
         GlobalData.addCart = null;
 
@@ -201,29 +201,29 @@ public class CartFragment extends Fragment {
         orderItemRv.setNestedScrollingEnabled(false);
 
         //Intialize address Value
-        if (GlobalData.getInstance().selectedAddress != null && GlobalData.getInstance().selectedAddress.getLandmark() != null) {
-            if (GlobalData.getInstance().addressList.getAddresses().size() == 1)
+        if (GlobalData.selectedAddress != null && GlobalData.selectedAddress.getLandmark() != null) {
+            if (GlobalData.addressList.getAddresses().size() == 1)
                 addAddressTxt.setText(getString(R.string.add_address));
             else
                 addAddressTxt.setText(getString(R.string.change_address));
             addAddressBtn.setBackgroundResource(R.drawable.button_corner_bg_green);
             addAddressBtn.setText(getResources().getString(R.string.proceed_to_pay));
-            addressHeader.setText(GlobalData.getInstance().selectedAddress.getType());
-            addressDetail.setText(GlobalData.getInstance().selectedAddress.getMapAddress());
+            addressHeader.setText(GlobalData.selectedAddress.getType());
+            addressDetail.setText(GlobalData.selectedAddress.getMapAddress());
             if (viewCartItemList != null && viewCartItemList.size() != 0)
                 addressDeliveryTime.setText(viewCartItemList.get(0).getProduct().getShop().getEstimatedDeliveryTime().toString() + " Mins");
-        } else if (GlobalData.getInstance().addressList != null) {
+        } else if (GlobalData.addressList != null) {
             addAddressBtn.setBackgroundResource(R.drawable.button_corner_bg_theme);
             addAddressBtn.setText(getResources().getString(R.string.add_address));
-            locationErrorSubTitle.setText(GlobalData.getInstance().addressHeader);
+            locationErrorSubTitle.setText(GlobalData.addressHeader);
             selectedAddressBtn.setVisibility(View.VISIBLE);
             locationErrorLayout.setVisibility(View.VISIBLE);
             locationInfoLayout.setVisibility(View.GONE);
         } else {
-            if (GlobalData.getInstance().selectedAddress != null)
+            if (GlobalData.selectedAddress != null)
                 locationErrorSubTitle.setText(GlobalData.selectedAddress.getMapAddress());
             else
-                locationErrorSubTitle.setText(GlobalData.getInstance().addressHeader);
+                locationErrorSubTitle.setText(GlobalData.addressHeader);
             locationErrorLayout.setVisibility(View.VISIBLE);
             selectedAddressBtn.setVisibility(View.GONE);
             locationInfoLayout.setVisibility(View.GONE);
@@ -250,7 +250,7 @@ public class CartFragment extends Fragment {
                     customDialog.dismiss();
                     //get Item Count
                     itemCount = response.body().getProductList().size();
-                    GlobalData.getInstance().notificationCount = response.body().getProductList().size();
+                    GlobalData.notificationCount = response.body().getProductList().size();
                     if (itemCount == 0) {
                         errorLayout.setVisibility(View.VISIBLE);
                         dataLayout.setVisibility(View.GONE);
@@ -275,7 +275,7 @@ public class CartFragment extends Fragment {
                             }
                         }
                         GlobalData.notificationCount = itemQuantity;
-                        GlobalData.getInstance().addCartShopId = response.body().getProductList().get(0).getProduct().getShopId();
+                        GlobalData.addCartShopId = response.body().getProductList().get(0).getProduct().getShopId();
                         //Set Payment details
                         String currency = response.body().getProductList().get(0).getProduct().getPrices().getCurrency();
                         itemTotalAmount.setText(currency + "" + String.format("%.2f", priceAmount));
@@ -343,7 +343,7 @@ public class CartFragment extends Fragment {
                     customDialog.dismiss();
                     //get Item Count
                     itemCount = response.body().getProductList().size();
-                    GlobalData.getInstance().notificationCount = response.body().getProductList().size();
+                    GlobalData.notificationCount = response.body().getProductList().size();
                     if (itemCount == 0) {
                         errorLayout.setVisibility(View.VISIBLE);
                         dataLayout.setVisibility(View.GONE);
@@ -369,7 +369,7 @@ public class CartFragment extends Fragment {
                             }
                         }
                         GlobalData.notificationCount = itemQuantity;
-                        GlobalData.getInstance().addCartShopId = response.body().getProductList().get(0).getProduct().getShopId();
+                        GlobalData.addCartShopId = response.body().getProductList().get(0).getProduct().getShopId();
                         //Set Payment details
                         String currency = response.body().getProductList().get(0).getProduct().getPrices().getCurrency();
                         itemTotalAmount.setText(currency + "" + String.format("%.2f", priceAmount));
@@ -450,7 +450,7 @@ public class CartFragment extends Fragment {
                 deliveryCharges.setText(currency + " " + GlobalData.addCart.getDeliveryCharges().toString());
                 discountAmount.setText("- " + currency + "" + GlobalData.addCart.getShopDiscount());
                 serviceTax.setText(currency + " " + GlobalData.addCart.getTax() + "");
-                payAmount.setText(currency + " " + String.format("%.2f", GlobalData.addCart.getPayable().toString()));
+                payAmount.setText(currency + " " + String.format("%.2f", GlobalData.addCart.getPayable()));
                 dataLayout.setVisibility(View.VISIBLE);
                 errorLayout.setVisibility(View.GONE);
                 skeleton.hide();
@@ -506,9 +506,9 @@ public class CartFragment extends Fragment {
         final Dialog dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.feedback);
-        EditText commentEdit = (EditText) dialog.findViewById(R.id.comment);
+        EditText commentEdit = dialog.findViewById(R.id.comment);
 
-        Button submitBtn = (Button) dialog.findViewById(R.id.submit);
+        Button submitBtn = dialog.findViewById(R.id.submit);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -522,7 +522,7 @@ public class CartFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         System.out.println("CartFragment");
-        toolbar = (ViewGroup) getActivity().findViewById(R.id.toolbar);
+        toolbar = getActivity().findViewById(R.id.toolbar);
         if (toolbar != null) {
             toolbar.setVisibility(View.GONE);
             dummyImageView.setVisibility(View.VISIBLE);
@@ -567,7 +567,7 @@ public class CartFragment extends Fragment {
                 if (connectionHelper.isConnectingToInternet()) {
 //                    checkOut(GlobalData.getInstance().selectedAddress.getId());
                     checkoutMap = new HashMap<>();
-                    checkoutMap.put("user_address_id", "" + GlobalData.getInstance().selectedAddress.getId());
+                    checkoutMap.put("user_address_id", "" + GlobalData.selectedAddress.getId());
                     checkoutMap.put("note", "" + customNotes.getText());
 
                     if (!promo_code.equalsIgnoreCase("")){
@@ -600,18 +600,18 @@ public class CartFragment extends Fragment {
         System.out.print("CartFragment");
         if (requestCode == ADDRESS_SELECTION && resultCode == Activity.RESULT_OK) {
             System.out.print("CartFragment : Success");
-            if (GlobalData.getInstance().selectedAddress != null) {
+            if (GlobalData.selectedAddress != null) {
                 locationErrorLayout.setVisibility(View.GONE);
                 locationInfoLayout.setVisibility(View.VISIBLE);
                 //Intialize address Value
-                if (GlobalData.getInstance().selectedAddress != null && GlobalData.getInstance().selectedAddress.getLandmark() != null) {
-                    if (GlobalData.getInstance().addressList.getAddresses().size() == 1)
+                if (GlobalData.selectedAddress != null && GlobalData.selectedAddress.getLandmark() != null) {
+                    if (GlobalData.addressList.getAddresses().size() == 1)
                         addAddressTxt.setText(getString(R.string.add_address));
                     else
                         addAddressTxt.setText(getString(R.string.change_address));
                 }
-                addressHeader.setText(GlobalData.getInstance().selectedAddress.getType());
-                addressDetail.setText(GlobalData.getInstance().selectedAddress.getMapAddress());
+                addressHeader.setText(GlobalData.selectedAddress.getType());
+                addressDetail.setText(GlobalData.selectedAddress.getMapAddress());
                 addressDeliveryTime.setText(viewCartItemList.get(0).getProduct().getShop().getEstimatedDeliveryTime().toString() + " Mins");
             } else {
                 locationErrorLayout.setVisibility(View.VISIBLE);
@@ -646,9 +646,9 @@ public class CartFragment extends Fragment {
             LayoutInflater inflater = alertDialog.getLayoutInflater();
             View dialogView = inflater.inflate(R.layout.custom_note_popup, frameView);
 
-            final EditText notes = (EditText) dialogView.findViewById(R.id.notes);
+            final EditText notes = dialogView.findViewById(R.id.notes);
             notes.setText(customNotes.getText());
-            Button submit = (Button) dialogView.findViewById(R.id.custom_note_submit);
+            Button submit = dialogView.findViewById(R.id.custom_note_submit);
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

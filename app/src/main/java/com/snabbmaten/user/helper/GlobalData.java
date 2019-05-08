@@ -12,10 +12,10 @@ import com.snabbmaten.user.models.Category;
 import com.snabbmaten.user.models.Cuisine;
 import com.snabbmaten.user.models.DisputeMessage;
 import com.snabbmaten.user.models.Order;
-import com.snabbmaten.user.models.Product;
-import com.snabbmaten.user.models.User;
 import com.snabbmaten.user.models.Otp;
+import com.snabbmaten.user.models.Product;
 import com.snabbmaten.user.models.Shop;
+import com.snabbmaten.user.models.User;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -31,6 +31,7 @@ import java.util.Locale;
 
 public class GlobalData {
 
+    public static String hashcode = "";
     public Otp otpModel = null;
 
     public static double latitude;
@@ -71,7 +72,10 @@ public class GlobalData {
 
     public static int otpValue = 0;
     public static String mobile = "";
-    public static String currencySymbol = "₹";
+    public static String currencySymbol = "";
+    public static String currency = "";
+    public static String privacy = "";
+    public static String terms = "";
     public static int notificationCount = 0;
 
     //Search Fragment
@@ -80,6 +84,7 @@ public class GlobalData {
 
     public static ArrayList<HashMap<String, String>> foodCart;
     public static String accessToken = "";
+    public static String deviceToken = "";
 
     private static final GlobalData ourInstance = new GlobalData();
 

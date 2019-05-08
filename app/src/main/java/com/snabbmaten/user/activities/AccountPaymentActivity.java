@@ -18,28 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.braintreepayments.api.AndroidPay;
-//import com.braintreepayments.api.BraintreeFragment;
-//import com.braintreepayments.api.PayPal;
-//import com.braintreepayments.api.dropin.DropInActivity;
-//import com.braintreepayments.api.dropin.DropInRequest;
-//import com.braintreepayments.api.dropin.DropInResult;
-//import com.braintreepayments.api.dropin.utils.PaymentMethodType;
-//import com.braintreepayments.api.exceptions.InvalidArgumentException;
-//import com.braintreepayments.api.interfaces.BraintreeCancelListener;
-//import com.braintreepayments.api.interfaces.BraintreeErrorListener;
-//import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener;
-//import com.braintreepayments.api.models.AndroidPayCardNonce;
-//import com.braintreepayments.api.models.CardNonce;
-//import com.braintreepayments.api.models.ClientToken;
-//import com.braintreepayments.api.models.PayPalAccountNonce;
-//import com.braintreepayments.api.models.PaymentMethodNonce;
-//import com.braintreepayments.api.models.PostalAddress;
-//import com.braintreepayments.api.models.VenmoAccountNonce;
 import com.snabbmaten.user.R;
 import com.snabbmaten.user.adapter.AccountPaymentAdapter;
-//import com.foodie.user.braintree.CreateTransactionActivity;
-//import com.foodie.user.braintree.Settings;
 import com.snabbmaten.user.build.api.ApiClient;
 import com.snabbmaten.user.build.api.ApiInterface;
 import com.snabbmaten.user.fragments.CartFragment;
@@ -48,10 +28,6 @@ import com.snabbmaten.user.helper.GlobalData;
 import com.snabbmaten.user.models.Card;
 import com.snabbmaten.user.models.Message;
 import com.snabbmaten.user.models.Order;
-//import com.google.android.gms.identity.intents.model.CountrySpecification;
-//import com.google.android.gms.identity.intents.model.UserAddress;
-//import com.google.android.gms.wallet.Cart;
-//import com.google.android.gms.wallet.LineItem;
 
 import org.json.JSONObject;
 
@@ -73,6 +49,31 @@ import static android.view.View.VISIBLE;
 import static com.snabbmaten.user.helper.GlobalData.cardArrayList;
 import static com.snabbmaten.user.helper.GlobalData.currencySymbol;
 import static com.snabbmaten.user.helper.GlobalData.isCardChecked;
+
+//import com.braintreepayments.api.AndroidPay;
+//import com.braintreepayments.api.BraintreeFragment;
+//import com.braintreepayments.api.PayPal;
+//import com.braintreepayments.api.dropin.DropInActivity;
+//import com.braintreepayments.api.dropin.DropInRequest;
+//import com.braintreepayments.api.dropin.DropInResult;
+//import com.braintreepayments.api.dropin.utils.PaymentMethodType;
+//import com.braintreepayments.api.exceptions.InvalidArgumentException;
+//import com.braintreepayments.api.interfaces.BraintreeCancelListener;
+//import com.braintreepayments.api.interfaces.BraintreeErrorListener;
+//import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener;
+//import com.braintreepayments.api.models.AndroidPayCardNonce;
+//import com.braintreepayments.api.models.CardNonce;
+//import com.braintreepayments.api.models.ClientToken;
+//import com.braintreepayments.api.models.PayPalAccountNonce;
+//import com.braintreepayments.api.models.PaymentMethodNonce;
+//import com.braintreepayments.api.models.PostalAddress;
+//import com.braintreepayments.api.models.VenmoAccountNonce;
+//import com.foodie.user.braintree.CreateTransactionActivity;
+//import com.foodie.user.braintree.Settings;
+//import com.google.android.gms.identity.intents.model.CountrySpecification;
+//import com.google.android.gms.identity.intents.model.UserAddress;
+//import com.google.android.gms.wallet.Cart;
+//import com.google.android.gms.wallet.LineItem;
 
 public class AccountPaymentActivity extends AppCompatActivity  {
 //    public class AccountPaymentActivity extends AppCompatActivity implements PaymentMethodNonceCreatedListener,
@@ -135,10 +136,10 @@ public class AccountPaymentActivity extends AppCompatActivity  {
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         context = AccountPaymentActivity.this;
         customDialog = new CustomDialog(context);
-        cashPaymentLayout = (LinearLayout) findViewById(R.id.cash_payment_layout);
-        walletPaymentLayout = (LinearLayout) findViewById(R.id.wallet_payment_layout);
-        proceedToPayBtn = (Button) findViewById(R.id.proceed_to_pay_btn);
-        cashCheckBox = (RadioButton) findViewById(R.id.cash_check_box);
+        cashPaymentLayout = findViewById(R.id.cash_payment_layout);
+        walletPaymentLayout = findViewById(R.id.wallet_payment_layout);
+        proceedToPayBtn = findViewById(R.id.proceed_to_pay_btn);
+        cashCheckBox = findViewById(R.id.cash_check_box);
 
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back);
@@ -229,7 +230,7 @@ public class AccountPaymentActivity extends AppCompatActivity  {
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
                     }
@@ -393,7 +394,7 @@ public class AccountPaymentActivity extends AppCompatActivity  {
     protected void onResume() {
         super.onResume();
         String walletMoney = GlobalData.profileModel.getWalletBalance();
-        walletAmtTxt.setText(currencySymbol + " " + String.valueOf(walletMoney));
+        walletAmtTxt.setText(currencySymbol + " " + walletMoney);
         getCardList();
 //        if (mPurchased) {
 //            mPurchased = false;

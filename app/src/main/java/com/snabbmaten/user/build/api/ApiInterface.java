@@ -8,7 +8,6 @@ import com.snabbmaten.user.models.AddCart;
 import com.snabbmaten.user.models.AddMoney;
 import com.snabbmaten.user.models.Address;
 import com.snabbmaten.user.models.Card;
-import com.snabbmaten.user.models.Message;
 import com.snabbmaten.user.models.ChangePassword;
 import com.snabbmaten.user.models.ClearCart;
 import com.snabbmaten.user.models.Cuisine;
@@ -17,6 +16,7 @@ import com.snabbmaten.user.models.Favorite;
 import com.snabbmaten.user.models.FavoriteList;
 import com.snabbmaten.user.models.ForgotPassword;
 import com.snabbmaten.user.models.LoginModel;
+import com.snabbmaten.user.models.Message;
 import com.snabbmaten.user.models.Order;
 import com.snabbmaten.user.models.Otp;
 import com.snabbmaten.user.models.PromotionResponse;
@@ -82,7 +82,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("api/user/forgot/password")
-    Call<ForgotPassword> forgotPassword(@Field("phone") String mobile);
+    Call<ForgotPassword> forgotPassword(@Field("phone") String mobile, @Field("hashcode") String hashcode);
 
     @FormUrlEncoded
     @POST("api/user/reset/password")

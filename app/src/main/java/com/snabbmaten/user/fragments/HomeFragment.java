@@ -27,7 +27,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
 import com.snabbmaten.user.HomeActivity;
@@ -171,8 +170,13 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                         longitude = selectedAddress.getLongitude();
                         break;
                     } else {
-                        addressLabel.setText(GlobalData.addressHeader);
-                        addressTxt.setText(GlobalData.address);
+                        String address = getAddress(latitude, longitude);
+                        if (address != null) {
+                            addressLabel.setText(context.getString(R.string.home));
+                            addressTxt.setText(address);
+                        }
+                        /*addressLabel.setText(GlobalData.addressHeader);
+                        addressTxt.setText(GlobalData.address);*/
                     }
                 }
             } else {
@@ -197,13 +201,13 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         super.onActivityCreated(savedInstanceState);
         System.out.println("HomeFragment");
         connectionHelper = new ConnectionHelper(context);
-        toolbar = (ViewGroup) getActivity().findViewById(R.id.toolbar);
+        toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setVisibility(View.VISIBLE);
         toolbarLayout = LayoutInflater.from(context).inflate(R.layout.toolbar_home, toolbar, false);
-        addressLabel = (TextView) toolbarLayout.findViewById(R.id.address_label);
-        addressTxt = (TextView) toolbarLayout.findViewById(R.id.address);
-        locationAddressLayout = (LinearLayout) toolbarLayout.findViewById(R.id.location_ll);
-        errorLoadingLayout = (RelativeLayout) toolbarLayout.findViewById(R.id.error_loading_layout);
+        addressLabel = toolbarLayout.findViewById(R.id.address_label);
+        addressTxt = toolbarLayout.findViewById(R.id.address);
+        locationAddressLayout = toolbarLayout.findViewById(R.id.location_ll);
+        errorLoadingLayout = toolbarLayout.findViewById(R.id.error_loading_layout);
         locationAddressLayout.setVisibility(View.INVISIBLE);
         errorLoadingLayout.setVisibility(View.VISIBLE);
         bannerList = new ArrayList<>();
@@ -296,8 +300,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 }
             }
         });
-        filterBtn = (Button) toolbarLayout.findViewById(R.id.filter);
-        filterSelectionImage = (ImageView) toolbarLayout.findViewById(R.id.filter_selection_image);
+        filterBtn = toolbarLayout.findViewById(R.id.filter);
+        filterSelectionImage = toolbarLayout.findViewById(R.id.filter_selection_image);
         filterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -505,7 +509,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             } else {
                 String address = getAddress(latitude, longitude);
                 if (address != null) {
-                    addressLabel.setText(address);
+                    addressLabel.setText(context.getString(R.string.home));
                     addressTxt.setText(address);
                 } else {
 
@@ -521,11 +525,12 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
 
     public String getAddress(double lat, double lng) {
-        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
         try {
             List<android.location.Address> addresses = geocoder.getFromLocation(lat, lng, 1);
             android.location.Address address = addresses.get(0);
-            String addressLine = address.getAddressLine(0);
+//            String addressLine = address.getAddressLine(0);
+            String addressLine = addresses.get(0).getAddressLine(0);
 
 
 /*                String add = obj.getAddressLine(0);
@@ -537,7 +542,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 add = add + "\n" + obj.getLocality();
                 add = add + "\n" + obj.getSubThoroughfare();*/
 
-            Log.v("IGA", "Address" + addressLine);
+            Log.v("seenu", "Address" + addressLine);
             return addressLine;
             // Toast.makeText(this, "Address=>" + add,
             // Toast.LENGTH_SHORT).show();

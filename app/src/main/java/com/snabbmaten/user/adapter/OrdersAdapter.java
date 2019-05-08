@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.snabbmaten.user.R;
@@ -31,6 +32,8 @@ import com.snabbmaten.user.models.AddCart;
 import com.snabbmaten.user.models.Item;
 import com.snabbmaten.user.models.Order;
 import com.snabbmaten.user.models.OrderModel;
+
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -119,7 +122,7 @@ public class OrdersAdapter extends SectionedRecyclerViewAdapter<OrdersAdapter.Vi
         final Order object = list.get(section).getOrders().get(relativePosition);
         holder.restaurantNameTxt.setText(object.getShop().getName());
         holder.restaurantAddressTxt.setText(object.getShop().getAddress());
-        holder.reorderBtn.setOnClickListener(new View.OnClickListener() {
+         /*holder.reorderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final HashMap<String, String> map = new HashMap<>();
@@ -139,7 +142,7 @@ public class OrdersAdapter extends SectionedRecyclerViewAdapter<OrdersAdapter.Vi
                     Reorder(map);
                 }
             }
-        });
+        });*/
         int lastPostion = relativePosition + 1;
         if (list.get(section).getOrders().size() == 1) {
             holder.dividerLine.setVisibility(View.GONE);
@@ -211,7 +214,27 @@ public class OrdersAdapter extends SectionedRecyclerViewAdapter<OrdersAdapter.Vi
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
             }
         });
-
+        holder.reorderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final HashMap<String, String> map = new HashMap<>();
+                map.put("order_id", String.valueOf(object.getId()));
+                if (GlobalData.addCart != null && !GlobalData.addCart.getProductList().isEmpty()) {
+                    String message = String.format(activity.getResources().getString(R.string.reorder_confirm_message), GlobalData.addCart.getProductList().get(0).getProduct().getShop().getName(), object.getShop().getName());
+                    new AlertDialog.Builder(activity)
+                            .setTitle("Reorder")
+                            .setMessage(message)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    Reorder(map);
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, null).show();
+                } else {
+                    Reorder(map);
+                }
+            }
+        });
 
     }
 
@@ -226,6 +249,13 @@ public class OrdersAdapter extends SectionedRecyclerViewAdapter<OrdersAdapter.Vi
                 if(response.isSuccessful()){
                     GlobalData.addCart=response.body();
                     activity.startActivity(new Intent(activity, ViewCartActivity.class));
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(context1, jObjError.optString("flash_error"), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+//                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
                 }
             }
 
@@ -247,20 +277,20 @@ public class OrdersAdapter extends SectionedRecyclerViewAdapter<OrdersAdapter.Vi
         public ViewHolder(View itemView, boolean isHeader) {
             super(itemView);
             if (isHeader) {
-                headerTxt = (TextView) itemView.findViewById(R.id.header);
+                headerTxt = itemView.findViewById(R.id.header);
             } else {
-                disputeStatusImage = (ImageView) itemView.findViewById(R.id.dispute_status_image);
-                disputeLayout = (LinearLayout) itemView.findViewById(R.id.dispute_layout);
-                disputeTxt = (TextView) itemView.findViewById(R.id.dispute_txt);
+                disputeStatusImage = itemView.findViewById(R.id.dispute_status_image);
+                disputeLayout = itemView.findViewById(R.id.dispute_layout);
+                disputeTxt = itemView.findViewById(R.id.dispute_txt);
 
-                itemLayout = (LinearLayout) itemView.findViewById(R.id.item_layout);
-                restaurantNameTxt = (TextView) itemView.findViewById(R.id.restaurant_name);
-                restaurantAddressTxt = (TextView) itemView.findViewById(R.id.restaurant_address);
-                totalAmount = (TextView) itemView.findViewById(R.id.total_amount);
-                reorderBtn = (Button) itemView.findViewById(R.id.reorder);
-                dishNameTxt = (TextView) itemView.findViewById(R.id.dish_name);
-                dateTimeTxt = (TextView) itemView.findViewById(R.id.date_time);
-                dividerLine = (View) itemView.findViewById(R.id.divider_line);
+                itemLayout = itemView.findViewById(R.id.item_layout);
+                restaurantNameTxt = itemView.findViewById(R.id.restaurant_name);
+                restaurantAddressTxt = itemView.findViewById(R.id.restaurant_address);
+                totalAmount = itemView.findViewById(R.id.total_amount);
+                reorderBtn = itemView.findViewById(R.id.reorder);
+                dishNameTxt = itemView.findViewById(R.id.dish_name);
+                dateTimeTxt = itemView.findViewById(R.id.date_time);
+                dividerLine = itemView.findViewById(R.id.divider_line);
             }
 
 

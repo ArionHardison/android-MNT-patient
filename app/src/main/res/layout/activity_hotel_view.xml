@@ -493,7 +493,7 @@
         android:layout_height="@dimen/_45sdp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:background="@color/theme"
+        android:background="@color/colorGreen"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/activity_vertical_margin"
         android:paddingTop="@dimen/_5sdp"

@@ -1,10 +1,13 @@
 package com.snabbmaten.user.activities;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +17,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.snabbmaten.user.HomeActivity;
 import com.snabbmaten.user.R;
 import com.snabbmaten.user.build.api.ApiClient;
@@ -28,7 +37,6 @@ import com.snabbmaten.user.models.Otp;
 import com.snabbmaten.user.models.RegisterModel;
 import com.snabbmaten.user.models.User;
 import com.snabbmaten.user.utils.Utils;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.stfalcon.smsverifycatcher.OnSmsCatchListener;
 import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
 
@@ -46,6 +54,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+import static com.snabbmaten.user.SmsRetrive.MySMSBroadcastReceiver.INTENT_OTP;
+
 
 public class OtpActivity extends AppCompatActivity {
 
@@ -70,11 +81,24 @@ public class OtpActivity extends AppCompatActivity {
     TextView mobileNumberTxt;
     CustomDialog customDialog;
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
+//    private BroadcastReceiver receiver;
 
     String device_token, device_UDID;
     Utils utils = new Utils();
     String TAG = "OTPACTIVITY";
     SmsVerifyCatcher smsVerifyCatcher;
+    private String hashcode = "";
+    //    private BroadcastReceiver receiver;
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equalsIgnoreCase(INTENT_OTP)) {
+                final String message = intent.getStringExtra("otp");
+                Log.d("MySMS", "OTPCheck" + message);
+                otpValue1.setText(message);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +113,28 @@ public class OtpActivity extends AppCompatActivity {
             isSignUp = bundle.getBoolean("signup", true);
         }
         mobileNumberTxt.setText(GlobalData.mobile);
+        //if(!valOTP.equalsIgnoreCase(""))
+        //otpValue1.setText(valOTP);
+        /*receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equalsIgnoreCase(INTENT_OTP)) {
+                    final String message = intent.getStringExtra("otp");
+                    Log.d(TAG, "OTPCheck" + message);
+                    otpValue1.setText(message);
+                }
+            }
+        };*/
+
+       /* List<String> list = new AppSignatureHelper(this).getAppSignatures();
+        Log.d(TAG, "HASH " + list.toString());
+        hashcode = list.get(0);*/
+
+        SmsRetriver();
+        /*if(GlobalData.otpValue != 0){
+            otpValue1.setText(""+GlobalData.otpValue);
+        }*/
+
 //        otpValue1.setText(String.valueOf(GlobalData.otpValue));
         getDeviceToken();
 
@@ -99,6 +145,27 @@ public class OtpActivity extends AppCompatActivity {
                 otpValue1.setText(code);//set code in edit text
 //                Toast.makeText(context,code,Toast.LENGTH_LONG).show();
                 //then you can send verification code to server
+            }
+        });
+
+
+    }
+
+    private void SmsRetriver() {
+        SmsRetrieverClient client = SmsRetriever.getClient(this);
+        Task<Void> task = client.startSmsRetriever();
+        task.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "Successfully started retriever");
+            }
+        });
+
+        task.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, e.getLocalizedMessage());
+                Log.d(TAG, " started retriever failed");
             }
         });
 
@@ -248,8 +315,8 @@ public class OtpActivity extends AppCompatActivity {
         });
     }
 
-
     public void getOtpVerification(HashMap<String, String> map) {
+        SmsRetriver();
         customDialog.show();
         Call<Otp> call = apiInterface.postOtp(map);
         call.enqueue(new Callback<Otp>() {
@@ -259,6 +326,7 @@ public class OtpActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Toast.makeText(context, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     GlobalData.otpValue = response.body().getOtp();
+                    otpValue1.setText("");
 //                    otpValue1.setText(String.valueOf(GlobalData.otpValue));
                 } else {
                     try {
@@ -308,6 +376,7 @@ public class OtpActivity extends AppCompatActivity {
             case R.id.resend_otp:
                 HashMap<String, String> map1 = new HashMap<>();
                 map1.put("phone", GlobalData.mobile);
+                map1.put("hashcode", GlobalData.hashcode);
                 getOtpVerification(map1);
                 break;
         }
@@ -316,12 +385,15 @@ public class OtpActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter(INTENT_OTP));
+
         smsVerifyCatcher.onStart();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
         smsVerifyCatcher.onStop();
     }
 

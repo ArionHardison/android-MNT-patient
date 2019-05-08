@@ -32,18 +32,6 @@ import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.snabbmaten.user.CountryPicker.Country;
-import com.snabbmaten.user.CountryPicker.CountryPicker;
-import com.snabbmaten.user.CountryPicker.CountryPickerListener;
-import com.snabbmaten.user.R;
-import com.snabbmaten.user.build.api.ApiClient;
-import com.snabbmaten.user.build.api.ApiInterface;
-import com.snabbmaten.user.helper.ConnectionHelper;
-import com.snabbmaten.user.helper.GlobalData;
-import com.snabbmaten.user.helper.CustomDialog;
-import com.snabbmaten.user.helper.SharedHelper;
-import com.snabbmaten.user.models.ForgotPassword;
-import com.snabbmaten.user.models.Otp;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
@@ -53,6 +41,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.snabbmaten.user.CountryPicker.Country;
+import com.snabbmaten.user.CountryPicker.CountryPicker;
+import com.snabbmaten.user.CountryPicker.CountryPickerListener;
+import com.snabbmaten.user.R;
+import com.snabbmaten.user.build.api.ApiClient;
+import com.snabbmaten.user.build.api.ApiInterface;
+import com.snabbmaten.user.helper.ConnectionHelper;
+import com.snabbmaten.user.helper.CustomDialog;
+import com.snabbmaten.user.helper.GlobalData;
+import com.snabbmaten.user.helper.SharedHelper;
+import com.snabbmaten.user.models.ForgotPassword;
+import com.snabbmaten.user.models.Otp;
 
 import org.json.JSONObject;
 
@@ -120,6 +120,7 @@ public class MobileNumberActivity extends AppCompatActivity implements GoogleApi
     String accessToken = "";
     String loginBy = "";
     String TAG = "ActivitySocialLogin";
+    private String hashcode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,8 +155,27 @@ public class MobileNumberActivity extends AppCompatActivity implements GoogleApi
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+        /*// OTP REtriver
+        List<String> list = new AppSignatureHelper(this).getAppSignatures();
+        Log.d(TAG, "HASH " + list.toString());
+        GlobalData.hashcode = list.get(0);
+        SmsRetrieverClient client = SmsRetriever.getClient(this);
+        Task<Void> task = client.startSmsRetriever();
+        task.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "Successfully started retriever");
+            }
+        });
 
-
+        task.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, e.getLocalizedMessage());
+                Log.d(TAG, " started retriever failed");
+            }
+        });
+*/
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
@@ -293,9 +313,9 @@ public class MobileNumberActivity extends AppCompatActivity implements GoogleApi
     }
 
 
-    private void forgotPassord(String mobileNumber) {
+    private void forgotPassord(String mobileNumber, String hashcode) {
         customDialog.show();
-        Call<ForgotPassword> call = apiInterface.forgotPassword(mobileNumber);
+        Call<ForgotPassword> call = apiInterface.forgotPassword(mobileNumber, hashcode);
         call.enqueue(new Callback<ForgotPassword>() {
             @Override
             public void onResponse(@NonNull Call<ForgotPassword> call, @NonNull Response<ForgotPassword> response) {
@@ -502,9 +522,10 @@ public class MobileNumberActivity extends AppCompatActivity implements GoogleApi
                     if (isSignUp) {
                         HashMap<String, String> map = new HashMap<>();
                         map.put("phone", mobileNumber);
+                        map.put("hashcode", GlobalData.hashcode);
                         getOtpVerification(map);
                     } else
-                        forgotPassord(mobileNumber);
+                        forgotPassord(mobileNumber, GlobalData.hashcode);
                 } else {
                     Toast.makeText(this, "Please enter valid mobile number", Toast.LENGTH_SHORT).show();
                 }

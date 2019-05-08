@@ -14,6 +14,18 @@ public class User {
     @SerializedName("id")
     @Expose
     private Integer id;
+    @SerializedName("currency")
+    @Expose
+    private String currency;
+    @SerializedName("currency_code")
+    @Expose
+    private String currency_code;
+    @SerializedName("terms")
+    @Expose
+    private String terms;
+    @SerializedName("privacy")
+    @Expose
+    private String privacy;
     @SerializedName("name")
     @Expose
     private String name;
@@ -56,6 +68,39 @@ public class User {
     @SerializedName("addresses")
     @Expose
     private List<Address> addresses = null;
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public String getCurrency_code() {
+        return currency_code;
+    }
+
+    public void setCurrency_code(String currency_code) {
+        this.currency_code = currency_code;
+    }
+
+    public String getTerms() {
+        return terms;
+    }
+
+    public void setTerms(String terms) {
+        this.terms = terms;
+    }
+
+    public String getPrivacy() {
+        return privacy;
+    }
+
+    public void setPrivacy(String privacy) {
+        this.privacy = privacy;
+    }
+
     @SerializedName("cart")
     @Expose
     private List<Cart> cart = null;

@@ -26,6 +26,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.snabbmaten.user.CountryPicker.Country;
 import com.snabbmaten.user.CountryPicker.CountryPicker;
 import com.snabbmaten.user.CountryPicker.CountryPickerListener;
@@ -46,14 +54,6 @@ import com.snabbmaten.user.models.RegisterModel;
 import com.snabbmaten.user.models.User;
 import com.snabbmaten.user.utils.TextUtils;
 import com.snabbmaten.user.utils.Utils;
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
 
@@ -124,6 +124,7 @@ public class SignUpActivity extends AppCompatActivity {
     String country_code = "+91";
     private static final int REQUEST_LOCATION = 1450;
     GoogleApiClient mGoogleApiClient;
+    private String hashcode = "";
 
 
     @Override
@@ -151,7 +152,26 @@ public class SignUpActivity extends AppCompatActivity {
             passwordLayout.setVisibility(View.VISIBLE);
             mobileNumberLayout.setVisibility(View.GONE);
         }
+/*// OTP REtriver
+        List<String> list = new AppSignatureHelper(this).getAppSignatures();
+        Log.d(TAG, "HASH " + list.toString());
+        hashcode = list.get(0);
+        SmsRetrieverClient client = SmsRetriever.getClient(this);
+        Task<Void> task = client.startSmsRetriever();
+        task.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "Successfully started retriever");
+            }
+        });
 
+        task.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, e.getLocalizedMessage());
+                Log.d(TAG, " started retriever failed");
+            }
+        });*/
 
         // You can limit the displayed countries
         List<Country> countryList = Country.getAllCountries();
@@ -414,12 +434,14 @@ public class SignUpActivity extends AppCompatActivity {
             map.put("phone", GlobalData.mobile);
             map.put("password", password);
             map.put("password_confirmation", strConfirmPassword);
+
             if (connectionHelper.isConnectingToInternet()) {
                 if (GlobalData.loginBy.equals("manual")) {
                     signup(map);
                 } else {
                     HashMap<String, String> map1 = new HashMap<>();
                     map1.put("phone", GlobalData.mobile);
+                    map.put("hashcode", hashcode);
                     map1.put("login_by", GlobalData.loginBy);
                     map1.put("accessToken", GlobalData.access_token);
                     getOtpVerification(map1);
@@ -527,11 +549,7 @@ public class SignUpActivity extends AppCompatActivity {
         boolean check = false;
         if (!Pattern.matches("[a-zA-Z]+", phone)) {
 //            if( phone.length() > 10) {
-            if (phone.length() != 10) {
-                check = false;
-            } else {
-                check = true;
-            }
+            check = phone.length() == 10;
         } else {
             check = false;
         }
