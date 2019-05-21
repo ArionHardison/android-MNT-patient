@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name" translatable="false">"Snabbmaten"</string>
+    <string name="app_name" translatable="false">"Paku Paku"</string>
 
     <!--<string name="facebook_app_id">367600214087688</string>-->
     <!--<string name="ACCOUNT_KIT_CLIENT_TOKEN">7ec8b7c865326cba19545d7a59a836c5</string>-->
-    <string name="facebook_app_id" translatable="false">367600214087688</string>
-    <string name="ACCOUNT_KIT_CLIENT_TOKEN" translatable="false">7ec8b7c865326cba19545d7a59a836c5</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb367600214087688</string>
+    <string name="facebook_app_id" translatable="false">2238479639802568</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN" translatable="false">4548f9301770cfcf33675af8e1cd463f</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb2238479639802568</string>
 
 
     <string name="login">Login</string>

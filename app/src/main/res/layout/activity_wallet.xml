@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.snabbmaten.user.activities.AccountPaymentActivity">
+    tools:context="com.pakupaku.user.activities.AccountPaymentActivity">
 
     <include
         android:id="@+id/toolbar"
