@@ -278,7 +278,7 @@ public class CartFragment extends Fragment {
                         GlobalData.addCartShopId = response.body().getProductList().get(0).getProduct().getShopId();
                         //Set Payment details
                         String currency = response.body().getProductList().get(0).getProduct().getPrices().getCurrency();
-                        itemTotalAmount.setText(currency + "" + String.format("%.2f", priceAmount));
+                        itemTotalAmount.setText(currency + "" +  GlobalData.roundoff(priceAmount));
                         if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() != null) {
                             if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() < priceAmount) {
                                 int offerPercentage = response.body().getProductList().get(0).getProduct().getShop().getOfferPercent();

@@ -101,4 +101,11 @@ public class GlobalData {
 
     private GlobalData() {
     }
+
+    public static int roundoff(double data){
+
+        int value = (int)Math.round(data);
+        return value;
+    }
+
 }

@@ -107,7 +107,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                         list.get(position).getCartAddons().get(j).getAddonProduct().getPrice()));
             }
         }
-        holder.priceTxt.setText(product.getPrices().getCurrency() + " " + priceAmount);
+        holder.priceTxt.setText(product.getPrices().getCurrency() + " " + GlobalData.roundoff(priceAmount));
         if (!product.getFoodType().equalsIgnoreCase("veg")) {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_nonveg));
         } else {
@@ -184,7 +184,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                                     list.get(position).getCartAddons().get(j).getAddonProduct().getPrice()));
                         }
                     }
-                    holder.priceTxt.setText(product.getPrices().getCurrency() + " " + priceAmount);
+                    holder.priceTxt.setText(product.getPrices().getCurrency() + " " + GlobalData.roundoff(priceAmount));
                 }
             }
         });
@@ -219,7 +219,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                                 list.get(position).getCartAddons().get(j).getAddonProduct().getPrice()));
                     }
                 }
-                holder.priceTxt.setText(product.getPrices().getCurrency() + " " + priceAmount);
+                holder.priceTxt.setText(product.getPrices().getCurrency() + " " + GlobalData.roundoff(priceAmount));
                 if (holder.cardTextValue.getText().toString().equalsIgnoreCase("1")) {
                     countMinusValue = Integer.parseInt(holder.cardTextValue.getText().toString()) - 1;
                     holder.cardTextValue.setText("" + countMinusValue);
@@ -387,8 +387,8 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                         GlobalData.notificationCount = itemQuantity;
                         //Set Payment details
                         String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
-                        CartFragment.itemTotalAmount.setText(currency + "" + String.format("%.2f", priceAmount));
-                        CartFragment.discountAmount.setText("- " + currency + "" + discount);
+                        CartFragment.itemTotalAmount.setText(currency + "" + GlobalData.roundoff(priceAmount));
+                        CartFragment.discountAmount.setText("- " + currency + "" + GlobalData.roundoff(discount));
 //                        Double topPayAmount = priceAmount - discount;
 //                        int tax = (int) Math.round(topPayAmount * (response.body().getTaxPercentage() * 0.01));
 //                        topPayAmount = topPayAmount + tax;
@@ -399,10 +399,10 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                         double tax = topPayAmount * (response.body().getTaxPercentage() * 0.01);
                         topPayAmount = topPayAmount + tax;
                         topPayAmount = topPayAmount + response.body().getDeliveryCharges();
-                        CartFragment.serviceTax.setText(currency + response.body().getTax());
+                        CartFragment.serviceTax.setText(currency + GlobalData.roundoff(Integer.parseInt(response.body().getTax())));
 
 //                        CartFragment.serviceTax.setText(response.body().getProductList().get(0).getProduct().getPrices().getCurrency() + "" + String.valueOf(tax));
-                        CartFragment.payAmount.setText(currency + "" + String.format("%.2f", topPayAmount));
+                        CartFragment.payAmount.setText(currency + "" +  GlobalData.roundoff(topPayAmount));
 
                     } else {
                         GlobalData.notificationCount = itemQuantity;

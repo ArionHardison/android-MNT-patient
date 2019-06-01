@@ -210,7 +210,7 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
         });
 
         if (product.getPrices().getCurrency() != null)
-            holder.priceTxt.setText(product.getPrices().getCurrency() + " " + product.getPrices().getPrice());
+            holder.priceTxt.setText(product.getPrices().getCurrency() + " " + GlobalData.roundoff(product.getPrices().getPrice()));
 
         if (!product.getFoodType().equalsIgnoreCase("veg")) {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_nonveg));
