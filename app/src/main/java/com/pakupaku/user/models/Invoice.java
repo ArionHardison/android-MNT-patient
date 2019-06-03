@@ -20,31 +20,31 @@ public class Invoice {
     private Integer paid;
     @SerializedName("gross")
     @Expose
-    private Double gross;
+    private int gross;
     @SerializedName("discount")
     @Expose
-    private Double discount;
+    private int discount;
     @SerializedName("promocode_amount")
     @Expose
-    private Double promocode_amount;
+    private int promocode_amount;
     @SerializedName("delivery_charge")
     @Expose
     private Integer deliveryCharge;
     @SerializedName("tax")
     @Expose
-    private Double tax;
+    private int tax;
     @SerializedName("net")
     @Expose
-    private Double net;
+    private int net;
     @SerializedName("total_pay")
     @Expose
     private Object totalPay;
     @SerializedName("wallet_amount")
     @Expose
-    private Double walletAmount;
+    private int walletAmount;
     @SerializedName("payable")
     @Expose
-    private Double payable;
+    private int payable;
     @SerializedName("tender_pay")
     @Expose
     private Object tenderPay;
@@ -90,19 +90,19 @@ public class Invoice {
         this.paid = paid;
     }
 
-    public Double getGross() {
+    public int getGross() {
         return gross;
     }
 
-    public void setGross(Double gross) {
+    public void setGross(int gross) {
         this.gross = gross;
     }
 
-    public Double getDiscount() {
+    public int getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Double discount) {
+    public void setDiscount(int discount) {
         this.discount = discount;
     }
 
@@ -114,19 +114,19 @@ public class Invoice {
         this.deliveryCharge = deliveryCharge;
     }
 
-    public Double getTax() {
+    public int getTax() {
         return tax;
     }
 
-    public void setTax(Double tax) {
+    public void setTax(int tax) {
         this.tax = tax;
     }
 
-    public Double getNet() {
+    public int getNet() {
         return net;
     }
 
-    public void setNet(Double net) {
+    public void setNet(int net) {
         this.net = net;
     }
 
@@ -138,27 +138,27 @@ public class Invoice {
         this.totalPay = totalPay;
     }
 
-    public Double getWalletAmount() {
+    public int getWalletAmount() {
         return walletAmount;
     }
 
-    public void setWalletAmount(Double walletAmount) {
+    public void setWalletAmount(int walletAmount) {
         this.walletAmount = walletAmount;
     }
 
-    public Double getPayable() {
+    public int getPayable() {
         return payable;
     }
 
-    public void setPayable(Double payable) {
+    public void setPayable(int payable) {
         this.payable = payable;
     }
 
-    public Double getPromocode_amount() {
+    public int getPromocode_amount() {
         return promocode_amount;
     }
 
-    public void setPromocode_amount(Double payable) {
+    public void setPromocode_amount(int payable) {
         this.promocode_amount = promocode_amount;
     }
     public Object getTenderPay() {

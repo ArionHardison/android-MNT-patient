@@ -1,9 +1,10 @@
 
 package com.pakupaku.user.models;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 public class Shop {
 
     @SerializedName("id")
@@ -26,7 +27,7 @@ public class Shop {
     private String description;
     @SerializedName("offer_min_amount")
     @Expose
-    private Double offerMinAmount;
+    private int offerMinAmount;
     @SerializedName("offer_percent")
     @Expose
     private Integer offerPercent;
@@ -134,11 +135,11 @@ public class Shop {
         this.description = description;
     }
 
-    public Double getOfferMinAmount() {
+    public int getOfferMinAmount() {
         return offerMinAmount;
     }
 
-    public void setOfferMinAmount(Double offerMinAmount) {
+    public void setOfferMinAmount(int offerMinAmount) {
         this.offerMinAmount = offerMinAmount;
     }
 

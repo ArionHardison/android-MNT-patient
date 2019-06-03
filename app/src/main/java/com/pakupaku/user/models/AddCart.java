@@ -1,10 +1,11 @@
 
 package com.pakupaku.user.models;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddCart {
 
@@ -25,11 +26,11 @@ public class AddCart {
 
     @SerializedName("total_price")
     @Expose
-    private Double totalPrice;
+    private int totalPrice;
 
     @SerializedName("orignal_price")
     @Expose
-    private Double orignal_price;
+    private int orignal_price;
 
     public String getShopDiscount() {
         return shopDiscount;
@@ -47,33 +48,32 @@ public class AddCart {
     private String tax;
     @SerializedName("promocode_amount")
     @Expose
-    private Double promocodeAmount;
+    private int promocodeAmount;
     @SerializedName("net")
     @Expose
-    private Double net;
+    private int net;
     @SerializedName("wallet_balance")
     @Expose
     private String walletBalance;
     @SerializedName("payable")
     @Expose
-    private Double payable;
+    private int payable;
 
 
-
-    public Double getTotalPrice() {
+    public int getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Double totalPrice) {
+    public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
     }
 
 
-    public Double getOrignalPrice() {
+    public int getOrignalPrice() {
         return orignal_price;
     }
 
-    public void setOriginalPrice(Double orignal_price) {
+    public void setOriginalPrice(int orignal_price) {
         this.orignal_price = orignal_price;
     }
 
@@ -85,19 +85,19 @@ public class AddCart {
         this.tax = tax;
     }
 
-    public Double getPromocodeAmount() {
+    public int getPromocodeAmount() {
         return promocodeAmount;
     }
 
-    public void setPromocodeAmount(Double promocodeAmount) {
+    public void setPromocodeAmount(int promocodeAmount) {
         this.promocodeAmount = promocodeAmount;
     }
 
-    public Double getNet() {
+    public int getNet() {
         return net;
     }
 
-    public void setNet(Double net) {
+    public void setNet(int net) {
         this.net = net;
     }
 
@@ -109,11 +109,11 @@ public class AddCart {
         this.walletBalance = walletBalance;
     }
 
-    public Double getPayable() {
+    public int getPayable() {
         return payable;
     }
 
-    public void setPayable(Double payable) {
+    public void setPayable(int payable) {
         this.payable = payable;
     }
 

@@ -36,7 +36,7 @@ public class PastOrderDetailActivity extends AppCompatActivity {
     Fragment orderFullViewFragment;
     FragmentManager fragmentManager;
 
-    Double priceAmount = 0.0;
+    int priceAmount = 0;
     int discount = 0;
     int itemCount = 0;
     int itemQuantity = 0;
@@ -110,9 +110,9 @@ public class PastOrderDetailActivity extends AppCompatActivity {
             }
             currency = order.getItems().get(0).getProduct().getPrices().getCurrency();
             if (itemQuantity == 1)
-                orderItemTxt.setText(String.valueOf(itemQuantity) + " Item, " + currency + String.valueOf(priceAmount));
+                orderItemTxt.setText(itemQuantity + " Item, " + currency + priceAmount);
             else
-                orderItemTxt.setText(String.valueOf(itemQuantity) + " Items, " + currency + String.valueOf(priceAmount));
+                orderItemTxt.setText(itemQuantity + " Items, " + currency + priceAmount);
 
             restaurantName.setText(order.getShop().getName());
             restaurantAddress.setText(order.getShop().getAddress());

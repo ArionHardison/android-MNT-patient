@@ -11,20 +11,20 @@ public class Prices {
     private Integer id;
     @SerializedName("price")
     @Expose
-    private Double price;
+    private int price;
     @SerializedName("currency")
     @Expose
     private String currency;
     @SerializedName("discount")
     @Expose
-    private Double discount;
+    private int discount;
     @SerializedName("discount_type")
     @Expose
     private String discountType;
 
     @SerializedName("orignal_price")
     @Expose
-    private Double orignal_price;
+    private int orignal_price;
 
     public Integer getId() {
         return id;
@@ -34,20 +34,20 @@ public class Prices {
         this.id = id;
     }
 
-    public Double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public Double getOrignalPrice() {
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getOrignalPrice() {
         return orignal_price;
     }
 
-    public void setOriginalPrice(Double orignal_price) {
+    public void setOriginalPrice(int orignal_price) {
         this.orignal_price = orignal_price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
     }
 
     public String getCurrency() {
@@ -58,11 +58,11 @@ public class Prices {
         this.currency = currency;
     }
 
-    public Double getDiscount() {
+    public int getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Double discount) {
+    public void setDiscount(int discount) {
         this.discount = discount;
     }
 

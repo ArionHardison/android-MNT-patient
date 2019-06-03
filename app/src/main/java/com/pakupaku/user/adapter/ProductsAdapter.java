@@ -66,7 +66,7 @@ public class ProductsAdapter extends SectionedRecyclerViewAdapter<ProductsAdapte
     public static Context context;
     public static Activity activity;
     public static int lastPosition = -1;
-    public static double priceAmount = 0;
+    public static int priceAmount = 0;
     public static int itemCount = 0;
     public static int itemQuantity = 0;
     public static Product product;
@@ -82,10 +82,10 @@ public class ProductsAdapter extends SectionedRecyclerViewAdapter<ProductsAdapte
     private static final char[] NUMBER_LIST = TickerUtils.getDefaultNumberList();
 
     public ProductsAdapter(Context context, Activity activity, List<Product> list) {
-        this.context = context;
+        ProductsAdapter.context = context;
         this.inflater = LayoutInflater.from(context);
         this.list = list;
-        this.activity = activity;
+        ProductsAdapter.activity = activity;
     }
 
     @Override
@@ -426,7 +426,7 @@ public class ProductsAdapter extends SectionedRecyclerViewAdapter<ProductsAdapte
                         //Get Total item Quantity
                         itemQuantity = itemQuantity + addCart.getProductList().get(i).getQuantity();
                         //Get addon price
-                        if (addCart.getProductList().get(i).getProduct().getPrices().getPrice() != null)
+                        if (addCart.getProductList().get(i).getProduct().getPrices().getPrice() != 0)
                             priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * addCart.getProductList().get(i).getProduct().getPrices().getPrice());
                     }
                     notificationCount = itemQuantity;
@@ -453,28 +453,28 @@ public class ProductsAdapter extends SectionedRecyclerViewAdapter<ProductsAdapte
         public ViewHolder(View itemView, boolean isHeader) {
             super(itemView);
             if (isHeader) {
-                headerTxt = (TextView) itemView.findViewById(R.id.product_header);
+                headerTxt = itemView.findViewById(R.id.product_header);
             } else {
-                dishImg = (ImageView) itemView.findViewById(R.id.dishImg);
-                foodImageType = (ImageView) itemView.findViewById(R.id.food_type_image);
-                animationLineCartAdd = (ImageView) itemView.findViewById(R.id.animation_line_cart_add);
-                dishNameTxt = (TextView) itemView.findViewById(R.id.dish_name_text);
-                priceTxt = (TextView) itemView.findViewById(R.id.price_text);
-                addOnsIconImg = (ImageView) itemView.findViewById(R.id.add_ons_icon);
-                customizableTxt = (TextView) itemView.findViewById(R.id.customizable_txt);
+                dishImg = itemView.findViewById(R.id.dishImg);
+                foodImageType = itemView.findViewById(R.id.food_type_image);
+                animationLineCartAdd = itemView.findViewById(R.id.animation_line_cart_add);
+                dishNameTxt = itemView.findViewById(R.id.dish_name_text);
+                priceTxt = itemView.findViewById(R.id.price_text);
+                addOnsIconImg = itemView.findViewById(R.id.add_ons_icon);
+                customizableTxt = itemView.findViewById(R.id.customizable_txt);
 
              /*    Add card Button Layout*/
-                cardAddDetailLayout = (RelativeLayout) itemView.findViewById(R.id.add_card_layout);
-                rootLayout = (RelativeLayout) itemView.findViewById(R.id.root_layout);
-                cardAddTextLayout = (RelativeLayout) itemView.findViewById(R.id.add_card_text_layout);
-                cardInfoLayout = (RelativeLayout) itemView.findViewById(R.id.add_card_info_layout);
-                cardAddInfoText = (TextView) itemView.findViewById(R.id.avialablity_time);
-                cardAddOutOfStock = (TextView) itemView.findViewById(R.id.out_of_stock);
-                cardAddBtn = (ImageView) itemView.findViewById(R.id.card_add_btn);
-                cardMinusBtn = (ImageView) itemView.findViewById(R.id.card_minus_btn);
-                cardTextValue = (TextView) itemView.findViewById(R.id.card_value);
-                viewFullMenu = (TextView) itemView.findViewById(R.id.view_full_menu);
-                cardTextValueTicker = (TickerView) itemView.findViewById(R.id.card_value_ticker);
+                cardAddDetailLayout = itemView.findViewById(R.id.add_card_layout);
+                rootLayout = itemView.findViewById(R.id.root_layout);
+                cardAddTextLayout = itemView.findViewById(R.id.add_card_text_layout);
+                cardInfoLayout = itemView.findViewById(R.id.add_card_info_layout);
+                cardAddInfoText = itemView.findViewById(R.id.avialablity_time);
+                cardAddOutOfStock = itemView.findViewById(R.id.out_of_stock);
+                cardAddBtn = itemView.findViewById(R.id.card_add_btn);
+                cardMinusBtn = itemView.findViewById(R.id.card_minus_btn);
+                cardTextValue = itemView.findViewById(R.id.card_value);
+                viewFullMenu = itemView.findViewById(R.id.view_full_menu);
+                cardTextValueTicker = itemView.findViewById(R.id.card_value_ticker);
 
                 //Load animation
                 slide_down = AnimationUtils.loadAnimation(context,

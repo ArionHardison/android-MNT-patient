@@ -74,7 +74,7 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
     public static Context context;
     Activity activity;
     int lastPosition = -1;
-    public static double priceAmount = 0;
+    public static int priceAmount = 0;
     public static int itemCount = 0;
     public static int itemQuantity = 0;
     public static Product product;
@@ -581,7 +581,7 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
             //Get Total item Quantity
             itemQuantity = itemQuantity + addCart.getProductList().get(i).getQuantity();
             //Get addon price
-            if (addCart.getProductList().get(i).getProduct().getPrices().getPrice() != null)
+            if (addCart.getProductList().get(i).getProduct().getPrices().getPrice() != 0)
                 priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * addCart.getProductList().get(i).getProduct().getPrices().getPrice());
             if (addCart.getProductList().get(i).getCartAddons() != null && !addCart.getProductList().get(i).getCartAddons().isEmpty()) {
                 for (int j = 0; j < addCart.getProductList().get(i).getCartAddons().size(); j++) {
@@ -604,7 +604,7 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
             }
             String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
             String itemMessage = context.getResources().getQuantityString(R.plurals.item, itemQuantity, itemQuantity);
-            itemMessage = itemMessage + " | " + currency + String.valueOf(priceAmount);
+            itemMessage = itemMessage + " | " + currency + priceAmount;
             Log.d("itemMessage", itemMessage);
             HotelViewActivity.itemText.setText(itemMessage);
             if (HotelViewActivity.viewCartLayout.getVisibility() == View.GONE) {
@@ -627,31 +627,31 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
         public ViewHolder(View itemView, boolean isHeader) {
             super(itemView);
             if (isHeader) {
-                headerTxt = (TextView) itemView.findViewById(R.id.category_header);
-                featureProductsTitle = (TextView) itemView.findViewById(R.id.featured_product_title);
-                categoryHeaderLayout = (LinearLayout) itemView.findViewById(R.id.category_header_layout);
+                headerTxt = itemView.findViewById(R.id.category_header);
+                featureProductsTitle = itemView.findViewById(R.id.featured_product_title);
+                categoryHeaderLayout = itemView.findViewById(R.id.category_header_layout);
 
             } else {
-                dishImg = (ImageView) itemView.findViewById(R.id.dishImg);
-                foodImageType = (ImageView) itemView.findViewById(R.id.food_type_image);
-                featuredImage = (ImageView) itemView.findViewById(R.id.featured_image);
-                addOnsIconImg = (ImageView) itemView.findViewById(R.id.add_ons_icon);
-                animationLineCartAdd = (ImageView) itemView.findViewById(R.id.animation_line_cart_add);
-                dishNameTxt = (TextView) itemView.findViewById(R.id.dish_name_text);
-                customizableTxt = (TextView) itemView.findViewById(R.id.customizable_txt);
-                priceTxt = (TextView) itemView.findViewById(R.id.price_text);
+                dishImg = itemView.findViewById(R.id.dishImg);
+                foodImageType = itemView.findViewById(R.id.food_type_image);
+                featuredImage = itemView.findViewById(R.id.featured_image);
+                addOnsIconImg = itemView.findViewById(R.id.add_ons_icon);
+                animationLineCartAdd = itemView.findViewById(R.id.animation_line_cart_add);
+                dishNameTxt = itemView.findViewById(R.id.dish_name_text);
+                customizableTxt = itemView.findViewById(R.id.customizable_txt);
+                priceTxt = itemView.findViewById(R.id.price_text);
 
                 /*    Add card Button Layout*/
-                cardAddDetailLayout = (RelativeLayout) itemView.findViewById(R.id.add_card_layout);
-                rootLayout = (LinearLayout) itemView.findViewById(R.id.root_layout);
-                cardAddTextLayout = (RelativeLayout) itemView.findViewById(R.id.add_card_text_layout);
-                cardInfoLayout = (RelativeLayout) itemView.findViewById(R.id.add_card_info_layout);
-                cardAddInfoText = (TextView) itemView.findViewById(R.id.avialablity_time);
-                cardAddOutOfStock = (TextView) itemView.findViewById(R.id.out_of_stock);
-                cardAddBtn = (ImageView) itemView.findViewById(R.id.card_add_btn);
-                cardMinusBtn = (ImageView) itemView.findViewById(R.id.card_minus_btn);
-                cardTextValue = (TextView) itemView.findViewById(R.id.card_value);
-                cardTextValueTicker = (TickerView) itemView.findViewById(R.id.card_value_ticker);
+                cardAddDetailLayout = itemView.findViewById(R.id.add_card_layout);
+                rootLayout = itemView.findViewById(R.id.root_layout);
+                cardAddTextLayout = itemView.findViewById(R.id.add_card_text_layout);
+                cardInfoLayout = itemView.findViewById(R.id.add_card_info_layout);
+                cardAddInfoText = itemView.findViewById(R.id.avialablity_time);
+                cardAddOutOfStock = itemView.findViewById(R.id.out_of_stock);
+                cardAddBtn = itemView.findViewById(R.id.card_add_btn);
+                cardMinusBtn = itemView.findViewById(R.id.card_minus_btn);
+                cardTextValue = itemView.findViewById(R.id.card_value);
+                cardTextValueTicker = itemView.findViewById(R.id.card_value_ticker);
                 //itemView.setOnClickListener( this);
 
                 //Load animation

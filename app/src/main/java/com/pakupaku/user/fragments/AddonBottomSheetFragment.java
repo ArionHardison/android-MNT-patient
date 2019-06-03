@@ -74,8 +74,8 @@ public class AddonBottomSheetFragment extends BottomSheetDialogFragment {
         dialog.setContentView(contentView);
         ButterKnife.bind(this, contentView);
         context = getContext();
-        addons = (TextView) contentView.findViewById(R.id.addons);
-        price = (TextView) contentView.findViewById(R.id.price);
+        addons = contentView.findViewById(R.id.addons);
+        price = contentView.findViewById(R.id.price);
         addOnsRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         addOnsRv.setItemAnimator(new DefaultItemAnimator());
         addOnsRv.setHasFixedSize(false);
@@ -148,7 +148,7 @@ public class AddonBottomSheetFragment extends BottomSheetDialogFragment {
 
     private void setAddOnsText() {
         int quantity = 0;
-        double priceAmount = 0;
+        int priceAmount = 0;
         boolean once=true;
         AddonBottomSheetFragment.addons.setText("");
         if (selectedCart != null) {
@@ -169,9 +169,9 @@ public class AddonBottomSheetFragment extends BottomSheetDialogFragment {
                 }
             }
             if (quantity == 1)
-                AddonBottomSheetFragment.price.setText(String.valueOf(quantity) + " Item | " + GlobalData.currencySymbol + priceAmount);
+                AddonBottomSheetFragment.price.setText(quantity + " Item | " + GlobalData.currencySymbol + priceAmount);
             else
-                AddonBottomSheetFragment.price.setText(String.valueOf(quantity) + " Items | " + GlobalData.currencySymbol + priceAmount);
+                AddonBottomSheetFragment.price.setText(quantity + " Items | " + GlobalData.currencySymbol + priceAmount);
 
         }
     }

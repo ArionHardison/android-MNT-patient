@@ -120,7 +120,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
     HeaderView floatHeaderView;
     int restaurantPosition = 0;
     boolean isShopIsChanged = true;
-    double priceAmount = 0;
+    int priceAmount = 0;
     int itemCount = 0;
     int itemQuantity = 0;
     Animation slide_down, slide_up;
@@ -343,7 +343,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
                 } else if (response.isSuccessful()) {
                     //get Item Count
                     itemCount = response.body().getProductList().size();
-                    GlobalData.getInstance().notificationCount = response.body().getProductList().size();
+                    GlobalData.notificationCount = response.body().getProductList().size();
                     if (itemCount == 0) {
                         GlobalData.addCart = response.body();
                     } else {
@@ -353,7 +353,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
                             //Get Total item Quantity
                             itemQuantity = itemQuantity + response.body().getProductList().get(i).getQuantity();
                             //Get product price
-                            if (response.body().getProductList().get(i).getProduct().getPrices().getOrignalPrice() != null)
+                            if (response.body().getProductList().get(i).getProduct().getPrices().getOrignalPrice() != 0)
                                 priceAmount = priceAmount + (response.body().getProductList().get(i).getQuantity() * response.body().getProductList().get(i).getProduct().getPrices().getOrignalPrice());
 
                             if (addCart.getProductList().get(i).getCartAddons() != null && !addCart.getProductList().get(i).getCartAddons().isEmpty()) {
@@ -364,10 +364,10 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
                             }
                         }
                         GlobalData.notificationCount = itemQuantity;
-                        GlobalData.getInstance().addCartShopId = response.body().getProductList().get(0).getProduct().getShopId();
+                        GlobalData.addCartShopId = response.body().getProductList().get(0).getProduct().getShopId();
                         //Set Payment details
                         String currency = response.body().getProductList().get(0).getProduct().getPrices().getCurrency();
-                        if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() != null) {
+                        if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() != 0) {
                             if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() < priceAmount) {
                                 int offerPercentage = response.body().getProductList().get(0).getProduct().getShop().getOfferPercent();
                             }
@@ -425,7 +425,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
             //Get Total item Quantity
             itemQuantity = itemQuantity + addCart.getProductList().get(i).getQuantity();
             //Get product price
-            if (addCart.getProductList().get(i).getProduct().getPrices().getPrice() != null)
+            if (addCart.getProductList().get(i).getProduct().getPrices().getPrice() != 0)
                 priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * addCart.getProductList().get(i).getProduct().getPrices().getPrice());
             if (addCart.getProductList().get(i).getCartAddons() != null && !addCart.getProductList().get(i).getCartAddons().isEmpty()) {
                 for (int j = 0; j < addCart.getProductList().get(i).getCartAddons().size(); j++) {

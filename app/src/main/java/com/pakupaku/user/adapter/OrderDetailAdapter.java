@@ -50,8 +50,8 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Item item = list.get(position);
-        holder.dishName.setText(item.getProduct().getName() + " x " + String.valueOf(item.getQuantity()));
-        Double priceAmount = item.getProduct().getPrices().getOrignalPrice()*item.getQuantity();
+        holder.dishName.setText(item.getProduct().getName() + " x " + item.getQuantity());
+        int priceAmount = item.getProduct().getPrices().getOrignalPrice() * item.getQuantity();
         if (list.get(position).getCartAddons() != null && !list.get(position).getCartAddons().isEmpty()) {
             for (int j = 0; j < list.get(position).getCartAddons().size(); j++) {
                 priceAmount = priceAmount + (list.get(position).getQuantity() * (list.get(position).getCartAddons().get(j).getQuantity() *
@@ -92,11 +92,11 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
 
         private MyViewHolder(View view) {
             super(view);
-            itemView = (LinearLayout) view.findViewById(R.id.item_view);
-            dishName = (TextView) view.findViewById(R.id.restaurant_name);
-            addons = (TextView) view.findViewById(R.id.addons);
-            dishImg = (ImageView) view.findViewById(R.id.food_type_image);
-            price = (TextView) view.findViewById(R.id.price);
+            itemView = view.findViewById(R.id.item_view);
+            dishName = view.findViewById(R.id.restaurant_name);
+            addons = view.findViewById(R.id.addons);
+            dishImg = view.findViewById(R.id.food_type_image);
+            price = view.findViewById(R.id.price);
             itemView.setOnClickListener(this);
         }
 

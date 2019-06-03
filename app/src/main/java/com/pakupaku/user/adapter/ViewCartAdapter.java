@@ -19,14 +19,14 @@ import android.widget.Toast;
 import com.pakupaku.user.R;
 import com.pakupaku.user.build.api.ApiClient;
 import com.pakupaku.user.build.api.ApiInterface;
+import com.pakupaku.user.fragments.AddonBottomSheetFragment;
 import com.pakupaku.user.fragments.CartChoiceModeFragment;
 import com.pakupaku.user.fragments.CartFragment;
-import com.pakupaku.user.fragments.AddonBottomSheetFragment;
 import com.pakupaku.user.helper.GlobalData;
 import com.pakupaku.user.models.AddCart;
+import com.pakupaku.user.models.Cart;
 import com.pakupaku.user.models.CartAddon;
 import com.pakupaku.user.models.Product;
-import com.pakupaku.user.models.Cart;
 import com.pakupaku.user.models.Shop;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
@@ -47,8 +47,8 @@ import retrofit2.Response;
 public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyViewHolder> {
     private List<Cart> list;
     public static Context context;
-    public static double priceAmount = 0;
-    public static double discount = 0;
+    public static int priceAmount = 0;
+    public static int discount = 0;
     public static int itemCount = 0;
     public static int itemQuantity = 0;
     public static Product product;
@@ -301,35 +301,6 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
         return list.size();
     }
 
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        private ImageView dishImg, foodImageType, cardAddBtn, cardMinusBtn, animationLineCartAdd;
-        private TextView dishNameTxt, priceTxt, cardTextValue, cardAddInfoText, cardAddOutOfStock, customizableTxt, addons, customize;
-        TickerView cardTextValueTicker;
-        RelativeLayout cardAddDetailLayout, cardAddTextLayout, cardInfoLayout;
-
-        private MyViewHolder(View view) {
-            super(view);
-            foodImageType = (ImageView) itemView.findViewById(R.id.food_type_image);
-            animationLineCartAdd = (ImageView) itemView.findViewById(R.id.animation_line_cart_add);
-            dishNameTxt = (TextView) itemView.findViewById(R.id.dish_name_text);
-            priceTxt = (TextView) itemView.findViewById(R.id.price_text);
-            customizableTxt = (TextView) itemView.findViewById(R.id.customizable_txt);
-            addons = (TextView) itemView.findViewById(R.id.addons);
-            customize = (TextView) itemView.findViewById(R.id.customize);
-            /*    Add card Button Layout*/
-            cardAddDetailLayout = (RelativeLayout) itemView.findViewById(R.id.add_card_layout);
-            cardAddTextLayout = (RelativeLayout) itemView.findViewById(R.id.add_card_text_layout);
-            cardAddInfoText = (TextView) itemView.findViewById(R.id.avialablity_time);
-            cardAddOutOfStock = (TextView) itemView.findViewById(R.id.out_of_stock);
-            cardAddBtn = (ImageView) itemView.findViewById(R.id.card_add_btn);
-            cardMinusBtn = (ImageView) itemView.findViewById(R.id.card_minus_btn);
-            cardTextValue = (TextView) itemView.findViewById(R.id.card_value);
-            cardTextValueTicker = (TickerView) itemView.findViewById(R.id.card_value_ticker);
-        }
-    }
-
-
     public static void addCart(HashMap<String, String> map) {
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -369,7 +340,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                             //Get Total item Quantity
                             itemQuantity = itemQuantity + addCart.getProductList().get(i).getQuantity();
                             //Get addon price
-                            if (addCart.getProductList().get(i).getProduct().getPrices().getOrignalPrice() != null)
+                            if (addCart.getProductList().get(i).getProduct().getPrices().getOrignalPrice() != 0)
                                 priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * addCart.getProductList().get(i).getProduct().getPrices().getOrignalPrice());
                             if (addCart.getProductList().get(i).getCartAddons() != null && !addCart.getProductList().get(i).getCartAddons().isEmpty()) {
                                 for (int j = 0; j < addCart.getProductList().get(i).getCartAddons().size(); j++) {
@@ -378,10 +349,10 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                                 }
                             }
                         }
-                        if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() != null) {
+                        if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() != 0) {
                             if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() < priceAmount) {
                                 int offerPercentage = response.body().getProductList().get(0).getProduct().getShop().getOfferPercent();
-                                discount = priceAmount * (offerPercentage * 0.01);
+                                discount = priceAmount * (offerPercentage /** 0.01*/);
                             }
                         }
                         GlobalData.notificationCount = itemQuantity;
@@ -389,14 +360,14 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                         String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
                         CartFragment.itemTotalAmount.setText(currency + "" + GlobalData.roundoff(priceAmount));
                         CartFragment.discountAmount.setText("- " + currency + "" + GlobalData.roundoff(discount));
-//                        Double topPayAmount = priceAmount - discount;
+//                        int topPayAmount = priceAmount - discount;
 //                        int tax = (int) Math.round(topPayAmount * (response.body().getTaxPercentage() * 0.01));
 //                        topPayAmount = topPayAmount + tax;
 //                        topPayAmount = topPayAmount + response.body().getDeliveryCharges();
 
-                        double topPayAmount = priceAmount - discount;
+                        int topPayAmount = priceAmount - discount;
 //                        int tax = (int) Math.round(topPayAmount * (response.body().getTaxPercentage() * 0.01));
-                        double tax = topPayAmount * (response.body().getTaxPercentage() * 0.01);
+                        int tax = topPayAmount * (response.body().getTaxPercentage() /** 0.01*/);
                         topPayAmount = topPayAmount + tax;
                         topPayAmount = topPayAmount + response.body().getDeliveryCharges();
                         CartFragment.serviceTax.setText(currency + GlobalData.roundoff(Integer.parseInt(response.body().getTax())));
@@ -420,6 +391,33 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
             }
         });
 
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        TickerView cardTextValueTicker;
+        RelativeLayout cardAddDetailLayout, cardAddTextLayout, cardInfoLayout;
+        private ImageView dishImg, foodImageType, cardAddBtn, cardMinusBtn, animationLineCartAdd;
+        private TextView dishNameTxt, priceTxt, cardTextValue, cardAddInfoText, cardAddOutOfStock, customizableTxt, addons, customize;
+
+        private MyViewHolder(View view) {
+            super(view);
+            foodImageType = itemView.findViewById(R.id.food_type_image);
+            animationLineCartAdd = itemView.findViewById(R.id.animation_line_cart_add);
+            dishNameTxt = itemView.findViewById(R.id.dish_name_text);
+            priceTxt = itemView.findViewById(R.id.price_text);
+            customizableTxt = itemView.findViewById(R.id.customizable_txt);
+            addons = itemView.findViewById(R.id.addons);
+            customize = itemView.findViewById(R.id.customize);
+            /*    Add card Button Layout*/
+            cardAddDetailLayout = itemView.findViewById(R.id.add_card_layout);
+            cardAddTextLayout = itemView.findViewById(R.id.add_card_text_layout);
+            cardAddInfoText = itemView.findViewById(R.id.avialablity_time);
+            cardAddOutOfStock = itemView.findViewById(R.id.out_of_stock);
+            cardAddBtn = itemView.findViewById(R.id.card_add_btn);
+            cardMinusBtn = itemView.findViewById(R.id.card_minus_btn);
+            cardTextValue = itemView.findViewById(R.id.card_value);
+            cardTextValueTicker = itemView.findViewById(R.id.card_value_ticker);
+        }
     }
 
 

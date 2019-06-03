@@ -51,19 +51,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.pakupaku.user.HomeActivity;
-import com.pakupaku.user.R;
-import com.pakupaku.user.adapter.OrderFlowAdapter;
-import com.pakupaku.user.build.api.ApiClient;
-import com.pakupaku.user.build.api.ApiInterface;
-import com.pakupaku.user.fragments.OrderViewFragment;
-import com.pakupaku.user.helper.CustomDialog;
-import com.pakupaku.user.helper.DataParser;
-import com.pakupaku.user.helper.GlobalData;
-import com.pakupaku.user.models.Message;
-import com.pakupaku.user.models.NotificationData;
-import com.pakupaku.user.models.Order;
-import com.pakupaku.user.models.OrderFlow;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -81,6 +68,19 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.pakupaku.user.HomeActivity;
+import com.pakupaku.user.R;
+import com.pakupaku.user.adapter.OrderFlowAdapter;
+import com.pakupaku.user.build.api.ApiClient;
+import com.pakupaku.user.build.api.ApiInterface;
+import com.pakupaku.user.fragments.OrderViewFragment;
+import com.pakupaku.user.helper.CustomDialog;
+import com.pakupaku.user.helper.DataParser;
+import com.pakupaku.user.helper.GlobalData;
+import com.pakupaku.user.models.Message;
+import com.pakupaku.user.models.NotificationData;
+import com.pakupaku.user.models.Order;
+import com.pakupaku.user.models.OrderFlow;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -147,7 +147,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
 
     Fragment orderFullViewFragment;
     FragmentManager fragmentManager;
-    Double priceAmount = 0.0;
+    int priceAmount = 0;
     int itemQuantity = 0;
     String currency = "";
     @BindView(R.id.order_flow_rv)
@@ -208,7 +208,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
         });
         toolbar.setPadding(0, 0, 0, 0);//for tab otherwise give space in tab
         toolbar.setContentInsetsAbsolute(0, 0);
-        orderCancelTxt = (TextView) findViewById(R.id.order_cancel);
+        orderCancelTxt = findViewById(R.id.order_cancel);
         orderCancelTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -355,9 +355,9 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             priceAmount = order.getInvoice().getPayable();
             currency = order.getItems().get(0).getProduct().getPrices().getCurrency();
             if (itemQuantity == 1)
-                orderItemTxt.setText(String.valueOf(itemQuantity) + " Item, " + currency + String.valueOf(priceAmount));
+                orderItemTxt.setText(itemQuantity + " Item, " + currency + priceAmount);
             else
-                orderItemTxt.setText(String.valueOf(itemQuantity) + " Items, " + currency + String.valueOf(priceAmount));
+                orderItemTxt.setText(itemQuantity + " Items, " + currency + priceAmount);
 
             orderIdTxt2.setText("#000" + order.getId().toString());
             orderOtp.setText(" : " + isSelectedOrder.getOrderOtp());
@@ -690,7 +690,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.order_cancel_dialog, null);
         dialogBuilder.setView(dialogView);
-        final EditText edt = (EditText) dialogView.findViewById(R.id.reason_edit);
+        final EditText edt = dialogView.findViewById(R.id.reason_edit);
         dialogBuilder.setTitle(orderIdTxt.getText().toString());
         dialogBuilder.setMessage("Are you sure want to cancel this order ?");
         dialogBuilder.setPositiveButton("Submit", null);
@@ -994,7 +994,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_CALL_PHONE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -1018,7 +1018,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             View dialogView = inflater.inflate(R.layout.feedback_popup, frameView);
             alertDialog.show();
 
-            final RadioGroup rateRadioGroup = (RadioGroup) dialogView.findViewById(R.id.rate_radiogroup);
+            final RadioGroup rateRadioGroup = dialogView.findViewById(R.id.rate_radiogroup);
             ((RadioButton) rateRadioGroup.getChildAt(4)).setChecked(true);
             rateRadioGroup.setOnCheckedChangeListener(null);
             rateRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -1044,8 +1044,8 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                 }
             });
 
-            final EditText comment = (EditText) dialogView.findViewById(R.id.comment);
-            Button feedbackSubmit = (Button) dialogView.findViewById(R.id.feedback_submit);
+            final EditText comment = dialogView.findViewById(R.id.comment);
+            Button feedbackSubmit = dialogView.findViewById(R.id.feedback_submit);
             feedbackSubmit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

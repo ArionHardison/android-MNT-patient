@@ -61,7 +61,7 @@ public class OtherHelpActivity extends AppCompatActivity {
     @BindView(R.id.order_item_txt)
     TextView orderItemTxt;
 
-    Double priceAmount = 0.0;
+    int priceAmount = 0;
     int DISPUTE_ID = 0;
     int itemQuantity = 0;
     String currency = "";
@@ -89,9 +89,9 @@ public class OtherHelpActivity extends AppCompatActivity {
         priceAmount = order.getInvoice().getNet();
         currency = order.getItems().get(0).getProduct().getPrices().getCurrency();
         if (itemQuantity == 1)
-            orderItemTxt.setText(String.valueOf(itemQuantity) + " Item, " + currency + String.valueOf(priceAmount));
+            orderItemTxt.setText(itemQuantity + " Item, " + currency + priceAmount);
         else
-            orderItemTxt.setText(String.valueOf(itemQuantity) + " Items, " + currency + String.valueOf(priceAmount));
+            orderItemTxt.setText(itemQuantity + " Items, " + currency + priceAmount);
         orderIdTxt.setText("ORDER #000" + order.getId().toString());
         reasonTitle.setText(reason);
         isChat = getIntent().getBooleanExtra("is_chat", false);
@@ -117,8 +117,8 @@ public class OtherHelpActivity extends AppCompatActivity {
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.dispute_dialog, null);
         dialogBuilder.setView(dialogView);
-        final EditText edt = (EditText) dialogView.findViewById(R.id.reason_edit);
-        final Spinner disputeTypeSpinner = (Spinner) dialogView.findViewById(R.id.dispute_type);
+        final EditText edt = dialogView.findViewById(R.id.reason_edit);
+        final Spinner disputeTypeSpinner = dialogView.findViewById(R.id.dispute_type);
         //Creating the ArrayAdapter instance having the country list
         ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, disputeArrayList);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

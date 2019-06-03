@@ -46,7 +46,7 @@ public class OrderDetailFragment extends Fragment {
     List<Item> itemList;
 
     int totalAmountValue = 0;
-    double discount = 0;
+    int discount = 0;
     int itemCount = 0;
     int itemQuantity = 0;
     String currency = "";
@@ -85,8 +85,8 @@ public class OrderDetailFragment extends Fragment {
 
             currency = order.getItems().get(0).getProduct().getPrices().getCurrency();
             itemQuantity = order.getInvoice().getQuantity();
-            itemTotalAmount.setText(currency + String.format("%.2f", order.getInvoice().getGross()));
-            serviceTax.setText(currency + order.getInvoice().getTax().toString());
+            itemTotalAmount.setText(currency + /*String.format("%.2f", */order.getInvoice().getGross());
+            serviceTax.setText(currency + order.getInvoice().getTax() + "");
             deliveryCharges.setText(currency + GlobalData.roundoff(order.getInvoice().getDeliveryCharge()));
 
             discount = order.getInvoice().getDiscount();
@@ -94,7 +94,7 @@ public class OrderDetailFragment extends Fragment {
             discountAmount.setText(currency+"-"+GlobalData.roundoff(discount));
 
             promocodeAmount.setText(""+currency+"-"+order.getInvoice().getPromocode_amount());
-            walletAmountDetection.setText(currency + order.getInvoice().getWalletAmount().toString());
+            walletAmountDetection.setText(currency + order.getInvoice().getWalletAmount() + "");
             totalAmount.setText(currency + GlobalData.roundoff(order.getInvoice().getPayable()));
         }
 

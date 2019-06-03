@@ -102,9 +102,9 @@ public class GlobalData {
     private GlobalData() {
     }
 
-    public static int roundoff(double data){
+    public static int roundoff(int data) {
 
-        int value = (int)Math.round(data);
+        int value = Math.round(data);
         return value;
     }
 

@@ -186,9 +186,9 @@ public class OrdersAdapter extends SectionedRecyclerViewAdapter<OrdersAdapter.Vi
             }
         });
         if (object.getItems().get(0) != null)
-            holder.totalAmount.setText(object.getItems().get(0).getProduct().getPrices().getCurrency() + object.getInvoice().getNet().toString());
+            holder.totalAmount.setText(object.getItems().get(0).getProduct().getPrices().getCurrency() + object.getInvoice().getNet() + "");
         else
-            holder.totalAmount.setText(GlobalData.currencySymbol + object.getInvoice().getNet().toString());
+            holder.totalAmount.setText(GlobalData.currencySymbol + object.getInvoice().getNet() + "");
         //set Item List Values
         itemList = new ArrayList<>();
         itemList.addAll(object.getItems());
