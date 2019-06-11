@@ -29,6 +29,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.pakupaku.user.BuildConfig;
 import com.pakupaku.user.HomeActivity;
 import com.pakupaku.user.R;
@@ -44,13 +50,7 @@ import com.pakupaku.user.adapter.ProfileSettingsAdapter;
 import com.pakupaku.user.helper.GlobalData;
 import com.pakupaku.user.helper.SharedHelper;
 import com.pakupaku.user.utils.ListViewSizeHelper;
-import com.facebook.login.LoginManager;
 import com.pakupaku.user.utils.LocaleUtils;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -155,10 +155,10 @@ public class ProfileFragment extends Fragment {
             /*case 3:
                 startActivity(new Intent(context, PromotionActivity.class));
                 break;*/
-//            case 5:
-//                changeLanguage();
-//                break;
             case 4:
+                changeLanguage();
+                break;
+            case 5:
                 startActivity(new Intent(context, ChangePasswordActivity.class));
                 break;
 //            case 4:
@@ -179,15 +179,15 @@ public class ProfileFragment extends Fragment {
         // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState);
         System.out.println("ProfileFragment");
-        toolbar = (ViewGroup) getActivity().findViewById(R.id.toolbar);
+        toolbar = getActivity().findViewById(R.id.toolbar);
         if (GlobalData.profileModel != null) {
             toolbarLayout = LayoutInflater.from(context).inflate(R.layout.toolbar_profile, toolbar, false);
-            userImage = (ImageView) toolbarLayout.findViewById(R.id.user_image);
-            userName = (TextView) toolbarLayout.findViewById(R.id.user_name);
-            userPhone = (TextView) toolbarLayout.findViewById(R.id.user_phone);
-            userEmail = (TextView) toolbarLayout.findViewById(R.id.user_mail);
+            userImage = toolbarLayout.findViewById(R.id.user_image);
+            userName = toolbarLayout.findViewById(R.id.user_name);
+            userPhone = toolbarLayout.findViewById(R.id.user_phone);
+            userEmail = toolbarLayout.findViewById(R.id.user_mail);
             initView();
-            Button editBtn = (Button) toolbarLayout.findViewById(R.id.edit);
+            Button editBtn = toolbarLayout.findViewById(R.id.edit);
             userImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -213,6 +213,7 @@ public class ProfileFragment extends Fragment {
             listIcons.add(R.drawable.heart);
             listIcons.add(R.drawable.payment);
             listIcons.add(R.drawable.ic_myorders);
+//            listIcons.add(R.drawable.ic_translate);
             /*listIcons.add(R.drawable.ic_promotion_details);*/
 //            listIcons.add(R.drawable.ic_translate);
 
@@ -238,7 +239,7 @@ public class ProfileFragment extends Fragment {
 
             String VERSION_NAME = BuildConfig.VERSION_NAME;
             int versionCode = BuildConfig.VERSION_CODE;
-            appVersion.setText("App version " + VERSION_NAME + " (" + String.valueOf(versionCode) + ")");
+            appVersion.setText("App version " + VERSION_NAME + " (" + versionCode + ")");
 
         } else {
             toolbar.setVisibility(View.GONE);
@@ -254,13 +255,13 @@ public class ProfileFragment extends Fragment {
         List<String> languages = Arrays.asList(getResources().getStringArray(R.array.languages));
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getLayoutInflater();
-        View convertView = (View) inflater.inflate(R.layout.language_dialog, null);
+        View convertView = inflater.inflate(R.layout.language_dialog, null);
         alertDialog.setView(convertView);
         alertDialog.setCancelable(true);
         alertDialog.setTitle("Change Language");
         final AlertDialog alert = alertDialog.create();
 
-        final ListView lv = (ListView) convertView.findViewById(R.id.lv);
+        final ListView lv = convertView.findViewById(R.id.lv);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_single_choice, languages);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -282,11 +283,11 @@ public class ProfileFragment extends Fragment {
             case "English":
                 LocaleUtils.setLocale(getActivity(), "en");
                 break;
+            case "Japanese":
+                LocaleUtils.setLocale(getActivity(), "ja");
+                break;
             case "Arabic":
                 LocaleUtils.setLocale(getActivity(), "ar");
-                break;
-            case "Spanish":
-                LocaleUtils.setLocale(getActivity(), "es");
                 break;
             default:
                 LocaleUtils.setLocale(getActivity(), "en");

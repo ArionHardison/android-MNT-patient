@@ -169,7 +169,7 @@ public class OtpActivity extends AppCompatActivity {
             }
         });
 
-        otpValue1.setText(Integer.toString(getIntent().getExtras().getInt("OTP")));
+//        otpValue1.setText(Integer.toString(getIntent().getExtras().getInt("OTP")));
 
 
     }

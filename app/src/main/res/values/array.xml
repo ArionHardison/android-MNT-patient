@@ -13,7 +13,8 @@
 
     <string-array name="languages">
         <item>English</item>
-        <item>Arabic</item>
+        <!--<item>Arabic</item>-->
+        <item>Jabanish</item>
     </string-array>
 
 

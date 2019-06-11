@@ -12,17 +12,17 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
 import com.pakupaku.user.R;
 import com.pakupaku.user.activities.SplashActivity;
 import com.pakupaku.user.helper.GlobalData;
 import com.pakupaku.user.helper.SharedHelper;
 import com.pakupaku.user.models.NotificationData;
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
-import com.google.gson.Gson;
 
-import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Objects;
 
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -36,8 +36,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData() != null) {
             Log.d(TAG, "From: " + remoteMessage.getFrom());
             Log.d(TAG, "Notification Message Body: " + remoteMessage.getData());
-            Log.d(TAG, "CustomData" + remoteMessage.getData().get("custom"));
-            customdata = new Gson().fromJson(remoteMessage.getData().get("custom"), NotificationData.class);
+            if (Objects.requireNonNull(remoteMessage.getData().get("custom")).isEmpty()) {
+                Log.d(TAG, "CustomData" + remoteMessage.getData().get("custom"));
+                customdata = new Gson().fromJson(remoteMessage.getData().get("custom"), NotificationData.class);
+            }
 //            Log.d(TAG, "onMessageReceived: " + customdata.getCustomData().get(0).getOrderId());
 
             //Calling method to generate notification
@@ -62,7 +64,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (customdata != null && customdata.getCustomData().get(0).getOrderId() != null) {
 
             GlobalData.ORDER_STATUS = Arrays.asList("ORDERED", "RECEIVED", "ASSIGNED", "PROCESSING", "REACHED", "PICKEDUP", "ARRIVED", "COMPLETED");
-            intent.putExtra("customdata", (Serializable) customdata);
+            intent.putExtra("customdata", customdata);
             intent.putExtra("order_staus", "ongoing");
 
         } else {

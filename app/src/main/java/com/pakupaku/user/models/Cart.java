@@ -17,6 +17,9 @@ public class Cart {
     @SerializedName("promocode_id")
     @Expose
     private Object promocodeId;
+    @SerializedName("calculated_price")
+    @Expose
+    private int calculated_price;
     @SerializedName("order_id")
     @Expose
     private Object orderId;
@@ -35,6 +38,14 @@ public class Cart {
     @SerializedName("cart_addons")
     @Expose
     private List<CartAddon> cartAddons = null;
+
+    public int getCalculated_price() {
+        return calculated_price;
+    }
+
+    public void setCalculated_price(int calculated_price) {
+        this.calculated_price = calculated_price;
+    }
 
     public Integer getId() {
         return id;

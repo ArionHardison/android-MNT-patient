@@ -190,33 +190,50 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
             holder.cardTextValueTicker.setText(String.valueOf(1));
             holder.cardTextValue.setText(String.valueOf(1));
         }
-        //Check if add-ons is available
-        if (product.getAddons() != null && product.getAddons().size() != 0) {
-            holder.customizableTxt.setVisibility(View.VISIBLE);
-            holder.addOnsIconImg.setVisibility(View.VISIBLE);
-        } else {
-            holder.customizableTxt.setVisibility(View.GONE);
-            holder.addOnsIconImg.setVisibility(View.GONE);
-        }
 
+        //Check if add-ons is available
         holder.rootLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                GlobalData.isSelectedProduct = list.get(section).getProducts().get(relativePosition);
-                context.startActivity(new Intent(context, ProductDetailActivity.class));
-                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
-
+            public void onClick(View v) {
+                product = list.get(section).getProducts().get(relativePosition);
+                if (product.getOut_of_stock() != null && product.getOut_of_stock().equalsIgnoreCase("NO")) {
+                    GlobalData.isSelectedProduct = list.get(section).getProducts().get(relativePosition);
+                    context.startActivity(new Intent(context, ProductDetailActivity.class));
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
+                }
             }
         });
 
-        if (product.getPrices().getCurrency() != null)
-            holder.priceTxt.setText(product.getPrices().getCurrency() + " " + GlobalData.roundoff(product.getPrices().getPrice()));
+        if (product.getPrices() != null)
+            if (product.getPrices().getCurrency() != null)
+                holder.priceTxt.setText(product.getPrices().getCurrency() + " " + product.getPrices().getPrice());
 
         if (!product.getFoodType().equalsIgnoreCase("veg")) {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_nonveg));
         } else {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_veg));
         }
+
+        if (product.getOut_of_stock() != null)
+            if (product.getOut_of_stock().equalsIgnoreCase("YES")) {
+                holder.cardInfoLayout.setVisibility(View.VISIBLE);
+                holder.cardAddOutOfStock.setVisibility(View.VISIBLE);
+                holder.cardAddTextLayout.setVisibility(View.GONE);
+                holder.cardAddDetailLayout.setVisibility(View.GONE);
+                holder.customizableTxt.setVisibility(View.GONE);
+                holder.addOnsIconImg.setVisibility(View.GONE);
+            } else {
+                holder.cardAddOutOfStock.setVisibility(View.GONE);
+                holder.cardInfoLayout.setVisibility(View.GONE);
+                if (product.getAddons() != null && product.getAddons().size() != 0) {
+                    holder.customizableTxt.setVisibility(View.VISIBLE);
+                    holder.addOnsIconImg.setVisibility(View.VISIBLE);
+                } else {
+                    holder.customizableTxt.setVisibility(View.GONE);
+                    holder.addOnsIconImg.setVisibility(View.GONE);
+                }
+            }
+
         holder.cardAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

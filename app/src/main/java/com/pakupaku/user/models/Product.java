@@ -20,6 +20,10 @@ public class Product {
     @SerializedName("description")
     @Expose
     private String description;
+    @SerializedName("out_of_stock")
+    @Expose
+    private String out_of_stock;
+
     @SerializedName("position")
     @Expose
     private Integer position;
@@ -173,4 +177,11 @@ public class Product {
         this.shop = shop;
     }
 
+    public String getOut_of_stock() {
+        return out_of_stock;
+    }
+
+    public void setOut_of_stock(String out_of_stock) {
+        this.out_of_stock = out_of_stock;
+    }
 }

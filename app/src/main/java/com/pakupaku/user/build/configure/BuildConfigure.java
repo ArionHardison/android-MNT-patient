@@ -15,8 +15,8 @@ public class BuildConfigure {
     /*   Dev Mode*/
     public static String BASE_URL = "https://pakupakunet.com/";
 
-    public static String CLIENT_SECRET = "y0Yu1svQUiNSMR0K94uDXrr0ZK8c40BQYc2hcP3P";
-    public static String CLIENT_ID = "2";
+    public static String CLIENT_SECRET = "2YAAgHbafBwJosrkHVH6qP8srupA3zaHfDA06Ul2";
+    public static String CLIENT_ID = "4";
 
     //Pubnub for Chat
     public static  String PUBNUB_PUBLISH_KEY = "pub-c-97296c9c-1fab-4d99-9d8f-37193407ae7e";
@@ -24,7 +24,7 @@ public class BuildConfigure {
     public static   String PUBNUB_CHANNEL_NAME = "21";
 
     //Stripe for card payment
-    public static String STRIPE_PK = "pk_test_39kly6aEfUEfvMpRnN6BnxLb";
+    public static String STRIPE_PK = "pk_test_I9MhBjA2wYUtmReL3Tc0HM9L";
 
 
 }

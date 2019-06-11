@@ -146,7 +146,7 @@ public class MobileNumberActivity extends AppCompatActivity implements GoogleApi
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 //taken from google api console (Web api client id)
-//                .requestIdToken("795253286119-p5b084skjnl7sll3s24ha310iotin5k4.apps.googleusercontent.com")
+                .requestIdToken("547746501062-fgil4cgue32ejq3r4b1l20fgogpve3pl.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
         // Build a GoogleApiClient with access to the Google Sign-In API and the

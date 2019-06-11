@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "547746501062-3r9mutl5mvjno7q962bruj4bbdbmmnl3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pakupaku.deliver",
+            "certificate_hash": "2c4d991b9ab437d97503bd581e638172ca0fc0a4"
+          }
+        },
+        {
           "client_id": "547746501062-6f85nl7kketfebgkdf9l4t9sr8d61vg7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -88,6 +96,22 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "547746501062-enqb9gsuadkj5bomndbla9m95d65g258.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pakupaku.user",
+            "certificate_hash": "ba31de39e551f1add8a9b2861348fd6de36e0e0d"
+          }
+        },
+        {
+          "client_id": "547746501062-6ud82uduva31pfkeiu57ha8dfdrgj0eh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pakupaku.user",
+            "certificate_hash": "2c4d991b9ab437d97503bd581e638172ca0fc0a4"
+          }
+        },
         {
           "client_id": "547746501062-17grbqsrd659iso4268huk3dc4dafocc.apps.googleusercontent.com",
           "client_type": 1,

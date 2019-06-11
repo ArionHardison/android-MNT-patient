@@ -185,7 +185,7 @@ public class OrdersAdapter extends SectionedRecyclerViewAdapter<OrdersAdapter.Vi
 //                        ViewGroup.LayoutParams.WRAP_CONTENT);
             }
         });
-        if (object.getItems().get(0) != null)
+        if (object.getItems().size() > 0 && object.getItems().get(0) != null)
             holder.totalAmount.setText(object.getItems().get(0).getProduct().getPrices().getCurrency() + object.getInvoice().getNet() + "");
         else
             holder.totalAmount.setText(GlobalData.currencySymbol + object.getInvoice().getNet() + "");
@@ -246,15 +246,24 @@ public class OrdersAdapter extends SectionedRecyclerViewAdapter<OrdersAdapter.Vi
             @Override
             public void onResponse(@NonNull Call<AddCart> call, @NonNull Response<AddCart> response) {
                 customDialog.dismiss();
-                if(response.isSuccessful()){
+                JSONObject jObjError = null;
+                try {
+                    jObjError = new JSONObject(response.errorBody().string());
+//                    Toast.makeText(context1, jObjError.optString("flash_error"), Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+//                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+
+                if (jObjError != null && !jObjError.optString("flash_error").equals("")) {
+                    Toast.makeText(context1, jObjError.optString("flash_error"), Toast.LENGTH_SHORT).show();
+                } else if(response.isSuccessful()){
                     GlobalData.addCart=response.body();
                     activity.startActivity(new Intent(activity, ViewCartActivity.class));
                 } else {
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(context1, jObjError.optString("flash_error"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(context1, jObjError.optString("flash_error"), Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
-//                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -262,6 +271,8 @@ public class OrdersAdapter extends SectionedRecyclerViewAdapter<OrdersAdapter.Vi
             @Override
             public void onFailure(@NonNull Call<AddCart> call,@NonNull Throwable t) {
                 customDialog.dismiss();
+
+
             }
         });
 
