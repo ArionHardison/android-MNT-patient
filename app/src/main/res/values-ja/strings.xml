@@ -1,448 +1,240 @@
-<?xml version="1.0" encoding="utf-8"?>
-    <resources>
+<resources>
+    <string name="app_name" translatable="false">"Paku Paku"</string>
 
-    <string translatable="false" name="app_name">"Paku Paku"</string>
+    <string name="facebook_app_id" translatable="false">2238479639802568</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN" translatable="false">4548f9301770cfcf33675af8e1cd463f</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb2238479639802568</string>
 
-    <!--<string name="facebook_app_id">367600214087688</string>-->
-
-
-    <!--<string name="ACCOUNT_KIT_CLIENT_TOKEN">7ec8b7c865326cba19545d7a59a836c5</string>-->
-
-
-    <string translatable="false" name="facebook_app_id">フェイスブックのID</string>
-
-    <string translatable="false" name="ACCOUNT_KIT_CLIENT_TOKEN">7ec8b7c865326cba19545d7a59a836c5</string>
-
-    <string translatable="false" name="fb_login_protocol_scheme">fb367600214087688</string>
 
     <string name="login">ログイン</string>
-
     <string name="logout">ログアウト</string>
-
     <string name="name">名前</string>
-
     <string name="username">ユーザーネーム </string>
-
     <string name="mobile_number">携帯電話番号</string>
-
     <string name="email_address">Eメールアドレス</string>
-
     <string name="enter_email_address">Eメールアドレスを入力してください</string>
-
     <string name="confirm">同意する</string>
-
     <string name="password">パスワード</string>
-
     <string name="register_this_account">アカウントをお持ちではないですか？</string>
-
     <string name="let_impress_you">パクパクが今日もお届け！</string>
-
     <string name="hundred_restaurant">"100 Restaurants"</string>
-
     <string name="discover">新たな検索</string>
-
     <string name="otp">SMS</string>
-
     <string name="eta">ETA</string>
-
     <string name="call">電話する</string>
-
     <string name="offers_near_you">あなたの近辺のオファー</string>
-
     <string name="filter">絞り込み</string>
-
     <string name="forgot_password">パスワードをお忘れですか？</string>
-
     <string name="manage_address">ご住所の設定</string>
-
     <string name="payment">お支払い</string>
-
     <string name="add_new_card">クレジットカードの追加</string>
-
     <string name="set_delivery_location">受渡し場所の設定</string>
-
     <string name="search_place">位置を検索</string>
-
     <string name="change_password">パスワードを変更</string>
-
     <string name="favourites">お気に入り</string>
-
     <string name="filters">絞り込み</string>
-
     <string name="reset">リセット</string>
-
     <string name="edit_account">アカウントの編集</string>
-
     <string name="address">住所</string>
-
     <string name="restaurant">レストラン・店舗</string>
-
     <string name="current_location">以前使った位置情報</string>
-
     <string name="dish">メニュー</string>
-
     <string name="home">ご自宅</string>
-
     <string name="work">職場</string>
-
     <string name="other">その他</string>
-
     <string name="save">セーブする</string>
-
     <string name="saved_addresses">セーブされている住所</string>
-
     <string name="edit">編集</string>
-
     <string name="delete">削除</string>
-
     <string name="delete_confirm">本当に削除しても宜しいですか？</string>
-
     <string name="orders">ご注文</string>
-
     <string name="apply_filter">絞り込みを使う</string>
 
+    <string name="large_text">
+        "Material is the metaphor.\n"
+        <!--"A material metaphor is the unifying theory of a rationalized space and a system of motion."-->
+        <!--"The material is grounded in tactile reality, inspired by the study of paper and ink, yet "-->
+        "seams, divides space, and indicates moving parts."
+    </string>
 
-    -<string name="large_text">
-"Material is the metaphor.\n"
-    <!--"A material metaphor is the unifying theory of a rationalized space and a system of motion."-->
-
-
-    <!--"The material is grounded in tactile reality, inspired by the study of paper and ink, yet "-->
-
-    "seams, divides space, and indicates moving parts."
-</string>
 
     <string name="getting_address">"Getting Address"</string>
-
-    <string name="fresh">P a k u P a k u</string>
-
+    <string name="fresh">P a k u  P a k u</string>
     <string name="fresh_description">パクパクメンバーが丁寧にあなたのご注文をお届けします♪</string>
-
     <string name="signin">サインインする</string>
-
     <string name="sign_in">サインイン</string>
-
     <string name="signup">新規登録</string>
-
-    <string name="search"/>
-
+    <string name="search">S e a r c h</string>
     <string name="search_description">さあ、あなたにピッタリのレストラン・お店を探しましょう！</string>
-
     <string name="bookmark">チップ制度にご協力ください！</string>
-
     <string name="bookmark_description">パクパクメンバーは お客様からの配達料金とチップによって保たれています。チップの額に決まりはありません。より素敵なサービス向上の為に、チップ制度にご協力ください♪</string>
-
     <string name="already_you_have_account">すでにアカウントをお持ちですか？</string>
-
     <string name="register_using">ソーシャルアカウントを使う</string>
-
     <string name="signin_here">ここちらでサインイン</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-
-
     <string name="next">次へ</string>
-
     <string name="verification_code_txt">認証コード</string>
-
     <string name="continue_txt">続ける</string>
-
     <string name="confirm_password">もう一度同じパスワードを入力</string>
-
     <string name="new_password">新しいパスワード</string>
-
     <string name="change">変更する</string>
-
     <string name="register">登録する</string>
-
     <string name="cart_error_title">カートに何も入っていません。</string>
-
     <string name="cart_error_description">メニューからご注文を選んでください。</string>
-
     <string name="proceed_to_pay">お支払いへ移動</string>
-
     <string name="add_address">住所を追加</string>
-
     <string name="change_address">住所の変更</string>
-
     <string name="old_password">以前と同じパスワード</string>
-
     <string name="select_address">住所を選択</string>
-
     <string name="submit">送信する</string>
-
     <string name="enter_secret_key">秘密の番号を入力してください</string>
-
     <string name="account">アカウント</string>
-
     <string name="login_or_sign_up_to_place_order">ご注文するために、ログインまたは新規登録</string>
-
     <string name="please_login_and_order_dishes">ご注文するには、ログインしてください。</string>
-
     <string name="manage_address_error_title">ご住所が登録されていません。</string>
-
     <string name="manage_address_error_description">ご住所を登録して、お会計を手早くを済ませちゃいましょう♪</string>
 
     <!--Order Flow Title-->
-
-
     <string name="order_placed">パクパクでのご注文申請</string>
-
     <string name="order_confirmed">店舗でのご注文確認</string>
-
     <string name="order_processed">ご注文の調理</string>
-
     <string name="order_pickedup">ご注文お届け中</string>
-
     <string name="order_delivered">ご注文受渡し完了</string>
-
     <string name="order_cancelled">ご注文がキャンセルされました。</string>
 
     <!--Order Flow Description-->
-
-
     <string name="description_1">パクパクアプリでご注文を受けました。</string>
-
     <string name="description_2">店舗にてご注文を受け付けました。</string>
-
     <string name="description_3">ご注文は現在調理中。</string>
-
     <string name="description_4">ご注文を現在お届け中。</string>
-
     <string name="description_5">どうぞお料理をお楽しみください♪</string>
 
     <!--Past Order Page-->
-
-
     <string name="order_delivered_successfully">ご注文を無事にお届けしました。</string>
-
     <string name="order_delivered_successfully_on">ご注文は無事にお届けされました。</string>
-
     <string name="address_hint">例）パク太郎の家、パク子の職場</string>
-
     <string name="cancel">キャンセル</string>
 
     <!--PAYMENT SCREEN-->
-
-
     <string name="wallet_amount">アプリ内残金</string>
-
     <string name="card">クレジットカード</string>
-
     <string name="pay_on_delivery">その他のお支払い</string>
-
     <string name="by_cash">現金</string>
-
     <string name="walletHistory">WALLET</string>
-
     <string name="history">履歴</string>
-
     <string name="add">追加</string>
-
     <string name="payment_options">お支払いオプション</string>
-
     <string name="promotion_details">クーポンの説明</string>
-
     <string name="add_money">金額を入力</string>
-
     <string name="enter_the_amount">金額を入力</string>
-
     <string name="pay">お支払い</string>
-
     <string name="promo_apply_text">クーポンを申請</string>
-
     <string name="apply">申請</string>
-
     <string name="promocode">クーポン</string>
-
     <string name="use_wallet">残金を使う</string>
-
     <string name="google_login_failed">Googleログインに失敗しました。</string>
-
     <string name="dispute">Dispute</string>
-
     <string name="email_us">Paku Pakuへメール</string>
-
     <string name="canelled">キャンセルされました。</string>
 
-    <!-- Check Internet Conneciton -->
 
-
+    <!--    Check Internet Conneciton  -->
     <string name="oops_connect_your_internet">あれ？インターネットに接続されてません。</string>
-
     <string name="retry">もう一度お願いします</string>
-
     <string name="server_down">サーバーダウンしました。</string>
-
     <string name="no_internet_found_check_your_internet_connection">ネット通信が確認できません。通信をご確認の上、もう一度お試しください。</string>
 
-    <!-- Braintree -->
-
+    <!--   Braintree  -->
 
     <string name="loading">Loading....</string>
-
     <string name="paypal_billing_agreement">お支払いの同意</string>
-
     <string name="nonce">ワンタイムパスワード</string>
 
     <!-- CreateTransactionActivity -->
-
-
     <string name="processing_transaction">Processing Transaction</string>
-
     <string name="transaction_failed">Transaction Failed</string>
-
     <string name="transaction_complete">Transaction Complete</string>
 
     <!-- Alert Dialog -->
-
-
     <string name="yes">はい</string>
-
     <string name="no">いいえ</string>
-
     <string name="replace_cart_item">カートの商品を戻す</string>
-
     <string name="do_you_want_to_discart_the_selection_and_add_dishes_from_the_restaurant">全て消去してやり直しますか？</string>
-
     <string name="enter_card_details">カードの記載を入力してください</string>
-
     <string name="add_card">カードを追加</string>
-
     <string name="okay">OK</string>
 
-    <!-- PROMOCODE -->
-
+    <!-- PROMOCODE  -->
 
     <string name="promo_code_apply_successfully">クーポンが適用されました。</string>
 
-    <!-- SIGN UP -->
-
-
+    <!--  SIGN UP  -->
     <string name="please_enter_username">ユーザーネームを入力してください。</string>
-
     <string name="please_enter_your_email">Eメールを入力してください。</string>
-
     <string name="please_enter_valid_email">ご利用可能なEメールを入力してください。</string>
-
     <string name="please_enter_your_mobile_number">携帯電話番号を入力してください。</string>
-
     <string name="please_enter_password">パスワードを入力してください。</string>
-
     <string name="please_enter_your_confirm_password">もう一度同じパスワードを入力してください。</string>
-
     <string name="password_and_confirm_password_doesnot_match">パスワードが一致しません。</string>
-
     <string name="profile_updated_successfully">プロフィールのアップデート完了</string>
-
     <string name="network_error_toast">ん〜何かがおかしいです。。</string>
-
     <string name="add_ons">トッピング</string>
-
     <string name="custom_notes">コメント</string>
-
     <string name="write_something">何か書いてください。</string>
-
     <string name="product">商品</string>
-
     <string name="customize">アレンジ出来ます</string>
-
     <string name="your_previous_customization">以前のアレンジ</string>
-
     <string name="i_will_choose">選択します</string>
-
     <string name="repeat">もう一度</string>
-
     <string name="remove_item_from_cart">アイテムをカートから戻す</string>
-
     <string name="remove_item_from_cart_description">The item has multiple customization added.Proceed to cart to remove item?</string>
-
     <string name="add_custom_notes">コメント追加</string>
-
     <string name="featured_products">イチオシ商品</string>
-
     <string name="reorder_confirm_message">今カートに入っている商品を消して、再注文なさいますか？</string>
-
     <string name="no_result">該当なし</string>
-
     <string name="what_is_love">what is love</string>
-
     <string name="fav_description">店舗ページ右上のハートを押すと、お気に入りに登録できます。</string>
-
     <string name="close">閉じる</string>
-
     <string name="no_addons">トッピングなし</string>
-
     <string name="add_new_address">新しいパスワードを追加してください。</string>
-
     <string name="back">戻る</string>
-
     <string name="notifications">お知らせ</string>
-
     <string name="looks_empty">LOOKS EMPTY!</string>
-
     <string name="order_list_empty_description">まだ何もご注文されていません。</string>
-
     <string name="past_orders">注文履歴</string>
-
     <string name="reason">理由</string>
-
     <string name="dispute_reason_description">何かわからないことがありましたか？</string>
-
     <string name="chat_us">メールする</string>
-
     <string name="call_us">電話する</string>
-
     <string name="please_type_verification_code">認証コードを入力してください。</string>
-
     <string name="did_not_get_otp">SMSが届きませんか？</string>
-
     <string name="resend_otp">もう一度SMSを送信</string>
-
     <string name="add_item">商品を追加</string>
-
     <string name="promotion_list_empty">クーポンリストはありません。</string>
-
     <string name="promotion_empty_description">クーポンコードをお持ちでしたら、こちらでご覧頂けます。</string>
-
     <string name="skip">Skip</string>
-
     <string name="food">Food</string>
-
     <string name="help">Help</string>
-
     <string name="type_a_message">メッセージを書く</string>
-
     <string name="my_account">マイアカウント</string>
-
     <string name="reorder">再注文</string>
-
     <string name="please_login">ログインしてください</string>
 
     <string name="no_restaurant_found">おや!? 店舗が見つかりません.</string>
-
     <string name="no_restaurant_found_in_your_location">パクパクサービス提供地域の外の可能性があります。</string>
-
     <string name="something_went_wrong">あれ!?何かがおかしいようです。</string>
-
     <string name="closed">閉店中</string>
 
 
-    -<plurals name="item">
+    <plurals name="item">
+        <item quantity="one">%d Item</item>
+        <item quantity="other">%d Items</item>
+    </plurals>
+    <plurals name="add_ons">
+        <item quantity="one">+%d Add-On</item>
+        <item quantity="other">+%d Add-Ons</item>
+    </plurals>
 
-    <item quantity="one">%d Item</item>
-
-    <item quantity="other">%d Items</item>
-
-</plurals>
-
-
-    -<plurals name="add_ons">
-
-    <item quantity="one">+%d Add-On</item>
-
-    <item quantity="other">+%d Add-Ons</item>
-
-</plurals>
 
 </resources>
