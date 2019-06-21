@@ -198,14 +198,9 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
         holder.dishNameTxt.setText(product.getName());
         holder.cardTextValue.setText(list.get(position).getQuantity().toString());
         holder.cardTextValueTicker.setText(list.get(position).getQuantity().toString());
-        /*priceAmount = list.get(position).getQuantity() * product.getPrices().getOrignalPrice();
-        if (list.get(position).getCartAddons() != null && !list.get(position).getCartAddons().isEmpty()) {
-            for (int j = 0; j < list.get(position).getCartAddons().size(); j++) {
-                priceAmount = priceAmount + (list.get(position).getQuantity() * (list.get(position).getCartAddons().get(j).getQuantity() *
-                        list.get(position).getCartAddons().get(j).getAddonProduct().getPrice()));
-            }
-        }*/
-        holder.priceTxt.setText(product.getPrices().getCurrency() + " " + GlobalData.roundoff(list.get(position).getCalculated_price()));
+        //   priceAmount = product.getCalculated_price();//list.get(position).getQuantity() * product.getPrices().getOrignalPrice();
+
+        holder.priceTxt.setText(product.getPrices().getCurrency() + " " + list.get(position).getCalculated_price());
         if (!product.getFoodType().equalsIgnoreCase("veg")) {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_nonveg));
         } else {
@@ -264,7 +259,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     bottomSheetDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
                     CartChoiceModeFragment.isViewcart = true;
                     CartChoiceModeFragment.isSearch = false;
-                } /*else {*/
+                } else {
                     int countValue = Integer.parseInt(holder.cardTextValue.getText().toString()) + 1;
                     holder.cardTextValue.setText("" + countValue);
                     holder.cardTextValueTicker.setText("" + countValue);
@@ -274,16 +269,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     map.put("cart_id", String.valueOf(list.get(position).getId()));
                     Log.e("AddCart_add", map.toString());
                     addCart(map);
-                    int quantity = Integer.parseInt(holder.cardTextValue.getText().toString());
-                    /*priceAmount = quantity * product.getPrices().getOrignalPrice();
-                    if (list.get(position).getCartAddons() != null && !list.get(position).getCartAddons().isEmpty()) {
-                        for (int j = 0; j < list.get(position).getCartAddons().size(); j++) {
-                            priceAmount = priceAmount + (list.get(position).getQuantity() * (list.get(position).getCartAddons().get(j).getQuantity() *
-                                    list.get(position).getCartAddons().get(j).getAddonProduct().getPrice()));
-                        }
-                    }*/
-                holder.priceTxt.setText(product.getPrices().getCurrency() + " " + GlobalData.roundoff(list.get(position).getCalculated_price()));
-                /* }*/
+                }
             }
         });
 
@@ -309,15 +295,6 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                 int countMinusValue;
                 /** Press Add Card Minus button */
                 product = list.get(position).getProduct();
-                int quantity = Integer.parseInt(holder.cardTextValue.getText().toString());
-                /*priceAmount = quantity * product.getPrices().getOrignalPrice();
-                if (list.get(position).getCartAddons() != null && !list.get(position).getCartAddons().isEmpty()) {
-                    for (int j = 0; j < list.get(position).getCartAddons().size(); j++) {
-                        priceAmount = priceAmount + (list.get(position).getQuantity() * (list.get(position).getCartAddons().get(j).getQuantity() *
-                                list.get(position).getCartAddons().get(j).getAddonProduct().getPrice()));
-                    }
-                }*/
-                holder.priceTxt.setText(product.getPrices().getCurrency() + " " + GlobalData.roundoff(list.get(position).getCalculated_price()));
                 if (holder.cardTextValue.getText().toString().equalsIgnoreCase("1")) {
                     countMinusValue = Integer.parseInt(holder.cardTextValue.getText().toString()) - 1;
                     holder.cardTextValue.setText("" + countMinusValue);

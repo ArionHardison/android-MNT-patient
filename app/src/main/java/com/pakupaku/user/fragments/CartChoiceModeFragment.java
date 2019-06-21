@@ -89,7 +89,7 @@ public class CartChoiceModeFragment extends BottomSheetDialogFragment {
         if (GlobalData.isSelectedProduct != null) {
             product = GlobalData.isSelectedProduct;
             productName.setText(product.getName());
-            productPrice.setText(product.getPrices().getCurrency() + " " + product.getPrices().getPrice());
+            productPrice.setText(product.getPrices().getCurrency() + " " + product.getPrices().getOrignalPrice());
             cartAddonList = new ArrayList<>();
             if (GlobalData.addCart != null) {
                 if (isViewcart) {
