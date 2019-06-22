@@ -233,7 +233,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void getUserCountryInfo() {
         Locale current = getResources().getConfiguration().locale;
-        Country country = Country.getCountryFromSIM(context);
+        //Country country = Country.getCountryFromSIM(context);
+        Country country = Country.getCountrydetails("JP");
         if (country != null) {
             countryImage.setImageResource(country.getFlag());
             countryNumber.setText(country.getDialCode());

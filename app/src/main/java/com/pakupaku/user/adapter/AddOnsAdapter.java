@@ -1,8 +1,6 @@
 package com.pakupaku.user.adapter;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,15 +15,14 @@ import android.widget.TextView;
 import com.pakupaku.user.R;
 import com.pakupaku.user.activities.ProductDetailActivity;
 import com.pakupaku.user.helper.GlobalData;
-import com.pakupaku.user.models.AddCart;
 import com.pakupaku.user.models.Addon;
 import com.pakupaku.user.models.Cart;
-import com.pakupaku.user.models.Shop;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
 
 import java.util.List;
 
+import static com.pakupaku.user.MyApplication.currency;
 import static com.pakupaku.user.helper.GlobalData.isSelectedProduct;
 
 /**
@@ -35,19 +32,7 @@ import static com.pakupaku.user.helper.GlobalData.isSelectedProduct;
 public class AddOnsAdapter extends RecyclerView.Adapter<AddOnsAdapter.MyViewHolder> {
     public static List<Addon> list;
     private Context context;
-    int priceAmount = 0;
-    int discount = 0;
-    int itemCount = 0;
-    int itemQuantity = 0;
     Addon addon;
-    boolean dataResponse = false;
-    Cart productList;
-
-    AddCart addCart;
-    AnimatedVectorDrawableCompat avdProgress;
-    Dialog dialog;
-    Runnable action;
-    Shop selectedShop = GlobalData.selectedShop;
 
     //Animation number
     private static final char[] NUMBER_LIST = TickerUtils.getDefaultNumberList();
@@ -59,9 +44,7 @@ public class AddOnsAdapter extends RecyclerView.Adapter<AddOnsAdapter.MyViewHold
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.add_ons_item, parent, false);
-
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.add_ons_item, parent, false);
         return new MyViewHolder(itemView);
     }
 
@@ -83,7 +66,7 @@ public class AddOnsAdapter extends RecyclerView.Adapter<AddOnsAdapter.MyViewHold
         holder.cardAddDetailLayout.setVisibility(View.GONE);
         addon = list.get(position);
         holder.cardTextValueTicker.setCharacterList(NUMBER_LIST);
-        holder.addonName.setText(addon.getAddon().getName() + " " + GlobalData.currencySymbol + list.get(position).getPrice());
+        holder.addonName.setText(addon.getAddon().getName() + " " + currency + list.get(position).getPrice());
         addon.setQuantity(1);
         holder.cardTextValue.setText("1");
         holder.cardTextValueTicker.setText("1");
@@ -91,25 +74,19 @@ public class AddOnsAdapter extends RecyclerView.Adapter<AddOnsAdapter.MyViewHold
         holder.addonName.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (checked) {
+                    holder.cardAddDetailLayout.setVisibility(View.VISIBLE);
+                    holder.cardAddTextLayout.setVisibility(View.GONE);
+                    addon = list.get(position);
+                    addon.getAddon().setChecked(true);
+                    setAddOnsText();
+                } else {
+                    holder.cardAddDetailLayout.setVisibility(View.GONE);
+                    holder.cardAddTextLayout.setVisibility(View.VISIBLE);
+                    addon.getAddon().setChecked(false);
+                    setAddOnsText();
 
-//                if(GlobalData.profileModel!=null){
-                    if (checked) {
-                        holder.cardAddDetailLayout.setVisibility(View.VISIBLE);
-                        holder.cardAddTextLayout.setVisibility(View.GONE);
-                        addon = list.get(position);
-                        addon.getAddon().setChecked(true);
-                        setAddOnsText();
-                    } else {
-                        holder.cardAddDetailLayout.setVisibility(View.GONE);
-                        holder.cardAddTextLayout.setVisibility(View.VISIBLE);
-                        addon.getAddon().setChecked(false);
-                        setAddOnsText();
-
-                    }
-//                }
-//                else {
-//                    Toast.makeText(context, context.getResources().getString(R.string.please_login), Toast.LENGTH_SHORT).show();
-//                }
+                }
 
             }
         });
@@ -117,20 +94,15 @@ public class AddOnsAdapter extends RecyclerView.Adapter<AddOnsAdapter.MyViewHold
         holder.cardAddTextLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /** Press Add Card Text Layout */
-//                if(GlobalData.profileModel!=null){
-                    addon = list.get(position);
-                    holder.cardAddDetailLayout.setVisibility(View.VISIBLE);
-                    holder.cardAddTextLayout.setVisibility(View.GONE);
-                    holder.cardTextValue.setText("1");
-                    holder.cardTextValueTicker.setText("1");
-                    addon.setQuantity(1);
-                    holder.addonName.setChecked(true);
-                    addon.getAddon().setChecked(true);
-                    setAddOnsText();
-//                }else {
-//                    Toast.makeText(context, context.getResources().getString(R.string.please_login), Toast.LENGTH_SHORT).show();
-//                }
+                addon = list.get(position);
+                holder.cardAddDetailLayout.setVisibility(View.VISIBLE);
+                holder.cardAddTextLayout.setVisibility(View.GONE);
+                holder.cardTextValue.setText("1");
+                holder.cardTextValueTicker.setText("1");
+                addon.setQuantity(1);
+                holder.addonName.setChecked(true);
+                addon.getAddon().setChecked(true);
+                setAddOnsText();
 
             }
         });
@@ -201,7 +173,7 @@ public class AddOnsAdapter extends RecyclerView.Adapter<AddOnsAdapter.MyViewHold
             foodImageType = itemView.findViewById(R.id.food_type_image);
             animationLineCartAdd = itemView.findViewById(R.id.animation_line_cart_add);
             addonName = itemView.findViewById(R.id.dish_name_text);
-         /*    Add card Button Layout*/
+            /*    Add card Button Layout*/
             cardAddDetailLayout = itemView.findViewById(R.id.add_card_layout);
             addButtonRootLayout = itemView.findViewById(R.id.add_button_root_layout);
             cardAddTextLayout = itemView.findViewById(R.id.add_card_text_layout);

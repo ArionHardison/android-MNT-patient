@@ -46,14 +46,11 @@ import com.pakupaku.user.helper.CustomDialog;
 import com.pakupaku.user.helper.GlobalData;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.PlaceBuffer;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -62,12 +59,18 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -82,13 +85,17 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+//import com.google.android.gms.location.places.Place;
+//import com.google.android.gms.location.places.PlaceBuffer;
+//import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+
 public class SaveDeliveryLocationActivity extends FragmentActivity implements OnMapReadyCallback,
         LocationListener, GoogleMap.OnCameraMoveListener, GoogleMap.OnCameraIdleListener,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
     @BindView(R.id.address)
-    EditText addressEdit;
+    TextView addressEdit;
     @BindView(R.id.flat_no)
     EditText flatNoEdit;
     @BindView(R.id.landmark)
@@ -122,6 +129,7 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
     @BindView(R.id.skip_txt)
     TextView skipTxt;
 
+    boolean mapClicked = true;
     private String TAG = "SaveDelivery";
     private String addressHeader = "";
     private BottomSheetBehavior behavior;
@@ -135,7 +143,8 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
     private Double srcLng;
     AnimatedVectorDrawableCompat avdProgress;
     FusedLocationProviderClient mFusedLocationClient;
-
+    private int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
+    private int SET_COMPLETE = 1;
     @BindView(R.id.backArrow)
     ImageView backArrow;
     @BindView(R.id.coordinatorLayout)
@@ -146,7 +155,7 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
     boolean isAddressSave = false;
     boolean isSkipVisible = false;
     Context context;
-
+    LatLng latlng;
     CustomDialog customDialog;
     Retrofit retrofit;
 
@@ -163,6 +172,8 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
         address.setType("other");
         //Intialize Animation line
         initializeAvd();
+
+
         //Load animation
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         slide_down = AnimationUtils.loadAnimation(context,
@@ -177,6 +188,10 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
         else
             skipTxt.setVisibility(View.GONE);
 
+
+        // Initialize Places.
+        Places.initialize(getApplicationContext(), getResources().getString(R.string.google_maps_key));
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 buildGoogleApiClient();
@@ -187,7 +202,14 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                                 // Got last known location. In some rare situations this can be null.
                                 if (location != null) {
                                     // Logic to handle location object
-                                    getAddress(location.getLatitude(), location.getLongitude());
+                                    Bundle extras = getIntent().getExtras();
+                                    if (extras != null) {
+                                        String isEdit = extras.getString("edit");
+                                        String my_address = extras.getString("place_address");
+                                        if (isEdit == null && my_address == null) {
+                                            getAddress(location.getLatitude(), location.getLongitude());
+                                        }
+                                    }
 //                                    getAddress(context, location.getLatitude(), location.getLongitude());
                                 }
                             }
@@ -204,7 +226,14 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
                                 // Logic to handle location object
-                                getAddress(location.getLatitude(), location.getLongitude());
+                                Bundle extras = getIntent().getExtras();
+                                if (extras != null) {
+                                    String isEdit = extras.getString("edit");
+                                    String my_address = extras.getString("place_address");
+                                    if (isEdit == null && my_address == null) {
+                                        getAddress(location.getLatitude(), location.getLongitude());
+                                    }
+                                }
 //                                getAddress(context, location.getLatitude(), location.getLongitude());
                             }
                         }
@@ -290,52 +319,6 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
             }
         });
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            String id = extras.getString("place_id");
-            String isEdit = extras.getString("edit");
-            if (id != null) {
-                Places.GeoDataApi.getPlaceById(mGoogleApiClient, id).setResultCallback(new ResultCallback<PlaceBuffer>() {
-                    @Override
-                    public void onResult(@NonNull PlaceBuffer places) {
-                        if (places.getStatus().isSuccess() && places.getCount() > 0) {
-                            Place place = places.get(0);
-                            addressEdit.setText(place.getAddress());
-                            LatLng latLng = place.getLatLng();
-                            value = 1;
-                            CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(16).build();
-                            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                        } else {
-                            System.out.println("Place not found");
-                        }
-                        places.release();
-                    }
-                });
-            }
-
-            if (isEdit != null && isEdit.equals("yes")) {
-                if (GlobalData.selectedAddress != null) {
-                    address = GlobalData.selectedAddress;
-                    addressEdit.setText(address.getMapAddress());
-                    flatNoEdit.setText(address.getBuilding());
-                    landmark.setText(address.getLandmark());
-                    switch (address.getType()) {
-                        case "home":
-                            homeRadio.setChecked(true);
-                            break;
-                        case "work":
-                            workRadio.setChecked(true);
-                            break;
-                        default:
-                            otherAddressHeaderEt.setText(address.getType());
-                            otherRadio.setChecked(true);
-                            break;
-                    }
-                }
-            }
-
-        }
-
     }
 
     Runnable action = new Runnable() {
@@ -356,7 +339,7 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
     private void repeatAnimation() {
         animationLineCartAdd.setVisibility(View.VISIBLE);
         avdProgress.start();
-        animationLineCartAdd.postDelayed(action, 1500); // Will repeat animation in every 1 second
+        animationLineCartAdd.postDelayed(action, 1700); // Will repeat animation in every 1 second
     }
 
     @Override
@@ -384,6 +367,52 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
             mMap.getUiSettings().setTiltGesturesEnabled(false);
         }
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String isEdit = extras.getString("edit");
+            String id = extras.getString("place_id");
+            String latitude = extras.getString("latitude");
+            String longitude = extras.getString("longitude");
+            String my_address = extras.getString("place_address");
+
+            if (my_address != null && latitude != null && longitude != null) {
+                value = 1;
+                mapClicked = false;
+                address.setLatitude(Double.parseDouble(latitude));
+                address.setLongitude(Double.parseDouble(longitude));
+                address.setMapAddress(my_address);
+                addressEdit.setText(my_address);
+                LatLng latLng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(17).build();
+                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            }
+
+            if (isEdit != null && isEdit.equals("yes")) {
+                value = 1;
+                mapClicked = false;
+                if (GlobalData.selectedAddress != null) {
+                    address = GlobalData.selectedAddress;
+                    addressEdit.setText(address.getMapAddress());
+                    flatNoEdit.setText(address.getBuilding());
+                    landmark.setText(address.getLandmark());
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(address.getLatitude(), address.getLongitude())).zoom(17).build();
+                    mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    switch (address.getType()) {
+                        case "home":
+                            homeRadio.setChecked(true);
+                            break;
+                        case "work":
+                            workRadio.setChecked(true);
+                            break;
+                        default:
+                            otherAddressHeaderEt.setText(address.getType());
+                            otherRadio.setChecked(true);
+                            break;
+                    }
+                }
+            }
+
+        }
 
     }
 
@@ -392,7 +421,7 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
-                .addApi(Places.GEO_DATA_API)
+//                .addApi(Places.GEO_DATA_API)
                 .addApi(LocationServices.API)
                 .build();
         mGoogleApiClient.connect();
@@ -405,14 +434,13 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
             value = 1;
             if (address.getId() == null) {
                 LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(loc).zoom(16).build();
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(loc).zoom(17).build();
                 mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             } else {
                 LatLng loc = new LatLng(address.getLatitude(), address.getLongitude());
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(loc).zoom(16).build();
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(loc).zoom(17).build();
                 mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
-//            getAddress( location.getLatitude(), location.getLongitude());
             getAddress(location.getLatitude(), location.getLongitude());
         }
         crtLat = location.getLatitude();
@@ -434,7 +462,13 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                 } else {
                     strReturnedAddress.append(returnedAddress.getAddressLine(0)).append("");
                 }
-                addressEdit.setText(strReturnedAddress.toString());
+                if (mapClicked) {
+                    addressEdit.setText(strReturnedAddress.toString());
+                } else {
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(latlng).zoom(17).build();
+                    mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                }
+
                 Address obj = addresses.get(0);
                 address.setCity(obj.getLocality());
                 address.setState(obj.getAdminArea());
@@ -522,11 +556,10 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
             CameraPosition cameraPosition = mMap.getCameraPosition();
             srcLat = cameraPosition.target.latitude;
             srcLng = cameraPosition.target.longitude;
-
-            //Intialize animation line
             initializeAvd();
-            getAddress(srcLat, srcLng);
-//            getAddress(context, srcLat, srcLng);
+            if (mapClicked) {
+                getAddress(srcLat, srcLng);
+            }
             skipTxt.setAlpha(1);
             skipTxt.setClickable(true);
             skipTxt.setEnabled(true);
@@ -544,6 +577,7 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
         skipTxt.setAlpha((float) 0.5);
         skipTxt.setClickable(false);
         skipTxt.setEnabled(false);
+        mapClicked = true;
     }
 
     @Override
@@ -599,8 +633,13 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                     } else {
                         APIError error = ErrorUtils.parseError(response);
 //                        Toast.makeText(SaveDeliveryLocationActivity.this, error.getType().get(0), Toast.LENGTH_SHORT).show();
-                        if (error.getType().get(0).equalsIgnoreCase("replace"))
-                            showUpdateAddressAlert();
+                        if (error != null) {
+                            if (error.getType() != null) {
+                                if (error.getType().get(0).equalsIgnoreCase("replace"))
+                                    showUpdateAddressAlert();
+                            }
+                        }
+
 
                     }
                 }
@@ -656,7 +695,11 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                         finish();
                     } else {
                         APIError error = ErrorUtils.parseError(response);
-                        Toast.makeText(SaveDeliveryLocationActivity.this, error.getType().get(0), Toast.LENGTH_SHORT).show();
+                        if (error != null) {
+                            if (error.getType() != null) {
+                                Toast.makeText(SaveDeliveryLocationActivity.this, error.getType().get(0), Toast.LENGTH_SHORT).show();
+                            }
+                        }
                     }
                 }
 
@@ -698,17 +741,21 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
         overridePendingTransition(R.anim.anim_nothing, R.anim.slide_out_right);
     }
 
-    @OnClick({R.id.backArrow, R.id.save, R.id.imgCurrentLoc, R.id.cancel_txt, R.id.skip_txt})
+    @OnClick({R.id.backArrow, R.id.save, R.id.imgCurrentLoc, R.id.cancel_txt, R.id.skip_txt, R.id.address})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.address:
+                findPlace();
+                break;
             case R.id.backArrow:
                 onBackPressed();
                 break;
             case R.id.imgCurrentLoc:
+                mapClicked = true;
                 if (crtLat != null && crtLng != null) {
                     LatLng loc = new LatLng(crtLat, crtLng);
-                    CameraPosition cameraPosition = new CameraPosition.Builder().target(loc).zoom(16).build();
-                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(loc).zoom(17).build();
+                    mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 }
                 break;
             case R.id.cancel_txt:
@@ -751,6 +798,66 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                 finish();
                 break;
 
+        }
+    }
+
+    private void findPlace() {
+        try {
+            List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG);
+            Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this);
+            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+//            if (resultCode == RESULT_OK) {
+//                Place place = PlaceAutocomplete.getPlace(this, data);
+//                LatLng loc = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
+//                mapClicked = false;
+//                CameraPosition cameraPosition = new CameraPosition.Builder().target(loc).zoom(17).build();
+//                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+//
+//                srcLat = loc.latitude;
+//                srcLng = loc.longitude;
+//
+//                if (place.getAddress().toString().contains(place.getName().toString())){
+//                    addressEdit.setText(place.getAddress());
+//                }else{
+//                    addressEdit.setText(place.getName()+", "+place.getAddress());
+//                }
+//
+//                getAddress(srcLat, srcLng);
+//            }
+
+            if (resultCode == RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
+                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId() + ", " + place.getLatLng());
+
+                latlng = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
+                mapClicked = false;
+
+                srcLat = latlng.latitude;
+                srcLng = latlng.longitude;
+
+                if (place.getAddress().toString().contains(place.getName().toString())) {
+                    addressEdit.setText(place.getAddress());
+                } else {
+                    addressEdit.setText(place.getName() + ", " + place.getAddress());
+                }
+
+                getAddress(srcLat, srcLng);
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                Status status = Autocomplete.getStatusFromIntent(data);
+                Log.i(TAG, status.getStatusMessage());
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
         }
     }
 

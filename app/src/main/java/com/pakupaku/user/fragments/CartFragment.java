@@ -258,40 +258,25 @@ public class CartFragment extends Fragment {
                         GlobalData.addCart = null;
                     } else {
                         AddCart addCart = response.body();
+                        viewCartItemList.clear();
+                        viewCartItemList = addCart.getProductList();
+                        viewCartAdapter = new ViewCartAdapter(viewCartItemList, context);
+                        orderItemRv.setAdapter(viewCartAdapter);
+                        viewCartAdapter.notifyDataSetChanged();
                         errorLayout.setVisibility(View.GONE);
                         dataLayout.setVisibility(View.VISIBLE);
                         for (int i = 0; i < itemCount; i++) {
                             //Get Total item Quantity
                             itemQuantity = itemQuantity + response.body().getProductList().get(i).getQuantity();
-                            //Get product price
-                            if (response.body().getProductList().get(i).getProduct().getPrices().getOrignalPrice() != 0)
-                                priceAmount = priceAmount + (response.body().getProductList().get(i).getQuantity() * response.body().getProductList().get(i).getProduct().getPrices().getOrignalPrice());
-
-                            if (addCart.getProductList().get(i).getCartAddons() != null && !addCart.getProductList().get(i).getCartAddons().isEmpty()) {
-                                for (int j = 0; j < addCart.getProductList().get(i).getCartAddons().size(); j++) {
-                                    priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * (addCart.getProductList().get(i).getCartAddons().get(j).getQuantity() *
-                                            addCart.getProductList().get(i).getCartAddons().get(j).getAddonProduct().getPrice()));
-                                }
-                            }
                         }
                         GlobalData.notificationCount = itemQuantity;
-                        GlobalData.addCartShopId = response.body().getProductList().get(0).getProduct().getShopId();
-                        //Set Payment details
                         String currency = response.body().getProductList().get(0).getProduct().getPrices().getCurrency();
-                        itemTotalAmount.setText(currency + "" + GlobalData.roundoff(addCart.getTotalPrice()));
-                        if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() != 0) {
-                            if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() < priceAmount) {
-                                int offerPercentage = response.body().getProductList().get(0).getProduct().getShop().getOfferPercent();
-                                discount = priceAmount * (offerPercentage /** 0.01*/);
-                            }
-                        }
-                        discountAmount.setText("- " + currency + "" + addCart.getShopDiscount());
-                        int topPayAmount = priceAmount - discount;
-//                        int tax = (int) Math.round(topPayAmount * (response.body().getTaxPercentage() /** 0.01*/));
-                        int tax = topPayAmount * (response.body().getTaxPercentage() /** 0.01*/);
+                        itemTotalAmount.setText(currency + "" + response.body().getTotalPrice());
+                        discountAmount.setText("- " + currency + "" + response.body().getShopDiscount());
+                        promocode_amount.setText("- " + currency + "" + response.body().getPromocodeAmount());
                         serviceTax.setText(currency + response.body().getTax());
-                        topPayAmount = topPayAmount + response.body().getDeliveryCharges() + tax;
-                        payAmount.setText(currency + "" + /*String.format("%.2f", */addCart.getPayable());
+                        payAmount.setText(currency + "" + response.body().getPayable());
+                        deliveryCharges.setText(response.body().getProductList().get(0).getProduct().getPrices().getCurrency() + "" + response.body().getDeliveryCharges());
                         //Set Restaurant Details
                         restaurantName.setText(response.body().getProductList().get(0).getProduct().getShop().getName());
                         restaurantDescription.setText(response.body().getProductList().get(0).getProduct().getShop().getDescription());
@@ -303,13 +288,6 @@ public class CartFragment extends Fragment {
                                         .placeholder(R.drawable.ic_restaurant_place_holder)
                                         .error(R.drawable.ic_restaurant_place_holder))
                                 .into(restaurantImage);
-                        deliveryChargeValue = response.body().getDeliveryCharges();
-                        deliveryCharges.setText(response.body().getProductList().get(0).getProduct().getPrices().getCurrency()
-                                + "" + response.body().getDeliveryCharges().toString());
-                        viewCartItemList.clear();
-                        viewCartItemList = response.body().getProductList();
-                        viewCartAdapter = new ViewCartAdapter(viewCartItemList, context);
-                        orderItemRv.setAdapter(viewCartAdapter);
                     }
 
                 }
@@ -322,6 +300,7 @@ public class CartFragment extends Fragment {
             }
         });
     }
+
 
 
     private void getViewCartWithPromocode(String promotion) {
@@ -351,67 +330,46 @@ public class CartFragment extends Fragment {
                         GlobalData.addCart = null;
                     } else {
                         AddCart addCart = response.body();
+
+                        viewCartItemList.clear();
+                        viewCartItemList = addCart.getProductList();
+                        viewCartAdapter = new ViewCartAdapter(viewCartItemList, context);
+                        orderItemRv.setAdapter(viewCartAdapter);
+                        viewCartAdapter.notifyDataSetChanged();
+
                         errorLayout.setVisibility(View.GONE);
                         dataLayout.setVisibility(View.VISIBLE);
-                        priceAmount = 0;
-                        for (int i = 0; i < itemCount; i++) {
-                            //Get Total item Quantity
-                            itemQuantity = itemQuantity + response.body().getProductList().get(i).getQuantity();
-                            //Get product price
-                            if (response.body().getProductList().get(i).getProduct().getPrices().getOrignalPrice() != 0)
-                                priceAmount = priceAmount + (response.body().getProductList().get(i).getQuantity() * response.body().getProductList().get(i).getProduct().getPrices().getOrignalPrice());
-
-                            if (addCart.getProductList().get(i).getCartAddons() != null && !addCart.getProductList().get(i).getCartAddons().isEmpty()) {
-                                for (int j = 0; j < addCart.getProductList().get(i).getCartAddons().size(); j++) {
-                                    priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * (addCart.getProductList().get(i).getCartAddons().get(j).getQuantity() *
-                                            addCart.getProductList().get(i).getCartAddons().get(j).getAddonProduct().getPrice()));
-                                }
-                            }
-                        }
                         GlobalData.notificationCount = itemQuantity;
                         GlobalData.addCartShopId = response.body().getProductList().get(0).getProduct().getShopId();
                         //Set Payment details
                         String currency = response.body().getProductList().get(0).getProduct().getPrices().getCurrency();
-                        itemTotalAmount.setText(currency + "" + /*String.format("%.2f", */addCart.getTotalPrice());
-                        if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() != 0) {
-                            if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() < priceAmount) {
-                                int offerPercentage = response.body().getProductList().get(0).getProduct().getShop().getOfferPercent();
-                                discount = (priceAmount * (offerPercentage /** 0.01*/));
-                            }
-                        }
-                        discountAmount.setText("- " + currency + "" + addCart.getShopDiscount());
-                        if (response.body().getPromocodeAmount() > 0){
+
+                        if (response.body().getPromocodeAmount() > 0) {
                             lnrPromocodeAmount.setVisibility(View.VISIBLE);
-                        }else{
+                            promoCodeApply.setText("Promocode Applied.");
+                            promoCodeApply.setEnabled(false);
+                        } else {
+                            promoCodeApply.setText("Apply");
+                            promoCodeApply.setEnabled(true);
                             lnrPromocodeAmount.setVisibility(View.GONE);
                         }
-                        promocode_amount.setText("- " + currency + "" +  response.body().getPromocodeAmount());
-                        int topPayAmount = priceAmount - discount;
-//                        int tax = (int) Math.round(topPayAmount * (response.body().getTaxPercentage() /** 0.01*/));
-                        int tax = topPayAmount * (response.body().getTaxPercentage() /** 0.01*/);
-                        serviceTax.setText(currency + addCart.getTax());
-                        topPayAmount = topPayAmount + response.body().getDeliveryCharges() + tax;
-                        payAmount.setText(currency + "" + /*String.format("%.2f", */addCart.getPayable());
+
+                        itemTotalAmount.setText(currency + "" + response.body().getTotalPrice());
+                        discountAmount.setText("- " + currency + "" + discount);
+                        promocode_amount.setText("- " + currency + "" + response.body().getPromocodeAmount());
+                        serviceTax.setText(currency + Double.parseDouble(response.body().getTax()));
+                        payAmount.setText(currency + "" + response.body().getPayable());
+                        deliveryCharges.setText(response.body().getProductList().get(0).getProduct().getPrices().getCurrency()
+                                + "" + response.body().getDeliveryCharges());
                         //Set Restaurant Details
                         restaurantName.setText(response.body().getProductList().get(0).getProduct().getShop().getName());
                         restaurantDescription.setText(response.body().getProductList().get(0).getProduct().getShop().getDescription());
                         String image_url = response.body().getProductList().get(0).getProduct().getShop().getAvatar();
                         Glide.with(context)
                                 .load(image_url)
-                                .apply(new RequestOptions()
-                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                        .placeholder(R.drawable.ic_restaurant_place_holder)
-                                        .error(R.drawable.ic_restaurant_place_holder))
+                                .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.ic_restaurant_place_holder).error(R.drawable.ic_restaurant_place_holder))
                                 .into(restaurantImage);
-                        deliveryChargeValue = response.body().getDeliveryCharges();
-                        deliveryCharges.setText(response.body().getProductList().get(0).getProduct().getPrices().getCurrency()
-                                + "" + deliveryChargeValue);
-                        viewCartItemList.clear();
-                        viewCartItemList = response.body().getProductList();
-                        viewCartAdapter = new ViewCartAdapter(viewCartItemList, context);
-                        orderItemRv.setAdapter(viewCartAdapter);
                     }
-
                 }
             }
 
@@ -422,7 +380,6 @@ public class CartFragment extends Fragment {
             }
         });
     }
-
 
     @Override
     public void onResume() {
@@ -438,9 +395,9 @@ public class CartFragment extends Fragment {
             skeleton.show();
             errorLayoutDescription.setText(getResources().getString(R.string.cart_error_description));
             if (connectionHelper.isConnectingToInternet() && GlobalData.addCart == null) {
-                if (promo_code.equalsIgnoreCase("")){
+                if (promo_code.equalsIgnoreCase("")) {
                     getViewCart();
-                }else{
+                } else {
                     getViewCartWithPromocode(promo_code);
                 }
             } else if (GlobalData.addCart != null) {
@@ -463,7 +420,7 @@ public class CartFragment extends Fragment {
                 Utils.displayMessage(activity, context, getString(R.string.oops_connect_your_internet));
             }
 
-            if (GlobalData.profileModel.getWalletBalance() != null){
+            if (GlobalData.profileModel.getWalletBalance() != null) {
                 float fd = Float.parseFloat(GlobalData.profileModel.getWalletBalance());
 
                 if (fd > 0) {
@@ -573,7 +530,7 @@ public class CartFragment extends Fragment {
                     checkoutMap.put("user_address_id", "" + GlobalData.selectedAddress.getId());
                     checkoutMap.put("note", "" + customNotes.getText());
 
-                    if (!promo_code.equalsIgnoreCase("")){
+                    if (!promo_code.equalsIgnoreCase("")) {
                         checkoutMap.put("promocode_id", promo_code);
                     }
 

@@ -6,6 +6,10 @@ import android.content.res.Configuration;
 import android.support.multidex.MultiDex;
 
 import com.crashlytics.android.Crashlytics;
+import com.pakupaku.user.utils.LocaleUtils;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import io.fabric.sdk.android.Fabric;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -19,6 +23,10 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 public class MyApplication extends Application {
 
     private static Context context;
+
+    public static String commonAccess = "";
+    public static String promoCodeSelect = "";
+    public static String currency = "";
 
     public static Object getContext() {
         return MyApplication.context;
@@ -56,8 +64,17 @@ public class MyApplication extends Application {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
+        super.attachBaseContext(LocaleUtils.onAttach(base));
 //        super.attachBaseContext(LocaleUtils.onAttach(base, "en"));
+
         MultiDex.install(this);
     }
+
+    //Number format not working N currency not found so changed text to decimal format --suresh
+    public static String retrunTwoDecimal(double actualVaue) {
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        return formatter.format(actualVaue);
+
+    }
+
 }

@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,14 +16,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.pakupaku.user.HomeActivity;
 import com.pakupaku.user.R;
 import com.pakupaku.user.build.api.ApiClient;
 import com.pakupaku.user.build.api.ApiInterface;
-import com.pakupaku.user.helper.GlobalData;
 import com.pakupaku.user.helper.CustomDialog;
+import com.pakupaku.user.helper.GlobalData;
+import com.pakupaku.user.helper.SharedHelper;
+import com.pakupaku.user.models.AddCart;
+import com.pakupaku.user.models.AddressList;
 import com.pakupaku.user.models.ResetPassword;
+import com.pakupaku.user.models.User;
 import com.pakupaku.user.utils.TextUtils;
+import com.pakupaku.user.utils.Utils;
 
 import org.json.JSONObject;
 
@@ -60,6 +67,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
     @BindView(R.id.confirm_password_eye_img)
     ImageView confirmPasswordEyeImg;
 
+    String device_token, device_UDID;
+    Utils utils = new Utils();
+    String TAG = "Login";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +79,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         context = ResetPasswordActivity.this;
         customDialog = new CustomDialog(context);
+        getDeviceToken();
         passwordEyeImg.setTag(1);
         confirmPasswordEyeImg.setTag(1);
 
@@ -149,10 +161,16 @@ public class ResetPasswordActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<ResetPassword> call, @NonNull Response<ResetPassword> response) {
                 customDialog.dismiss();
                 if (response.isSuccessful()) {
-                    Toast.makeText(ResetPasswordActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(context, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    Toast.makeText(ResetPasswordActivity.this, "Password Updated", Toast.LENGTH_SHORT).show();
+                /*    SharedHelper.putKey(context, "access_token", "Bearer" + " " + response.body().getAccessToken());
+                    GlobalData.accessToken = "Bearer" + " " + response.body().getAccessToken();
+                    getProfile();*/
+
+                    startActivity(new Intent(context, LoginActivity.class)
+                            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                 } else {
+
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
@@ -168,6 +186,60 @@ public class ResetPasswordActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    private void getProfile() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("device_type", "android");
+        map.put("device_id", device_UDID);
+        map.put("device_token", device_token);
+        Call<User> getprofile = apiInterface.getProfile(map);
+        getprofile.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                customDialog.dismiss();
+                SharedHelper.putKey(context, "logged", "true");
+                GlobalData.profileModel = response.body();
+                GlobalData.addCart = new AddCart();
+                GlobalData.addCart.setProductList(response.body().getCart());
+                GlobalData.addressList = new AddressList();
+                GlobalData.addressList.setAddresses(response.body().getAddresses());
+                startActivity(new Intent(ResetPasswordActivity.this, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                finish();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                customDialog.dismiss();
+            }
+        });
+    }
+
+
+    public void getDeviceToken() {
+        try {
+            if (!SharedHelper.getKey(context, "device_token").equals("") && SharedHelper.getKey(context, "device_token") != null) {
+                device_token = SharedHelper.getKey(context, "device_token");
+                Log.d(TAG, "GCM Registration Token: " + device_token);
+            } else {
+                device_token = "" + FirebaseInstanceId.getInstance().getToken();
+                SharedHelper.putKey(context, "device_token", "" + FirebaseInstanceId.getInstance().getToken());
+                Log.d(TAG, "Failed to complete token refresh: " + device_token);
+            }
+        } catch (Exception e) {
+            device_token = "COULD NOT GET FCM TOKEN";
+            Log.d(TAG, "Failed to complete token refresh");
+        }
+
+        try {
+            device_UDID = android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+            Log.d(TAG, "Device UDID:" + device_UDID);
+        } catch (Exception e) {
+            device_UDID = "COULD NOT GET UDID";
+            e.printStackTrace();
+            Log.d(TAG, "Failed to complete device UDID");
+        }
     }
 
 }

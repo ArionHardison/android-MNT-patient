@@ -11,7 +11,7 @@ public class AddCart {
 
     @SerializedName("delivery_charges")
     @Expose
-    private Integer deliveryCharges;
+    private String deliveryCharges;
     @SerializedName("delivery_free_minimum")
     @Expose
     private Integer deliveryFreeMinimum;
@@ -118,11 +118,11 @@ public class AddCart {
     }
 
 
-    public Integer getDeliveryCharges() {
+    public String getDeliveryCharges() {
         return deliveryCharges;
     }
 
-    public void setDeliveryCharges(Integer deliveryCharges) {
+    public void setDeliveryCharges(String deliveryCharges) {
         this.deliveryCharges = deliveryCharges;
     }
 

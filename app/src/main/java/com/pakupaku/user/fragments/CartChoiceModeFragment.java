@@ -43,6 +43,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
+import static com.pakupaku.user.MyApplication.commonAccess;
 /**
  * Created by santhosh@appoets.com on 13-11-2017.
  */
@@ -130,6 +132,7 @@ public class CartChoiceModeFragment extends BottomSheetDialogFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.i_will_choose_btn:
+                commonAccess = "Chooice";
                 context.startActivity(new Intent(context, ProductDetailActivity.class));
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                 break;

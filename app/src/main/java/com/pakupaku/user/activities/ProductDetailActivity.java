@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.pakupaku.user.R;
 import com.pakupaku.user.adapter.AddOnsAdapter;
 import com.pakupaku.user.adapter.SliderPagerAdapter;
+import com.pakupaku.user.adapter.ViewCartAdapter;
 import com.pakupaku.user.build.api.ApiClient;
 import com.pakupaku.user.build.api.ApiInterface;
 import com.pakupaku.user.helper.CustomDialog;
@@ -50,6 +51,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static com.pakupaku.user.MyApplication.commonAccess;
+import static com.pakupaku.user.MyApplication.currency;
 import static com.pakupaku.user.adapter.AddOnsAdapter.list;
 import static com.pakupaku.user.helper.GlobalData.selectedShop;
 
@@ -122,10 +125,11 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         }
 
-        if (product.getName()!=null) {
+        if (product.getName() != null) {
+
             productName.setText(product.getName() + "\n" + product.getPrices().getCurrency() + product.getPrices().getPrice());
         }
-
+        currency = product.getPrices().getCurrency();
         itemText.setText("1 Item | " + product.getPrices().getCurrency() + product.getPrices().getPrice());
         productDescription.setText(product.getDescription());
         slider_image_list = new ArrayList<>();
@@ -156,59 +160,59 @@ public class ProductDetailActivity extends AppCompatActivity {
                /* if (GlobalData.profileModel == null) {
                     Toast.makeText(context, "Please login", Toast.LENGTH_SHORT).show();
                 } else {*/
-                    final HashMap<String, String> map = new HashMap<>();
-                    map.put("product_id", product.getId().toString());
-                    map.put("note", custom_notes.getText().toString());
-                    if (product.getCart() != null && product.getCart().size() == 1 && product.getAddons().isEmpty()) {
-                        map.put("quantity", String.valueOf(product.getCart().get(0).getQuantity() + 1));
-                        map.put("cart_id", String.valueOf(product.getCart().get(0).getId()));
-                    } else if (product.getAddons().isEmpty() && cartId != 0) {
-                        map.put("quantity", String.valueOf(quantity + 1));
-                        map.put("cart_id", String.valueOf(cartId));
-                    } else {
-                        map.put("quantity", "1");
-                        if (!list.isEmpty()) {
-                            for (int i = 0; i < list.size(); i++) {
-                                Addon addon = list.get(i);
-                                if (addon.getAddon().getChecked()) {
-                                    map.put("product_addons[" + "" + i + "]", addon.getId().toString());
-                                    map.put("addons_qty[" + "" + i + "]", addon.getQuantity().toString());
-                                }
+                final HashMap<String, String> map = new HashMap<>();
+                map.put("product_id", product.getId().toString());
+                map.put("note", custom_notes.getText().toString());
+                if (product.getCart() != null && product.getCart().size() == 1 && product.getAddons().isEmpty()) {
+                    map.put("quantity", String.valueOf(product.getCart().get(0).getQuantity() + 1));
+                    map.put("cart_id", String.valueOf(product.getCart().get(0).getId()));
+                } else if (product.getAddons().isEmpty() && cartId != 0) {
+                    map.put("quantity", String.valueOf(quantity + 1));
+                    map.put("cart_id", String.valueOf(cartId));
+                } else {
+                    map.put("quantity", "1");
+                    if (!list.isEmpty()) {
+                        for (int i = 0; i < list.size(); i++) {
+                            Addon addon = list.get(i);
+                            if (addon.getAddon().getChecked()) {
+                                map.put("product_addons[" + "" + i + "]", addon.getId().toString());
+                                map.put("addons_qty[" + "" + i + "]", addon.getQuantity().toString());
                             }
                         }
                     }
-                    Log.e("AddCart_add", map.toString());
+                }
+                Log.e("AddCart_add", map.toString());
 
-                    if (!Utils.isShopChanged(product.getShopId())) {
-                        addItem(map);
-                    } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setTitle(context.getResources().getString(R.string.replace_cart_item))
-                                .setMessage(context.getResources().getString(R.string.do_you_want_to_discart_the_selection_and_add_dishes_from_the_restaurant))
-                                .setPositiveButton(context.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // continue with delete
-                                        clearCart();
-                                        addItem(map);
+                if (!Utils.isShopChanged(product.getShopId())) {
+                    addItem(map);
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle(context.getResources().getString(R.string.replace_cart_item))
+                            .setMessage(context.getResources().getString(R.string.do_you_want_to_discart_the_selection_and_add_dishes_from_the_restaurant))
+                            .setPositiveButton(context.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // continue with delete
+                                    clearCart();
+                                    addItem(map);
 
-                                    }
-                                })
-                                .setNegativeButton(context.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // do nothing
-                                        dialog.dismiss();
+                                }
+                            })
+                            .setNegativeButton(context.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                    dialog.dismiss();
 
-                                    }
-                                });
-                        AlertDialog alert = builder.create();
-                        alert.show();
-                        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
-                        nbutton.setTextColor(ContextCompat.getColor(context, R.color.theme));
-                        nbutton.setTypeface(nbutton.getTypeface(), Typeface.BOLD);
-                        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
-                        pbutton.setTextColor(ContextCompat.getColor(context, R.color.theme));
-                        pbutton.setTypeface(pbutton.getTypeface(), Typeface.BOLD);
-                    }
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                    Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+                    nbutton.setTextColor(ContextCompat.getColor(context, R.color.theme));
+                    nbutton.setTypeface(nbutton.getTypeface(), Typeface.BOLD);
+                    Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+                    pbutton.setTextColor(ContextCompat.getColor(context, R.color.theme));
+                    pbutton.setTypeface(pbutton.getTypeface(), Typeface.BOLD);
+                }
 
 
 //                }
@@ -267,33 +271,38 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void addItem(HashMap<String, String> map) {
-
-        customDialog.show();
-        Call<AddCart> call = apiInterface.postAddCart(map);
-        call.enqueue(new Callback<AddCart>() {
-            @Override
-            public void onResponse(@NonNull Call<AddCart> call, @NonNull Response<AddCart> response) {
-                customDialog.dismiss();
-                if (response.isSuccessful()) {
-                    GlobalData.addCart = response.body();
-                    finish();
-                } else {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
+        if (commonAccess.equalsIgnoreCase("")) {
+            customDialog.show();
+            Call<AddCart> call = apiInterface.postAddCart(map);
+            call.enqueue(new Callback<AddCart>() {
+                @Override
+                public void onResponse(@NonNull Call<AddCart> call, @NonNull Response<AddCart> response) {
+                    customDialog.dismiss();
+                    if (response.isSuccessful()) {
+                        GlobalData.addCart = response.body();
+                        finish();
+                    } else {
+                        try {
+                            JSONObject jObjError = new JSONObject(response.errorBody().string());
+                            Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
 //                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<AddCart> call, @NonNull Throwable t) {
-                Toast.makeText(ProductDetailActivity.this, "ProductDetail : Something went wrong", Toast.LENGTH_SHORT).show();
-                customDialog.dismiss();
+                @Override
+                public void onFailure(@NonNull Call<AddCart> call, @NonNull Throwable t) {
+                    Toast.makeText(ProductDetailActivity.this, "ProductDetail : Something went wrong", Toast.LENGTH_SHORT).show();
+                    customDialog.dismiss();
 
-            }
-        });
+                }
+            });
+        } else {
+            commonAccess = "";
+            ViewCartAdapter.addCart(map);
+            finish();
+        }
 
     }
 

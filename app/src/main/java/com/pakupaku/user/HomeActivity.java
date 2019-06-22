@@ -27,15 +27,6 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 import com.facebook.FacebookSdk;
-import com.pakupaku.user.build.api.ApiClient;
-import com.pakupaku.user.build.api.ApiInterface;
-import com.pakupaku.user.fragments.CartFragment;
-import com.pakupaku.user.fragments.HomeFragment;
-import com.pakupaku.user.fragments.ProfileFragment;
-import com.pakupaku.user.fragments.SearchFragment;
-import com.pakupaku.user.helper.ConnectionHelper;
-import com.pakupaku.user.helper.GlobalData;
-import com.pakupaku.user.helper.SharedHelper;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -50,6 +41,15 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.pakupaku.user.build.api.ApiClient;
+import com.pakupaku.user.build.api.ApiInterface;
+import com.pakupaku.user.fragments.CartFragment;
+import com.pakupaku.user.fragments.HomeFragment;
+import com.pakupaku.user.fragments.ProfileFragment;
+import com.pakupaku.user.fragments.SearchFragment;
+import com.pakupaku.user.helper.ConnectionHelper;
+import com.pakupaku.user.helper.GlobalData;
+import com.pakupaku.user.helper.SharedHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -99,7 +99,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
     private static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE = 0;
 
     FusedLocationProviderClient mFusedLocationClient;
-    boolean isChangePassword = false;
+    boolean is_ChangeLanguage = false;
     Retrofit retrofit;
     FragmentTransaction transaction;
 
@@ -111,7 +111,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
         setContentView(R.layout.activity_home);
         connectionHelper = new ConnectionHelper(this);
 
-        isChangePassword = getIntent().getBooleanExtra("change_language", false);
+        is_ChangeLanguage = getIntent().getBooleanExtra("change_language", false);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -204,7 +204,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
 
 
         // Set current item programmatically
-        if (isChangePassword) {
+        if (is_ChangeLanguage) {
             fragment = new ProfileFragment();
             transaction.add(R.id.main_container, fragment).commit();
             bottomNavigation.setCurrentItem(3);

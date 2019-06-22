@@ -237,4 +237,14 @@
     </plurals>
 
 
+    <string name="lang_english">English</string>
+    <!--<item>Arabic</item>-->
+    <string name="lang_japnese">Japanese</string>
+    <string name="alert_logout">ログアウトしてよろしいですか？</string>
+    <string name="chage_password">パスワードを変更する</string>
+
+
+    <string name="my_account_profile">住所を管理, お気に入り, 支払い, 私の注文, パスワードを変更する</string>
+
+
 </resources>

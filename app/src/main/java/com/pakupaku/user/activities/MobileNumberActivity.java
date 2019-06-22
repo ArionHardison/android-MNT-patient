@@ -415,7 +415,8 @@ public class MobileNumberActivity extends AppCompatActivity implements GoogleApi
 
     private void getUserCountryInfo() {
         Locale current = getResources().getConfiguration().locale;
-        Country country = Country.getCountryFromSIM(MobileNumberActivity.this);
+        //Country country = Country.getCountryFromSIM(MobileNumberActivity.this);
+        Country country = Country.getCountrydetails("JP");
         if (country != null) {
             mCountryFlagImageView.setImageResource(country.getFlag());
             mCountryDialCodeTextView.setText(country.getDialCode());

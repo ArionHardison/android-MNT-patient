@@ -28,24 +28,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.pakupaku.user.CountryPicker.Country;
-import com.pakupaku.user.CountryPicker.CountryPicker;
-import com.pakupaku.user.CountryPicker.CountryPickerListener;
-import com.pakupaku.user.HomeActivity;
-import com.pakupaku.user.R;
-import com.pakupaku.user.build.api.ApiClient;
-import com.pakupaku.user.build.api.ApiInterface;
-import com.pakupaku.user.build.configure.BuildConfigure;
-import com.pakupaku.user.helper.GlobalData;
-import com.pakupaku.user.helper.ConnectionHelper;
-import com.pakupaku.user.helper.CustomDialog;
-import com.pakupaku.user.helper.SharedHelper;
-import com.pakupaku.user.models.AddCart;
-import com.pakupaku.user.models.AddressList;
-import com.pakupaku.user.models.LoginModel;
-import com.pakupaku.user.models.User;
-import com.pakupaku.user.utils.TextUtils;
-import com.pakupaku.user.utils.Utils;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -67,6 +49,24 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.pakupaku.user.CountryPicker.Country;
+import com.pakupaku.user.CountryPicker.CountryPicker;
+import com.pakupaku.user.CountryPicker.CountryPickerListener;
+import com.pakupaku.user.HomeActivity;
+import com.pakupaku.user.R;
+import com.pakupaku.user.build.api.ApiClient;
+import com.pakupaku.user.build.api.ApiInterface;
+import com.pakupaku.user.build.configure.BuildConfigure;
+import com.pakupaku.user.helper.ConnectionHelper;
+import com.pakupaku.user.helper.CustomDialog;
+import com.pakupaku.user.helper.GlobalData;
+import com.pakupaku.user.helper.SharedHelper;
+import com.pakupaku.user.models.AddCart;
+import com.pakupaku.user.models.AddressList;
+import com.pakupaku.user.models.LoginModel;
+import com.pakupaku.user.models.User;
+import com.pakupaku.user.utils.TextUtils;
+import com.pakupaku.user.utils.Utils;
 
 import org.json.JSONObject;
 
@@ -189,7 +189,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         mCountryPicker = CountryPicker.newInstance("Select Country");
         // You can limit the displayed countries
-        List<Country> countryList=Country.getAllCountries();
+        List<Country> countryList = Country.getAllCountries();
         Collections.sort(countryList, new Comparator<Country>() {
             @Override
             public int compare(Country s1, Country s2) {
@@ -336,7 +336,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private void getUserCountryInfo() {
         Locale current = getResources().getConfiguration().locale;
-        Country country = Country.getCountryFromSIM(LoginActivity.this);
+        // Country country = Country.getCountryFromSIM(LoginActivity.this);
+        Country country = Country.getCountrydetails("JP");
         if (country != null) {
             countryImage.setImageResource(country.getFlag());
             countryNumber.setText(country.getDialCode());

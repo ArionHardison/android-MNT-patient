@@ -372,6 +372,18 @@ public class Country {
         return null;
     }
 
+    public static Country getCountrydetails(String countryName) {
+        // Because the data we have is sorted by ISO codes and not by names, we must check all
+        // countries one by one
+
+        for (Country c : COUNTRIES) {
+            if (countryName.equals(c.getCode())) {
+                return c;
+            }
+        }
+        return null;
+    }
+
     public static Country getCountryByLocale(Locale locale) {
         String countryIsoCode = locale.getISO3Country().substring(0, 2).toLowerCase();
         return Country.getCountryByISO(countryIsoCode);

@@ -57,7 +57,7 @@
                             android:maxLines="1"
                             android:paddingEnd="4dp"
                             android:paddingStart="8dp"
-                            android:text="Manage Address, Favorites, Payment, Orders, Change Password"
+                            android:text="@string/my_account_profile"
                             android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/text_small" />
 

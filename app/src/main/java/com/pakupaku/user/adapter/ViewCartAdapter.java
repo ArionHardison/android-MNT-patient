@@ -126,44 +126,13 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     //get Item Count
                     itemCount = addCart.getProductList().size();
                     if (itemCount != 0) {
-                        for (int i = 0; i < itemCount; i++) {
-                            //Get Total item Quantity
-                            itemQuantity = itemQuantity + addCart.getProductList().get(i).getQuantity();
-                            //Get addon price
-                            if (addCart.getProductList().get(i).getProduct().getPrices().getOrignalPrice() != 0)
-                                priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * addCart.getProductList().get(i).getProduct().getPrices().getOrignalPrice());
-                            if (addCart.getProductList().get(i).getCartAddons() != null && !addCart.getProductList().get(i).getCartAddons().isEmpty()) {
-                                for (int j = 0; j < addCart.getProductList().get(i).getCartAddons().size(); j++) {
-                                    priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * (addCart.getProductList().get(i).getCartAddons().get(j).getQuantity() *
-                                            addCart.getProductList().get(i).getCartAddons().get(j).getAddonProduct().getPrice()));
-                                }
-                            }
-                        }
-                        if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() != 0) {
-                            if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() < priceAmount) {
-                                int offerPercentage = response.body().getProductList().get(0).getProduct().getShop().getOfferPercent();
-                                discount = priceAmount * (offerPercentage /** 0.01*/);
-                            }
-                        }
                         GlobalData.notificationCount = itemQuantity;
                         //Set Payment details
                         String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
-                        CartFragment.itemTotalAmount.setText(currency + "" + GlobalData.roundoff(addCart.getTotalPrice()));
-                        CartFragment.discountAmount.setText("- " + currency + "" + addCart.getShopDiscount());
-//                        int topPayAmount = priceAmount - discount;
-//                        int tax = (int) Math.round(topPayAmount * (response.body().getTaxPercentage() * 0.01));
-//                        topPayAmount = topPayAmount + tax;
-//                        topPayAmount = topPayAmount + response.body().getDeliveryCharges();
-
-                        int topPayAmount = priceAmount - discount;
-//                        int tax = (int) Math.round(topPayAmount * (response.body().getTaxPercentage() * 0.01));
-                        int tax = topPayAmount * (response.body().getTaxPercentage() /** 0.01*/);
-                        topPayAmount = topPayAmount + tax;
-                        topPayAmount = topPayAmount + response.body().getDeliveryCharges();
-                        CartFragment.serviceTax.setText(currency + GlobalData.roundoff(Integer.parseInt(response.body().getTax())));
-
-//                        CartFragment.serviceTax.setText(response.body().getProductList().get(0).getProduct().getPrices().getCurrency() + "" + String.valueOf(tax));
-                        CartFragment.payAmount.setText(currency + "" + GlobalData.roundoff(addCart.getPayable()));
+                        CartFragment.itemTotalAmount.setText(currency + "" + response.body().getTotalPrice());
+                        CartFragment.discountAmount.setText("- " + currency + "" + response.body().getShopDiscount());
+                        CartFragment.serviceTax.setText(currency + "" +response.body().getTax());
+                        CartFragment.payAmount.setText(currency + "" + response.body().getPayable());
 
                     } else {
                         GlobalData.notificationCount = itemQuantity;

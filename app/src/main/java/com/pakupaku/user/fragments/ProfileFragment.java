@@ -18,11 +18,12 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -219,7 +220,7 @@ public class ProfileFragment extends Fragment {
 
             if (!loginBy.equalsIgnoreCase("facebook") &&
                     !loginBy.equalsIgnoreCase("google")) {
-                list.add("Change Password");
+                list.add(getResources().getString(R.string.chage_password));
                 listIcons.add(R.drawable.padlock);
 
             }
@@ -260,22 +261,41 @@ public class ProfileFragment extends Fragment {
         alertDialog.setCancelable(true);
         alertDialog.setTitle("Change Language");
         final AlertDialog alert = alertDialog.create();
+        final RadioGroup chooseLanguage = convertView.findViewById(R.id.choose_language);
+        final RadioButton english = convertView.findViewById(R.id.english);
+        final RadioButton japnese = convertView.findViewById(R.id.japnese);
 
-        final ListView lv = convertView.findViewById(R.id.lv);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_single_choice, languages);
-        lv.setAdapter(adapter);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        String dd = LocaleUtils.getLanguage(context);
+        switch (dd) {
+            case "en":
+                english.setChecked(true);
+                break;
+            case "ja":
+                japnese.setChecked(true);
+                break;
+            default:
+                english.setChecked(true);
+                break;
+        }
+        chooseLanguage.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                String item = lv.getItemAtPosition(position).toString();
-                setLanguage(item);
-                alert.dismiss();
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.english:
+                        setLanguage("English");
+                        alert.dismiss();
+                        break;
+                    case R.id.japnese:
+                        setLanguage("Japanese");
+                        alert.dismiss();
+                        break;
+
+                }
             }
         });
         alert.show();
 
     }
-
 
     private void setLanguage(String value) {
         SharedHelper.putKey(getActivity(), "language", value);
@@ -435,7 +455,7 @@ public class ProfileFragment extends Fragment {
 
     public void alertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("Are you sure you want to logout?")
+        builder.setMessage(getResources().getString(R.string.alert_logout))
                 .setPositiveButton(getResources().getString(R.string.logout), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete

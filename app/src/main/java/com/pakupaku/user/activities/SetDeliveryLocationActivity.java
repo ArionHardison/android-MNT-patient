@@ -15,12 +15,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.google.android.gms.common.api.Status;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.widget.Autocomplete;
-import com.google.android.libraries.places.widget.AutocompleteActivity;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.pakupaku.user.R;
 import com.pakupaku.user.adapter.DeliveryLocationAdapter;
 import com.pakupaku.user.build.api.ApiClient;
@@ -28,6 +22,19 @@ import com.pakupaku.user.build.api.ApiInterface;
 import com.pakupaku.user.helper.GlobalData;
 import com.pakupaku.user.models.Address;
 import com.pakupaku.user.models.AddressList;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+//import com.google.android.gms.location.places.Place;
+//import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,6 +59,7 @@ public class SetDeliveryLocationActivity extends AppCompatActivity {
     @BindView(R.id.animation_line_cart_add)
     ImageView animationLineCartAdd;
     private int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
+    private int SET_COMPLETE = 20;
     @BindView(R.id.find_place_ll)
     LinearLayout findPlaceLl;
     private String TAG = "DeliveryLocationActi";
@@ -72,9 +80,11 @@ public class SetDeliveryLocationActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         activity = SetDeliveryLocationActivity.this;
 
-        Places.initialize(SetDeliveryLocationActivity.this, getResources().getString(R.string.google_maps_key));
         //Intialize Animation line
         initializeAvd();
+
+        // Initialize Places.
+        Places.initialize(getApplicationContext(), getResources().getString(R.string.google_maps_key));
 
         isAddressSelection = getIntent().getBooleanExtra("get_address", false);
         isHomePage = getIntent().getBooleanExtra("home_page", false);
@@ -91,14 +101,13 @@ public class SetDeliveryLocationActivity extends AppCompatActivity {
         if (GlobalData.profileModel != null) {
             addressList.setHeader(getResources().getString(R.string.saved_addresses));
             addressList.setAddresses(GlobalData.profileModel.getAddresses());
-            modelListReference.clear();
-            modelListReference.add(addressList);
-            manager = new LinearLayoutManager(this);
-            deliveryLocationRv.setLayoutManager(manager);
-            adapter = new DeliveryLocationAdapter(this, activity, modelListReference);
-            deliveryLocationRv.setAdapter(adapter);
         }
-
+        modelListReference.clear();
+        modelListReference.add(addressList);
+        manager = new LinearLayoutManager(this);
+        deliveryLocationRv.setLayoutManager(manager);
+        adapter = new DeliveryLocationAdapter(this, activity, modelListReference);
+        deliveryLocationRv.setAdapter(adapter);
     }
 
 
@@ -148,17 +157,21 @@ public class SetDeliveryLocationActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-//                Place place = PlaceAutocomplete.getPlace(this, data);
                 Place place = Autocomplete.getPlaceFromIntent(data);
                 Intent intent = new Intent(SetDeliveryLocationActivity.this, SaveDeliveryLocationActivity.class);
                 intent.putExtra("skip_visible", isHomePage);
-                intent.putExtra("place_id", place.getId());
-                startActivity(intent);
+                if (place.getAddress().toString().contains(place.getName().toString())) {
+                    intent.putExtra("place_address", place.getAddress());
+                }else{
+                    intent.putExtra("place_address", place.getName() + ", " + place.getAddress());
+                }
+                intent.putExtra("latitude", ""+place.getLatLng().latitude);
+                intent.putExtra("longitude", ""+place.getLatLng().longitude);
+                startActivityForResult(intent,SET_COMPLETE);
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
-                Status status = Autocomplete.getStatusFromIntent(data);
                 // TODO: Handle the error.
+                Status status = Autocomplete.getStatusFromIntent(data);
                 Log.i(TAG, status.getStatusMessage());
-
             } else if (resultCode == RESULT_CANCELED) {
                 // The user canceled the operation.
             }
@@ -179,25 +192,11 @@ public class SetDeliveryLocationActivity extends AppCompatActivity {
     }
 
     private void findPlace() {
-        //
-        List<Place.Field> fields =
-                Arrays.asList(Place.Field.ID, Place.Field.LAT_LNG, Place.Field.NAME);
+        List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG);
 
         // Start the autocomplete intent.
-        Intent intent = new Autocomplete.
-                IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
-                .build(this);
+        Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(this);
         startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-        //
-
-       /* try {
-            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(this);
-            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-        } catch (GooglePlayServicesRepairableException e) {
-
-        } catch (GooglePlayServicesNotAvailableException e) {
-
-        }*/
     }
 
     @Override

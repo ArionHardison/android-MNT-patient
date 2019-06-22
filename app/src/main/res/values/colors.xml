@@ -19,7 +19,7 @@
     <color name="grey">#a4a4a4</color>
     <color name="light_grey">#dcdcdc</color>
 
-s
+    s
     <array name="array_dot_active">
         <item>@color/grey</item>
         <item>@color/grey</item>

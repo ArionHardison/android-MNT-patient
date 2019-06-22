@@ -141,7 +141,6 @@
     <string name="canelled">Canelled</string>
 
 
-
     <!--    Check Internet Conneciton  -->
     <string name="oops_connect_your_internet">Oops ! Connect your Internet.</string>
     <string name="retry">Retry</string>
@@ -240,4 +239,10 @@
     </plurals>
 
 
+    <string name="lang_english">English</string>
+    <!--<item>Arabic</item>-->
+    <string name="lang_japnese">Japanese</string>
+    <string name="alert_logout">Are you sure you want to logout?</string>
+    <string name="chage_password">Change Password</string>
+    <string name="my_account_profile">Manage Address, Favorites, Payment, Orders, Change Password</string>
 </resources>

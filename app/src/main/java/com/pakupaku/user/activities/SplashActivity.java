@@ -29,6 +29,7 @@ import com.pakupaku.user.helper.SharedHelper;
 import com.pakupaku.user.models.AddCart;
 import com.pakupaku.user.models.AddressList;
 import com.pakupaku.user.models.User;
+import com.pakupaku.user.utils.LocaleUtils;
 import com.pakupaku.user.utils.Utils;
 
 import org.json.JSONObject;
@@ -86,7 +87,18 @@ public class SplashActivity extends AppCompatActivity {
                 Log.d(TAG, " started retriever failed");
             }
         });*/
-
+        String dd = SharedHelper.getKey(context, "language");
+        switch (dd) {
+            case "English":
+                LocaleUtils.setLocale(context, "en");
+                break;
+            case "Japanese":
+                LocaleUtils.setLocale(context, "ja");
+                break;
+            default:
+                LocaleUtils.setLocale(context, "en");
+                break;
+        }
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
