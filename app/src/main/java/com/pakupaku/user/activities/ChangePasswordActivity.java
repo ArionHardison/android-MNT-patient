@@ -86,13 +86,13 @@ public class ChangePasswordActivity extends AppCompatActivity {
         strNewPassword = newPassword.getText().toString();
 
         if (TextUtils.isEmpty(strOldPassword)) {
-            Toast.makeText(this, "Please enter old password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.please_enter_old_password), Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(strNewPassword)) {
-            Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.please_enter_password), Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(strConfirmPassword)) {
-            Toast.makeText(this, "Please confirm password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.please_enter_your_confirm_password), Toast.LENGTH_SHORT).show();
         } else if (!strConfirmPassword.equalsIgnoreCase(strNewPassword)) {
-            Toast.makeText(this, "Password and confirm password doesn't match", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.password_and_confirm_password_doesnot_match), Toast.LENGTH_SHORT).show();
         } else {
             HashMap<String, String> map = new HashMap<>();
             map.put("password_old", strOldPassword);
@@ -117,7 +117,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        if(jObjError.has("password"))
+                        if (jObjError.has("password"))
                             Toast.makeText(context, jObjError.optJSONArray("password").get(0).toString(), Toast.LENGTH_LONG).show();
                         else
                             Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();

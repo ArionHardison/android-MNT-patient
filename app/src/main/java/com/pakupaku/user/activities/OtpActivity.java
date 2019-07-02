@@ -237,14 +237,14 @@ public class OtpActivity extends AppCompatActivity {
                             Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
 //                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-                        Toast.makeText(context, "Something went wrong", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, getResources().getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show();
                     }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<RegisterModel> call, @NonNull Throwable t) {
-                Toast.makeText(OtpActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OtpActivity.this, getResources().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                 customDialog.dismiss();
             }
         });
@@ -290,7 +290,7 @@ public class OtpActivity extends AppCompatActivity {
                     GlobalData.addCart.setProductList(response.body().getCart());
                     GlobalData.addressList = new AddressList();
                     GlobalData.addressList.setAddresses(response.body().getAddresses());
-                    Toast.makeText(context, "Registred sucesfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getResources().getString(R.string.regsiter_success), Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(context, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     finish();
                 } else {
@@ -373,7 +373,7 @@ public class OtpActivity extends AppCompatActivity {
                         finish();
                     }
                 } else {
-                    Toast.makeText(this, "Enter otp is incorrect", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getResources().getString(R.string.entor_otp_incorrect), Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.resend_otp:

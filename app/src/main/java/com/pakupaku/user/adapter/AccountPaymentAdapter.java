@@ -108,7 +108,7 @@ public class AccountPaymentAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context_);
-                builder.setMessage("Are you sure you want to delete?")
+                builder.setMessage(R.string.alert_delete_card)
                         .setPositiveButton(context_.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // continue with delete

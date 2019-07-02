@@ -58,13 +58,12 @@
     </string>
 
 
-    <string name="getting_address">"Getting Address"</string>
     <string name="fresh">P a k u  P a k u</string>
     <string name="fresh_description">パクパクメンバーが丁寧にあなたのご注文をお届けします♪</string>
     <string name="signin">サインインする</string>
     <string name="sign_in">サインイン</string>
     <string name="signup">新規登録</string>
-    <string name="search">S e a r c h</string>
+
     <string name="search_description">さあ、あなたにピッタリのレストラン・お店を探しましょう！</string>
     <string name="bookmark">チップ制度にご協力ください！</string>
     <string name="bookmark_description">パクパクメンバーは お客様からの配達料金とチップによって保たれています。チップの額に決まりはありません。より素敵なサービス向上の為に、チップ制度にご協力ください♪</string>
@@ -121,7 +120,7 @@
     <string name="card">クレジットカード</string>
     <string name="pay_on_delivery">その他のお支払い</string>
     <string name="by_cash">現金</string>
-    <string name="walletHistory">WALLET</string>
+    <string name="walletHistory">財布</string>
     <string name="history">履歴</string>
     <string name="add">追加</string>
     <string name="payment_options">お支払いオプション</string>
@@ -193,14 +192,13 @@
     <string name="featured_products">イチオシ商品</string>
     <string name="reorder_confirm_message">今カートに入っている商品を消して、再注文なさいますか？</string>
     <string name="no_result">該当なし</string>
-    <string name="what_is_love">what is love</string>
+    <string name="what_is_love">愛とは何か</string>
     <string name="fav_description">店舗ページ右上のハートを押すと、お気に入りに登録できます。</string>
     <string name="close">閉じる</string>
     <string name="no_addons">トッピングなし</string>
     <string name="add_new_address">新しいパスワードを追加してください。</string>
     <string name="back">戻る</string>
     <string name="notifications">お知らせ</string>
-    <string name="looks_empty">LOOKS EMPTY!</string>
     <string name="order_list_empty_description">まだ何もご注文されていません。</string>
     <string name="past_orders">注文履歴</string>
     <string name="reason">理由</string>
@@ -213,9 +211,7 @@
     <string name="add_item">商品を追加</string>
     <string name="promotion_list_empty">クーポンリストはありません。</string>
     <string name="promotion_empty_description">クーポンコードをお持ちでしたら、こちらでご覧頂けます。</string>
-    <string name="skip">Skip</string>
-    <string name="food">Food</string>
-    <string name="help">Help</string>
+
     <string name="type_a_message">メッセージを書く</string>
     <string name="my_account">マイアカウント</string>
     <string name="reorder">再注文</string>
@@ -228,12 +224,12 @@
 
 
     <plurals name="item">
-        <item quantity="one">%d Item</item>
-        <item quantity="other">%d Items</item>
+        <item quantity="one">%d アイテム</item>
+        <item quantity="other">%d 箇条</item>
     </plurals>
     <plurals name="add_ons">
-        <item quantity="one">+%d Add-On</item>
-        <item quantity="other">+%d Add-Ons</item>
+        <item quantity="one">+%d アドオン</item>
+        <item quantity="other">+%d アドオン</item>
     </plurals>
 
 
@@ -242,9 +238,75 @@
     <string name="lang_japnese">Japanese</string>
     <string name="alert_logout">ログアウトしてよろしいですか？</string>
     <string name="chage_password">パスワードを変更する</string>
-
-
     <string name="my_account_profile">住所を管理, お気に入り, 支払い, 私の注文, パスワードを変更する</string>
 
+
+    <string name="item_total">アイテム合計</string>
+    <string name="delivery_fees">配送料</string>
+    <string name="service_tax">サービス税</string>
+    <string name="promo_code">プロモーションコード</string>
+    <string name="shop_discount">ショップ割引</string>
+
+    <string name="delivery_charges">配送料</string>
+    <string name="promocode_amount">プロモコード金額</string>
+    <string name="wallet_detection">財布の検出</string>
+    <string name="total">総計</string>
+    <string name="order_details">細目</string>
+    <string name="order_help">助ける</string>
+
+
+    <string name="connect_with_social">社会とつながる</string>
+    <string name="sent_to_your">あなたに送った</string>
+    <string name="entor_otp_incorrect">Enter otpが正しくありません</string>
+    <string name="regsiter_success">正常に登録</string>
+    <string name="please_enter_valid_number">有効な携帯電話番号を入力してください</string>
+    <string name="please_enter_old_password">古いパスワードを入力してください</string>
+    <string name="select_contry">国を選択</string>
+    <string name="please_choose_your_card">カードを選択してください</string>
+    <string name="pleasse_enter_amount">金額を入力してください</string>
+    <string name="please_enter_valid_amount">有効な金額を入力してください</string>
+    <string name="please_selecct_your_card">カードを選択してください</string>
+    <string name="save_delivery_location">安全な配達場所</string>
+    <string name="house_flat_no">家/アパートいいえ</string>
+    <string name="landmark">ランドマーク</string>
+    <string name="save_as">新規保管</string>
+    <string name="skip">跳躍</string>
+    <string name="update_address">更新アドレス</string>
+    <string name="alert_update_address">保存した住所を更新してよろしいですか？</string>
+    <string name="please_enter_address">住所を入力してください</string>
+    <string name="please_enter_flat">フラット番号を入力してください</string>
+    <string name="please_enter_landmark">ランドマークを入力してください</string>
+    <string name="please_enter_house_and_flat">家/アパートの番号を入力してください</string>
+    <string name="please_select_payment_mode">支払い方法を選択してください</string>
+    <string name="alert_delete_card">消去してもよろしいですか</string>
+    <string name="looks_empty">空っぽに見える</string>
+    <string name="food">フード</string>
+    <string name="help">助ける</string>
+    <string name="getting_address">"住所を取得する"</string>
+    <string name="search">サーチ</string>
+    <string name="item_count">項目</string>
+    <string name="items_counts">アイテム</string>
+    <string name="no_rating_txt">評価なし</string>
+    <string name="view_cart_txt">かごの中身を見る</string>
+    <string name="to_pay">ペイ</string>
+    <string name="enter_your_notes">あなたのメモを入力してください。</string>
+    <string name="you_seem_location">あなたは新しい場所にいるようです</string>
+    <string name="enable_location_services">位置情報サービスを有効にします</string>
+    <string name="promo_applied">プロモーションコードが適用されました。</string>
+    <string name="promo_apply">適用する</string>
+    <string name="order_minits">分</string>
+    <string name="alert_areyou_cancel_order">この注文をキャンセルしてよろしいですか？</string>
+    <string name="pleasse_enter_reason">理由を入力してください</string>
+    <string name="order_details_page">注文</string>
+    <string name="dispate_create_success">異議申し立てが正常に作成されました</string>
+    <string name="no_number_available">利用可能な番号がありません</string>
+    <string name="enter_your_description">説明を入力してください</string>
+    <string name="are_you_facing_help">あなたは私たちが手助けできる何か問題に直面していますか？私たちに手を差し伸べてください私たちは助けて幸せになります！</string>
+    <string name="please_enter_mobile_number">有効な携帯電話番号を入力してください</string>
+    <string name="check_your_internet">インターネット接続を確認してください</string>
+    <string name="settings">巣引き</string>
+    <string name="password_updates">パスワード更新</string>
+    <string name="the_shop_is_closed">店は閉まっています</string>
+    <string name="enter_your_reason">理由を入力してください</string>
 
 </resources>

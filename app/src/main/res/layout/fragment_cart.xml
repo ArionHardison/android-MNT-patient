@@ -32,8 +32,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/activity_vertical_margin"
-                    android:paddingRight="@dimen/activity_vertical_margin"
-                    android:paddingTop="@dimen/activity_vertical_margin">
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingRight="@dimen/activity_vertical_margin">
 
                     <ImageView
                         android:id="@+id/restaurant_image"
@@ -46,8 +46,8 @@
                         android:id="@+id/restaurant_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
                         android:layout_marginStart="16dp"
+                        android:layout_marginBottom="8dp"
                         android:layout_toEndOf="@+id/restaurant_image"
                         android:maxLines="1"
                         android:text="Sangeetha"
@@ -58,8 +58,8 @@
                         android:id="@+id/restaurant_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
                         android:layout_below="@+id/restaurant_name"
+                        android:layout_alignParentEnd="true"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="-5dp"
                         android:layout_toEndOf="@+id/restaurant_image"
@@ -112,10 +112,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingBottom="@dimen/activity_vertical_margin_half"
                     android:paddingLeft="@dimen/activity_vertical_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
                     android:paddingRight="@dimen/activity_vertical_margin"
-                    android:paddingTop="@dimen/activity_vertical_margin">
+                    android:paddingBottom="@dimen/activity_vertical_margin_half">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -126,7 +126,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Item Total"
+                            android:text="@string/item_total"
                             android:textColor="@color/colorSecondaryText" />
 
                         <TextView
@@ -149,7 +149,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Delivery Fees"
+                            android:text="@string/delivery_fees"
                             android:textColor="@color/colorSecondaryText" />
 
                         <TextView
@@ -172,7 +172,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Service Tax"
+                            android:text="@string/service_tax"
                             android:textColor="@color/colorGreen"
                             android:textSize="@dimen/text_small" />
 
@@ -198,7 +198,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Promo Code"
+                            android:text="@string/promo_code"
                             android:textColor="@color/theme" />
 
                         <TextView
@@ -207,7 +207,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="Apply"
+                            android:text="@string/promo_apply"
                             android:textColor="@color/theme" />
                     </LinearLayout>
 
@@ -216,14 +216,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:visibility="gone"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Promocode amount"
+                            android:text="@string/promocode_amount"
                             android:textColor="@color/colorSecondaryText" />
 
                         <TextView
@@ -246,7 +246,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Shop Discount"
+                            android:text="@string/shop_discount"
                             android:textColor="@color/colorSecondaryText" />
 
                         <TextView
@@ -258,27 +258,27 @@
                             android:text="- $30"
                             android:textColor="@color/colorSecondaryText" />
                     </LinearLayout>
-<!--
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/activity_vertical_margin"
-                        android:orientation="horizontal"
-                        android:background="ba">
+                    <!--
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="@dimen/activity_vertical_margin"
+                                            android:orientation="horizontal"
+                                            android:background="ba">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Apply Coupon"
-                            android:textSize="@dimen/_14sdp"
-                            android:drawableLeft="@drawable/ic_coupon_voucher"
-                            android:drawablePadding="@dimen/_8sdp"
-                            android:textColor="@color/colorTextBlack" />
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="1"
+                                                android:text="Apply Coupon"
+                                                android:textSize="@dimen/_14sdp"
+                                                android:drawableLeft="@drawable/ic_coupon_voucher"
+                                                android:drawablePadding="@dimen/_8sdp"
+                                                android:textColor="@color/colorTextBlack" />
 
 
-                    </LinearLayout>
--->
+                                        </LinearLayout>
+                    -->
 
 
                     <View
@@ -296,8 +296,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:orientation="horizontal"
-                    android:paddingEnd="@dimen/activity_vertical_margin"
-                    android:paddingStart="@dimen/activity_vertical_margin">
+                    android:paddingStart="@dimen/activity_vertical_margin"
+                    android:paddingEnd="@dimen/activity_vertical_margin">
 
                     <LinearLayout
 
@@ -335,7 +335,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="end"
-                        android:text="To Pay"
+                        android:text="@string/to_pay"
                         android:textColor="@color/colorTextBlack" />
 
 
@@ -383,10 +383,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/_7sdp"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/_7sdp"
                     android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:paddingTop="@dimen/_7sdp">
+                    android:paddingBottom="@dimen/_7sdp">
 
                     <ImageView
 
@@ -428,7 +428,7 @@
                             android:text="50 mins"
                             android:textAllCaps="true"
                             android:textSize="@dimen/text_tiny"
-                            android:visibility="gone"/>
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
@@ -460,10 +460,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:paddingBottom="@dimen/_7sdp"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/_7sdp"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingBottom="@dimen/_7sdp"
                 android:visibility="gone">
 
                 <ImageView
@@ -477,7 +477,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/map_marker_image"
-                    android:text="You Seem to be in a new Location"
+                    android:text="@string/you_seem_location"
                     android:textColor="@color/colorPrimaryText" />
 
                 <TextView
@@ -486,7 +486,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/location_error_title"
                     android:layout_toRightOf="@id/map_marker_image"
-                    android:text="You Seem to be in a new Location"
+                    android:text="@string/you_seem_location"
                     android:textColor="@color/colorSecondaryText"
                     android:textSize="10sp" />
 

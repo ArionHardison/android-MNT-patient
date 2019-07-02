@@ -197,7 +197,7 @@ public class AccountPaymentActivity extends AppCompatActivity  {
                     CartFragment.checkoutMap.put("payment_mode", "cash");
                     checkOut(CartFragment.checkoutMap);
                 } else {
-                    Toast.makeText(context, "Please select payment mode", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.please_select_payment_mode, Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -239,7 +239,7 @@ public class AccountPaymentActivity extends AppCompatActivity  {
 
             @Override
             public void onFailure(@NonNull Call<Order> call, @NonNull Throwable t) {
-                Toast.makeText(AccountPaymentActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AccountPaymentActivity.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -301,7 +301,7 @@ public class AccountPaymentActivity extends AppCompatActivity  {
 
             @Override
             public void onFailure(@NonNull Call<Message> call, @NonNull Throwable t) {
-                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
                 customDialog.dismiss();
             }
         });

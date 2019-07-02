@@ -66,6 +66,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.pakupaku.user.MyApplication.commonAccess;
 import static com.pakupaku.user.helper.GlobalData.addressList;
 import static com.pakupaku.user.helper.GlobalData.cuisineIdArrayList;
 import static com.pakupaku.user.helper.GlobalData.cuisineList;
@@ -200,6 +201,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState);
         System.out.println("HomeFragment");
+        commonAccess = "";
         connectionHelper = new ConnectionHelper(context);
         toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setVisibility(View.VISIBLE);
@@ -401,7 +403,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
             @Override
             public void onFailure(Call<RestaurantsData> call, Throwable t) {
-                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
 
             }
         });

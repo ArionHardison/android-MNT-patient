@@ -62,7 +62,7 @@ public class AddonBottomSheetFragment extends BottomSheetDialogFragment {
 
     Unbinder unbinder;
     Product product;
-   BottomSheetBehavior mBottomSheetBehavior ;
+    BottomSheetBehavior mBottomSheetBehavior;
 
     public static Cart selectedCart;
 
@@ -149,7 +149,7 @@ public class AddonBottomSheetFragment extends BottomSheetDialogFragment {
     private void setAddOnsText() {
         int quantity = 0;
         int priceAmount = 0;
-        boolean once=true;
+        boolean once = true;
         AddonBottomSheetFragment.addons.setText("");
         if (selectedCart != null) {
             Product product = AddonBottomSheetFragment.selectedCart.getProduct();
@@ -157,11 +157,10 @@ public class AddonBottomSheetFragment extends BottomSheetDialogFragment {
             priceAmount = quantity * product.getPrices().getPrice();
             for (Addon addon : list) {
                 if (addon.getAddon().getChecked()) {
-                    if (once){
+                    if (once) {
                         addons.append(addon.getAddon().getName());
-                        once=false;
-                    }
-                    else{
+                        once = false;
+                    } else {
                         AddonBottomSheetFragment.addons.append(", " + addon.getAddon().getName());
                     }
 
@@ -169,9 +168,9 @@ public class AddonBottomSheetFragment extends BottomSheetDialogFragment {
                 }
             }
             if (quantity == 1)
-                AddonBottomSheetFragment.price.setText(quantity + " Item | " + GlobalData.currencySymbol + priceAmount);
+                AddonBottomSheetFragment.price.setText(quantity + " " + R.string.item_count + " | " + GlobalData.currencySymbol + priceAmount);
             else
-                AddonBottomSheetFragment.price.setText(quantity + " Items | " + GlobalData.currencySymbol + priceAmount);
+                AddonBottomSheetFragment.price.setText(quantity + " " + R.string.items_counts + " | " + GlobalData.currencySymbol + priceAmount);
 
         }
     }

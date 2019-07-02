@@ -45,8 +45,8 @@ public class OrderViewFragment extends Fragment {
 
         //ViewPager Adapter
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFragment(new OrderDetailFragment(), "DETAILS");
-        adapter.addFragment(new OrderHelpFragment(), "HELP");
+        adapter.addFragment(new OrderDetailFragment(), getResources().getString(R.string.order_details));
+        adapter.addFragment(new OrderHelpFragment(), getResources().getString(R.string.order_help));
         viewPager.setAdapter(adapter);
         //set ViewPager
         tabLayout.setupWithViewPager(viewPager);

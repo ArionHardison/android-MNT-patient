@@ -130,7 +130,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             productName.setText(product.getName() + "\n" + product.getPrices().getCurrency() + product.getPrices().getPrice());
         }
         currency = product.getPrices().getCurrency();
-        itemText.setText("1 Item | " + product.getPrices().getCurrency() + product.getPrices().getPrice());
+        itemText.setText("1 " + getResources().getString(R.string.item_count) + " | " + product.getPrices().getCurrency() + product.getPrices().getPrice());
         productDescription.setText(product.getDescription());
         slider_image_list = new ArrayList<>();
         addonList = new ArrayList<>();
@@ -245,7 +245,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         call.enqueue(new Callback<ClearCart>() {
             @Override
             public void onResponse(Call<ClearCart> call, Response<ClearCart> response) {
-
                 if (response != null && !response.isSuccessful() && response.errorBody() != null) {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
@@ -264,7 +263,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ClearCart> call, Throwable t) {
-                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -132,7 +132,6 @@ public class CartChoiceModeFragment extends BottomSheetDialogFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.i_will_choose_btn:
-                commonAccess = "Chooice";
                 context.startActivity(new Intent(context, ProductDetailActivity.class));
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                 break;
@@ -202,7 +201,7 @@ public class CartChoiceModeFragment extends BottomSheetDialogFragment {
             @Override
             public void onFailure(@NonNull Call<AddCart> call, @NonNull Throwable t) {
                 customDialog.dismiss();
-                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
                 dismiss();
             }
         });

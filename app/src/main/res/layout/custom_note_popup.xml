@@ -25,7 +25,7 @@
         android:background="#EEE"
         android:textSize="@dimen/text_small"
         android:gravity="start"
-        android:hint="Enter your notes."
+        android:hint="@string/enter_your_notes"
         android:inputType="textMultiLine"
         android:lines="4"
         android:padding="@dimen/activity_vertical_margin_half" />
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
-        android:text="Submit"
+        android:text="@string/submit"
         android:textColor="@color/colorWhite" />
 
 </LinearLayout>

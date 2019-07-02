@@ -122,7 +122,8 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
                             .putExtra("position", getAdapterPosition()).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                     list.get(getAdapterPosition()).getCuisines();
-                } else Toast.makeText(context, "The Shop is closed", Toast.LENGTH_SHORT).show();
+                } else
+                    Toast.makeText(context, context.getResources().getString(R.string.the_shop_is_closed), Toast.LENGTH_SHORT).show();
             }
         }
     }

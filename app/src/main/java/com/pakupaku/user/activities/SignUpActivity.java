@@ -138,7 +138,7 @@ public class SignUpActivity extends AppCompatActivity {
         activity = SignUpActivity.this;
         connectionHelper = new ConnectionHelper(context);
         customDialog = new CustomDialog(context);
-        mCountryPicker = CountryPicker.newInstance("Select Country");
+        mCountryPicker = CountryPicker.newInstance(getResources().getString(R.string.select_contry));
         passwordEyeImg.setTag(1);
         confirmPasswordEyeImg.setTag(1);
         if (!GlobalData.loginBy.equals("manual")) {
@@ -485,7 +485,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<Otp> call, @NonNull Throwable t) {
                 customDialog.dismiss();
-                Toast.makeText(SignUpActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, getResources().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
             }
         });
 

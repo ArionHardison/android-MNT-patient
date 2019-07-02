@@ -136,12 +136,12 @@ public class ResetPasswordActivity extends AppCompatActivity {
         strConfirmPassword = confirmPassword.getText().toString();
         strNewPassword = newPassword.getText().toString();
         if (TextUtils.isEmpty(strNewPassword)) {
-            Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.please_enter_password, Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(strConfirmPassword)) {
-            Toast.makeText(this, "Please confirm password", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.please_enter_your_confirm_password, Toast.LENGTH_SHORT).show();
 
         } else if (!strConfirmPassword.equalsIgnoreCase(strNewPassword)) {
-            Toast.makeText(this, "Password and confirm password doesn't match", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.password_and_confirm_password_doesnot_match, Toast.LENGTH_SHORT).show();
         } else {
 
             HashMap<String, String> map = new HashMap<>();
@@ -161,7 +161,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<ResetPassword> call, @NonNull Response<ResetPassword> response) {
                 customDialog.dismiss();
                 if (response.isSuccessful()) {
-                    Toast.makeText(ResetPasswordActivity.this, "Password Updated", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ResetPasswordActivity.this, R.string.password_updates, Toast.LENGTH_SHORT).show();
                 /*    SharedHelper.putKey(context, "access_token", "Bearer" + " " + response.body().getAccessToken());
                     GlobalData.accessToken = "Bearer" + " " + response.body().getAccessToken();
                     getProfile();*/

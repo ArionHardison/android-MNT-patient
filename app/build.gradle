@@ -19,6 +19,7 @@ repositories {
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
 
         applicationId "com.pakupaku.user"
@@ -51,6 +52,13 @@ android {
             exclude module: 'commons-logging'
         }
     }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "${variant.applicationId}_V${variant.versionCode}_VN-${variant.versionName}_" + new Date().format('yyyy-MM-dd') + ".apk"
+        }
+    }
+
 }
 
 dependencies {

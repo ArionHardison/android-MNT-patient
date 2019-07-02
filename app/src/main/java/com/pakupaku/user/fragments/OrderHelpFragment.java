@@ -165,10 +165,10 @@ public class OrderHelpFragment extends Fragment {
 
             }
         });
-        dialogBuilder.setTitle("ORDER #000" + isSelectedOrder.getId().toString());
+        dialogBuilder.setTitle(R.string.order_details_page + "  #000" + isSelectedOrder.getId().toString());
         dialogBuilder.setMessage(reason);
-        dialogBuilder.setPositiveButton("Submit", null);
-        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        dialogBuilder.setPositiveButton(R.string.submit, null);
+        dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 dialog.dismiss();
             }
@@ -183,7 +183,7 @@ public class OrderHelpFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         if (edt.getText().toString().equalsIgnoreCase("")) {
-                            Toast.makeText(context, "Please enter reason", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, R.string.pleasse_enter_reason, Toast.LENGTH_SHORT).show();
                         } else {
                             dialog.dismiss();
                             HashMap<String, String> map = new HashMap<>();
@@ -211,7 +211,7 @@ public class OrderHelpFragment extends Fragment {
             public void onResponse(@NonNull Call<Order> call, @NonNull Response<Order> response) {
                 customDialog.dismiss();
                 if (response.isSuccessful()) {
-                    Toast.makeText(context, "Dispute create successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,R.string.dispate_create_success, Toast.LENGTH_SHORT).show();
                     getActivity().finish();
                 } else {
                     try {
@@ -226,7 +226,7 @@ public class OrderHelpFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<Order> call, @NonNull Throwable t) {
                 customDialog.dismiss();
-                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -259,7 +259,7 @@ public class OrderHelpFragment extends Fragment {
             @Override
             public void onFailure(Call<List<DisputeMessage>> call, Throwable t) {
                 updateDiputeLayout();
-                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -292,7 +292,7 @@ public class OrderHelpFragment extends Fragment {
                         intent.setData(Uri.parse("tel:" + isSelectedOrder.getUser().getCustomer_support()));
                         startActivity(intent);
                     }else {
-                        Toast.makeText(context,"No Number Available",Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,R.string.no_number_available,Toast.LENGTH_LONG).show();
                     }
                 } else {
                     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
@@ -303,7 +303,7 @@ public class OrderHelpFragment extends Fragment {
                     intent.setData(Uri.parse("tel:" + isSelectedOrder.getUser().getCustomer_support()));
                     startActivity(intent);
                 }else {
-                    Toast.makeText(context,"No Number Available",Toast.LENGTH_LONG).show();
+                    Toast.makeText(context,R.string.no_number_available,Toast.LENGTH_LONG).show();
                 }
             }
         }

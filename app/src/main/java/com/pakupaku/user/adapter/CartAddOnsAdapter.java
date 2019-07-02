@@ -200,9 +200,9 @@ public class CartAddOnsAdapter extends RecyclerView.Adapter<CartAddOnsAdapter.My
                 }
             }
             if (quantity == 1)
-                AddonBottomSheetFragment.price.setText(quantity + " Item | " + GlobalData.currencySymbol + priceAmount);
+                AddonBottomSheetFragment.price.setText(quantity + " " + context.getResources().getString(R.string.item_count) + " | " + GlobalData.currencySymbol + priceAmount);
             else
-                AddonBottomSheetFragment.price.setText(quantity + " Items | " + GlobalData.currencySymbol + priceAmount);
+                AddonBottomSheetFragment.price.setText(quantity + " " + context.getResources().getString(R.string.items_counts) + " | " + GlobalData.currencySymbol + priceAmount);
 
         }
     }

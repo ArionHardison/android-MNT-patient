@@ -51,9 +51,9 @@ public class AccompanimentDishesAdapter extends RecyclerView.Adapter<Accompanime
         RecommendedDish dish = list.get(position);
         holder.cardTextValueTicker.setCharacterList(NUMBER_LIST);
         holder.dishNameTxt.setText(dish.getName());
-        holder.priceTxt.setText("$"+dish.getPrice());
+        holder.priceTxt.setText("$" + dish.getPrice());
 
-       /* check Availablity*/
+        /* check Availablity*/
         if (dish.getAvaialable().equalsIgnoreCase("available")) {
             holder.cardAddTextLayout.setVisibility(View.VISIBLE);
             holder.cardTextValueTicker.setText(String.valueOf(1));
@@ -86,7 +86,7 @@ public class AccompanimentDishesAdapter extends RecyclerView.Adapter<Accompanime
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView dishImg, foodImageType, cardAddBtn, cardMinusBtn, animationLineCartAdd;
-        private TextView dishNameTxt, priceTxt,cardTextValue , cardAddInfoText, cardAddOutOfStock;
+        private TextView dishNameTxt, priceTxt, cardTextValue, cardAddInfoText, cardAddOutOfStock;
         TickerView cardTextValueTicker;
         RelativeLayout cardAddDetailLayout, cardAddTextLayout, cardInfoLayout;
 
@@ -99,7 +99,7 @@ public class AccompanimentDishesAdapter extends RecyclerView.Adapter<Accompanime
             dishNameTxt = view.findViewById(R.id.dish_name_text);
             priceTxt = view.findViewById(R.id.price_text);
 
-             /*    Add card Button Layout*/
+            /*    Add card Button Layout*/
             cardAddDetailLayout = view.findViewById(R.id.add_card_layout);
             cardAddTextLayout = view.findViewById(R.id.add_card_text_layout);
             cardInfoLayout = view.findViewById(R.id.add_card_info_layout);
@@ -127,7 +127,7 @@ public class AccompanimentDishesAdapter extends RecyclerView.Adapter<Accompanime
                     HotelViewActivity.viewCartLayout.setVisibility(View.VISIBLE);
                     itemCount = itemCount + 1;
                     priceAmount = priceAmount + Integer.parseInt(list.get(getAdapterPosition()).getPrice());
-                    HotelViewActivity.itemText.setText("" + itemCount + " Item | $" + "" + priceAmount);
+                    HotelViewActivity.itemText.setText("" + itemCount + " " + context.getResources().getString(R.string.item_count) + " | $" + "" + priceAmount);
                     cardAddTextLayout.setVisibility(View.GONE);
                     break;
 
@@ -135,7 +135,7 @@ public class AccompanimentDishesAdapter extends RecyclerView.Adapter<Accompanime
                     int countValue = Integer.parseInt(cardTextValue.getText().toString()) + 1;
                     itemCount = itemCount + 1;
                     priceAmount = priceAmount + Integer.parseInt(list.get(getAdapterPosition()).getPrice());
-                    HotelViewActivity.itemText.setText("" + itemCount + " Items | $" + "" + priceAmount);
+                    HotelViewActivity.itemText.setText("" + itemCount + " " + R.string.items_counts + " | $" + "" + priceAmount);
                     cardTextValue.setText("" + countValue);
                     cardTextValueTicker.setText("" + countValue);
                     break;
@@ -148,7 +148,7 @@ public class AccompanimentDishesAdapter extends RecyclerView.Adapter<Accompanime
                         int countMinusValue = Integer.parseInt(cardTextValue.getText().toString()) - 1;
                         itemCount = itemCount - 1;
                         priceAmount = priceAmount - Integer.parseInt(list.get(getAdapterPosition()).getPrice());
-                        HotelViewActivity.itemText.setText("" + itemCount + " Items | $" + "" + priceAmount);
+                        HotelViewActivity.itemText.setText("" + itemCount + " " + R.string.items_counts + " | $" + "" +  priceAmount);
                         cardTextValue.setText("" + countMinusValue);
                         cardTextValueTicker.setText("" + countMinusValue);
 

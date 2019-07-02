@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Item Total"
+            android:text="@string/item_total"
             android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/text_small" />
 
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Service Tax"
+            android:text="@string/service_tax"
             android:textColor="@color/colorGreen"
             android:textSize="@dimen/text_small" />
 
@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Delivery Charges"
+            android:text="@string/delivery_charges"
             android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/text_small" />
 
@@ -90,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Promocode amount"
+            android:text="@string/promocode_amount"
             android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/text_small" />
 
@@ -115,7 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Shop Discount"
+            android:text="@string/shop_discount"
             android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/text_small" />
 
@@ -140,7 +140,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Wallet Detection"
+            android:text="@string/wallet_detection"
             android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/text_small" />
 
@@ -168,7 +168,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="end"
-            android:text="Total"
+            android:text="@string/total"
             android:textColor="@color/colorTextBlack"
             android:textSize="@dimen/text_small_large" />
 

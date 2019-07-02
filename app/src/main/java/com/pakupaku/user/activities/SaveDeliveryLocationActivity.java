@@ -36,14 +36,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.pakupaku.user.HomeActivity;
-import com.pakupaku.user.R;
-import com.pakupaku.user.build.api.APIError;
-import com.pakupaku.user.build.api.ApiClient;
-import com.pakupaku.user.build.api.ApiInterface;
-import com.pakupaku.user.build.api.ErrorUtils;
-import com.pakupaku.user.helper.CustomDialog;
-import com.pakupaku.user.helper.GlobalData;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
@@ -64,6 +56,14 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.pakupaku.user.HomeActivity;
+import com.pakupaku.user.R;
+import com.pakupaku.user.build.api.APIError;
+import com.pakupaku.user.build.api.ApiClient;
+import com.pakupaku.user.build.api.ApiInterface;
+import com.pakupaku.user.build.api.ErrorUtils;
+import com.pakupaku.user.helper.CustomDialog;
+import com.pakupaku.user.helper.GlobalData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -648,7 +648,7 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                 public void onFailure(@NonNull Call<com.pakupaku.user.models.Address> call, @NonNull Throwable t) {
                     Log.e(TAG, t.toString());
                     customDialog.dismiss();
-                    Toast.makeText(SaveDeliveryLocationActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SaveDeliveryLocationActivity.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -656,16 +656,16 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
 
     private void showUpdateAddressAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Update Address");
-        builder.setMessage("Are you sure want to update your saved address?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.update_address);
+        builder.setMessage(R.string.alert_update_address);
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
                 saveAddress("YES");
             }
         });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -707,7 +707,7 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                 public void onFailure(@NonNull Call<com.pakupaku.user.models.Address> call, @NonNull Throwable t) {
                     Log.e(TAG, t.toString());
                     customDialog.dismiss();
-                    Toast.makeText(SaveDeliveryLocationActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SaveDeliveryLocationActivity.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -715,13 +715,13 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
 
     private boolean validate() {
         if (address.getMapAddress().isEmpty() && address.getMapAddress().equals(getResources().getString(R.string.getting_address))) {
-            Toast.makeText(this, "Please enter address", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.please_enter_address, Toast.LENGTH_SHORT).show();
             return false;
         } else if (address.getBuilding().isEmpty()) {
-            Toast.makeText(this, "Please enter Flat No", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.please_enter_flat, Toast.LENGTH_SHORT).show();
             return false;
         } else if (address.getLandmark().isEmpty()) {
-            Toast.makeText(this, "Please enter landmark", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.please_enter_landmark, Toast.LENGTH_SHORT).show();
             return false;
         } else if (address.getLatitude() == null || address.getLongitude() == null) {
             Toast.makeText(this, "Lat & long cannot be left blank", Toast.LENGTH_SHORT).show();
@@ -777,9 +777,9 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                     address.setType(otherAddressHeaderEt.getText().toString());
                 }
                 if (address.getBuilding().equalsIgnoreCase("")) {
-                    Toast.makeText(context, "Please enter House/ flat no ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.please_enter_house_and_flat, Toast.LENGTH_SHORT).show();
                 } else if (address.getLandmark().equalsIgnoreCase("")) {
-                    Toast.makeText(context, "Please enter landmark ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.please_enter_landmark, Toast.LENGTH_SHORT).show();
                 } else {
                     if (address.getType().equalsIgnoreCase(""))
                         address.setType("other");

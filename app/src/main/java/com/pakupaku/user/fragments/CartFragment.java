@@ -582,7 +582,7 @@ public class CartFragment extends Fragment {
 
         } else if (requestCode == PROMOCODE_APPLY) {
             if (data != null) {
-                promoCodeApply.setText("Promocode Applied.");
+                promoCodeApply.setText(R.string.promo_applied);
                 promoCodeApply.setEnabled(false);
                 promo_code = data.getExtras().getString("promotion");
                 getViewCartWithPromocode(promo_code);

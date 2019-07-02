@@ -14,7 +14,7 @@
         android:layout_height="@dimen/_60sdp"
         android:background="@drawable/edit_text_rounded_corner_bg"
         android:gravity="start"
-        android:hint="Enter your reason ?"
+        android:hint="@string/enter_your_reason"
         android:padding="@dimen/activity_vertical_margin_half"
         android:textSize="@dimen/text_small" />
 

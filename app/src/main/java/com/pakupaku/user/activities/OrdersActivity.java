@@ -124,7 +124,7 @@ public class OrdersActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<List<Order>> call, @NonNull Throwable t) {
                 customDialog.dismiss();
-                Toast.makeText(OrdersActivity.this, "Some thing went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrdersActivity.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -159,7 +159,7 @@ public class OrdersActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<List<Order>> call, @NonNull Throwable t) {
-                Toast.makeText(OrdersActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrdersActivity.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
                 getPastOrders();
                 customDialog.dismiss();
             }

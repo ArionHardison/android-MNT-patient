@@ -118,7 +118,7 @@ public class ManageAddressActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<List<Address>> call, @NonNull Throwable t) {
                 skeletonScreen.hide();
-                Toast.makeText(ManageAddressActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ManageAddressActivity.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
             }
         });
     }

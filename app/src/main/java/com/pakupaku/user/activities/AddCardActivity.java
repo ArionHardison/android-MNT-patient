@@ -164,9 +164,8 @@ public class AddCardActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<Message> call, @NonNull Throwable t) {
-                Toast.makeText(AddCardActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddCardActivity.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
                 customDialog.dismiss();
-                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
 

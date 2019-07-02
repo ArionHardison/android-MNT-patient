@@ -40,6 +40,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.pakupaku.user.MyApplication.commonAccess;
+
 /**
  * Created by santhosh@appoets.com on 22-08-2017.
  */
@@ -99,6 +101,9 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
         dataResponse = false;
         dialog.show();
         Call<AddCart> call = apiInterface.postAddCart(map);
+
+
+        Log.e(" Call<AddCart>==>", "" + map);
         call.enqueue(new Callback<AddCart>() {
             @Override
             public void onResponse(Call<AddCart> call, Response<AddCart> response) {
@@ -131,7 +136,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                         String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
                         CartFragment.itemTotalAmount.setText(currency + "" + response.body().getTotalPrice());
                         CartFragment.discountAmount.setText("- " + currency + "" + response.body().getShopDiscount());
-                        CartFragment.serviceTax.setText(currency + "" +response.body().getTax());
+                        CartFragment.serviceTax.setText(currency + "" + response.body().getTax());
                         CartFragment.payAmount.setText(currency + "" + response.body().getPayable());
 
                     } else {
@@ -224,6 +229,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                 if (product.getAddons() != null && !product.getAddons().isEmpty()) {
                     GlobalData.isSelectedProduct = product;
                     CartChoiceModeFragment.lastCart = list.get(position);
+                    commonAccess = "Chooice";
                     bottomSheetDialogFragment = new CartChoiceModeFragment();
                     bottomSheetDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
                     CartChoiceModeFragment.isViewcart = true;

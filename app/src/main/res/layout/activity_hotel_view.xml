@@ -537,7 +537,7 @@
             android:drawableEnd="@drawable/ic_cart_white"
             android:drawablePadding="@dimen/_5sdp"
             android:gravity="center"
-            android:text="View Cart"
+            android:text="@string/view_cart_txt"
             android:textAllCaps="true"
             android:textColor="@color/colorTextWhite"
             android:textSize="@dimen/text_small_large" />

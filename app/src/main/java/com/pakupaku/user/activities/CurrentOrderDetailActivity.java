@@ -236,9 +236,9 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             public void run() {
                 if (customdata != null) {
                     getParticularOrders(customdata.getCustomData().get(0).getOrderId());
-                } else{
+                } else {
 //                    if (isSelectedOrder!=null) {
-                        getParticularOrders(isSelectedOrder.getId());
+                    getParticularOrders(isSelectedOrder.getId());
 //                    }
                 }
 
@@ -312,22 +312,22 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
     }
 
     private void goToCall() {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-                    if (TransporterNumber != null && !TransporterNumber.isEmpty()) {
-                        Intent intent = new Intent(Intent.ACTION_CALL);
-                        intent.setData(Uri.parse("tel:" + TransporterNumber));
-                        startActivity(intent);
-                    }
-                } else {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                if (TransporterNumber != null && !TransporterNumber.isEmpty()) {
+                    Intent intent = new Intent(Intent.ACTION_CALL);
+                    intent.setData(Uri.parse("tel:" + TransporterNumber));
+                    startActivity(intent);
                 }
-            } else if (TransporterNumber != null && !TransporterNumber.isEmpty()) {
-                Intent intent = new Intent(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:" + TransporterNumber));
-                startActivity(intent);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
             }
+        } else if (TransporterNumber != null && !TransporterNumber.isEmpty()) {
+            Intent intent = new Intent(Intent.ACTION_CALL);
+            intent.setData(Uri.parse("tel:" + TransporterNumber));
+            startActivity(intent);
         }
+    }
 
     public void updateOrderDeatail() {
         List<OrderFlow> orderFlowList = new ArrayList<>();
@@ -350,14 +350,14 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
         if (GlobalData.isSelectedOrder != null) {
 //            updateOrderDeatail();
             Order order = GlobalData.isSelectedOrder;
-            orderIdTxt.setText("ORDER #000" + order.getId().toString());
+            orderIdTxt.setText(getResources().getString(R.string.order_details_page) + " #000" + order.getId().toString());
             itemQuantity = order.getItems().size();
             priceAmount = order.getInvoice().getPayable();
             currency = order.getItems().get(0).getProduct().getPrices().getCurrency();
             if (itemQuantity == 1)
-                orderItemTxt.setText(itemQuantity + " Item, " + currency + priceAmount);
+                orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.item_count) + " , " + currency + priceAmount);
             else
-                orderItemTxt.setText(itemQuantity + " Items, " + currency + priceAmount);
+                orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.items_counts) + " , " + currency + priceAmount);
 
             orderIdTxt2.setText("#000" + order.getId().toString());
             orderOtp.setText(" : " + isSelectedOrder.getOrderOtp());
@@ -634,7 +634,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                         final int width = getResources().getDisplayMetrics().widthPixels;
                         final int height = getResources().getDisplayMetrics().heightPixels;
                         final int padding = (int) (width * 0.20); // offset from edges of the map in pixels
-                        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds,120);
+                        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 120);
                         mMap.moveCamera(cu);
                         // Adding all the points in the route to LineOptions
                         lineOptions.addAll(points);
@@ -682,7 +682,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
 
         // Building the url to the web service
 
-        return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters+"&key="+getString(R.string.google_maps_key);
+        return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
     }
 
     private void showDialog() {
@@ -692,9 +692,9 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
         dialogBuilder.setView(dialogView);
         final EditText edt = dialogView.findViewById(R.id.reason_edit);
         dialogBuilder.setTitle(orderIdTxt.getText().toString());
-        dialogBuilder.setMessage("Are you sure want to cancel this order ?");
-        dialogBuilder.setPositiveButton("Submit", null);
-        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        dialogBuilder.setMessage(getResources().getString(R.string.alert_areyou_cancel_order));
+        dialogBuilder.setPositiveButton(R.string.submit, null);
+        dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 dialog.dismiss();
             }
@@ -709,7 +709,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                     @Override
                     public void onClick(View view) {
                         if (edt.getText().toString().equalsIgnoreCase("")) {
-                            Toast.makeText(context, "Please enter reason", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, R.string.pleasse_enter_reason, Toast.LENGTH_SHORT).show();
                         } else {
                             dialog.dismiss();
                             cancelOrder(edt.getText().toString());
@@ -745,7 +745,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             @Override
             public void onFailure(@NonNull Call<Order> call, @NonNull Throwable t) {
                 customDialog.dismiss();
-                Toast.makeText(CurrentOrderDetailActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CurrentOrderDetailActivity.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -775,9 +775,9 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                     } else isSelectedOrder = response.body();
                     Log.i("isSelectedOrder : ", isSelectedOrder.toString());
 
-                    order_eta.setText(" : " + isSelectedOrder.getEta() + "Mins");
+                    order_eta.setText(" : " + isSelectedOrder.getEta() + getResources().getString(R.string.order_minits));
 
-                    if (isSelectedOrder.getTransporter()!=null){
+                    if (isSelectedOrder.getTransporter() != null) {
 
                         transporter_details.setVisibility(View.VISIBLE);
 
@@ -791,7 +791,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                         transporterName.setText(isSelectedOrder.getTransporter().getName());
                         TransporterNumber = isSelectedOrder.getTransporter().getPhone();
 
-                    }else {
+                    } else {
                         transporter_details.setVisibility(View.GONE);
                     }
 
@@ -813,7 +813,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                         order_succeess_image.setImageResource(R.drawable.order_cancelled_img);
 //                        dotLineImg.setBackgroundResource(R.drawable.order_cancelled_line);
                         orderStatusTxt.setTextColor(ContextCompat.getColor(context, R.color.colorRed));
-                    }else {
+                    } else {
                         orderStatusLayout.setVisibility(View.GONE);
                         orderFlowRv.setVisibility(View.VISIBLE);
                     }
@@ -868,10 +868,10 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
 
             final float startRotation = marker.getRotation();
 
-            if (prevLoc == null){
+            if (prevLoc == null) {
                 prevLoc = destination;
             }
-            final float bearing = prevLoc.bearingTo(destination) ;
+            final float bearing = prevLoc.bearingTo(destination);
 
             prevLoc = destination;
 
@@ -1027,20 +1027,20 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                     if (i == R.id.one) {
                         //do work when radioButton1 is active
                         rating = 1;
-                    } else  if (i == R.id.two) {
+                    } else if (i == R.id.two) {
                         //do work when radioButton2 is active
                         rating = 2;
-                    } else  if (i == R.id.three) {
+                    } else if (i == R.id.three) {
                         //do work when radioButton3 is active
                         rating = 3;
-                    } else  if (i == R.id.four) {
+                    } else if (i == R.id.four) {
                         //do work when radioButton3 is active
                         rating = 4;
-                    } else  if (i == R.id.five) {
+                    } else if (i == R.id.five) {
                         //do work when radioButton3 is active
                         rating = 5;
                     }
-                    Log.d("gfgfgf", "onCheckedChanged: "+rating);
+                    Log.d("gfgfgf", "onCheckedChanged: " + rating);
                 }
             });
 

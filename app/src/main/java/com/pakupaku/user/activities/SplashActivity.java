@@ -45,6 +45,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static com.pakupaku.user.MyApplication.commonAccess;
 import static com.pakupaku.user.helper.GlobalData.addCart;
 import static com.pakupaku.user.helper.GlobalData.profileModel;
 
@@ -67,6 +68,7 @@ public class SplashActivity extends AppCompatActivity {
         context = SplashActivity.this;
         connectionHelper = new ConnectionHelper(context);
         getDeviceToken();
+        commonAccess = "";
         // OTP REtriver
         List<String> list = new AppSignatureHelper(this).getAppSignatures();
         Log.d(TAG, "HASH " + list.toString());
@@ -99,6 +101,8 @@ public class SplashActivity extends AppCompatActivity {
                 LocaleUtils.setLocale(context, "en");
                 break;
         }
+
+
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -109,8 +113,7 @@ public class SplashActivity extends AppCompatActivity {
                     if (connectionHelper.isConnectingToInternet()) {
                         getDeviceToken();
                         getProfile();
-                    }
-                    else displayMessage(getString(R.string.oops_connect_your_internet));
+                    } else displayMessage(getString(R.string.oops_connect_your_internet));
                 } else {
 
                     startActivity(new Intent(SplashActivity.this, WelcomeScreenActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));

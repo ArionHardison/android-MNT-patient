@@ -94,7 +94,7 @@ public class PastOrderDetailActivity extends AppCompatActivity {
         });
         if (isSelectedOrder != null) {
             Order order = GlobalData.isSelectedOrder;
-            orderIdTxt.setText("ORDER #000" + order.getId().toString());
+            orderIdTxt.setText(R.string.order_details_page + " #000" + order.getId().toString());
             itemQuantity = order.getInvoice().getQuantity();
             priceAmount = order.getInvoice().getPayable();
             if (order.getStatus().equalsIgnoreCase("CANCELLED")) {
@@ -110,9 +110,9 @@ public class PastOrderDetailActivity extends AppCompatActivity {
             }
             currency = order.getItems().get(0).getProduct().getPrices().getCurrency();
             if (itemQuantity == 1)
-                orderItemTxt.setText(itemQuantity + " Item, " + currency + priceAmount);
+                orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.item_count) + " , " + currency + priceAmount);
             else
-                orderItemTxt.setText(itemQuantity + " Items, " + currency + priceAmount);
+                orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.items_counts)+ " , " + currency + priceAmount);
 
             restaurantName.setText(order.getShop().getName());
             restaurantAddress.setText(order.getShop().getAddress());
@@ -153,6 +153,7 @@ public class PastOrderDetailActivity extends AppCompatActivity {
         finish();
         overridePendingTransition(R.anim.anim_nothing, R.anim.slide_out_right);
     }
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));

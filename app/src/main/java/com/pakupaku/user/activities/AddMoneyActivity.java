@@ -22,8 +22,8 @@ import com.pakupaku.user.R;
 import com.pakupaku.user.adapter.AccountPaymentAdapter;
 import com.pakupaku.user.build.api.ApiClient;
 import com.pakupaku.user.build.api.ApiInterface;
-import com.pakupaku.user.helper.GlobalData;
 import com.pakupaku.user.helper.CustomDialog;
+import com.pakupaku.user.helper.GlobalData;
 import com.pakupaku.user.models.AddMoney;
 import com.pakupaku.user.models.Card;
 
@@ -116,7 +116,7 @@ public class AddMoneyActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<List<Card>> call, @NonNull Throwable t) {
                 customDialog.dismiss();
-                Toast.makeText(AddMoneyActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddMoneyActivity.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -145,11 +145,11 @@ public class AddMoneyActivity extends AppCompatActivity {
             case R.id.pay_btn:
                 String amount = amountTxt.getText().toString();
                 if (!isCardChecked) {
-                    Toast.makeText(context, "Please choose your card", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getResources().getString(R.string.please_choose_your_card), Toast.LENGTH_SHORT).show();
                 } else if (amount.equalsIgnoreCase("")) {
-                    Toast.makeText(context, "Please enter amount", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getResources().getString(R.string.pleasse_enter_amount), Toast.LENGTH_SHORT).show();
                 } else if (Integer.parseInt(amount) == 0) {
-                    Toast.makeText(context, "Please enter valid amount", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getResources().getString(R.string.please_enter_valid_amount), Toast.LENGTH_SHORT).show();
                 } else if (isCardChecked) {
                     for (int i = 0; i < cardArrayList.size(); i++) {
                         if (cardArrayList.get(i).isChecked()) {
@@ -162,7 +162,7 @@ public class AddMoneyActivity extends AppCompatActivity {
                         }
                     }
                 } else {
-                    Toast.makeText(context, "Please select your card", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getResources().getString(R.string.please_selecct_your_card), Toast.LENGTH_SHORT).show();
                 }
 
                 break;
@@ -225,7 +225,7 @@ public class AddMoneyActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<AddMoney> call, @NonNull Throwable t) {
                 customDialog.dismiss();
-                Toast.makeText(AddMoneyActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddMoneyActivity.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
             }
         });
 

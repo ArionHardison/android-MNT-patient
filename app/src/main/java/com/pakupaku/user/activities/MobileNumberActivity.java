@@ -129,7 +129,7 @@ public class MobileNumberActivity extends AppCompatActivity implements GoogleApi
         AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_mobile_number);
         ButterKnife.bind(this);
-        mCountryPicker = CountryPicker.newInstance("Select Country");
+        mCountryPicker = CountryPicker.newInstance(getResources().getString(R.string.select_contry));
         context = MobileNumberActivity.this;
         customDialog = new CustomDialog(context);
         helper = new ConnectionHelper(context);
@@ -226,14 +226,14 @@ public class MobileNumberActivity extends AppCompatActivity implements GoogleApi
         } else {
             //mProgressDialog.dismiss();
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage("Check your Internet").setCancelable(false);
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            builder.setMessage(getResources().getString(R.string.check_your_internet)).setCancelable(false);
+            builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                 }
             });
-            builder.setPositiveButton("Setting", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(getResources().getString(R.string.settings), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
@@ -290,14 +290,14 @@ public class MobileNumberActivity extends AppCompatActivity implements GoogleApi
             request.executeAsync();
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage("Check your Internet").setCancelable(false);
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            builder.setMessage(getResources().getString(R.string.check_your_internet)).setCancelable(false);
+            builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                 }
             });
-            builder.setPositiveButton("Setting", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(getResources().getString(R.string.settings), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
@@ -359,7 +359,7 @@ public class MobileNumberActivity extends AppCompatActivity implements GoogleApi
                     Toast.makeText(MobileNumberActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     GlobalData.otpValue = response.body().getOtp();
                     //startActivity(new Intent(MobileNumberActivity.this, OtpActivity.class));
-                    startActivity(new Intent(MobileNumberActivity.this, OtpActivity.class).putExtra("OTP",GlobalData.otpValue));
+                    startActivity(new Intent(MobileNumberActivity.this, OtpActivity.class).putExtra("OTP", GlobalData.otpValue));
 
                     finish();
                 } else {
@@ -530,7 +530,7 @@ public class MobileNumberActivity extends AppCompatActivity implements GoogleApi
                     } else
                         forgotPassord(mobileNumber, GlobalData.hashcode);
                 } else {
-                    Toast.makeText(this, "Please enter valid mobile number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getResources().getString(R.string.please_enter_valid_number), Toast.LENGTH_SHORT).show();
                 }
                 break;
         }

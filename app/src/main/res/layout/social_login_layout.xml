@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_20sdp"
         android:gravity="center"
-        android:text="Connect with social"
+        android:text="@string/connect_with_social"
         android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/text_medium" />
 

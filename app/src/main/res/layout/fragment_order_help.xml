@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_vertical_margin_half"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="Are you facing any issue which we can assist with? Please reach out to us we will be happy to help !"
+            android:text="@string/are_you_facing_help"
             android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/text_small" />
 

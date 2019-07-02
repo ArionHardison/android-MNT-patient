@@ -369,10 +369,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mobile = edMobileNumber.getText().toString();
         password = edPassword.getText().toString();
         if (!isValidMobile(country_code + mobile)) {
-            Toast.makeText(this, "Please enter valid mobile number", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.please_enter_mobile_number), Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(this, getResources().getString(R.string.please_enter_password), Toast.LENGTH_SHORT).show();
         } else {
             HashMap<String, String> map = new HashMap<>();
             map.put("username", country_code + mobile);
@@ -496,14 +495,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         } else {
             //mProgressDialog.dismiss();
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage("Check your Internet").setCancelable(false);
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            builder.setMessage(getResources().getString(R.string.check_your_internet)).setCancelable(false);
+            builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                 }
             });
-            builder.setPositiveButton("Setting", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(getResources().getString(R.string.settings), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 

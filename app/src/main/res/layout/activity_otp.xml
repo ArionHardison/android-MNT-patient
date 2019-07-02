@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_6sdp"
-            android:text="sent to your" />
+            android:text="@string/sent_to_your" />
 
         <TextView
             android:id="@+id/mobile_number_txt"
