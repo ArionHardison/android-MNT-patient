@@ -14,6 +14,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StrikethroughSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -76,6 +80,12 @@ public class ProductDetailActivity extends AppCompatActivity {
     @BindView(R.id.product_description)
     TextView productDescription;
 
+
+    @BindView(R.id.realPrice)
+    TextView realPrice;
+    @BindView(R.id.showPrice)
+    TextView showPrice;
+
     Product product;
     List<Addon> addonList;
     Context context;
@@ -83,6 +93,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     public static TextView addOnsTxt;
     int cartId = 0;
     int quantity = 0;
+
+    private static final String TAG = "ProductDetailActivity";
 
     CustomDialog customDialog;
 
@@ -105,138 +117,152 @@ public class ProductDetailActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        context = ProductDetailActivity.this;
-        customDialog = new CustomDialog(context);
+        try {
+            context = ProductDetailActivity.this;
+            customDialog = new CustomDialog(context);
 
-        //Intialize
-        addOnsTxt = (TextView) findViewById(R.id.add_ons_txt);
-        itemText = (TextView) findViewById(R.id.item_text);
-        viewCart = (TextView) findViewById(R.id.view_cart);
-        addItemLayout = (RelativeLayout) findViewById(R.id.view_cart_layout);
-        product = GlobalData.isSelectedProduct;
-        if (GlobalData.addCart != null) {
-            if (GlobalData.addCart.getProductList().size() != 0) {
-                for (int i = 0; i < GlobalData.addCart.getProductList().size(); i++) {
-                    if (GlobalData.addCart.getProductList().get(i).getProductId().equals(product.getId())) {
-                        cartId = GlobalData.addCart.getProductList().get(i).getId();
-                        quantity = GlobalData.addCart.getProductList().get(i).getQuantity();
-                    }
-                }
-            }
-        }
-
-        if (product.getName() != null) {
-
-            productName.setText(product.getName() + "\n" + product.getPrices().getCurrency() + product.getPrices().getPrice());
-        }
-        currency = product.getPrices().getCurrency();
-        itemText.setText("1 " + getResources().getString(R.string.item_count) + " | " + product.getPrices().getCurrency() + product.getPrices().getPrice());
-        productDescription.setText(product.getDescription());
-        slider_image_list = new ArrayList<>();
-        addonList = new ArrayList<>();
-        addonList.addAll(product.getAddons());
-        if (addonList.size() == 0)
-            addOnsTxt.setVisibility(View.GONE);
-        else
-            addOnsTxt.setVisibility(View.VISIBLE);
-
-        //Add ons Adapter
-        addOnsRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-//        addOnsRv.setItemAnimator(new DefaultItemAnimator());
-        addOnsRv.setHasFixedSize(false);
-        addOnsRv.setNestedScrollingEnabled(false);
-
-        AddOnsAdapter addOnsAdapter = new AddOnsAdapter(addonList, context);
-        addOnsRv.setAdapter(addOnsAdapter);
-
-        slider_image_list.addAll(product.getImages());
-        sliderPagerAdapter = new SliderPagerAdapter(this, slider_image_list, true);
-        productSlider.setAdapter(sliderPagerAdapter);
-        addBottomDots(0);
-
-        addItemLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               /* if (GlobalData.profileModel == null) {
-                    Toast.makeText(context, "Please login", Toast.LENGTH_SHORT).show();
-                } else {*/
-                final HashMap<String, String> map = new HashMap<>();
-                map.put("product_id", product.getId().toString());
-                map.put("note", custom_notes.getText().toString());
-                if (product.getCart() != null && product.getCart().size() == 1 && product.getAddons().isEmpty()) {
-                    map.put("quantity", String.valueOf(product.getCart().get(0).getQuantity() + 1));
-                    map.put("cart_id", String.valueOf(product.getCart().get(0).getId()));
-                } else if (product.getAddons().isEmpty() && cartId != 0) {
-                    map.put("quantity", String.valueOf(quantity + 1));
-                    map.put("cart_id", String.valueOf(cartId));
-                } else {
-                    map.put("quantity", "1");
-                    if (!list.isEmpty()) {
-                        for (int i = 0; i < list.size(); i++) {
-                            Addon addon = list.get(i);
-                            if (addon.getAddon().getChecked()) {
-                                map.put("product_addons[" + "" + i + "]", addon.getId().toString());
-                                map.put("addons_qty[" + "" + i + "]", addon.getQuantity().toString());
-                            }
+            //Intialize
+            addOnsTxt = (TextView) findViewById(R.id.add_ons_txt);
+            itemText = (TextView) findViewById(R.id.item_text);
+            viewCart = (TextView) findViewById(R.id.view_cart);
+            addItemLayout = (RelativeLayout) findViewById(R.id.view_cart_layout);
+            product = GlobalData.isSelectedProduct;
+            if (GlobalData.addCart != null) {
+                if (GlobalData.addCart.getProductList().size() != 0) {
+                    for (int i = 0; i < GlobalData.addCart.getProductList().size(); i++) {
+                        if (GlobalData.addCart.getProductList().get(i).getProductId().equals(product.getId())) {
+                            cartId = GlobalData.addCart.getProductList().get(i).getId();
+                            quantity = GlobalData.addCart.getProductList().get(i).getQuantity();
                         }
                     }
                 }
-                Log.e("AddCart_add", map.toString());
+            }
 
-                if (!Utils.isShopChanged(product.getShopId())) {
-                    addItem(map);
-                } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle(context.getResources().getString(R.string.replace_cart_item))
-                            .setMessage(context.getResources().getString(R.string.do_you_want_to_discart_the_selection_and_add_dishes_from_the_restaurant))
-                            .setPositiveButton(context.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // continue with delete
-                                    clearCart();
-                                    addItem(map);
 
-                                }
-                            })
-                            .setNegativeButton(context.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // do nothing
-                                    dialog.dismiss();
-
-                                }
-                            });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-                    Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
-                    nbutton.setTextColor(ContextCompat.getColor(context, R.color.theme));
-                    nbutton.setTypeface(nbutton.getTypeface(), Typeface.BOLD);
-                    Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
-                    pbutton.setTextColor(ContextCompat.getColor(context, R.color.theme));
-                    pbutton.setTypeface(pbutton.getTypeface(), Typeface.BOLD);
+            if (product.getName() != null) {
+                productName.setText(product.getName());
+            }
+            if (product.getPrices() != null && product.getPrices().getCurrency() != null) {
+                if (product.getPrices().getDiscount() > 0) {
+                    Spannable spannable = new SpannableString(product.getPrices().getCurrency() + product.getPrices().getPrice());
+                    spannable.setSpan(new StrikethroughSpan(), 1, String.valueOf(product.getPrices().getPrice()).length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    realPrice.setText(spannable);
                 }
+                showPrice.setText(String.format("%s %d", product.getPrices().getCurrency(), product.getPrices().getOrignalPrice()));
+            }
+
+
+            currency = product.getPrices().getCurrency();
+            itemText.setText("1 " + getResources().getString(R.string.item_count) + " | " + product.getPrices().getCurrency() + product.getPrices().getOrignalPrice());
+            productDescription.setText(product.getDescription());
+            slider_image_list = new ArrayList<>();
+            addonList = new ArrayList<>();
+            addonList.addAll(product.getAddons());
+            if (addonList.size() == 0)
+                addOnsTxt.setVisibility(View.GONE);
+            else
+                addOnsTxt.setVisibility(View.VISIBLE);
+
+            //Add ons Adapter
+            addOnsRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+//        addOnsRv.setItemAnimator(new DefaultItemAnimator());
+            addOnsRv.setHasFixedSize(false);
+            addOnsRv.setNestedScrollingEnabled(false);
+
+            AddOnsAdapter addOnsAdapter = new AddOnsAdapter(addonList, context);
+            addOnsRv.setAdapter(addOnsAdapter);
+
+            slider_image_list.addAll(product.getImages());
+            sliderPagerAdapter = new SliderPagerAdapter(this, slider_image_list, true);
+            productSlider.setAdapter(sliderPagerAdapter);
+            addBottomDots(0);
+
+            addItemLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+               /* if (GlobalData.profileModel == null) {
+                    Toast.makeText(context, "Please login", Toast.LENGTH_SHORT).show();
+                } else {*/
+                    final HashMap<String, String> map = new HashMap<>();
+                    map.put("product_id", product.getId().toString());
+                    map.put("note", custom_notes.getText().toString());
+                    if (product.getCart() != null && product.getCart().size() == 1 && product.getAddons().isEmpty()) {
+                        map.put("quantity", String.valueOf(product.getCart().get(0).getQuantity() + 1));
+                        map.put("cart_id", String.valueOf(product.getCart().get(0).getId()));
+                    } else if (product.getAddons().isEmpty() && cartId != 0) {
+                        map.put("quantity", String.valueOf(quantity + 1));
+                        map.put("cart_id", String.valueOf(cartId));
+                    } else {
+                        map.put("quantity", "1");
+                        if (!list.isEmpty()) {
+                            for (int i = 0; i < list.size(); i++) {
+                                Addon addon = list.get(i);
+                                if (addon.getAddon().getChecked()) {
+                                    map.put("product_addons[" + "" + i + "]", addon.getId().toString());
+                                    map.put("addons_qty[" + "" + i + "]", addon.getQuantity().toString());
+                                }
+                            }
+                        }
+                    }
+                    Log.e("AddCart_add", map.toString());
+
+                    if (!Utils.isShopChanged(product.getShopId())) {
+                        addItem(map);
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle(context.getResources().getString(R.string.replace_cart_item))
+                                .setMessage(context.getResources().getString(R.string.do_you_want_to_discart_the_selection_and_add_dishes_from_the_restaurant))
+                                .setPositiveButton(context.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // continue with delete
+                                        clearCart();
+                                        addItem(map);
+
+                                    }
+                                })
+                                .setNegativeButton(context.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // do nothing
+                                        dialog.dismiss();
+
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+                        nbutton.setTextColor(ContextCompat.getColor(context, R.color.theme));
+                        nbutton.setTypeface(nbutton.getTypeface(), Typeface.BOLD);
+                        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+                        pbutton.setTextColor(ContextCompat.getColor(context, R.color.theme));
+                        pbutton.setTypeface(pbutton.getTypeface(), Typeface.BOLD);
+                    }
 
 
 //                }
 
 
-            }
-        });
+                }
+            });
 
-        productSlider.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            productSlider.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
+                }
 
-            @Override
-            public void onPageSelected(int position) {
-                addBottomDots(position);
-            }
+                @Override
+                public void onPageSelected(int position) {
+                    addBottomDots(position);
+                }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
+                @Override
+                public void onPageScrollStateChanged(int state) {
 
-            }
-        });
+                }
+            });
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
     }
 
     private void clearCart() {

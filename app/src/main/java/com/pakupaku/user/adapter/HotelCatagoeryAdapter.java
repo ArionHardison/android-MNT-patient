@@ -1,5 +1,6 @@
 package com.pakupaku.user.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -12,6 +13,10 @@ import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StrikethroughSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -101,6 +106,7 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
         }
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
@@ -148,6 +154,7 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
         });
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int section, final int relativePosition, int absolutePosition) {
         Category category = list.get(section);
@@ -204,9 +211,14 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
             }
         });
 
-        if (product.getPrices() != null)
-            if (product.getPrices().getCurrency() != null)
-                holder.priceTxt.setText(product.getPrices().getCurrency() + " " + product.getPrices().getPrice());
+        if (product.getPrices() != null && product.getPrices().getCurrency() != null) {
+            if (product.getPrices().getDiscount() > 0) {
+                Spannable spannable = new SpannableString( product.getPrices().getCurrency() + product.getPrices().getPrice());
+                spannable.setSpan(new StrikethroughSpan(), 1, String.valueOf(product.getPrices().getPrice()).length()+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                holder.realPrice.setText(spannable);
+            }
+            holder.priceTxt.setText(String.format("%s %d", product.getPrices().getCurrency(), product.getPrices().getOrignalPrice()));
+        }
 
         if (!product.getFoodType().equalsIgnoreCase("veg")) {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_nonveg));
@@ -636,7 +648,7 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView headerTxt, featureProductsTitle;
         private ImageView dishImg, foodImageType, cardAddBtn, cardMinusBtn, animationLineCartAdd, addOnsIconImg, featuredImage;
-        private TextView dishNameTxt, priceTxt, cardTextValue, cardAddInfoText, cardAddOutOfStock, customizableTxt;
+        private TextView dishNameTxt, priceTxt, realPrice, cardTextValue, cardAddInfoText, cardAddOutOfStock, customizableTxt;
         TickerView cardTextValueTicker;
         RelativeLayout cardAddDetailLayout, cardAddTextLayout, cardInfoLayout;
         LinearLayout rootLayout, categoryHeaderLayout;
@@ -657,6 +669,7 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
                 dishNameTxt = itemView.findViewById(R.id.dish_name_text);
                 customizableTxt = itemView.findViewById(R.id.customizable_txt);
                 priceTxt = itemView.findViewById(R.id.price_text);
+                realPrice = itemView.findViewById(R.id.realPrice);
 
                 /*    Add card Button Layout*/
                 cardAddDetailLayout = itemView.findViewById(R.id.add_card_layout);
@@ -679,6 +692,5 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
             }
 
         }
-
     }
 }
