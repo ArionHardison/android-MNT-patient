@@ -2,6 +2,7 @@ package com.pakupaku.user.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.pakupaku.user.R;
 import com.pakupaku.user.build.api.ApiClient;
 import com.pakupaku.user.build.api.ApiInterface;
@@ -47,6 +49,8 @@ import static com.pakupaku.user.MyApplication.commonAccess;
  */
 
 public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyViewHolder> {
+
+    private static final String TAG = "ViewCartAdapter";
     private List<Cart> list;
     public static Context context;
     public static int priceAmount = 0;
@@ -73,6 +77,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
         context = con;
     }
 
+    @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
@@ -93,7 +98,8 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
         notifyDataSetChanged();
     }
 
-    public static void addCart(HashMap<String, String> map) {
+    public static void addCart(HashMap<String, String> map, final Context context) {
+        Log.d(TAG, context.toString());
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.empty_dialog);
@@ -118,6 +124,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
 //                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 } else if (response.isSuccessful()) {
+                    Log.d(TAG, response.body().toString());
                     addCart = response.body();
                     GlobalData.addCart = new AddCart();
                     GlobalData.addCart = response.body();
@@ -220,7 +227,6 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                             avdProgress.start();
                             holder.animationLineCartAdd.postDelayed(action, 3000);
                         }
-
                     }
                 };
                 holder.animationLineCartAdd.postDelayed(action, 3000);
@@ -228,7 +234,9 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                 product = list.get(position).getProduct();
                 if (product.getAddons() != null && !product.getAddons().isEmpty()) {
                     GlobalData.isSelectedProduct = product;
+                    Log.d(TAG, list.get(position).toString());
                     CartChoiceModeFragment.lastCart = list.get(position);
+                    Log.d(TAG, new Gson().toJson(list.get(position)));
                     commonAccess = "Chooice";
                     bottomSheetDialogFragment = new CartChoiceModeFragment();
                     bottomSheetDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
@@ -243,7 +251,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     map.put("quantity", holder.cardTextValue.getText().toString());
                     map.put("cart_id", String.valueOf(list.get(position).getId()));
                     Log.e("AddCart_add", map.toString());
-                    addCart(map);
+                    addCart(map, holder.itemView.getContext());
                 }
             }
         });
@@ -286,7 +294,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                         map.put("addons_qty[" + "" + i + "]", cartAddon.getQuantity().toString());
                     }
                     Log.e("AddCart_Minus", map.toString());
-                    addCart(map);
+                    addCart(map, holder.itemView.getContext());
                     remove(productList);
 
                 } else {
@@ -304,7 +312,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                         map.put("addons_qty[" + "" + i + "]", cartAddon.getQuantity().toString());
                     }
                     Log.e("AddCart_Minus", map.toString());
-                    addCart(map);
+                    addCart(map, holder.itemView.getContext());
                 }
 
 

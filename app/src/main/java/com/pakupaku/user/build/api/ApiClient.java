@@ -3,6 +3,7 @@ package com.pakupaku.user.build.api;
 import android.content.Context;
 import android.util.Log;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.pakupaku.user.MyApplication;
 import com.pakupaku.user.build.configure.BuildConfigure;
 
@@ -46,7 +47,7 @@ public class ApiClient {
         OkHttpClient client = new OkHttpClient.Builder()
                 .addNetworkInterceptor(interceptor)
                 .addNetworkInterceptor(new AddHeaderInterceptor())
-//                .addNetworkInterceptor(new StethoInterceptor())
+                .addNetworkInterceptor(new StethoInterceptor())
                 .connectTimeout(1, TimeUnit.MINUTES)
                 .readTimeout(1, TimeUnit.MINUTES)
                 .retryOnConnectionFailure(true)

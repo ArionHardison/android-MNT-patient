@@ -1,5 +1,6 @@
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="400dp"
     android:clipToPadding="true"
@@ -29,8 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingEnd="@dimen/_8sdp"
-                android:paddingStart="@dimen/_8sdp">
+                android:paddingStart="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp">
 
                 <TextView
                     android:id="@+id/product_name"
@@ -42,13 +43,30 @@
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/text_medium" />
 
-                <TextView
-                    android:id="@+id/product_price"
-                    android:layout_width="wrap_content"
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="225$"
-                    android:textColor="@color/colorSecondaryText"
-                    android:textSize="@dimen/text_small" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvOriginPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/_10sdp"
+                        tools:text="225$" />
+
+                    <TextView
+                        fontPath="fonts/Nunito-Bold.ttf"
+                        android:id="@+id/product_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/text_small"
+                        tools:text="225$" />
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
@@ -89,6 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    tools:text="150"
                     android:padding="@dimen/activity_vertical_margin"
                     android:textColor="#FFF" />
 

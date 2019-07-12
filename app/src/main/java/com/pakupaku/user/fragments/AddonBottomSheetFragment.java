@@ -10,6 +10,10 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StrikethroughSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -27,6 +31,7 @@ import com.pakupaku.user.models.Product;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +57,9 @@ public class AddonBottomSheetFragment extends BottomSheetDialogFragment {
     TextView productName;
     @BindView(R.id.product_price)
     TextView productPrice;
+
+    @BindView(R.id.tvOriginPrice)
+    TextView tvOriginPrice;
 
     @SuppressLint("RestrictedApi")
     public static TextView addons;
@@ -83,7 +91,7 @@ public class AddonBottomSheetFragment extends BottomSheetDialogFragment {
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) ((View) contentView.getParent()).getLayoutParams();
         CoordinatorLayout.Behavior behavior = params.getBehavior();
 
-        if (behavior != null && behavior instanceof BottomSheetBehavior) {
+        if (behavior instanceof BottomSheetBehavior) {
             mBottomSheetBehavior = (BottomSheetBehavior) behavior;
             mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
                 @Override
@@ -113,15 +121,23 @@ public class AddonBottomSheetFragment extends BottomSheetDialogFragment {
             GlobalData.cartAddons = selectedCart.getCartAddons();
             addonList.clear();
             addonList.addAll(product.getAddons());
-            addOnsRv.getAdapter().notifyDataSetChanged();
+            addOnsAdapter.notifyDataSetChanged();
         } else if (GlobalData.isSelectedProduct != null) {
             product = GlobalData.isSelectedProduct;
             addonList.clear();
             addonList.addAll(product.getAddons());
-            addOnsRv.getAdapter().notifyDataSetChanged();
+            addOnsAdapter.notifyDataSetChanged();
         }
         productName.setText(product.getName());
-        productPrice.setText(product.getPrices().getCurrency() + " " + product.getPrices().getPrice());
+
+        if (product.getPrices() != null && product.getPrices().getCurrency() != null) {
+            if (product.getPrices().getDiscount() > 0) {
+                Spannable spannable = new SpannableString(product.getPrices().getCurrency() + product.getPrices().getPrice());
+                spannable.setSpan(new StrikethroughSpan(), 1, String.valueOf(product.getPrices().getPrice()).length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tvOriginPrice.setText(spannable);
+            }
+            productPrice.setText(String.format("%s %d", product.getPrices().getCurrency(), product.getPrices().getOrignalPrice()));
+        }
 
         update.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,7 +154,7 @@ public class AddonBottomSheetFragment extends BottomSheetDialogFragment {
                     }
                 }
                 Log.e("AddCart_add", map.toString());
-                ViewCartAdapter.addCart(map);
+                ViewCartAdapter.addCart(map, Objects.requireNonNull(getActivity()));
                 dismiss();
             }
         });
@@ -154,7 +170,7 @@ public class AddonBottomSheetFragment extends BottomSheetDialogFragment {
         if (selectedCart != null) {
             Product product = AddonBottomSheetFragment.selectedCart.getProduct();
             quantity = AddonBottomSheetFragment.selectedCart.getQuantity();
-            priceAmount = quantity * product.getPrices().getPrice();
+            priceAmount = quantity * product.getPrices().getOrignalPrice();
             for (Addon addon : list) {
                 if (addon.getAddon().getChecked()) {
                     if (once) {

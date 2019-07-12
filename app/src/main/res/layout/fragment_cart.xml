@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.amar.library.ui.StickyScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.amar.library.ui.StickyScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/bottom_layout"

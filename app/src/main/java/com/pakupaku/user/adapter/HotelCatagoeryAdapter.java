@@ -213,8 +213,8 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
 
         if (product.getPrices() != null && product.getPrices().getCurrency() != null) {
             if (product.getPrices().getDiscount() > 0) {
-                Spannable spannable = new SpannableString( product.getPrices().getCurrency() + product.getPrices().getPrice());
-                spannable.setSpan(new StrikethroughSpan(), 1, String.valueOf(product.getPrices().getPrice()).length()+1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                Spannable spannable = new SpannableString(product.getPrices().getCurrency() + product.getPrices().getPrice());
+                spannable.setSpan(new StrikethroughSpan(), 1, String.valueOf(product.getPrices().getPrice()).length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 holder.realPrice.setText(spannable);
             }
             holder.priceTxt.setText(String.format("%s %d", product.getPrices().getCurrency(), product.getPrices().getOrignalPrice()));
@@ -610,8 +610,8 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
             //Get Total item Quantity
             itemQuantity = itemQuantity + addCart.getProductList().get(i).getQuantity();
             //Get addon price
-            if (addCart.getProductList().get(i).getProduct().getPrices().getPrice() != 0)
-                priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * addCart.getProductList().get(i).getProduct().getPrices().getPrice());
+            if (addCart.getProductList().get(i).getProduct().getPrices().getOrignalPrice() > 0)
+                priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * addCart.getProductList().get(i).getProduct().getPrices().getOrignalPrice());
             if (addCart.getProductList().get(i).getCartAddons() != null && !addCart.getProductList().get(i).getCartAddons().isEmpty()) {
                 for (int j = 0; j < addCart.getProductList().get(i).getCartAddons().size(); j++) {
                     priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * (addCart.getProductList().get(i).getCartAddons().get(j).getQuantity() *

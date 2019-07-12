@@ -47,6 +47,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -122,10 +123,10 @@ public class ProductDetailActivity extends AppCompatActivity {
             customDialog = new CustomDialog(context);
 
             //Intialize
-            addOnsTxt = (TextView) findViewById(R.id.add_ons_txt);
-            itemText = (TextView) findViewById(R.id.item_text);
-            viewCart = (TextView) findViewById(R.id.view_cart);
-            addItemLayout = (RelativeLayout) findViewById(R.id.view_cart_layout);
+            addOnsTxt = findViewById(R.id.add_ons_txt);
+            itemText = findViewById(R.id.item_text);
+            viewCart = findViewById(R.id.view_cart);
+            addItemLayout = findViewById(R.id.view_cart_layout);
             product = GlobalData.isSelectedProduct;
             if (GlobalData.addCart != null) {
                 if (GlobalData.addCart.getProductList().size() != 0) {
@@ -180,13 +181,10 @@ public class ProductDetailActivity extends AppCompatActivity {
             addItemLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-               /* if (GlobalData.profileModel == null) {
-                    Toast.makeText(context, "Please login", Toast.LENGTH_SHORT).show();
-                } else {*/
                     final HashMap<String, String> map = new HashMap<>();
                     map.put("product_id", product.getId().toString());
                     map.put("note", custom_notes.getText().toString());
-                    if (product.getCart() != null && product.getCart().size() == 1 && product.getAddons().isEmpty()) {
+                    if (product.getCart() != null && product.getCart().size() == 1) {
                         map.put("quantity", String.valueOf(product.getCart().get(0).getQuantity() + 1));
                         map.put("cart_id", String.valueOf(product.getCart().get(0).getId()));
                     } else if (product.getAddons().isEmpty() && cartId != 0) {
@@ -325,8 +323,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             });
         } else {
             commonAccess = "";
-            ViewCartAdapter.addCart(map);
-            finish();
+            ViewCartAdapter.addCart(map, this);
+          //  finish();
         }
 
     }

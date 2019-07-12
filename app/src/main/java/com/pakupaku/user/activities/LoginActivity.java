@@ -198,7 +198,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         });
         mCountryPicker.setCountriesList(countryList);
         setListener();
-        final boolean once = false;
         eyeImg.setTag(1);
 
 
@@ -336,7 +335,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private void getUserCountryInfo() {
         Locale current = getResources().getConfiguration().locale;
-        // Country country = Country.getCountryFromSIM(LoginActivity.this);
+       //  Country country = Country.getCountryFromSIM(LoginActivity.this);
         Country country = Country.getCountrydetails("JP");
         if (country != null) {
             countryImage.setImageResource(country.getFlag());

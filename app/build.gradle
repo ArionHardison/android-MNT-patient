@@ -97,6 +97,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
     implementation 'com.facebook.android:facebook-android-sdk:4.38.1'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
     implementation 'com.github.amarjain07:StickyScrollView:1.0.2'
     implementation 'me.philio:pinentryview:1.0.6'
     implementation 'com.robinhood.ticker:ticker:1.2.0'

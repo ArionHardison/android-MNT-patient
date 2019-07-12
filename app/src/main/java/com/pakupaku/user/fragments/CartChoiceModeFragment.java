@@ -34,6 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +46,7 @@ import retrofit2.Response;
 
 
 import static com.pakupaku.user.MyApplication.commonAccess;
+
 /**
  * Created by santhosh@appoets.com on 13-11-2017.
  */
@@ -93,23 +95,37 @@ public class CartChoiceModeFragment extends BottomSheetDialogFragment {
             productName.setText(product.getName());
             productPrice.setText(product.getPrices().getCurrency() + " " + product.getPrices().getOrignalPrice());
             cartAddonList = new ArrayList<>();
-            if (GlobalData.addCart != null) {
-                if (isViewcart) {
-                    cartAddonList = lastCart.getCartAddons();
-                } else {
-                    for (int i = 0; i < GlobalData.addCart.getProductList().size(); i++) {
-                        if (GlobalData.addCart.getProductList().get(i).getProductId().equals(product.getId())) {
-                            lastCart = GlobalData.addCart.getProductList().get(i);
-                            cartAddonList = lastCart.getCartAddons();
-                        }
-                    }
-                }
-            } else if (product.getCart() != null && !product.getCart().isEmpty()) {
+
+            if (isViewcart) {
+                cartAddonList = lastCart.getCartAddons();
+            } else if (product.getCart() != null) {
                 cartAddonList = product.getCart().get(product.getCart().size() - 1).getCartAddons();
                 lastCart = product.getCart().get(product.getCart().size() - 1);
+            } else if (GlobalData.addCart != null) {
+                for (int i = 0; i < GlobalData.addCart.getProductList().size(); i++) {
+                    if (GlobalData.addCart.getProductList().get(i).getProductId().equals(product.getId())) {
+                        lastCart = GlobalData.addCart.getProductList().get(i);
+                        cartAddonList = lastCart.getCartAddons();
+                    }
+                }
             }
+//            if (GlobalData.addCart != null) {
+//                if (isViewcart) {
+//                    cartAddonList = lastCart.getCartAddons();
+//                } else {
+//                    for (int i = 0; i < GlobalData.addCart.getProductList().size(); i++) {
+//                        if (GlobalData.addCart.getProductList().get(i).getProductId().equals(product.getId())) {
+//                            lastCart = GlobalData.addCart.getProductList().get(i);
+//                            cartAddonList = lastCart.getCartAddons();
+//                        }
+//                    }
+//                }
+//            } else if (product.getCart() != null) {
+//                cartAddonList = product.getCart().get(product.getCart().size() - 1).getCartAddons();
+//                lastCart = product.getCart().get(product.getCart().size() - 1);
+//            }
 //            addOnsQty.setText("" + cartAddonList.size() + " Add on");
-            addOnsQty.setText(context.getResources().getQuantityString(R.plurals.add_ons,cartAddonList.size(),cartAddonList.size()));
+            addOnsQty.setText(context.getResources().getQuantityString(R.plurals.add_ons, cartAddonList.size(), cartAddonList.size()));
             for (int i = 0; i < cartAddonList.size(); i++) {
                 if (i == 0)
                     addOnsItemsTxt.setText(cartAddonList.get(i).getAddonProduct().getAddon().getName());
@@ -143,11 +159,11 @@ public class CartChoiceModeFragment extends BottomSheetDialogFragment {
                 for (int i = 0; i < cartAddonList.size(); i++) {
                     CartAddon cartAddon = cartAddonList.get(i);
                     repeatCartMap.put("product_addons[" + "" + i + "]", cartAddon.getAddonProduct().getId().toString());
-                    repeatCartMap.put("addons_qty[" + "" + i + "]", cartAddon.getQuantity().toString());
+                    repeatCartMap.put("addons_qty[" + "" + i + "]", String.valueOf(cartAddon.getQuantity() * 2));
                 }
                 Log.e("Repeat_cart", repeatCartMap.toString());
                 if (isViewcart) {
-                    ViewCartAdapter.addCart(repeatCartMap);
+                    ViewCartAdapter.addCart(repeatCartMap, Objects.requireNonNull(getActivity()));
                 } else if (isSearch) {
                     ProductsAdapter.addCart(repeatCartMap);
                     if (GlobalData.searchProductList != null) {

@@ -187,7 +187,7 @@ public class CartAddOnsAdapter extends RecyclerView.Adapter<CartAddOnsAdapter.My
         if (AddonBottomSheetFragment.selectedCart != null) {
             Product product = AddonBottomSheetFragment.selectedCart.getProduct();
             quantity = AddonBottomSheetFragment.selectedCart.getQuantity();
-            priceAmount = quantity * product.getPrices().getPrice();
+            priceAmount = quantity * product.getPrices().getOrignalPrice();
             for (Addon addon : list) {
                 if (addon.getAddon().getChecked()) {
                     if (AddonBottomSheetFragment.addons.getText().toString().equalsIgnoreCase("")){
@@ -196,7 +196,7 @@ public class CartAddOnsAdapter extends RecyclerView.Adapter<CartAddOnsAdapter.My
                     else{
                         AddonBottomSheetFragment.addons.append(", " + addon.getAddon().getName());
                     }
-                    priceAmount = priceAmount + (quantity * (addon.getQuantity() * addon.getPrice()));
+                    priceAmount = priceAmount + ((addon.getQuantity() * addon.getPrice()));
                 }
             }
             if (quantity == 1)

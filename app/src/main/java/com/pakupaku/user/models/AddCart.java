@@ -57,24 +57,15 @@ public class AddCart {
     private String walletBalance;
     @SerializedName("payable")
     @Expose
-    private int payable;
+    private double payable;
 
 
     public int getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-
     public int getOrignalPrice() {
         return orignal_price;
-    }
-
-    public void setOriginalPrice(int orignal_price) {
-        this.orignal_price = orignal_price;
     }
 
     public String getTax() {
@@ -89,35 +80,9 @@ public class AddCart {
         return promocodeAmount;
     }
 
-    public void setPromocodeAmount(int promocodeAmount) {
-        this.promocodeAmount = promocodeAmount;
-    }
-
-    public int getNet() {
-        return net;
-    }
-
-    public void setNet(int net) {
-        this.net = net;
-    }
-
-    public String getWalletBalance() {
-        return walletBalance;
-    }
-
-    public void setWalletBalance(String walletBalance) {
-        this.walletBalance = walletBalance;
-    }
-
-    public int getPayable() {
+    public double getPayable() {
         return payable;
     }
-
-    public void setPayable(int payable) {
-        this.payable = payable;
-    }
-
-
     public String getDeliveryCharges() {
         return deliveryCharges;
     }

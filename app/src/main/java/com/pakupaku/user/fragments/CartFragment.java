@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +70,7 @@ import static com.pakupaku.user.adapter.ViewCartAdapter.bottomSheetDialogFragmen
  */
 public class CartFragment extends Fragment {
 
+    private static final String TAG = "CartFragment";
     private static final int PROMOCODE_APPLY = 201;
     @BindView(R.id.re)
     RelativeLayout re;
@@ -236,6 +238,7 @@ public class CartFragment extends Fragment {
         call.enqueue(new Callback<AddCart>() {
             @Override
             public void onResponse(Call<AddCart> call, Response<AddCart> response) {
+                Log.d(TAG,response.toString());
                 skeleton.hide();
                 if (response != null && !response.isSuccessful() && response.errorBody() != null) {
                     errorLayout.setVisibility(View.VISIBLE);
@@ -254,7 +257,6 @@ public class CartFragment extends Fragment {
                     if (itemCount == 0) {
                         errorLayout.setVisibility(View.VISIBLE);
                         dataLayout.setVisibility(View.GONE);
-                        GlobalData.addCart = response.body();
                         GlobalData.addCart = null;
                     } else {
                         AddCart addCart = response.body();
@@ -355,7 +357,7 @@ public class CartFragment extends Fragment {
                         }
 
                         itemTotalAmount.setText(currency + "" + response.body().getTotalPrice());
-                        discountAmount.setText("- " + currency + "" + discount);
+                        discountAmount.setText("- " + currency + "" + response.body().getShopDiscount());
                         promocode_amount.setText("- " + currency + "" + response.body().getPromocodeAmount());
                         serviceTax.setText(currency + Double.parseDouble(response.body().getTax()));
                         payAmount.setText(currency + "" + response.body().getPayable());

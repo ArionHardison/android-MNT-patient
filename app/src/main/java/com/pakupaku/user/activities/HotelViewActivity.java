@@ -184,7 +184,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
                 Double ratingValue = new BigDecimal(shops.getRating()).setScale(1, RoundingMode.HALF_UP).doubleValue();
                 rating.setText("" + ratingValue);
             } else
-                rating.setText(""+R.string.no_rating_txt);
+                rating.setText("" + R.string.no_rating_txt);
 
             deliveryTime.setText(shops.getEstimatedDeliveryTime().toString() + "Mins");
 
@@ -425,8 +425,8 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
             //Get Total item Quantity
             itemQuantity = itemQuantity + addCart.getProductList().get(i).getQuantity();
             //Get product price
-            if (addCart.getProductList().get(i).getProduct().getPrices().getPrice() != 0)
-                priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * addCart.getProductList().get(i).getProduct().getPrices().getPrice());
+            if (addCart.getProductList().get(i).getProduct().getPrices().getPrice() > 0)
+                priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * addCart.getProductList().get(i).getProduct().getPrices().getOrignalPrice());
             if (addCart.getProductList().get(i).getCartAddons() != null && !addCart.getProductList().get(i).getCartAddons().isEmpty()) {
                 for (int j = 0; j < addCart.getProductList().get(i).getCartAddons().size(); j++) {
                     priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * (addCart.getProductList().get(i).getCartAddons().get(j).getQuantity() *
@@ -446,7 +446,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
             } else
                 HotelViewActivity.viewCartShopName.setVisibility(View.GONE);
             String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
-            HotelViewActivity.itemText.setText("" + itemQuantity + " " + getResources().getString(R.string.item_count )+ " | " +currency + "" + priceAmount);
+            HotelViewActivity.itemText.setText("" + itemQuantity + " " + getResources().getString(R.string.item_count) + " | " + currency + "" + priceAmount);
             if (HotelViewActivity.viewCartLayout.getVisibility() == View.GONE) {
                 // Start animation
                 HotelViewActivity.viewCartLayout.setVisibility(View.VISIBLE);

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -61,7 +62,7 @@ import static com.pakupaku.user.helper.GlobalData.selectedShop;
 
 public class ProductsAdapter extends SectionedRecyclerViewAdapter<ProductsAdapter.ViewHolder> {
 
-    List<Product> list = new ArrayList<>();
+    List<Product> list;
     private LayoutInflater inflater;
     public static Context context;
     public static Activity activity;
@@ -88,6 +89,7 @@ public class ProductsAdapter extends SectionedRecyclerViewAdapter<ProductsAdapte
         ProductsAdapter.activity = activity;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
@@ -167,8 +169,6 @@ public class ProductsAdapter extends SectionedRecyclerViewAdapter<ProductsAdapte
         holder.cardAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("access_token2", GlobalData.accessToken);
-                /** Press Add Card Add button */
                 product = list.get(section);
                 currentShop = list.get(section).getShop();
                 if (product.getAddons() != null && !product.getAddons().isEmpty()) {
@@ -294,7 +294,8 @@ public class ProductsAdapter extends SectionedRecyclerViewAdapter<ProductsAdapte
                 product = list.get(section);
                 if (profileModel != null) {
                   if (Utils.isShopChanged(product.getShopId())) {
-                        String message = String.format(activity.getResources().getString(R.string.reorder_confirm_message), product.getShop().getName(), GlobalData.addCart.getProductList().get(0).getProduct().getShop().getName());
+                        String message = String.format(activity.getResources().getString(R.string.reorder_confirm_message),
+                                product.getShop().getName(), GlobalData.addCart.getProductList().get(0).getProduct().getShop().getName());
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
                         builder.setTitle(context.getResources().getString(R.string.replace_cart_item))
                                 .setMessage(message)
