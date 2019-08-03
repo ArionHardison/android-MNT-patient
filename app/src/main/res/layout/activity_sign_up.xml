@@ -6,7 +6,7 @@
     android:layout_height="fill_parent"
     android:background="#FFFFFF"
     android:fillViewport="true"
-    tools:context="com.pakupaku.user.activities.SignUpActivity">
+    tools:context="com.dalejoak.user.activities.SignUpActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

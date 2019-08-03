@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.pakupaku.user.activities.RecommendedListActivity">
+    tools:context="com.dalejoak.user.activities.RecommendedListActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        tools:context="com.pakupaku.user.HomeActivity">
+        tools:context="com.dalejoak.user.HomeActivity">
 
         <RelativeLayout
             android:layout_width="match_parent"

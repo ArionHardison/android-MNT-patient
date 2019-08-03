@@ -5,6 +5,7 @@
         <item>"Favorites"</item>
         <item>"Payment"</item>
         <item>"My Orders"</item>
+        <!--<item>"Scheduled Orders"</item>-->
         <!--<item>"Notifications"</item>-->
         <!--<item>"Promotion Details"</item>-->
         <item>"Change Language"</item>
@@ -13,7 +14,7 @@
 
     <string-array name="languages">
         <item>English</item>
-        <item>Japanese</item>
+        <!--<item>Japanese</item>-->
     </string-array>
 
 

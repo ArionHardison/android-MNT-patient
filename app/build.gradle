@@ -22,7 +22,7 @@ android {
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
 
-        applicationId "com.pakupaku.user"
+        applicationId "com.dalejoak.user"
         minSdkVersion 19
         targetSdkVersion 28
         vectorDrawables.useSupportLibrary = true

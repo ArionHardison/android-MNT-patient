@@ -1,51 +1,58 @@
 {
   "project_info": {
-    "project_number": "547746501062",
-    "firebase_url": "https://authentic-ether-240113.firebaseio.com",
-    "project_id": "authentic-ether-240113",
-    "storage_bucket": "authentic-ether-240113.appspot.com"
+    "project_number": "643060563655",
+    "firebase_url": "https://dale3-jo3ak-1564127927770.firebaseio.com",
+    "project_id": "dale3-jo3ak-1564127927770",
+    "storage_bucket": "dale3-jo3ak-1564127927770.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:547746501062:android:98c70ca4162fcaf3",
+        "mobilesdk_app_id": "1:643060563655:android:9cb59b39f3a3a004",
         "android_client_info": {
-          "package_name": "com.pakupaku.deliver"
+          "package_name": "com.dalejoak.deliver"
         }
       },
       "oauth_client": [
         {
-          "client_id": "547746501062-3r9mutl5mvjno7q962bruj4bbdbmmnl3.apps.googleusercontent.com",
+          "client_id": "643060563655-ruk8tlp0k9n7skh74v85r1gqkgh2c520.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.pakupaku.deliver",
-            "certificate_hash": "2c4d991b9ab437d97503bd581e638172ca0fc0a4"
+            "package_name": "com.dalejoak.deliver",
+            "certificate_hash": "7b25599fa9cdd236dfee7d4a9417f56b2f43673c"
           }
         },
         {
-          "client_id": "547746501062-6f85nl7kketfebgkdf9l4t9sr8d61vg7.apps.googleusercontent.com",
+          "client_id": "643060563655-hbe06sjck4unjcaetobc9d53uq29fbtm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.pakupaku.deliver",
-            "certificate_hash": "bfc5cfc24e1ba6730b73875c498453c7ce6c244b"
+            "package_name": "com.dalejoak.deliver",
+            "certificate_hash": "d40279dd1d10c3f80340f3cf84d3e19980090728"
           }
         },
         {
-          "client_id": "547746501062-fgil4cgue32ejq3r4b1l20fgogpve3pl.apps.googleusercontent.com",
+          "client_id": "643060563655-t36iitd6p7fv5bq17k97ii6i81qt30oc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDh_odoejkr5TC94lGJ0OeqcM0C3qKCinc"
+          "current_key": "AIzaSyAodoU-5_eIG5conH9aH2oWaBeclv753aw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "547746501062-fgil4cgue32ejq3r4b1l20fgogpve3pl.apps.googleusercontent.com",
+              "client_id": "643060563655-t36iitd6p7fv5bq17k97ii6i81qt30oc.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "643060563655-mvf8lbthktsk4oe8aoefbbms593jce73.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dale3.deliveryApp"
+              }
             }
           ]
         }
@@ -53,36 +60,51 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:547746501062:android:c066dd339b10c78a",
+        "mobilesdk_app_id": "1:643060563655:android:c2e96cf621054ac8",
         "android_client_info": {
-          "package_name": "com.pakupaku.outlet"
+          "package_name": "com.dalejoak.outlet"
         }
       },
       "oauth_client": [
         {
-          "client_id": "547746501062-r4e3j29h4sg130nml5vuimonjlapcc67.apps.googleusercontent.com",
+          "client_id": "643060563655-d2df3ppssep0lo4knkmbr2293c0qhk32.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.pakupaku.outlet",
-            "certificate_hash": "bfc5cfc24e1ba6730b73875c498453c7ce6c244b"
+            "package_name": "com.dalejoak.outlet",
+            "certificate_hash": "7b25599fa9cdd236dfee7d4a9417f56b2f43673c"
           }
         },
         {
-          "client_id": "547746501062-fgil4cgue32ejq3r4b1l20fgogpve3pl.apps.googleusercontent.com",
+          "client_id": "643060563655-41g38jcfl2ldh87fetp0l48cer4ba8rb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dalejoak.outlet",
+            "certificate_hash": "d40279dd1d10c3f80340f3cf84d3e19980090728"
+          }
+        },
+        {
+          "client_id": "643060563655-t36iitd6p7fv5bq17k97ii6i81qt30oc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDh_odoejkr5TC94lGJ0OeqcM0C3qKCinc"
+          "current_key": "AIzaSyAodoU-5_eIG5conH9aH2oWaBeclv753aw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "547746501062-fgil4cgue32ejq3r4b1l20fgogpve3pl.apps.googleusercontent.com",
+              "client_id": "643060563655-t36iitd6p7fv5bq17k97ii6i81qt30oc.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "643060563655-mvf8lbthktsk4oe8aoefbbms593jce73.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dale3.deliveryApp"
+              }
             }
           ]
         }
@@ -90,52 +112,51 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:547746501062:android:916d92a59849709a",
+        "mobilesdk_app_id": "1:643060563655:android:4772d1810b7c14eb",
         "android_client_info": {
-          "package_name": "com.pakupaku.user"
+          "package_name": "com.dalejoak.user"
         }
       },
       "oauth_client": [
         {
-          "client_id": "547746501062-enqb9gsuadkj5bomndbla9m95d65g258.apps.googleusercontent.com",
+          "client_id": "643060563655-6ujq7hpj6vhqjk96fq03rr5r1e5krknj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.pakupaku.user",
-            "certificate_hash": "ba31de39e551f1add8a9b2861348fd6de36e0e0d"
+            "package_name": "com.dalejoak.user",
+            "certificate_hash": "7b25599fa9cdd236dfee7d4a9417f56b2f43673c"
           }
         },
         {
-          "client_id": "547746501062-6ud82uduva31pfkeiu57ha8dfdrgj0eh.apps.googleusercontent.com",
+          "client_id": "643060563655-0k4a627ofcmiim89ibc0r34do81sa5fu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.pakupaku.user",
-            "certificate_hash": "2c4d991b9ab437d97503bd581e638172ca0fc0a4"
+            "package_name": "com.dalejoak.user",
+            "certificate_hash": "d40279dd1d10c3f80340f3cf84d3e19980090728"
           }
         },
         {
-          "client_id": "547746501062-17grbqsrd659iso4268huk3dc4dafocc.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.pakupaku.user",
-            "certificate_hash": "bfc5cfc24e1ba6730b73875c498453c7ce6c244b"
-          }
-        },
-        {
-          "client_id": "547746501062-fgil4cgue32ejq3r4b1l20fgogpve3pl.apps.googleusercontent.com",
+          "client_id": "643060563655-t36iitd6p7fv5bq17k97ii6i81qt30oc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDh_odoejkr5TC94lGJ0OeqcM0C3qKCinc"
+          "current_key": "AIzaSyAodoU-5_eIG5conH9aH2oWaBeclv753aw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "547746501062-fgil4cgue32ejq3r4b1l20fgogpve3pl.apps.googleusercontent.com",
+              "client_id": "643060563655-t36iitd6p7fv5bq17k97ii6i81qt30oc.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "643060563655-mvf8lbthktsk4oe8aoefbbms593jce73.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dale3.deliveryApp"
+              }
             }
           ]
         }

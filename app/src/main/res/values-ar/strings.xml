@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="facebook_app_id">373720729876682</string>
 
     <string name="login">Login</string>
     <string name="logout">Logout</string>
@@ -236,7 +235,6 @@
     <string name="alert_logout">Are you sure you want to logout?</string>
     <string name="chage_password">Change Password</string>
     <string name="my_account_profile">Manage Address, Favorites, Payment, Orders, Change Password</string>
-
 
 
     <string name="item_total">Item Total</string>

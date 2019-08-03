@@ -29,6 +29,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:button="@null"
+            android:visibility="gone"
             android:drawableRight="@drawable/language_select_unselect"
             android:drawablePadding="30dp"
             android:ellipsize="end"
