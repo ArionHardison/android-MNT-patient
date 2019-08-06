@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dalejoak.user">
+    package="com.dalejoak.app">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -16,7 +16,7 @@
 
 
     <application
-        android:name="com.dalejoak.user.MyApplication"
+        android:name="com.dalejoak.app.MyApplication"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
@@ -28,7 +28,7 @@
         android:theme="@style/AppTheme">
 
         <receiver
-            android:name="com.dalejoak.user.SmsRetrive.MySMSBroadcastReceiver"
+            android:name="com.dalejoak.app.SmsRetrive.MySMSBroadcastReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
@@ -77,11 +77,11 @@
             android:value="true" />
 
         <activity
-            android:name="com.dalejoak.user.activities.WelcomeScreenActivity"
+            android:name="com.dalejoak.app.activities.WelcomeScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.SplashActivity"
+            android:name="com.dalejoak.app.activities.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -91,12 +91,12 @@
             </intent-filter>
         </activity>
         <!-- Firebase Notifications -->
-        <service android:name="com.dalejoak.user.fcm.MyFirebaseMessagingService">
+        <service android:name="com.dalejoak.app.fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name="com.dalejoak.user.fcm.MyFirebaseInstanceIDService">
+        <service android:name="com.dalejoak.app.fcm.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
@@ -115,7 +115,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.dalejoak.user.HomeActivity"
+            android:name="com.dalejoak.app.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing" />
@@ -125,107 +125,107 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.dalejoak.user.activities.LoginActivity"
+            android:name="com.dalejoak.app.activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.AddCardActivity"
+            android:name="com.dalejoak.app.activities.AddCardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.OtpActivity"
+            android:name="com.dalejoak.app.activities.OtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.MobileNumberActivity"
+            android:name="com.dalejoak.app.activities.MobileNumberActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.SignUpActivity"
+            android:name="com.dalejoak.app.activities.SignUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.ForgotPasswordActivity"
+            android:name="com.dalejoak.app.activities.ForgotPasswordActivity"
             android:label="@string/forgot_password"
-            android:parentActivityName="com.dalejoak.user.activities.LoginActivity"
+            android:parentActivityName="com.dalejoak.app.activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.HotelViewActivity"
+            android:name="com.dalejoak.app.activities.HotelViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.ChangePasswordActivity"
+            android:name="com.dalejoak.app.activities.ChangePasswordActivity"
             android:label="Change Password"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.FavouritesActivity"
+            android:name="com.dalejoak.app.activities.FavouritesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.RecommendedListActivity"
+            android:name="com.dalejoak.app.activities.RecommendedListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.EditAccountActivity"
+            android:name="com.dalejoak.app.activities.EditAccountActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.SetDeliveryLocationActivity"
+            android:name="com.dalejoak.app.activities.SetDeliveryLocationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.SaveDeliveryLocationActivity"
+            android:name="com.dalejoak.app.activities.SaveDeliveryLocationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.ManageAddressActivity"
+            android:name="com.dalejoak.app.activities.ManageAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.AccountPaymentActivity"
+            android:name="com.dalejoak.app.activities.AccountPaymentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.OrdersActivity"
+            android:name="com.dalejoak.app.activities.OrdersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.FilterActivity"
+            android:name="com.dalejoak.app.activities.FilterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.ViewCartActivity"
+            android:name="com.dalejoak.app.activities.ViewCartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.PastOrderDetailActivity"
+            android:name="com.dalejoak.app.activities.PastOrderDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.OtherHelpActivity"
+            android:name="com.dalejoak.app.activities.OtherHelpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.dalejoak.user.activities.NotificationActivity"
+            android:name="com.dalejoak.app.activities.NotificationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.PromotionActivity"
+            android:name="com.dalejoak.app.activities.PromotionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.CurrentOrderDetailActivity"
+            android:name="com.dalejoak.app.activities.CurrentOrderDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dalejoak.user.activities.AddMoneyActivity"
+            android:name="com.dalejoak.app.activities.AddMoneyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name="com.dalejoak.user.activities.WalletActivity"
+            android:name="com.dalejoak.app.activities.WalletActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
@@ -234,10 +234,10 @@
             android:value="3aef7a5b05836cf8166f23c95e43c52517bee917" />
 
         <activity
-            android:name="com.dalejoak.user.activities.ResetPasswordActivity"
+            android:name="com.dalejoak.app.activities.ResetPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.dalejoak.user.activities.SecretKeyActivity"
+            android:name="com.dalejoak.app.activities.SecretKeyActivity"
             android:screenOrientation="portrait" />
 
         <!--<provider-->
@@ -251,8 +251,8 @@
         <!--</provider>-->
 
         <activity
-            android:name="com.dalejoak.user.activities.ProductDetailActivity"
-            android:parentActivityName="com.dalejoak.user.activities.HotelViewActivity"
+            android:name="com.dalejoak.app.activities.ProductDetailActivity"
+            android:parentActivityName="com.dalejoak.app.activities.HotelViewActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
     </application>

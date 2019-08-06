@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:scrollbars="none"
-        tools:context="com.dalejoak.user.activities.ProfileActivity">
+        tools:context="com.dalejoak.app.activities.ProfileActivity">
 
         <LinearLayout
 
@@ -30,8 +30,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:paddingTop="@dimen/activity_vertical_margin">
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -45,8 +45,8 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:maxLines="1"
-                            android:paddingEnd="8dp"
                             android:paddingStart="8dp"
+                            android:paddingEnd="8dp"
                             android:text="@string/my_account"
                             android:textColor="@color/colorTextBlack"
                             android:textSize="@dimen/text_medium" />
@@ -55,8 +55,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:maxLines="1"
-                            android:paddingEnd="4dp"
                             android:paddingStart="8dp"
+                            android:paddingEnd="4dp"
                             android:text="@string/my_account_profile"
                             android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/text_small" />
@@ -69,8 +69,8 @@
                         android:id="@+id/arrow_image"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:layout_marginEnd="5dp"
                         android:layout_marginTop="3dp"
+                        android:layout_marginEnd="5dp"
                         android:padding="3dp"
                         android:src="@drawable/ic_navigate_up_arrow" />
 
@@ -107,24 +107,24 @@
                 android:id="@+id/list_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
                 android:orientation="vertical">
 
                 <ListView
-                    android:id="@+id/profile_setting_lv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="@null"
-                    android:scrollbars="none" />
+                android:id="@+id/profile_setting_lv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null"
+                android:scrollbars="none" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_below="@id/profile_setting_lv"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="10dp"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:background="#eee" />
             </RelativeLayout>
 
@@ -141,8 +141,10 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
-                android:drawableEnd="@drawable/logout"
-                android:drawablePadding="8dp"
+                android:tint="@color/colorAccent"
+                android:drawableStart="@drawable/ic_input_light"
+
+                android:drawablePadding="16dp"
                 android:gravity="start|center"
                 android:padding="@dimen/activity_vertical_margin"
                 android:text="@string/logout"
@@ -235,9 +237,6 @@
                 android:text="@string/login"
                 android:textColor="@color/colorTextWhite" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/botttom_bar_size" />
         </LinearLayout>
 
     </RelativeLayout>

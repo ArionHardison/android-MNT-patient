@@ -90,9 +90,9 @@
                 android:layout_marginStart="@dimen/_4sdp"
                 android:gravity="bottom"
                 android:maxLines="1"
-                android:paddingBottom="@dimen/_2sdp"
-                android:paddingEnd="@dimen/_5sdp"
                 android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_2sdp"
                 android:text="Dispute Created"
                 android:textAllCaps="true"
                 android:textSize="@dimen/text_small" />
@@ -107,8 +107,8 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:maxLines="2"
-            android:paddingEnd="@dimen/_5sdp"
             android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
             android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/text_small" />
 
@@ -127,8 +127,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
             android:background="@drawable/button"
-            android:minHeight="0dp"
             android:minWidth="0dp"
+            android:minHeight="0dp"
             android:padding="4dp"
             android:text="@string/reorder"
             android:textColor="@color/colorAccent"

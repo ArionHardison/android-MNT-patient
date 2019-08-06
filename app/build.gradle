@@ -22,8 +22,8 @@ android {
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
 
-        applicationId "com.dalejoak.user"
-        minSdkVersion 19
+        applicationId "com.dalejoak.app"
+        minSdkVersion 21
         targetSdkVersion 28
         vectorDrawables.useSupportLibrary = true
         versionCode 2

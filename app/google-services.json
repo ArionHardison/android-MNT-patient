@@ -8,28 +8,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:643060563655:android:9cb59b39f3a3a004",
+        "mobilesdk_app_id": "1:643060563655:android:5c9c85df15c53a79",
         "android_client_info": {
-          "package_name": "com.dalejoak.deliver"
+          "package_name": "com.dalejoak.app"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "643060563655-ruk8tlp0k9n7skh74v85r1gqkgh2c520.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.dalejoak.deliver",
-            "certificate_hash": "7b25599fa9cdd236dfee7d4a9417f56b2f43673c"
-          }
-        },
-        {
-          "client_id": "643060563655-hbe06sjck4unjcaetobc9d53uq29fbtm.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.dalejoak.deliver",
-            "certificate_hash": "d40279dd1d10c3f80340f3cf84d3e19980090728"
-          }
-        },
         {
           "client_id": "643060563655-t36iitd6p7fv5bq17k97ii6i81qt30oc.apps.googleusercontent.com",
           "client_type": 3
@@ -60,28 +44,12 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:643060563655:android:c2e96cf621054ac8",
+        "mobilesdk_app_id": "1:643060563655:android:94d0a081b122d3cb",
         "android_client_info": {
-          "package_name": "com.dalejoak.outlet"
+          "package_name": "com.dalejoak.deliveryboy"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "643060563655-d2df3ppssep0lo4knkmbr2293c0qhk32.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.dalejoak.outlet",
-            "certificate_hash": "7b25599fa9cdd236dfee7d4a9417f56b2f43673c"
-          }
-        },
-        {
-          "client_id": "643060563655-41g38jcfl2ldh87fetp0l48cer4ba8rb.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.dalejoak.outlet",
-            "certificate_hash": "d40279dd1d10c3f80340f3cf84d3e19980090728"
-          }
-        },
         {
           "client_id": "643060563655-t36iitd6p7fv5bq17k97ii6i81qt30oc.apps.googleusercontent.com",
           "client_type": 3
@@ -112,28 +80,12 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:643060563655:android:4772d1810b7c14eb",
+        "mobilesdk_app_id": "1:643060563655:android:040296c1fe83ec1b",
         "android_client_info": {
-          "package_name": "com.dalejoak.user"
+          "package_name": "com.dalejoak.restaurant"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "643060563655-6ujq7hpj6vhqjk96fq03rr5r1e5krknj.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.dalejoak.user",
-            "certificate_hash": "7b25599fa9cdd236dfee7d4a9417f56b2f43673c"
-          }
-        },
-        {
-          "client_id": "643060563655-0k4a627ofcmiim89ibc0r34do81sa5fu.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.dalejoak.user",
-            "certificate_hash": "d40279dd1d10c3f80340f3cf84d3e19980090728"
-          }
-        },
         {
           "client_id": "643060563655-t36iitd6p7fv5bq17k97ii6i81qt30oc.apps.googleusercontent.com",
           "client_type": 3

@@ -6,7 +6,7 @@
     android:layout_height="fill_parent"
     android:background="#FFFFFF"
     android:fillViewport="true"
-    tools:context="com.dalejoak.user.activities.SignUpActivity">
+    tools:context="com.dalejoak.app.activities.SignUpActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -201,6 +201,7 @@
                 android:id="@+id/sign_up"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/linearLayout"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:background="@color/theme"
                 android:text="@string/register"

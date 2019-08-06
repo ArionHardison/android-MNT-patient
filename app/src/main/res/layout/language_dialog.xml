@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:button="@null"
-            android:drawableRight="@drawable/language_select_unselect"
+            android:drawableEnd="@drawable/language_select_unselect"
             android:drawablePadding="30dp"
             android:ellipsize="end"
             android:padding="12dp"
@@ -25,17 +25,16 @@
             android:textSize="@dimen/text_medium" />
 
         <RadioButton
-            android:id="@+id/japnese"
+            android:id="@+id/arabic"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:button="@null"
-            android:visibility="gone"
             android:drawableRight="@drawable/language_select_unselect"
             android:drawablePadding="30dp"
             android:ellipsize="end"
             android:padding="12dp"
             android:singleLine="true"
-            android:text="@string/lang_japnese"
+            android:text="@string/lang_arabic"
             android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/text_medium" />
     </RadioGroup>

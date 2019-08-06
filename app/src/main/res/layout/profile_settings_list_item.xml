@@ -2,32 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingBottom="@dimen/_14sdp"
     android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/_14sdp"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/_14sdp">
+    android:paddingBottom="@dimen/_14sdp">
 
     <ImageView
-        android:tint="@color/colorTextBlack"
         android:id="@+id/setting_icon"
         android:layout_width="@dimen/_16sdp"
         android:layout_height="@dimen/_16sdp"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:contentDescription="@string/image_view"
+        android:tint="@color/colorAccent" />
 
     <TextView
-        fontPath="fonts/Nunito-Bold.ttf"
-        android:textAllCaps="true"
         android:id="@+id/setting_label"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_weight="1"
         android:drawableEnd="@drawable/ic_right_arrow"
+        fontPath="fonts/Nunito-Bold.ttf"
         android:gravity="start|center_vertical"
         android:maxLines="1"
         android:text="Profile"
+        android:textAllCaps="true"
         android:textColor="@color/colorTextBlack"
         android:textSize="@dimen/text_tiny" />
 

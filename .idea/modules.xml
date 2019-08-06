@@ -4,8 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/dale3jo3ak_android_user_new.iml" filepath="$PROJECT_DIR$/dale3jo3ak_android_user_new.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pakupaku_android_user.iml" filepath="$PROJECT_DIR$/pakupaku_android_user.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pakupaku_android_user_base.iml" filepath="$PROJECT_DIR$/pakupaku_android_user_base.iml" />
     </modules>
   </component>
 </project>

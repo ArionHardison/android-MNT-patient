@@ -252,8 +252,7 @@
 
 
     <string name="lang_english">English</string>
-    <!--<item>Arabic</item>-->
-    <string name="lang_japnese">Japanese</string>
+    <string name="lang_arabic">Arabic</string>
     <string name="alert_logout">Are you sure you want to logout?</string>
     <string name="chage_password">Change Password</string>
     <string name="my_account_profile">Manage Address, Favorites, Payment, Orders, Change Password</string>
@@ -317,5 +316,8 @@
     <string name="the_shop_is_closed">The Shop is closed</string>
     <string name="enter_your_reason">Enter your reason ?</string>
     <string name="favorites">Favorites</string>
+    <string name="image_view">Image View</string>
+    <string name="bottom_nav_cart">Cart</string>
+    <string name="nav_bottom_profile">Profile</string>
 
 </resources>
