@@ -212,8 +212,8 @@ public class ProfileFragment extends Fragment {
             List<Integer> listIcons = new ArrayList<>();
             listIcons.add(R.drawable.ic_local_post);
             listIcons.add(R.drawable.ic_favorite_light);
-            listIcons.add(R.drawable.ic_payment_light);
-            listIcons.add(R.drawable.ic_payment_light);
+          //  listIcons.add(R.drawable.ic_payment_light);
+            listIcons.add(R.drawable.ic_orders_light);
             listIcons.add(R.drawable.ic_g_translate_light);
 
             if (!loginBy.equalsIgnoreCase("facebook") &&

@@ -179,9 +179,9 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
         holder.dishNameTxt.setText(product.getName());
         holder.cardTextValue.setText(list.get(position).getQuantity().toString());
         holder.cardTextValueTicker.setText(list.get(position).getQuantity().toString());
-        //   priceAmount = product.getCalculated_price();//list.get(position).getQuantity() * product.getPrices().getOrignalPrice();
+      //  priceAmount = product.getCalculated_price();
 
-        holder.priceTxt.setText(product.getPrices().getCurrency() + " " + list.get(position).getCalculated_price());
+        holder.priceTxt.setText(product.getPrices().getCurrency() + " " +  list.get(position).getQuantity() * product.getPrices().getOrignalPrice());
         if (!product.getFoodType().equalsIgnoreCase("veg")) {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_nonveg));
         } else {

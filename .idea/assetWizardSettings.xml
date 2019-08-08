@@ -158,7 +158,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_input_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_payment_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -169,7 +169,7 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="8f8f8f" />
-                            <entry key="outputName" value="ic_input_light" />
+                            <entry key="outputName" value="ic_payment_light" />
                             <entry key="sourceFile" value="C:\Users\CSS" />
                           </map>
                         </option>

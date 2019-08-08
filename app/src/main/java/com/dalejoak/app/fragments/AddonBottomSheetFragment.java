@@ -136,7 +136,7 @@ public class AddonBottomSheetFragment extends BottomSheetDialogFragment {
                 spannable.setSpan(new StrikethroughSpan(), 1, String.valueOf(product.getPrices().getPrice()).length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 tvOriginPrice.setText(spannable);
             }
-            productPrice.setText(String.format("%s %d", product.getPrices().getCurrency(), product.getPrices().getOrignalPrice()));
+            productPrice.setText(String.format("%s %.2f", product.getPrices().getCurrency(), product.getPrices().getOrignalPrice()));
         }
 
         update.setOnClickListener(new View.OnClickListener() {

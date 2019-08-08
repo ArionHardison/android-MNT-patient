@@ -148,7 +148,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     spannable.setSpan(new StrikethroughSpan(), 1, String.valueOf(product.getPrices().getPrice()).length() + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     realPrice.setText(spannable);
                 }
-                showPrice.setText(String.format("%s %d", product.getPrices().getCurrency(), product.getPrices().getOrignalPrice()));
+                showPrice.setText(String.format("%s %.2f", product.getPrices().getCurrency(), product.getPrices().getOrignalPrice()));
             }
 
 

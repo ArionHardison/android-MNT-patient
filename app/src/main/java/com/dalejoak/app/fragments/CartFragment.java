@@ -311,7 +311,7 @@ public class CartFragment extends Fragment {
             @Override
             public void onResponse(Call<AddCart> call, Response<AddCart> response) {
                 skeleton.hide();
-                if (response != null && !response.isSuccessful() && response.errorBody() != null) {
+                if (!response.isSuccessful() && response.errorBody() != null) {
                     errorLayout.setVisibility(View.VISIBLE);
                     dataLayout.setVisibility(View.GONE);
                     try {
@@ -422,17 +422,18 @@ public class CartFragment extends Fragment {
                 Utils.displayMessage(activity, context, getString(R.string.oops_connect_your_internet));
             }
 
-            if (GlobalData.profileModel.getWalletBalance() != null) {
-                float fd = Float.parseFloat(GlobalData.profileModel.getWalletBalance());
+            //TODO IF PROJECT HAVE PAYMENT GATEWAY ENABLE BELOW CODE OTHERWISE HIDDEN WALLET LAYOUT
+            walletLayout.setVisibility(View.INVISIBLE);
 
-                if (fd > 0) {
-//                amountTxt.setText(numberFormat.format(money));
-                    amountTxt.setText(GlobalData.currencySymbol + " " + money);
-                    walletLayout.setVisibility(View.VISIBLE);
-                } else {
-                    walletLayout.setVisibility(View.INVISIBLE);
-                }
-            }
+//            if (GlobalData.profileModel.getWalletBalance() != null) {
+//                float fd = Float.parseFloat(GlobalData.profileModel.getWalletBalance());
+//                if (fd > 0) {
+//                    amountTxt.setText(GlobalData.currencySymbol + " " + money);
+//                    walletLayout.setVisibility(View.VISIBLE);
+//                } else {
+//                    walletLayout.setVisibility(View.INVISIBLE);
+//                }
+//            }
 
         } else {
             dataLayout.setVisibility(View.GONE);
@@ -540,7 +541,8 @@ public class CartFragment extends Fragment {
                         checkoutMap.put("wallet", "1");
                     else
                         checkoutMap.put("wallet", "0");
-                    startActivity(new Intent(context, AccountPaymentActivity.class).putExtra("is_show_wallet", false).putExtra("is_show_cash", true));
+                    startActivity(new Intent(context, AccountPaymentActivity.class)
+                            .putExtra("is_show_wallet", false).putExtra("is_show_cash", true));
                     activity.overridePendingTransition(R.anim.anim_nothing, R.anim.slide_out_right);
                 } else {
                     Utils.displayMessage(activity, context, getString(R.string.oops_connect_your_internet));

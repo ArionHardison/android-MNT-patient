@@ -3,7 +3,7 @@
     <string-array name="profile_settings" tools:ignore="InconsistentArrays">
         <item>"Manage Address"</item>
         <item>"Favorites"</item>
-        <item>"Payment"</item>
+        <!--<item>"Payment"</item>-->
         <item>"My Orders"</item>
         <!--<item>"Scheduled Orders"</item>-->
         <!--<item>"Notifications"</item>-->

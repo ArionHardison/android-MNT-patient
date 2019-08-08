@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @BindView(R.id.eye_img)
     ImageView eyeImg;
     private CountryPicker mCountryPicker;
-    String country_code = "+91";
+    String country_code = "+961";
     Activity activity;
     private static final int ASK_MULTIPLE_PERMISSION_REQUEST_CODE = 0;
 
@@ -335,18 +335,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void getUserCountryInfo() {
-        Locale current = getResources().getConfiguration().locale;
-       //  Country country = Country.getCountryFromSIM(LoginActivity.this);
-        Country country = Country.getCountrydetails("JP");
+        Country country = Country.getCountrydetails("LB");
         if (country != null) {
             countryImage.setImageResource(country.getFlag());
             countryNumber.setText(country.getDialCode());
             country_code = country.getDialCode();
         } else {
-            Country india = new Country("IN", "India", "+91", R.drawable.flag_in);
-            countryImage.setImageResource(india.getFlag());
-            countryNumber.setText(india.getDialCode());
-            country_code = india.getDialCode();
+            countryImage.setImageResource(R.drawable.flag_lb);
+            countryNumber.setText("LB");
+            country_code = "+961";
         }
     }
 

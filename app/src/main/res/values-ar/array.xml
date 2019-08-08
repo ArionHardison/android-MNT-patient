@@ -3,7 +3,7 @@
     <string-array name="profile_settings" tools:ignore="InconsistentArrays">
         <item>"إدارة العنوان"</item>
         <item>"المفضلة"</item>
-        <item>"دفع"</item>
+        <!--<item>"دفع"</item>-->
         <item>"طلباتي"</item>
         <!--<item>"Notifications"</item>-->
         <!--<item>"Promotion Details"</item>-->

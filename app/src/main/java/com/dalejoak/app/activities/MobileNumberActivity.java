@@ -97,7 +97,7 @@ public class MobileNumberActivity extends AppCompatActivity implements GoogleApi
     @BindView(R.id.already_have_aacount_txt)
     TextView alreadyHaveAacountTxt;
     private CountryPicker mCountryPicker;
-    String country_code = "+91";
+    String country_code = "+961";
     Context context;
     boolean isSignUp = true;
     CustomDialog customDialog;
@@ -414,19 +414,15 @@ public class MobileNumberActivity extends AppCompatActivity implements GoogleApi
     }
 
     private void getUserCountryInfo() {
-        Locale current = getResources().getConfiguration().locale;
-        //Country country = Country.getCountryFromSIM(MobileNumberActivity.this);
-        Country country = Country.getCountrydetails("JP");
+        Country country = Country.getCountrydetails("LB");
         if (country != null) {
             mCountryFlagImageView.setImageResource(country.getFlag());
             mCountryDialCodeTextView.setText(country.getDialCode());
             country_code = country.getDialCode();
         } else {
-            Country india = new Country("IN", "India", "+91", R.drawable.flag_in);
-            mCountryFlagImageView.setImageResource(india.getFlag());
-            mCountryDialCodeTextView.setText(india.getDialCode());
-            country_code = india.getDialCode();
-            //Toast.makeText(MobileNumberActivity.this, "Required Sim", Toast.LENGTH_SHORT).show();
+            mCountryFlagImageView.setImageResource(R.drawable.flag_lb);
+            mCountryDialCodeTextView.setText("LB");
+            country_code = "+961";
         }
     }
 

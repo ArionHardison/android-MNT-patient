@@ -319,5 +319,6 @@
     <string name="image_view">Image View</string>
     <string name="bottom_nav_cart">Cart</string>
     <string name="nav_bottom_profile">Profile</string>
+    <string name="proceed">Proceed</string>
 
 </resources>
