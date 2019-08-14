@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:scrollbars="none"
-        tools:context="com.dalejoak.app.activities.ProfileActivity">
+        tools:context="com.tringtwentyfour.app.activities.ProfileActivity">
 
         <LinearLayout
 

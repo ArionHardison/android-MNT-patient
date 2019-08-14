@@ -29,12 +29,26 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="color" value="000000" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                     </map>
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="theme" value="HOLO_DARK" />
-                                      <entry key="themeColor" value="ffffff" />
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="D:\WorkSpace\pakupaku_android_user_base\app\src\main\res\drawable\ic_home.png" />
+                                      <entry key="outputName" value="home_" />
+                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="themeColor" value="d3d3d3" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -51,6 +65,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
+                                                <entry key="scalingPercent" value="112" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -62,7 +77,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="foregroundImage" value="C:\Users\CSS\Downloads\paku\Assets - User\Android\app_icon_1024.png" />
+                                      <entry key="foregroundImage" value="C:\Users\CSS\Downloads\tring24_Asset\ASSETS-U\Android\app_icon_512.png" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -132,7 +147,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputIconType" value="NOTIFICATION" />
+                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>

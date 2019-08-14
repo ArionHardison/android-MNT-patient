@@ -1,10 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name" translatable="false">"Dale3 Jo3ak"</string>
+    <string name="app_name" translatable="false">"Tring24"</string>
 
-    <string name="facebook_app_id" translatable="false">353717792186807</string>
-    <string name="ACCOUNT_KIT_CLIENT_TOKEN" translatable="false">4548f9301770cfcf33675af8e1cd463f</string>
-    <string name="fb_login_protocol_scheme" translatable="false">fb2238479639802568</string>
-    <string name="google_client_id" translatable="false">643060563655-t36iitd6p7fv5bq17k97ii6i81qt30oc.apps.googleusercontent.com</string>
+    <string name="facebook_app_id" translatable="false">713627212407692</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb713627212407692</string>
+    <string name="google_client_id" translatable="false">230760189296-p819dho31de7nmim7ef95nrbf73vjb2c.apps.googleusercontent.com</string>
 
 
     <string name="login">Login</string>
@@ -63,7 +62,6 @@
     <string name="fresh">F r e s h</string>
     <string name="fresh_description">Discover new dishes everyday and hold your favourite restaurant</string>
     <string name="signin">Sign in</string>
-    <string name="sign_in">Sign in</string>
     <string name="signup">Sign up</string>
     <string name="search">S e a r c h</string>
     <string name="search_description">View menus, photos and reviews for restaurants around you</string>
@@ -313,12 +311,13 @@
     <string name="check_your_internet">Check your Internet</string>
     <string name="settings">Setting</string>
     <string name="password_updates">Password Updated</string>
+    <string name="enter_your_reason">Enter Your Reason</string>
     <string name="the_shop_is_closed">The Shop is closed</string>
-    <string name="enter_your_reason">Enter your reason ?</string>
     <string name="favorites">Favorites</string>
     <string name="image_view">Image View</string>
     <string name="bottom_nav_cart">Cart</string>
     <string name="nav_bottom_profile">Profile</string>
     <string name="proceed">Proceed</string>
+    <string name="sign_in">Sign In</string>
 
 </resources>

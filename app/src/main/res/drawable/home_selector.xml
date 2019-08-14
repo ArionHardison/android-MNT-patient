@@ -1,8 +1,9 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_checked="true">
-    <bitmap android:src="@drawable/ic_home"
-        android:tint="@color/theme" />
+        <bitmap android:src="@drawable/home_"
+            android:tint="@color/theme" />
     </item>
-    <item android:drawable="@drawable/ic_home" android:state_checked="false" />
+    <item android:drawable="@drawable/home_"
+        android:state_checked="false" />
 
 </selector>

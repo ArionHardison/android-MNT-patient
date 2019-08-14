@@ -1,114 +1,43 @@
 {
   "project_info": {
-    "project_number": "643060563655",
-    "firebase_url": "https://dale3-jo3ak-1564127927770.firebaseio.com",
-    "project_id": "dale3-jo3ak-1564127927770",
-    "storage_bucket": "dale3-jo3ak-1564127927770.appspot.com"
+    "project_number": "230760189296",
+    "firebase_url": "https://tring24.firebaseio.com",
+    "project_id": "tring24",
+    "storage_bucket": "tring24.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:643060563655:android:5c9c85df15c53a79",
+        "mobilesdk_app_id": "1:230760189296:android:08e4047f309e6fc5",
         "android_client_info": {
-          "package_name": "com.dalejoak.app"
+          "package_name": "com.tringtwentyfour.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "643060563655-t36iitd6p7fv5bq17k97ii6i81qt30oc.apps.googleusercontent.com",
+          "client_id": "230760189296-7qtrrdnbcq1sq9q0epkhihvuloe43k9q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tringtwentyfour.app",
+            "certificate_hash": "7b25599fa9cdd236dfee7d4a9417f56b2f43673c"
+          }
+        },
+        {
+          "client_id": "230760189296-p819dho31de7nmim7ef95nrbf73vjb2c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAodoU-5_eIG5conH9aH2oWaBeclv753aw"
+          "current_key": "AIzaSyAGynsx2bOLZ5vskHpFkD98RDJWFve2Tt4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "643060563655-t36iitd6p7fv5bq17k97ii6i81qt30oc.apps.googleusercontent.com",
+              "client_id": "230760189296-p819dho31de7nmim7ef95nrbf73vjb2c.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "643060563655-mvf8lbthktsk4oe8aoefbbms593jce73.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.dale3.deliveryApp"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:643060563655:android:94d0a081b122d3cb",
-        "android_client_info": {
-          "package_name": "com.dalejoak.deliveryboy"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "643060563655-t36iitd6p7fv5bq17k97ii6i81qt30oc.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAodoU-5_eIG5conH9aH2oWaBeclv753aw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "643060563655-t36iitd6p7fv5bq17k97ii6i81qt30oc.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "643060563655-mvf8lbthktsk4oe8aoefbbms593jce73.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.dale3.deliveryApp"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:643060563655:android:040296c1fe83ec1b",
-        "android_client_info": {
-          "package_name": "com.dalejoak.restaurant"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "643060563655-t36iitd6p7fv5bq17k97ii6i81qt30oc.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAodoU-5_eIG5conH9aH2oWaBeclv753aw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "643060563655-t36iitd6p7fv5bq17k97ii6i81qt30oc.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "643060563655-mvf8lbthktsk4oe8aoefbbms593jce73.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.dale3.deliveryApp"
-              }
             }
           ]
         }
