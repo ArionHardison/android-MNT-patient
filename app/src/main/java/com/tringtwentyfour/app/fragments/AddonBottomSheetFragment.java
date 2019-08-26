@@ -27,6 +27,7 @@ import com.tringtwentyfour.app.helper.GlobalData;
 import com.tringtwentyfour.app.models.Addon;
 import com.tringtwentyfour.app.models.Cart;
 import com.tringtwentyfour.app.models.Product;
+import com.tringtwentyfour.app.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -184,9 +185,9 @@ public class AddonBottomSheetFragment extends BottomSheetDialogFragment {
                 }
             }
             if (quantity == 1)
-                AddonBottomSheetFragment.price.setText(quantity + " " + R.string.item_count + " | " + GlobalData.currencySymbol + priceAmount);
+                AddonBottomSheetFragment.price.setText(quantity + " " + R.string.item_count + " | " + GlobalData.currencySymbol + Utils.getNewNumberFormat(priceAmount));
             else
-                AddonBottomSheetFragment.price.setText(quantity + " " + R.string.items_counts + " | " + GlobalData.currencySymbol + priceAmount);
+                AddonBottomSheetFragment.price.setText(quantity + " " + R.string.items_counts + " | " + GlobalData.currencySymbol + Utils.getNewNumberFormat(priceAmount));
 
         }
     }

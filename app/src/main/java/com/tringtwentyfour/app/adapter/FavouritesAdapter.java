@@ -2,6 +2,8 @@ package com.tringtwentyfour.app.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.bumptech.glide.Glide;
@@ -37,19 +40,16 @@ public class FavouritesAdapter extends SectionedRecyclerViewAdapter<FavouritesAd
         this.list = list;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v;
-        switch (viewType) {
-            case VIEW_TYPE_HEADER:
-                v = inflater.inflate(R.layout.header, parent, false);
-                return new ViewHolder(v, true);
-            case VIEW_TYPE_ITEM:
-                v = inflater.inflate(R.layout.favorite_list_item, parent, false);
-                return new ViewHolder(v, false);
-            default:
-                v = inflater.inflate(R.layout.favorite_list_item, parent, false);
-                return new ViewHolder(v, false);
+        if (viewType == VIEW_TYPE_HEADER) {
+            v = inflater.inflate(R.layout.header, parent, false);
+            return new ViewHolder(v, true);
+        } else {
+            v = inflater.inflate(R.layout.favorite_list_item, parent, false);
+            return new ViewHolder(v, false);
         }
     }
 
@@ -58,7 +58,6 @@ public class FavouritesAdapter extends SectionedRecyclerViewAdapter<FavouritesAd
         return list.size();
     }
 
-
     @Override
     public int getItemCount(int section) {
         return list.get(section).getFav().size();
@@ -66,17 +65,15 @@ public class FavouritesAdapter extends SectionedRecyclerViewAdapter<FavouritesAd
 
     @Override
     public void onBindHeaderViewHolder(FavouritesAdapter.ViewHolder holder, final int section) {
+//        if (list.get(section).getHeader().equals("available"))
+//            holder.header.setBackgroundColor(ContextCompat.getColor(context, R.color.colorGreen));
+//        else
+//            holder.header.setBackgroundColor(ContextCompat.getColor(context, R.color.colorRed));
         holder.header.setText(list.get(section).getHeader());
-        holder.header.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println(list.get(section).getHeader());
-            }
-        });
     }
 
     @Override
-    public void onBindViewHolder(FavouritesAdapter.ViewHolder holder, int section, int relativePosition, int absolutePosition) {
+    public void onBindViewHolder(FavouritesAdapter.ViewHolder holder, final int section, int relativePosition, int absolutePosition) {
         final Available object = list.get(section).getFav().get(relativePosition);
         holder.shopName.setText(object.getShop().getName());
         holder.shopAddress.setText(object.getShop().getAddress());
@@ -86,8 +83,12 @@ public class FavouritesAdapter extends SectionedRecyclerViewAdapter<FavouritesAd
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GlobalData.selectedShop = object.getShop();
-                context.startActivity(new Intent(context, HotelViewActivity.class).putExtra("is_fav", true));
+                if (list.get(section).getHeader().equals("available")) {
+                    GlobalData.selectedShop = object.getShop();
+                    context.startActivity(new Intent(context, HotelViewActivity.class).putExtra("is_fav", true));
+                } else {
+                    Toast.makeText(context, context.getString(R.string.un_available), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

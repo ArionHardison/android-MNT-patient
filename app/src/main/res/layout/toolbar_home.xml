@@ -42,11 +42,11 @@
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_down"
                 android:drawablePadding="8dp"
+                android:ellipsize="end"
                 android:maxLines="1"
+                android:singleLine="true"
                 android:text="Home"
                 android:textAllCaps="true"
-                android:ellipsize="end"
-                android:singleLine="true"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/text_small" />
 
@@ -54,9 +54,9 @@
                 android:id="@+id/address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:ellipsize="end"
                 android:paddingStart="0dp"
                 android:paddingEnd="@dimen/_8sdp"
                 android:textColor="@color/colorSecondaryText"
@@ -66,25 +66,24 @@
 
         <ImageView
             android:id="@+id/filter_selection_image"
-            android:layout_width="@dimen/_6sdp"
-            android:layout_height="@dimen/_6sdp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:src="@drawable/circle"
             android:visibility="gone" />
 
         <Button
-            android:paddingEnd="@dimen/activity_vertical_margin_half"
             android:id="@+id/filter"
-            fontPath="fonts/Nunito-Bold.ttf"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
             android:background="?attr/selectableItemBackground"
             android:drawableEnd="@drawable/ic_filter"
-            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:paddingEnd="@dimen/activity_vertical_margin_half"
             android:text="@string/filter"
             android:textAllCaps="true"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/text_tiny" />
+            android:textColor="@color/colorTextBlack"
+            android:textSize="13sp" />
 
     </LinearLayout>
 

@@ -174,8 +174,6 @@ public class CartFragment extends Fragment {
         ButterKnife.bind(this, view);
         connectionHelper = new ConnectionHelper(context);
 
-
-
         /*  Intialize Global Values*/
         itemTotalAmount = view.findViewById(R.id.item_total_amount);
         deliveryCharges = view.findViewById(R.id.delivery_charges);
@@ -197,10 +195,11 @@ public class CartFragment extends Fragment {
                 .show();
         viewCartItemList = new ArrayList<>();
         //Offer Restaurant Adapter
+        orderItemRv.setNestedScrollingEnabled(false);
         orderItemRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         orderItemRv.setItemAnimator(new DefaultItemAnimator());
         orderItemRv.setHasFixedSize(false);
-        orderItemRv.setNestedScrollingEnabled(false);
+
 
         //Intialize address Value
         if (GlobalData.selectedAddress != null && GlobalData.selectedAddress.getLandmark() != null) {

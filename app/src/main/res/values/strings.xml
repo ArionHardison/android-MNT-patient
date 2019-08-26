@@ -10,8 +10,8 @@
     <string name="logout">Logout</string>
     <string name="name">Name</string>
     <string name="username">Username</string>
-    <string name="mobile_number">Mobile Number</string>
-    <string name="email_address">Email Address</string>
+    <string name="mobile_number" translatable="false">Mobile Number</string>
+    <string name="email_address" translatable="false">Email Address</string>
     <string name="enter_email_address">Enter Email Address</string>
     <string name="confirm">Confirm</string>
     <string name="password">Password</string>
@@ -319,5 +319,7 @@
     <string name="nav_bottom_profile">Profile</string>
     <string name="proceed">Proceed</string>
     <string name="sign_in">Sign In</string>
+    <string name="user_name">User Name</string>
+    <string name="un_available">Un Available</string>
 
 </resources>

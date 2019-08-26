@@ -25,6 +25,7 @@ import com.tringtwentyfour.app.models.Product;
 import com.tringtwentyfour.app.models.Shop;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
+import com.tringtwentyfour.app.utils.Utils;
 
 import java.util.List;
 
@@ -190,19 +191,19 @@ public class CartAddOnsAdapter extends RecyclerView.Adapter<CartAddOnsAdapter.My
             priceAmount = quantity * product.getPrices().getOrignalPrice();
             for (Addon addon : list) {
                 if (addon.getAddon().getChecked()) {
-                    if (AddonBottomSheetFragment.addons.getText().toString().equalsIgnoreCase("")){
+                    if (AddonBottomSheetFragment.addons.getText().toString().equalsIgnoreCase("")) {
                         AddonBottomSheetFragment.addons.append(addon.getAddon().getName());
-                    }
-                    else{
+                    } else {
                         AddonBottomSheetFragment.addons.append(", " + addon.getAddon().getName());
                     }
                     priceAmount = priceAmount + ((addon.getQuantity() * addon.getPrice()));
                 }
             }
             if (quantity == 1)
-                AddonBottomSheetFragment.price.setText(quantity + " " + context.getResources().getString(R.string.item_count) + " | " + GlobalData.currencySymbol + priceAmount);
+                AddonBottomSheetFragment.price.setText(quantity + " " + context.getResources().getString(R.string.item_count) + " | "
+                        + GlobalData.currencySymbol + Utils.getNewNumberFormat(priceAmount));
             else
-                AddonBottomSheetFragment.price.setText(quantity + " " + context.getResources().getString(R.string.items_counts) + " | " + GlobalData.currencySymbol + priceAmount);
+                AddonBottomSheetFragment.price.setText(quantity + " " + context.getResources().getString(R.string.items_counts) + " | " + GlobalData.currencySymbol + Utils.getNewNumberFormat(priceAmount));
 
         }
     }
@@ -226,7 +227,7 @@ public class CartAddOnsAdapter extends RecyclerView.Adapter<CartAddOnsAdapter.My
             foodImageType = itemView.findViewById(R.id.food_type_image);
             animationLineCartAdd = itemView.findViewById(R.id.animation_line_cart_add);
             addonName = itemView.findViewById(R.id.dish_name_text);
-         /*    Add card Button Layout*/
+            /*    Add card Button Layout*/
             cardAddDetailLayout = itemView.findViewById(R.id.add_card_layout);
             addButtonRootLayout = itemView.findViewById(R.id.add_button_root_layout);
             cardAddTextLayout = itemView.findViewById(R.id.add_card_text_layout);

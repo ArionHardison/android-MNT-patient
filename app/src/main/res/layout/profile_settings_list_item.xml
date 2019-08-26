@@ -14,7 +14,7 @@
         android:layout_height="@dimen/_16sdp"
         android:layout_gravity="center"
         android:contentDescription="@string/image_view"
-        android:tint="@color/colorAccent" />
+        android:tint="@color/colorTextBlack" />
 
     <TextView
         android:id="@+id/setting_label"

@@ -67,8 +67,6 @@ public class EditAccountActivity extends AppCompatActivity {
     EditText phone;
     @BindView(R.id.email)
     EditText email;
-    @BindView(R.id.update)
-    Button updateBtn;
     @BindView(R.id.user_profile)
     CircleImageView userProfileImg;
     @BindView(R.id.edit_user_profile)

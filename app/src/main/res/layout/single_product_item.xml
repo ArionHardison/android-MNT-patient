@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="0.8"
-            android:gravity="end|center_vertical"
+            android:gravity="center_vertical|end"
             android:maxLines="1"
             android:text="$220"
             android:textColor="@color/colorSecondaryText"
@@ -78,6 +78,7 @@
         android:layout_height="wrap_content"
         android:textAllCaps="true"
         android:text="@string/customize"
+        android:padding="4dp"
         android:textSize="@dimen/_8sdp"
         android:drawablePadding="8dp"
         android:drawableEnd="@drawable/ic_down"/>

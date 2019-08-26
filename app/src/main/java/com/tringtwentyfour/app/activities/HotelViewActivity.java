@@ -460,7 +460,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
                 HotelViewActivity.viewCartShopName.setVisibility(View.GONE);
 
             String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
-            HotelViewActivity.itemText.setText("" + itemQuantity + " " + getResources().getString(R.string.item_count) + " | " + currency + "" + priceAmount);
+            HotelViewActivity.itemText.setText("" + itemQuantity + " " + getResources().getString(R.string.item_count) + " | " + currency + "" + Utils.getNewNumberFormat(priceAmount ));
             if (HotelViewActivity.viewCartLayout.getVisibility() == View.GONE) {
                 // Start animation
                 HotelViewActivity.viewCartLayout.setVisibility(View.VISIBLE);

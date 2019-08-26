@@ -452,7 +452,7 @@ public class MobileNumberActivity extends AppCompatActivity implements GoogleApi
                 Log.d("Google", "photo:" + acct.getPhotoUrl());
                 new RetrieveTokenTask().execute(acct.getEmail());
             } else {
-                Snackbar.make(this.findViewById(android.R.id.content), getResources().getString(R.string.google_login_failed), Snackbar.LENGTH_SHORT).show();
+              //  Snackbar.make(this.findViewById(android.R.id.content), getResources().getString(R.string.google_login_failed), Snackbar.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             e.printStackTrace();

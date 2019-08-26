@@ -117,5 +117,24 @@ public class Utils {
 
     }
 
+    public static String getNewNumberFormat(double d) {
+        //  String text = Double.toString(Math.abs(d));
+        String text = Double.toString(d);
+        int integerPlaces = text.indexOf('.');
+        int decimalPlaces = text.length() - integerPlaces - 1;
+        if (decimalPlaces == 2) return text;
+        else if (decimalPlaces == 1) return text + "0";
+        else if (decimalPlaces == 0) return text + ".00";
+        else if (decimalPlaces > 2) {
+            String converted = String.valueOf((double) Math.round(d * 100) / 100);
+            int convertedIntegers = converted.indexOf('.');
+            int convertedDecimals = converted.length() - convertedIntegers - 1;
+            if (convertedDecimals == 2) return converted;
+            else if (convertedDecimals == 1) return converted + "0";
+            else if (convertedDecimals == 0) return converted + ".00";
+            else return converted;
+        } else return text;
+    }
+
 
 }

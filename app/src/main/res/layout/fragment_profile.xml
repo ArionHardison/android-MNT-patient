@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite">
-
-
+    <!--Profile Layout-->
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:scrollbars="none"
-        tools:context="com.tringtwentyfour.app.activities.ProfileActivity">
+        tools:context="com.dalejoak.app.activities.ProfileActivity">
 
         <LinearLayout
 
@@ -112,11 +112,11 @@
                 android:orientation="vertical">
 
                 <ListView
-                android:id="@+id/profile_setting_lv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="@null"
-                android:scrollbars="none" />
+                    android:id="@+id/profile_setting_lv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@null"
+                    android:scrollbars="none" />
 
                 <View
                     android:layout_width="match_parent"
@@ -160,7 +160,6 @@
         </LinearLayout>
 
     </ScrollView>
-
     <!--Error Layout-->
     <RelativeLayout
         android:id="@+id/error_layout"
@@ -168,6 +167,7 @@
         android:layout_height="match_parent"
         android:background="@color/colorWhite"
         android:clickable="true"
+        android:paddingBottom="60dp"
         android:focusable="true"
         android:visibility="gone">
 
@@ -228,7 +228,6 @@
                 android:textSize="@dimen/text_medium" />
 
             <Button
-
                 android:id="@+id/login_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -240,4 +239,5 @@
         </LinearLayout>
 
     </RelativeLayout>
-</FrameLayout>
+
+</RelativeLayout>

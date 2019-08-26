@@ -32,6 +32,7 @@ import com.tringtwentyfour.app.models.Product;
 import com.tringtwentyfour.app.models.Shop;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
+import com.tringtwentyfour.app.utils.Utils;
 
 import org.json.JSONObject;
 
@@ -112,7 +113,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
         Log.e(" Call<AddCart>==>", "" + map);
         call.enqueue(new Callback<AddCart>() {
             @Override
-            public void onResponse(Call<AddCart> call, Response<AddCart> response) {
+            public void onResponse(@NonNull Call<AddCart> call, @NonNull Response<AddCart> response) {
                 avdProgress.stop();
                 dialog.dismiss();
                 dataResponse = true;
@@ -157,7 +158,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
             }
 
             @Override
-            public void onFailure(Call<AddCart> call, Throwable t) {
+            public void onFailure(@NonNull Call<AddCart> call, @NonNull Throwable t) {
 
             }
         });
@@ -179,9 +180,10 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
         holder.dishNameTxt.setText(product.getName());
         holder.cardTextValue.setText(list.get(position).getQuantity().toString());
         holder.cardTextValueTicker.setText(list.get(position).getQuantity().toString());
-      //  priceAmount = product.getCalculated_price();
+        //  priceAmount = product.getCalculated_price();
 
-        holder.priceTxt.setText(product.getPrices().getCurrency() + " " +  list.get(position).getQuantity() * product.getPrices().getOrignalPrice());
+        holder.priceTxt.setText(product.getPrices().getCurrency() +
+                " " + Utils.getNewNumberFormat((list.get(position).getQuantity() * product.getPrices().getOrignalPrice())));
         if (!product.getFoodType().equalsIgnoreCase("veg")) {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_nonveg));
         } else {

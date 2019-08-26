@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin_half"
-    android:paddingLeft="@dimen/activity_vertical_margin"
-    android:paddingRight="@dimen/activity_vertical_margin">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/header"
+        fontPath="fonts/Nunito-Bold.ttf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/_31sdp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/background_color"
         android:maxLines="1"
-        android:text="Recent Searches"
+        android:padding="16dp"
         android:textAllCaps="true"
-        android:textColor="@color/colorSecondaryText"
-        android:textSize="@dimen/text_small" />
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/text_small"
+        tools:text="Recent Searches" />
 
 </LinearLayout>

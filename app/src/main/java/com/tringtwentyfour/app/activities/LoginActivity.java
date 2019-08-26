@@ -540,10 +540,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Log.d("Google", "mail:" + acct.getEmail());
                 Log.d("Google", "photo:" + acct.getPhotoUrl());
                 new RetrieveTokenTask().execute(acct.getEmail());
-            } else {
-
-                Snackbar.make(this.findViewById(android.R.id.content), getResources().getString(R.string.google_login_failed), Snackbar.LENGTH_SHORT).show();
             }
+//            } else {
+//
+//                Snackbar.make(this.findViewById(android.R.id.content), getResources().getString(R.string.google_login_failed), Snackbar.LENGTH_SHORT).show();
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }

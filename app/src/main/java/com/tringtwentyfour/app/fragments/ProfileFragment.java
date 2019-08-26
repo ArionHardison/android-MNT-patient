@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -84,6 +85,9 @@ public class ProfileFragment extends Fragment {
     RelativeLayout errorLayout;
     @BindView(R.id.login_btn)
     Button loginBtn;
+    @BindView(R.id.scrollView)
+    ScrollView scrollView;
+
     private Activity activity;
     private Context context;
     @BindView(R.id.profile_setting_lv)
@@ -187,7 +191,7 @@ public class ProfileFragment extends Fragment {
             userPhone = toolbarLayout.findViewById(R.id.user_phone);
             userEmail = toolbarLayout.findViewById(R.id.user_mail);
             initView();
-            Button editBtn = toolbarLayout.findViewById(R.id.edit);
+            ImageView editBtn = toolbarLayout.findViewById(R.id.edit);
             userImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -211,7 +215,7 @@ public class ProfileFragment extends Fragment {
             List<Integer> listIcons = new ArrayList<>();
             listIcons.add(R.drawable.ic_local_post);
             listIcons.add(R.drawable.ic_favorite_light);
-          //  listIcons.add(R.drawable.ic_payment_light);
+            //  listIcons.add(R.drawable.ic_payment_light);
             listIcons.add(R.drawable.ic_orders_light);
             listIcons.add(R.drawable.ic_g_translate_light);
 
@@ -242,7 +246,10 @@ public class ProfileFragment extends Fragment {
         } else {
             toolbar.setVisibility(View.GONE);
             //set Error Layout
+            scrollView.setVisibility(View.GONE);
             errorLayout.setVisibility(View.VISIBLE);
+
+
         }
 
 
