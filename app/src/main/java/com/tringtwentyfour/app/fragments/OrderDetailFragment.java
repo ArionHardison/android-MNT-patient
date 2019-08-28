@@ -91,7 +91,7 @@ public class OrderDetailFragment extends Fragment {
 
             discount = order.getInvoice().getDiscount();
 
-            discountAmount.setText(currency+"-"+GlobalData.roundoff(discount));
+            discountAmount.setText(currency+"-"+/*GlobalData.roundoff(*/discount/*)*/);
 
             promocodeAmount.setText(""+currency+"-"+order.getInvoice().getPromocode_amount());
             walletAmountDetection.setText(currency + order.getInvoice().getWalletAmount() + "");
