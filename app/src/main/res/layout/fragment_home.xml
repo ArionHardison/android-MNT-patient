@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
     app:stickyHeader="@+id/title"
-    tools:context="com.tringtwentyfour.app.HomeActivity">
+    tools:context="com.oyola.app.HomeActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "230760189296",
-    "firebase_url": "https://tring24.firebaseio.com",
-    "project_id": "tring24",
-    "storage_bucket": "tring24.appspot.com"
+    "project_number": "1062254733354",
+    "firebase_url": "https://oyola-245705.firebaseio.com",
+    "project_id": "oyola-245705",
+    "storage_bucket": "oyola-245705.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:230760189296:android:08e4047f309e6fc5",
+        "mobilesdk_app_id": "1:1062254733354:android:9a91ca1b7a80d603",
         "android_client_info": {
-          "package_name": "com.tringtwentyfour.app"
+          "package_name": "com.oyola.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "230760189296-7qtrrdnbcq1sq9q0epkhihvuloe43k9q.apps.googleusercontent.com",
+          "client_id": "1062254733354-nj2m2cf7344e5t8ncfg4afo2loaqc0r0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.tringtwentyfour.app",
-            "certificate_hash": "7b25599fa9cdd236dfee7d4a9417f56b2f43673c"
+            "package_name": "com.oyola.app",
+            "certificate_hash": "21f915f6f2499b05689b1c0042d6dfc631bca4dc"
           }
         },
         {
-          "client_id": "230760189296-p819dho31de7nmim7ef95nrbf73vjb2c.apps.googleusercontent.com",
+          "client_id": "1062254733354-5ejog3aheni6140r0ptrau9hk9rpc817.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAGynsx2bOLZ5vskHpFkD98RDJWFve2Tt4"
+          "current_key": "AIzaSyBJqS_Nyg8oI4i9gbCzjaPk2OWAi9uQ1ug"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "230760189296-p819dho31de7nmim7ef95nrbf73vjb2c.apps.googleusercontent.com",
+              "client_id": "1062254733354-5ejog3aheni6140r0ptrau9hk9rpc817.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

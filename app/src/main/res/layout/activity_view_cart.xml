@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.tringtwentyfour.app.activities.ViewCartActivity">
+    tools:context="com.oyola.app.activities.ViewCartActivity">
 
     <FrameLayout
         android:id="@+id/view_cart_container"

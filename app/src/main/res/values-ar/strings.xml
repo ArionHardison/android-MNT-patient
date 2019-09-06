@@ -1,7 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">"Tring24"</string>
-
-    <string name="login">تسجيل الدخول</string> 
+    <string name="login">تسجيل الدخول</string>
     <string name="logout">الخروج</string>
     <string name="name">اسم</string>
     <string name="username">اسم المستخدم </string>

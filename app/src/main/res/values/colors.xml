@@ -9,7 +9,8 @@
     <color name="colorPrimaryText">#303338</color>
     <color name="colorSecondaryText">#888888</color>
     <color name="colorGreen">#00a551</color>
-    <color name="colorRed">#b31101</color>
+<!--    <color name="colorRed">#b31101</color>-->
+    <color name="colorRed">#D7372A</color>
     <color name="colorWhite">#FFF</color>
     <color name="colorTextWhite">#FFF</color>
     <color name="colorTextBlack">#212121</color>

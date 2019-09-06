@@ -7,7 +7,7 @@
     android:fillViewport="true"
     android:orientation="vertical"
     android:background="#FFFFFF"
-    tools:context="com.tringtwentyfour.app.activities.LoginActivity">
+    tools:context="com.oyola.app.activities.LoginActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.tringtwentyfour.app.activities.ManageAddressActivity">
+    tools:context="com.oyola.app.activities.ManageAddressActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

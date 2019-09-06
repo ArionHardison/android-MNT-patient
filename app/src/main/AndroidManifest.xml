@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tringtwentyfour.app">
+    package="com.oyola.app">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
 
@@ -16,7 +16,7 @@
 
 
     <application
-        android:name="com.tringtwentyfour.app.MyApplication"
+        android:name="com.oyola.app.MyApplication"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
@@ -24,11 +24,11 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
 
         <receiver
-            android:name="com.tringtwentyfour.app.SmsRetrive.MySMSBroadcastReceiver"
+            android:name="com.oyola.app.SmsRetrive.MySMSBroadcastReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
@@ -48,11 +48,11 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
         <!--<meta-data-->
-            <!--android:name="com.facebook.accountkit.ClientToken"-->
-            <!--android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />-->
+        <!--android:name="com.facebook.accountkit.ClientToken"-->
+        <!--android:value="@string/ACCOUNT_KIT_CLIENT_TOKEN" />-->
         <!--<meta-data-->
-            <!--android:name="com.facebook.accountkit.FacebookAppEventsEnabled"-->
-            <!--android:value="false" />-->
+        <!--android:name="com.facebook.accountkit.FacebookAppEventsEnabled"-->
+        <!--android:value="false" />-->
 
         <!-- <meta-data
              android:name="com.facebook.sdk.ApplicationId"
@@ -77,11 +77,11 @@
             android:value="true" />
 
         <activity
-            android:name="com.tringtwentyfour.app.activities.WelcomeScreenActivity"
+            android:name="com.oyola.app.activities.WelcomeScreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.SplashActivity"
+            android:name="com.oyola.app.activities.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -91,12 +91,12 @@
             </intent-filter>
         </activity>
         <!-- Firebase Notifications -->
-        <service android:name="com.tringtwentyfour.app.fcm.MyFirebaseMessagingService">
+        <service android:name="com.oyola.app.fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name="com.tringtwentyfour.app.fcm.MyFirebaseInstanceIDService">
+        <service android:name="com.oyola.app.fcm.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
@@ -115,7 +115,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.tringtwentyfour.app.HomeActivity"
+            android:name="com.oyola.app.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing" />
@@ -125,107 +125,107 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.tringtwentyfour.app.activities.LoginActivity"
+            android:name="com.oyola.app.activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.AddCardActivity"
+            android:name="com.oyola.app.activities.AddCardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.OtpActivity"
+            android:name="com.oyola.app.activities.OtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.MobileNumberActivity"
+            android:name="com.oyola.app.activities.MobileNumberActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.SignUpActivity"
+            android:name="com.oyola.app.activities.SignUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.ForgotPasswordActivity"
+            android:name="com.oyola.app.activities.ForgotPasswordActivity"
             android:label="@string/forgot_password"
-            android:parentActivityName="com.tringtwentyfour.app.activities.LoginActivity"
+            android:parentActivityName="com.oyola.app.activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.HotelViewActivity"
+            android:name="com.oyola.app.activities.HotelViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.ChangePasswordActivity"
+            android:name="com.oyola.app.activities.ChangePasswordActivity"
             android:label="Change Password"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.FavouritesActivity"
+            android:name="com.oyola.app.activities.FavouritesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.RecommendedListActivity"
+            android:name="com.oyola.app.activities.RecommendedListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.EditAccountActivity"
+            android:name="com.oyola.app.activities.EditAccountActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.SetDeliveryLocationActivity"
+            android:name="com.oyola.app.activities.SetDeliveryLocationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.SaveDeliveryLocationActivity"
+            android:name="com.oyola.app.activities.SaveDeliveryLocationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.ManageAddressActivity"
+            android:name="com.oyola.app.activities.ManageAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.AccountPaymentActivity"
+            android:name="com.oyola.app.activities.AccountPaymentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.OrdersActivity"
+            android:name="com.oyola.app.activities.OrdersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.FilterActivity"
+            android:name="com.oyola.app.activities.FilterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.ViewCartActivity"
+            android:name="com.oyola.app.activities.ViewCartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.PastOrderDetailActivity"
+            android:name="com.oyola.app.activities.PastOrderDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.OtherHelpActivity"
+            android:name="com.oyola.app.activities.OtherHelpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.NotificationActivity"
+            android:name="com.oyola.app.activities.NotificationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.PromotionActivity"
+            android:name="com.oyola.app.activities.PromotionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.CurrentOrderDetailActivity"
+            android:name="com.oyola.app.activities.CurrentOrderDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.AddMoneyActivity"
+            android:name="com.oyola.app.activities.AddMoneyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.WalletActivity"
+            android:name="com.oyola.app.activities.WalletActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
@@ -234,10 +234,10 @@
             android:value="3aef7a5b05836cf8166f23c95e43c52517bee917" />
 
         <activity
-            android:name="com.tringtwentyfour.app.activities.ResetPasswordActivity"
+            android:name="com.oyola.app.activities.ResetPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.tringtwentyfour.app.activities.SecretKeyActivity"
+            android:name="com.oyola.app.activities.SecretKeyActivity"
             android:screenOrientation="portrait" />
 
         <!--<provider-->
@@ -251,8 +251,8 @@
         <!--</provider>-->
 
         <activity
-            android:name="com.tringtwentyfour.app.activities.ProductDetailActivity"
-            android:parentActivityName="com.tringtwentyfour.app.activities.HotelViewActivity"
+            android:name="com.oyola.app.activities.ProductDetailActivity"
+            android:parentActivityName="com.oyola.app.activities.HotelViewActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
     </application>
