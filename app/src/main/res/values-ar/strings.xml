@@ -312,5 +312,5 @@
     <string name="password_updates">تم تحديث كلمة السر</string>
     <string name="the_shop_is_closed">المتجر مغلق</string>
     <string name="enter_your_reason">أدخل السبب الخاص بك؟</string>
-
+    <string name="welcome">Welcome</string>
 </resources>

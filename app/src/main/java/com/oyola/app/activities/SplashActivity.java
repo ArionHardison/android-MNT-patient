@@ -116,7 +116,7 @@ public class SplashActivity extends AppCompatActivity {
                     } else displayMessage(getString(R.string.oops_connect_your_internet));
                 } else {
 
-                    startActivity(new Intent(SplashActivity.this, WelcomeScreenActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    startActivity(new Intent(SplashActivity.this, WelcomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     finish();
                 }
 

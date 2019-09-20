@@ -26,4 +26,7 @@
     <dimen name="header_view_end_margin_left">@dimen/_44sdp</dimen>
     <dimen name="header_view_end_margin_right">@dimen/_14sdp</dimen>
     <dimen name="header_view_start_margin_bottom">@dimen/_14sdp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="list_item_spacing">16dp</dimen>
+    <dimen name="list_item_spacing_half">8dp</dimen>
 </resources>

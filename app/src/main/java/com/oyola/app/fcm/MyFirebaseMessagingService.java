@@ -130,7 +130,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             return R.drawable.ic_stat_push;
         } else {
 //            notificationBuilder.setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorAccent));
-            return R.drawable.ic_push;
+            return R.drawable.ic_stat_push;
         }
     }
 

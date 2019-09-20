@@ -73,7 +73,7 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
                 imgView.setImageResource(R.drawable.home);
                 break;
             case "work":
-                imgView.setImageResource(R.drawable.ic_work);
+                imgView.setImageResource(R.drawable.ic_work_old);
                 break;
             default:
                 imgView.setImageResource(R.drawable.ic_map_marker);

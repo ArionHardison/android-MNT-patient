@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">"Oyola"</string>
-
     <string name="facebook_app_id" translatable="false">488442101928926</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb488442101928926</string>
     <string name="google_client_id" translatable="false">1062254733354-5ejog3aheni6140r0ptrau9hk9rpc817.apps.googleusercontent.com</string>
@@ -322,4 +321,47 @@
     <string name="user_name">User Name</string>
     <string name="un_available">Un Available</string>
 
+    <string name="welcome">Welcome</string>
+    <array name="walk_through_banner">
+        <item>@drawable/ic_banner_1</item>
+        <item>@drawable/ic_banner_2</item>
+        <item>@drawable/ic_banner_3</item>
+        <item>@drawable/ic_banner_4</item>
+    </array>
+    <string-array name="walk_through_title">
+        <item>@string/welcome_title_1</item>
+        <item>@string/welcome_title_2</item>
+        <item>@string/welcome_title_3</item>
+        <item>@string/welcome_title_4</item>
+    </string-array>
+    <string-array name="walk_through_description">
+        <item>@string/order_anything</item>
+        <item>@string/order_anything</item>
+        <item>@string/order_anything</item>
+        <item>@string/track_orders</item>
+    </string-array>
+    <string name="welcome_title_1">Find where to eat</string>
+    <string name="welcome_title_2">Place your order</string>
+    <string name="welcome_title_3">Get your order</string>
+    <string name="welcome_title_4">Track your order and enjoy!</string>
+    <string name="order_anything">Order anything you want from your favorite restaurant</string>
+    <string name="track_orders">Track your orders while the food is arriving and rate</string>
+    <string name="get_started">Get started</string>
+    <string name="login_facebook">Continue with Facebook</string>
+    <string name="login_google">Continue with Google</string>
+    <string name="login_email">Continue with Email</string>
+    <string name="login_later">I will Log In later</string>
+    <string name="welcome_user">Hi, %s</string>
+    <string name="set_location">Set your location to start exploring specialist kitchens around you</string>
+    <string name="use_current_location">Use current location</string>
+    <string name="set_location_manually">or set location manually</string>
+    <string name="select_location">Select location</string>
+    <string name="your_location">Your location</string>
+    <string name="confirm_location">Confirm location</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="service_not_available">Service is not available</string>
+    <string name="invalid_lat_long">Invalid latitude and longitude</string>
+    <string name="no_address_found">No address found</string>
+    <string name="no_geocoder_available">No geocoder available</string>
+    <string name="search_here">Search here</string>
 </resources>

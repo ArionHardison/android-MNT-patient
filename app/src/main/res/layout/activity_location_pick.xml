@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.LocationPickActivity">
+
+    <include layout="@layout/layout_location_pick" />
+
+    <include layout="@layout/layout_select_location" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/iv_current_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="65dp"
+        android:background="?attr/selectableItemBackground"
+        android:backgroundTint="@color/colorWhite"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_current_location"
+        app:borderWidth="0dp"
+        app:fabSize="mini"
+        app:layout_anchor="@+id/cl_bottom_sheet"
+        app:layout_anchorGravity="top|end" />
+
+</android.support.design.widget.CoordinatorLayout>

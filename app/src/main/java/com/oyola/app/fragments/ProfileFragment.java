@@ -46,7 +46,7 @@ import com.oyola.app.activities.FavouritesActivity;
 import com.oyola.app.activities.LoginActivity;
 import com.oyola.app.activities.ManageAddressActivity;
 import com.oyola.app.activities.OrdersActivity;
-import com.oyola.app.activities.WelcomeScreenActivity;
+import com.oyola.app.activities.WelcomeActivity;
 import com.oyola.app.adapter.ProfileSettingsAdapter;
 import com.oyola.app.helper.GlobalData;
 import com.oyola.app.helper.SharedHelper;
@@ -472,7 +472,7 @@ public class ProfileFragment extends Fragment {
                         if (SharedHelper.getKey(context, "login_by").equals("google"))
                             signOut();
                         SharedHelper.putKey(context, "logged", "false");
-                        startActivity(new Intent(context, WelcomeScreenActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        startActivity(new Intent(context, WelcomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         GlobalData.profileModel = null;
                         GlobalData.addCart = null;
                         GlobalData.notificationCount = 0;
