@@ -11,12 +11,12 @@
         android:layout_height="match_parent"
         android:contentDescription="@null"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_banner_1" />
+        android:src="@drawable/bg_login" />
 
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="50dp"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_marginTop="70dp"
         android:contentDescription="@null"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_app_name"
@@ -128,7 +128,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/login_email"
+                android:text="@string/login_mobile"
                 android:textColor="@color/colorWhite"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"

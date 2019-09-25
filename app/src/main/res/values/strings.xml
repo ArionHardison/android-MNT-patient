@@ -349,7 +349,7 @@
     <string name="get_started">Get started</string>
     <string name="login_facebook">Continue with Facebook</string>
     <string name="login_google">Continue with Google</string>
-    <string name="login_email">Continue with Email</string>
+    <string name="login_mobile">Continue with Mobile</string>
     <string name="login_later">I will Log In later</string>
     <string name="welcome_user">Hi, %s</string>
     <string name="set_location">Set your location to start exploring specialist kitchens around you</string>
@@ -364,4 +364,5 @@
     <string name="no_address_found">No address found</string>
     <string name="no_geocoder_available">No geocoder available</string>
     <string name="search_here">Search here</string>
+    <string name="signup_privacy">By signing up you agree to oyola\'s Terms of Service, Privacy Policy and Content Policies</string>
 </resources>

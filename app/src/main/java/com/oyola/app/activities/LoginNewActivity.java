@@ -18,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.oyola.app.HomeActivity;
 import com.oyola.app.R;
 import com.oyola.app.helper.GlobalData;
 import com.oyola.app.helper.SharedHelper;
@@ -68,10 +69,11 @@ public class LoginNewActivity extends BaseActivity {
                 break;
 
             case R.id.cl_email:
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 break;
 
             case R.id.tv_login_later:
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 break;
 
             default:

@@ -36,7 +36,7 @@
     <color name="colorEmailLogin">#636363</color>
     <color name="colorGray">#9E9E9E</color>
     <color name="colorGrayBackground">#EEEEEE</color>
-    <color name="colorTransparent20">#CC000000</color>
+    <color name="colorTransparent20">#BF000000</color>
     <color name="colorTransparent100">#00000000</color>
     <color name="colorFacebookLogin">#3B5998</color>
     <color name="colorGoogleLogin">@color/colorPink</color>

@@ -232,7 +232,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_18sdp"
-                android:background="@drawable/button_corner_bg_theme"
+                android:background="@drawable/button_curved"
                 android:text="@string/login"
                 android:textColor="@color/colorTextWhite" />
 
