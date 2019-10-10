@@ -124,6 +124,7 @@ public class SignUpActivity extends AppCompatActivity {
     private static final int REQUEST_LOCATION = 1450;
     GoogleApiClient mGoogleApiClient;
     private String hashcode = "";
+    String mMobile = "";
 
 
     @Override
@@ -140,7 +141,12 @@ public class SignUpActivity extends AppCompatActivity {
         mCountryPicker = CountryPicker.newInstance(getResources().getString(R.string.select_contry));
         passwordEyeImg.setTag(1);
         confirmPasswordEyeImg.setTag(1);
-        if (!GlobalData.loginBy.equals("manual")) {
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            mMobile = bundle.getString("mobile");
+        }
+      /*  if (!GlobalData.loginBy.equals("manual")) {
             confirmPasswordLayout.setVisibility(View.GONE);
             passwordLayout.setVisibility(View.GONE);
             mobileNumberLayout.setVisibility(View.VISIBLE);
@@ -150,7 +156,7 @@ public class SignUpActivity extends AppCompatActivity {
             confirmPasswordLayout.setVisibility(View.VISIBLE);
             passwordLayout.setVisibility(View.VISIBLE);
             mobileNumberLayout.setVisibility(View.GONE);
-        }
+        }*/
 /*// OTP REtriver
         List<String> list = new AppSignatureHelper(this).getAppSignatures();
         Log.d(TAG, "HASH " + list.toString());
@@ -302,7 +308,6 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-
     public void signup(HashMap<String, String> map) {
         customDialog.show();
         Call<RegisterModel> call = apiInterface.postRegister(map);
@@ -310,10 +315,9 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<RegisterModel> call, @NonNull Response<RegisterModel> response) {
                 if (response.body() != null) {
-                    HashMap<String, String> map = new HashMap<>()
-                            ;
-                    map.put("username", GlobalData.mobile);
-                    map.put("password", password);
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put("username", mMobile);
+                    map.put("password", "123456");
                     map.put("grant_type", GRANT_TYPE);
                     map.put("client_id", BuildConfigure.CLIENT_ID);
                     map.put("client_secret", BuildConfigure.CLIENT_SECRET);
@@ -388,8 +392,6 @@ public class SignUpActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<LoginModel> call, @NonNull Response<LoginModel> response) {
                 if (response.body() != null) {
                     SharedHelper.putKey(context, "access_token", response.body().getTokenType() + " " + response.body().getAccessToken());
-                    GlobalData.accessToken = response.body().getTokenType() + " " + response.body().getAccessToken();
-                    //Get Profile data
                     getProfile();
 
                 }
@@ -407,16 +409,14 @@ public class SignUpActivity extends AppCompatActivity {
         name = nameEdit.getText().toString();
         email = emailEdit.getText().toString();
         strConfirmPassword = confirmPassword.getText().toString();
-        if (!GlobalData.loginBy.equals("manual"))
-            GlobalData.mobile = country_code + etMobileNumber.getText().toString();
-        password = passwordEdit.getText().toString();
         if (TextUtils.isEmpty(name)) {
             Toast.makeText(this, getResources().getString(R.string.please_enter_username), Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, getResources().getString(R.string.please_enter_your_email), Toast.LENGTH_SHORT).show();
         } else if (!TextUtils.isValidEmail(email)) {
             Toast.makeText(this, getResources().getString(R.string.please_enter_valid_email), Toast.LENGTH_SHORT).show();
-        } else if (!isValidMobile(etMobileNumber.getText().toString()) && !GlobalData.loginBy.equals("manual")) {
+        }
+        /*else if (!isValidMobile(etMobileNumber.getText().toString()) && !GlobalData.loginBy.equals("manual")) {
             Toast.makeText(this, getResources().getString(R.string.please_enter_your_mobile_number), Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(password) && GlobalData.loginBy.equals("manual")) {
             Toast.makeText(this, getResources().getString(R.string.please_enter_password), Toast.LENGTH_SHORT).show();
@@ -424,67 +424,21 @@ public class SignUpActivity extends AppCompatActivity {
             Toast.makeText(this, getResources().getString(R.string.please_enter_your_confirm_password), Toast.LENGTH_SHORT).show();
         } else if (!strConfirmPassword.equalsIgnoreCase(password) && GlobalData.loginBy.equals("manual")) {
             Toast.makeText(this, getResources().getString(R.string.password_and_confirm_password_doesnot_match), Toast.LENGTH_SHORT).show();
-        } else {
+        }*/
+        else {
             HashMap<String, String> map = new HashMap<>();
             map.put("name", name);
             map.put("email", email);
-            map.put("phone", GlobalData.mobile);
-            map.put("password", password);
-            map.put("password_confirmation", strConfirmPassword);
+            map.put("phone", mMobile);
+            map.put("password", "123456");
+            map.put("password_confirmation", "123456");
 
             if (connectionHelper.isConnectingToInternet()) {
-                if (GlobalData.loginBy.equals("manual")) {
-                    signup(map);
-                } else {
-                    HashMap<String, String> map1 = new HashMap<>();
-                    map1.put("phone", GlobalData.mobile);
-                    map.put("hashcode", hashcode);
-                    map1.put("login_by", GlobalData.loginBy);
-                    map1.put("accessToken", GlobalData.access_token);
-                    getOtpVerification(map1);
-                }
-
+                signup(map);
             } else {
                 Utils.displayMessage(activity, context, getString(R.string.oops_connect_your_internet));
             }
         }
-    }
-
-    public void getOtpVerification(HashMap<String, String> map) {
-        customDialog.show();
-        Call<Otp> call = apiInterface.postOtp(map);
-        call.enqueue(new Callback<Otp>() {
-            @Override
-            public void onResponse(@NonNull Call<Otp> call, @NonNull Response<Otp> response) {
-                customDialog.dismiss();
-                if (response.isSuccessful()) {
-                    Toast.makeText(context, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    GlobalData.otpValue = response.body().getOtp();
-                    startActivity(new Intent(context, OtpActivity.class));
-                    finish();
-                } else {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        if (jObjError.has("phone"))
-                            Toast.makeText(context, jObjError.optString("phone"), Toast.LENGTH_LONG).show();
-                        else if (jObjError.has("email"))
-                            Toast.makeText(context, jObjError.optString("email"), Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-                        Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
-                    }
-                }
-
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Otp> call, @NonNull Throwable t) {
-                customDialog.dismiss();
-                Toast.makeText(SignUpActivity.this, getResources().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
-            }
-        });
-
     }
 
     private void getProfile() {
@@ -542,14 +496,4 @@ public class SignUpActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.anim_nothing, R.anim.slide_out_right);
     }
 
-    private boolean isValidMobile(String phone) {
-        boolean check = false;
-        if (!Pattern.matches("[a-zA-Z]+", phone)) {
-//            if( phone.length() > 10) {
-            check = phone.length() == 10;
-        } else {
-            check = false;
-        }
-        return check;
-    }
 }

@@ -298,7 +298,7 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 RadioButton radioButton = (RadioButton) radioGroup.findViewById(i);
                 if (radioButton.getText().toString().toLowerCase().equals("home"))
-                    currentLocImg.setBackgroundResource(R.drawable.ic_hoem_marker);
+                    currentLocImg.setBackgroundResource(R.drawable.ic_home_marker);
                 else if (radioButton.getText().toString().toLowerCase().equals("work"))
                     currentLocImg.setBackgroundResource(R.drawable.ic_work_marker);
                 else if (radioButton.getText().toString().equalsIgnoreCase(getResources().getString(R.string.other))) {

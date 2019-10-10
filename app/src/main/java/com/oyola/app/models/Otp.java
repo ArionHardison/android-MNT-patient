@@ -12,6 +12,12 @@ public class Otp {
     @SerializedName("otp")
     @Expose
     private Integer otp;
+    @SerializedName("status")
+    @Expose
+    private String status;
+    @SerializedName("user")
+    @Expose
+    private String user;
 
     public String getMessage() {
         return message;
@@ -29,4 +35,19 @@ public class Otp {
         this.otp = otp;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
 }

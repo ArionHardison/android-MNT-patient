@@ -227,6 +227,8 @@ public interface ApiInterface {
     @DELETE("api/user/card/{id}")
     Call<Message> deleteCard(@Path("id") int id);
 
-
+    @FormUrlEncoded
+    @POST("send/otp")
+    Call<Otp> sendOtp(@FieldMap HashMap<String, String> params);
 
 }

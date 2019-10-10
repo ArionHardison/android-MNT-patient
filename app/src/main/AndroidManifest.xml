@@ -45,7 +45,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".activities.LoginNewActivity"
+            android:name=".activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
@@ -161,10 +161,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing" />
-        <activity
-            android:name=".activities.LoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.AddCardActivity"
             android:screenOrientation="portrait"

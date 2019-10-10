@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oyola.app.build.configure.BuildConfigure;
 import com.oyola.app.models.ForgotPassword;
 import com.google.android.gms.auth.api.phone.SmsRetriever;
 import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
@@ -36,6 +37,7 @@ import com.oyola.app.models.AddressList;
 import com.oyola.app.models.LoginModel;
 import com.oyola.app.models.Otp;
 import com.oyola.app.models.RegisterModel;
+import com.oyola.app.models.SocialModel;
 import com.oyola.app.models.User;
 import com.oyola.app.utils.Utils;
 import com.stfalcon.smsverifycatcher.OnSmsCatchListener;
@@ -72,12 +74,19 @@ public class OtpActivity extends AppCompatActivity {
     TextView veriTxt2;
     @BindView(R.id.rel_verificatin_code)
     RelativeLayout relVerificatinCode;
-    @BindView(R.id.otp_value1)
-    PinEntryView otpValue1;
+    @BindView(R.id.otp_value)
+    PinEntryView otpEntryView;
     @BindView(R.id.otp_continue)
     Button otpContinue;
     Context context;
     boolean isSignUp = true;
+    int mOtp = 0;
+    boolean mIsUserExists = false;
+    Boolean mIsFromSocial = false;
+    SocialModel mModel;
+    String mMobile = "";
+    String GRANT_TYPE = "password";
+
     @BindView(R.id.mobile_number_txt)
     TextView mobileNumberTxt;
     CustomDialog customDialog;
@@ -96,7 +105,7 @@ public class OtpActivity extends AppCompatActivity {
             if (intent.getAction().equalsIgnoreCase(INTENT_OTP)) {
                 final String message = intent.getStringExtra("otp");
                 Log.d("MySMS", "OTPCheck" + message);
-                otpValue1.setText(message);
+                otpEntryView.setText(message);
             }
         }
     };
@@ -112,17 +121,22 @@ public class OtpActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
             isSignUp = bundle.getBoolean("signup", true);
+            mOtp = bundle.getInt("otp");
+            mIsUserExists = bundle.getBoolean("isUserExist");
+            mIsFromSocial = bundle.getBoolean("mIsFromSocial");
+            mMobile = bundle.getString("mobile");
+            mModel = (SocialModel) bundle.getSerializable("social_login_model");
         }
-        mobileNumberTxt.setText(GlobalData.mobile);
+        mobileNumberTxt.setText(mMobile);
         //if(!valOTP.equalsIgnoreCase(""))
-        //otpValue1.setText(valOTP);
+        //otpEntryView.setText(valOTP);
         /*receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equalsIgnoreCase(INTENT_OTP)) {
                     final String message = intent.getStringExtra("otp");
                     Log.d(TAG, "OTPCheck" + message);
-                    otpValue1.setText(message);
+                    otpEntryView.setText(message);
                 }
             }
         };*/
@@ -132,18 +146,18 @@ public class OtpActivity extends AppCompatActivity {
         hashcode = list.get(0);*/
 
         SmsRetriver();
-        if(GlobalData.otpValue != 0){
-            otpValue1.setText(""+GlobalData.otpValue);
+        if (mOtp != 0) {
+            otpEntryView.setText("" + mOtp);
         }
 
-//        otpValue1.setText(String.valueOf(GlobalData.otpValue));
+//        otpEntryView.setText(String.valueOf(GlobalData.otpValue));
         getDeviceToken();
 
         smsVerifyCatcher = new SmsVerifyCatcher(this, new OnSmsCatchListener<String>() {
             @Override
             public void onSmsCatch(String message) {
                 String code = parseCode(message);//Parse verification code
-                otpValue1.setText(code);//set code in edit text
+                otpEntryView.setText(code);//set code in edit text
 //                Toast.makeText(context,code,Toast.LENGTH_LONG).show();
                 //then you can send verification code to server
             }
@@ -170,7 +184,7 @@ public class OtpActivity extends AppCompatActivity {
             }
         });
 
-//        otpValue1.setText(Integer.toString(getIntent().getExtras().getInt("OTP")));
+//        otpEntryView.setText(Integer.toString(getIntent().getExtras().getInt("OTP")));
 
 
     }
@@ -222,10 +236,21 @@ public class OtpActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<RegisterModel> call, @NonNull Response<RegisterModel> response) {
                 if (response.isSuccessful()) {
-                    HashMap<String, String> map = new HashMap<>();
-                    map.put("login_by", GlobalData.loginBy);
-                    map.put("accessToken", GlobalData.access_token);
-                    login(map);
+                    if (mIsFromSocial){
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("login_by", mModel.getmLoginBy());
+                        map.put("accessToken", mModel.getmAccessToken());
+                        socialLogin(map);
+                    }else {
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("username", mMobile);
+                        map.put("password", "123456");
+                        map.put("grant_type", GRANT_TYPE);
+                        map.put("client_id", BuildConfigure.CLIENT_ID);
+                        map.put("client_secret", BuildConfigure.CLIENT_SECRET);
+                        login(map);
+                    }
+
                 } else {
                     customDialog.dismiss();
                     try {
@@ -254,16 +279,36 @@ public class OtpActivity extends AppCompatActivity {
 
     private void login(HashMap<String, String> map) {
         Call<LoginModel> call;
-        if (GlobalData.loginBy.equals("manual"))
+     /*   if (GlobalData.loginBy.equals("manual"))
             call = apiInterface.postLogin(map);
         else
-            call = apiInterface.postSocialLogin(map);
+            call = apiInterface.postSocialLogin(map);*/
+        call = apiInterface.postLogin(map);
         call.enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(@NonNull Call<LoginModel> call, @NonNull Response<LoginModel> response) {
                 if (response.isSuccessful()) {
                     SharedHelper.putKey(context, "access_token", response.body().getTokenType() + " " + response.body().getAccessToken());
-                    GlobalData.accessToken = response.body().getTokenType() + " " + response.body().getAccessToken();
+                    getProfile();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<LoginModel> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
+    private void socialLogin(HashMap<String, String> map) {
+        Call<LoginModel> call;
+        call = apiInterface.postSocialLogin(map);
+        call.enqueue(new Callback<LoginModel>() {
+            @Override
+            public void onResponse(@NonNull Call<LoginModel> call, @NonNull Response<LoginModel> response) {
+                if (response.isSuccessful()) {
+                    SharedHelper.putKey(context, "access_token", response.body().getTokenType() + " " + response.body().getAccessToken());
+                    SharedHelper.putKey(context, "login_by", mModel.getmLoginBy());
                     getProfile();
                 }
             }
@@ -322,16 +367,16 @@ public class OtpActivity extends AppCompatActivity {
     public void getOtpVerification(HashMap<String, String> map) {
         SmsRetriver();
         customDialog.show();
-        Call<Otp> call = apiInterface.postOtp(map);
+        Call<Otp> call = apiInterface.sendOtp(map);
         call.enqueue(new Callback<Otp>() {
             @Override
             public void onResponse(@NonNull Call<Otp> call, @NonNull Response<Otp> response) {
                 customDialog.dismiss();
                 if (response.isSuccessful()) {
+                    mOtp = response.body().getOtp();
                     Toast.makeText(context, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    GlobalData.otpValue = response.body().getOtp();
-                    otpValue1.setText("");
-                    otpValue1.setText(String.valueOf(GlobalData.otpValue));
+                    otpEntryView.setText("");
+                    otpEntryView.setText(String.valueOf(mOtp));
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
@@ -350,43 +395,11 @@ public class OtpActivity extends AppCompatActivity {
 
     }
 
-    private void getForgotResendOtp() {
-        SmsRetriver();
-        customDialog.show();
-        Call<ForgotPassword> call = apiInterface.forgotPassword(GlobalData.mobile, GlobalData.hashcode);
-        call.enqueue(new Callback<ForgotPassword>() {
-            @Override
-            public void onResponse(@NonNull Call<ForgotPassword> call, @NonNull Response<ForgotPassword> response) {
-                customDialog.dismiss();
-                if (response.isSuccessful()) {
-                    Toast.makeText(context, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    GlobalData.otpValue = Integer.parseInt(response.body().getUser().getOtp());
-                    otpValue1.setText("");
-                    otpValue1.setText(String.valueOf(GlobalData.otpValue));
-                } else {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-                        Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ForgotPassword> call, @NonNull Throwable t) {
-                customDialog.dismiss();
-            }
-        });
-
-    }
-
     @OnClick({R.id.otp_continue, R.id.resend_otp})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.otp_continue:
-                Log.d("OtpData", otpValue1.getText().toString() + " = " + GlobalData.otpValue);
-                if (otpValue1.getText().toString().equals("" + GlobalData.otpValue)) {
+              /*  if (otpEntryView.getText().toString().equals("" +mOtp)) {
                     if (!GlobalData.loginBy.equals("manual")) {
                         HashMap<String, String> map = new HashMap<>();
                         map.put("name", GlobalData.name);
@@ -406,16 +419,43 @@ public class OtpActivity extends AppCompatActivity {
                     }
                 } else {
                     Toast.makeText(this, getResources().getString(R.string.entor_otp_incorrect), Toast.LENGTH_SHORT).show();
+                }*/
+
+                if (otpEntryView.getText().toString().equals("" + mOtp)) {
+                    if (mIsUserExists) {
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("username", mMobile);
+                        map.put("password", "123456");
+                        map.put("grant_type", GRANT_TYPE);
+                        map.put("client_id", BuildConfigure.CLIENT_ID);
+                        map.put("client_secret", BuildConfigure.CLIENT_SECRET);
+                        login(map);
+                    } else {
+                        if (mIsFromSocial) {
+                            HashMap<String, String> map = new HashMap<>();
+                            map.put("name", mModel.getmName());
+                            map.put("email", mModel.getmEmail());
+                            map.put("phone", mMobile);
+                            map.put("login_by", mModel.getmLoginBy());
+                            map.put("accessToken", mModel.getmAccessToken());
+                            signup(map);
+                        } else {
+                            Intent intent = new Intent(OtpActivity.this, SignUpActivity.class);
+                            intent.putExtra("mobile", mMobile);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
+                            finish();
+                        }
+                    }
+                } else {
+                    Toast.makeText(this, getResources().getString(R.string.entor_otp_incorrect), Toast.LENGTH_SHORT).show();
                 }
+
                 break;
             case R.id.resend_otp:
-                HashMap<String, String> map1 = new HashMap<>();
-                map1.put("phone", GlobalData.mobile);
-                map1.put("hashcode", GlobalData.hashcode);
-                if (isSignUp)
-                    getOtpVerification(map1);
-                else
-                    getForgotResendOtp();
+                HashMap<String, String> map = new HashMap<>();
+                map.put("phone", mMobile);
+                getOtpVerification(map);
                 break;
         }
     }

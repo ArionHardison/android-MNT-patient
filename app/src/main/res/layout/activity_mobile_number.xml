@@ -11,18 +11,19 @@
         android:layout_margin="@dimen/activity_horizontal_margin"
         android:contentDescription="@string/back"
         android:src="@drawable/ic_back"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <!--   App Icon Image-->
 
     <ImageView
         android:id="@+id/app_logo"
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_150sdp"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_120sdp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_50sdp"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/logo_app" />
+        android:src="@drawable/ic_app_name"
+        android:tint="@color/colorPrimary" />
 
     <!--   Mobile Number Layout-->
 
@@ -30,9 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/app_logo"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="30dp"
-        android:gravity="bottom"
+        android:layout_marginTop="@dimen/_50sdp"
         android:orientation="vertical"
         android:padding="@dimen/activity_common_margin">
 
@@ -49,7 +48,7 @@
                 android:layout_height="@dimen/_20sdp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:src="@drawable/flag_lb" />
+                android:src="@drawable/flag_in" />
 
             <TextView
                 android:id="@+id/countryNumber"
@@ -59,7 +58,7 @@
                 android:layout_marginStart="@dimen/_6sdp"
                 android:layout_toEndOf="@+id/countryImage"
                 android:gravity="center"
-                android:text="+961"
+                android:text="+91"
                 android:textSize="@dimen/text_normal" />
 
             <EditText
@@ -72,8 +71,8 @@
                 android:hint="@string/mobile_number"
                 android:imeOptions="actionDone"
                 android:inputType="number"
-                android:maxLines="1"
                 android:maxLength="10"
+                android:maxLines="1"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:textSize="@dimen/text_normal" />
@@ -85,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:background="@color/colorAccent"
+            android:background="@drawable/button_curved"
             android:text="@string/next"
             android:textColor="@color/colorWhite" />
 
@@ -96,7 +95,8 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:text="@string/already_you_have_account"
             android:textColor="@color/colorTextBlack"
-            android:textSize="@dimen/text_small" />
+            android:textSize="@dimen/text_small"
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -108,7 +108,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/activity_vertical_margin">
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/connect_with"

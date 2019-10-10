@@ -617,7 +617,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                         LatLng location = new LatLng(isSelectedOrder.getAddress().getLatitude(), isSelectedOrder.getAddress().getLongitude());
                         MarkerOptions markerOptions = new MarkerOptions()
                                 .position(location).title("Source").draggable(true)
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_hoem_marker));
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_home_marker));
                         sourceMarker = mMap.addMarker(markerOptions);
 
                         destLatLng = new LatLng(isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());

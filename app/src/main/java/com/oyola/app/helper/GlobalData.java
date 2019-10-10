@@ -83,8 +83,6 @@ public class GlobalData {
     public static List<Product> searchProductList;
 
     public static ArrayList<HashMap<String, String>> foodCart;
-    public static String accessToken = "";
-    public static String deviceToken = "";
 
     private static final GlobalData ourInstance = new GlobalData();
 

@@ -265,7 +265,6 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
                         }
                     };
                     holder.animationLineCartAdd.postDelayed(action, 3000);
-                    Log.e("access_token2", GlobalData.accessToken);
                     /** Press Add Card Add button */
                     if (product.getAddons() != null && !product.getAddons().isEmpty()) {
                         GlobalData.isSelectedProduct = product;

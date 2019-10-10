@@ -145,7 +145,6 @@ public class CartAddOnsAdapter extends RecyclerView.Adapter<CartAddOnsAdapter.My
         holder.cardAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("access_token2", GlobalData.accessToken);
                 /** Press Add Card Add button */
                 addon = list.get(position);
                 addon.getAddon().setChecked(true);

@@ -114,6 +114,7 @@
     <string name="order_delivered_successfully_on">Order Delivered Successfully on </string>
     <string name="address_hint">Ex : Dad\'s place, John\'s Home</string>
     <string name="cancel">Cancel</string>
+    <string name="setting">Setting</string>
 
     <!--PAYMENT SCREEN-->
     <string name="wallet_amount">Wallet Amount</string>

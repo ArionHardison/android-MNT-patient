@@ -109,7 +109,6 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 //Do something after 3000ms
                 if (SharedHelper.getKey(context, "logged") != null &&SharedHelper.getKey(context, "logged").equalsIgnoreCase("true")) {
-                    GlobalData.accessToken = SharedHelper.getKey(context, "access_token");
                     if (connectionHelper.isConnectingToInternet()) {
                         getDeviceToken();
                         getProfile();

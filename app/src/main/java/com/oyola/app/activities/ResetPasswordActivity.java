@@ -163,7 +163,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Toast.makeText(ResetPasswordActivity.this, R.string.password_updates, Toast.LENGTH_SHORT).show();
                 /*    SharedHelper.putKey(context, "access_token", "Bearer" + " " + response.body().getAccessToken());
-                    GlobalData.accessToken = "Bearer" + " " + response.body().getAccessToken();
                     getProfile();*/
 
                     startActivity(new Intent(context, LoginActivity.class)

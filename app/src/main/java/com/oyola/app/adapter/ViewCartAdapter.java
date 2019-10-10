@@ -215,7 +215,6 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
         holder.cardAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("access_token2", GlobalData.accessToken);
                 /** Intilaize Animation View Image */
                 holder.animationLineCartAdd.setVisibility(View.VISIBLE);
                 //Intialize

@@ -136,7 +136,7 @@ public class WelcomeActivity extends BaseActivity implements
 
     private void setPageSelection() {
         if (welcomePager.getCurrentItem() == WelcomePagerAdapter.PAGE_COUNT - 1) {
-            startActivity(new Intent(getApplicationContext(), LoginNewActivity.class));
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
             finish();
         } else if (welcomePager.getCurrentItem() == WelcomePagerAdapter.PAGE_COUNT - 2) {

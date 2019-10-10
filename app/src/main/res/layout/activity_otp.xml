@@ -9,12 +9,12 @@
 
     <ImageView
         android:id="@+id/otp_image"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_130sdp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="08dp"
         android:contentDescription="@string/verification_code_txt"
-        android:src="@drawable/logo_app" />
+        android:src="@drawable/bg_otp" />
 
     <TextView
         android:id="@+id/verification_code_txt"
@@ -63,7 +63,7 @@
     </RelativeLayout>
 
     <me.philio.pinentry.PinEntryView
-        android:id="@+id/otp_value1"
+        android:id="@+id/otp_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rel_verificatin_code"
@@ -84,11 +84,11 @@
         android:id="@+id/otp_continue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/otp_value1"
+        android:layout_below="@id/otp_value"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="@dimen/_60sdp"
-        android:background="@color/colorAccent"
+        android:background="@drawable/button_curved"
         android:text="@string/continue_txt"
         android:textColor="@color/colorWhite" />
 

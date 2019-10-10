@@ -27,7 +27,6 @@ public class MyApplication extends Application {
     public static String commonAccess = "";
     public static String promoCodeSelect = "";
     public static String currency = "";
-
     public static Object getContext() {
         return MyApplication.context;
     }
