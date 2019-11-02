@@ -162,9 +162,9 @@ public class ProfileFragment extends Fragment {
             case 3:
                 changeLanguage();
                 break;
-            case 4:
-                startActivity(new Intent(context, ChangePasswordActivity.class));
-                break;
+//            case 4:
+//                startActivity(new Intent(context, ChangePasswordActivity.class));
+//                break;
 //            case 4:
 //                startActivity(new Intent(context, NotificationActivity.class));
 //                break;
@@ -219,12 +219,12 @@ public class ProfileFragment extends Fragment {
             listIcons.add(R.drawable.ic_orders_light);
             listIcons.add(R.drawable.ic_g_translate_light);
 
-            if (!loginBy.equalsIgnoreCase("facebook") &&
+            /*if (!loginBy.equalsIgnoreCase("facebook") &&
                     !loginBy.equalsIgnoreCase("google")) {
                 list.add(getResources().getString(R.string.chage_password));
                 listIcons.add(R.drawable.ic_lock_outline_light);
 
-            }
+            }*/
 
             ProfileSettingsAdapter adbPerson = new ProfileSettingsAdapter(context, list, listIcons);
             profileSettingLv.setAdapter(adbPerson);

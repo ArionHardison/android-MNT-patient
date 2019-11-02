@@ -274,7 +274,8 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.sign_up, R.id.back_img, R.id.password_eye_img, R.id.confirm_password_eye_img})
+    @OnClick({R.id.sign_up, R.id.back_img, R.id.password_eye_img, R.id.confirm_password_eye_img,
+    R.id.txtAgreePolicy})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.sign_up:
@@ -304,6 +305,9 @@ public class SignUpActivity extends AppCompatActivity {
                     confirmPassword.setTransformationMethod(new PasswordTransformationMethod());
                     confirmPasswordEyeImg.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_eye_open));
                 }
+                break;
+            case R.id.txtAgreePolicy:
+                startActivity(new Intent(getApplicationContext(), TermsAndConditions.class));
                 break;
         }
     }
@@ -393,7 +397,6 @@ public class SignUpActivity extends AppCompatActivity {
                 if (response.body() != null) {
                     SharedHelper.putKey(context, "access_token", response.body().getTokenType() + " " + response.body().getAccessToken());
                     getProfile();
-
                 }
 
             }
@@ -457,7 +460,11 @@ public class SignUpActivity extends AppCompatActivity {
                     GlobalData.addCart.setProductList(response.body().getCart());
                     GlobalData.addressList = new AddressList();
                     GlobalData.addressList.setAddresses(response.body().getAddresses());
-                    startActivity(new Intent(context, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+//                    Intent intent=new Intent(context, HomeActivity.class);
+                    Intent intent=new Intent(context, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("isFromSignUp",true);
+                    startActivity(intent);
                     finish();
                 } else {
                     if (response.code() == 401) {

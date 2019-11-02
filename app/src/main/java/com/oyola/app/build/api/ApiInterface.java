@@ -4,6 +4,7 @@ package com.oyola.app.build.api;
  * Created by tamil@appoets.com on 30-08-2017.
  */
 
+import com.oyola.app.models.CuisinesModel;
 import com.oyola.app.models.AddCart;
 import com.oyola.app.models.AddMoney;
 import com.oyola.app.models.Address;
@@ -230,5 +231,13 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("send/otp")
     Call<Otp> sendOtp(@FieldMap HashMap<String, String> params);
+
+    @GET("api/user/favorite-cuisines")
+    Call<List<Cuisine>> getCuisines();
+
+//    @FormUrlEncoded
+    @POST("api/user/profile")
+//    Call<Object> updateCuisines(@FieldMap() Map<String, Integer> mMap);
+    Call<Object> updateCuisines(@Body() CuisinesModel mMap);
 
 }

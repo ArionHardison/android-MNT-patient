@@ -97,7 +97,9 @@ public class Order {
     @SerializedName("reviewrating")
     @Expose
     private Object reviewrating;
-
+    @SerializedName("pickup_from_restaurants")
+    @Expose
+    private Integer pickUpRestaurant;
     public Integer getId() {
         return id;
     }
@@ -336,5 +338,13 @@ public class Order {
 
     public void setReviewrating(Object reviewrating) {
         this.reviewrating = reviewrating;
+    }
+
+    public Integer getPickUpRestaurant() {
+        return pickUpRestaurant;
+    }
+
+    public void setPickUpRestaurant(Integer pickUpRestaurant) {
+        this.pickUpRestaurant = pickUpRestaurant;
     }
 }

@@ -29,4 +29,10 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="list_item_spacing">16dp</dimen>
     <dimen name="list_item_spacing_half">8dp</dimen>
+
+    <dimen name="edit_text_size_large">@dimen/_60sdp</dimen>
+    <dimen name="button_size">@dimen/_42sdp</dimen>
+
+    <dimen name="login_bottom_layout_height">40dp</dimen>
+    <dimen name="material_spinner_height">45dp</dimen>
 </resources>

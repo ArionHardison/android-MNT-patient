@@ -35,6 +35,7 @@ import com.oyola.app.activities.FilterActivity;
 import com.oyola.app.activities.SetDeliveryLocationActivity;
 import com.oyola.app.adapter.BannerAdapter;
 import com.oyola.app.adapter.DiscoverAdapter;
+import com.oyola.app.adapter.FavouriteCuisinesAdapter;
 import com.oyola.app.adapter.OfferRestaurantAdapter;
 import com.oyola.app.adapter.RestaurantsAdapter;
 import com.oyola.app.build.api.ApiClient;
@@ -81,7 +82,8 @@ import static com.oyola.app.helper.GlobalData.selectedAddress;
  * Created by santhosh@appoets.com on 22-08-2017.
  */
 
-public class HomeFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class HomeFragment extends Fragment implements AdapterView.OnItemSelectedListener,
+        CuisineSelectFragment.OnSuccessListener {
 
     @BindView(R.id.animation_line_image)
     ImageView animationLineImage;
@@ -94,11 +96,14 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     TextView restaurantCountTxt;
     @BindView(R.id.offer_title_header)
     TextView offerTitleHeader;
+    @BindView(R.id.favourite_title_header)
+    TextView favouriteTitle;
     @BindView(R.id.error_layout)
     LinearLayout errorLayout;
     @BindView(R.id.impressive_dishes_layout)
     LinearLayout impressiveDishesLayout;
-    private SkeletonScreen skeletonScreen, skeletonScreen2, skeletonText1, skeletonText2, skeletonSpinner;
+    private SkeletonScreen skeletonScreen, skeletonScreen2, skeletonText1, skeletonText2,
+            skeletonSpinner, skeletonFavourites, skeletonFavouriteTitle;
     private TextView addressLabel;
     private TextView addressTxt;
     private LinearLayout locationAddressLayout;
@@ -112,11 +117,14 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     RecyclerView bannerRv;
     @BindView(R.id.restaurants_rv)
     RecyclerView restaurantsRv;
+    @BindView(R.id.favourite_dishes_rv)
+    RecyclerView favouritesRv;
     @BindView(R.id.discover_rv)
     RecyclerView discoverRv;
     int ADDRESS_SELECTION = 1;
     int FILTER_APPLIED_CHECK = 2;
     ImageView filterSelectionImage;
+    ImageView favouriteSelectionImage;
 
     private ViewGroup toolbar;
     private View toolbarLayout;
@@ -127,18 +135,23 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
     List<Shop> restaurantList;
+    List<Shop> cuisinesRestaurantList;
     RestaurantsAdapter adapterRestaurant;
+    FavouriteCuisinesAdapter mCuisinesAdapter;
     public static boolean isFilterApplied = false;
     BannerAdapter bannerAdapter;
     List<Banner> bannerList;
     ConnectionHelper connectionHelper;
     Activity activity;
-
+    boolean mIsFromSignUp = false;
+    CuisineSelectFragment mFragment;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.context = getContext();
         activity = getActivity();
+        mFragment= new CuisineSelectFragment();
+        mFragment.setListener(this);
 
     }
 
@@ -192,6 +205,12 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
+        mIsFromSignUp = getArguments().getBoolean("isFromSignUp");
+        if (mIsFromSignUp) {
+            mFragment.show(getFragmentManager(), "CuisineSelectFragment");
+        } else {
+//            new CuisineSelectFragment().show(getFragmentManager(), "CuisineSelectFragment");
+        }
         return view;
 
     }
@@ -228,6 +247,9 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         skeletonText1 = Skeleton.bind(offerTitleHeader)
                 .load(R.layout.skeleton_label)
                 .show();
+        skeletonFavouriteTitle = Skeleton.bind(favouriteTitle)
+                .load(R.layout.skeleton_label)
+                .show();
         skeletonText2 = Skeleton.bind(restaurantCountTxt)
                 .load(R.layout.skeleton_label)
                 .show();
@@ -248,10 +270,20 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         restaurantsRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         restaurantsRv.setItemAnimator(new DefaultItemAnimator());
         restaurantsRv.setHasFixedSize(true);
+        favouritesRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        favouritesRv.setItemAnimator(new DefaultItemAnimator());
+        favouritesRv.setHasFixedSize(true);
         restaurantList = new ArrayList<>();
+        cuisinesRestaurantList = new ArrayList<>();
         adapterRestaurant = new RestaurantsAdapter(restaurantList, context, getActivity());
+        mCuisinesAdapter = new FavouriteCuisinesAdapter(cuisinesRestaurantList, context, getActivity());
         skeletonScreen = Skeleton.bind(restaurantsRv)
                 .adapter(adapterRestaurant)
+                .load(R.layout.skeleton_restaurant_list_item)
+                .count(2)
+                .show();
+        skeletonFavourites = Skeleton.bind(favouritesRv)
+                .adapter(mCuisinesAdapter)
                 .load(R.layout.skeleton_restaurant_list_item)
                 .count(2)
                 .show();
@@ -304,11 +336,19 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         });
         filterBtn = toolbarLayout.findViewById(R.id.filter);
         filterSelectionImage = toolbarLayout.findViewById(R.id.filter_selection_image);
+        favouriteSelectionImage = toolbarLayout.findViewById(R.id.favourite_selection_image);
         filterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivityForResult(new Intent(context, FilterActivity.class), FILTER_APPLIED_CHECK);
                 getActivity().overridePendingTransition(R.anim.slide_up, R.anim.anim_nothing);
+            }
+        });
+
+        favouriteSelectionImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mFragment.show(getFragmentManager(), "CuisineSelectFragment");
             }
         });
         toolbar.addView(toolbarLayout);
@@ -322,6 +362,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             Utils.displayMessage(activity, context, getString(R.string.oops_connect_your_internet));
         }
 
+
+    }
+
+    private void showFavouritesDialog() {
 
     }
 
@@ -363,8 +407,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             @Override
             public void onResponse(Call<RestaurantsData> call, Response<RestaurantsData> response) {
                 skeletonScreen.hide();
+                skeletonFavourites.hide();
                 skeletonScreen2.hide();
                 skeletonText1.hide();
+                skeletonFavouriteTitle.hide();
                 skeletonText2.hide();
                 skeletonSpinner.hide();
                 if (response != null && !response.isSuccessful() && response.errorBody() != null) {
@@ -378,7 +424,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                     //Check Restaurant list
                     if (response.body().getShops().size() == 0) {
                         title.setVisibility(View.GONE);
-                        errorLayout.setVisibility(View.VISIBLE);
+                        errorLayout.setVisibility(View.GONE);
                     } else {
                         title.setVisibility(View.VISIBLE);
                         errorLayout.setVisibility(View.GONE);
@@ -394,9 +440,17 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                     restaurantList.addAll(GlobalData.shopList);
                     bannerList.clear();
                     bannerList.addAll(response.body().getBanners());
+                    cuisinesRestaurantList.clear();
+                    cuisinesRestaurantList.addAll(response.body().getFavouriteCuisines());
                     restaurantCountTxt.setText("" + restaurantList.size() + " Restaurants");
                     adapterRestaurant.notifyDataSetChanged();
+                    mCuisinesAdapter.notifyDataSetChanged();
                     bannerAdapter.notifyDataSetChanged();
+                    if (cuisinesRestaurantList.size() > 0) {
+                        favouriteTitle.setVisibility(View.VISIBLE);
+                    } else {
+                        favouriteTitle.setVisibility(View.GONE);
+                    }
 
                 }
             }
@@ -525,7 +579,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
     }
 
-
     public String getAddress(double lat, double lng) {
         Geocoder geocoder = new Geocoder(context, Locale.getDefault());
         try {
@@ -558,7 +611,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         return null;
     }
 
-
     @Override
     public void onDetach() {
         super.onDetach();
@@ -583,7 +635,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
@@ -597,8 +648,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 latitude = selectedAddress.getLatitude();
                 longitude = selectedAddress.getLongitude();
                 skeletonScreen.show();
+                skeletonFavourites.show();
                 skeletonScreen2.show();
                 skeletonText1.show();
+                skeletonFavouriteTitle.show();
                 skeletonText2.show();
                 skeletonSpinner.show();
                 findRestaurant();
@@ -612,8 +665,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         if (requestCode == FILTER_APPLIED_CHECK && resultCode == Activity.RESULT_OK) {
             System.out.print("HomeFragment : Filter Success");
             skeletonScreen.show();
+            skeletonFavourites.show();
             skeletonScreen2.show();
             skeletonText1.show();
+            skeletonFavouriteTitle.show();
             skeletonText2.show();
             skeletonSpinner.show();
             findRestaurant();
@@ -624,7 +679,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         }
 
     }
-
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -640,5 +694,15 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
-
+    @Override
+    public void refreshHome() {
+        skeletonScreen.show();
+        skeletonFavourites.show();
+        skeletonScreen2.show();
+        skeletonText1.show();
+        skeletonFavouriteTitle.show();
+        skeletonText2.show();
+        skeletonSpinner.show();
+        findRestaurant();
+    }
 }

@@ -88,6 +88,9 @@ public class Shop {
     @Expose
     private List<Category> categories = null;
 
+    @SerializedName("deliveryoption")
+    @Expose
+    private List<DeliveryOption> deliveryOptionList=null;
     public Integer getId() {
         return id;
     }
@@ -296,4 +299,11 @@ public class Shop {
         this.shopstatus = shopstatus;
     }
 
+    public List<DeliveryOption> getDeliveryOptionList() {
+        return deliveryOptionList;
+    }
+
+    public void setDeliveryOptionList(List<DeliveryOption> deliveryOptionList) {
+        this.deliveryOptionList = deliveryOptionList;
+    }
 }

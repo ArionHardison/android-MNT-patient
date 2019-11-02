@@ -331,11 +331,27 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
 
     public void updateOrderDeatail() {
         List<OrderFlow> orderFlowList = new ArrayList<>();
-        orderFlowList.add(new OrderFlow(getString(R.string.order_placed), getString(R.string.description_1), R.drawable.ic_order_placed, ORDER_STATUS.get(0)));
-        orderFlowList.add(new OrderFlow(getString(R.string.order_confirmed), getString(R.string.description_2), R.drawable.ic_order_confirmed, ORDER_STATUS.get(1)));
-        orderFlowList.add(new OrderFlow(getString(R.string.order_processed), getString(R.string.description_3), R.drawable.ic_order_processed, ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4)));
-        orderFlowList.add(new OrderFlow(getString(R.string.order_pickedup), getString(R.string.description_4), R.drawable.ic_order_picked_up, ORDER_STATUS.get(5) + ORDER_STATUS.get(6)));
-        orderFlowList.add(new OrderFlow(getString(R.string.order_delivered), getString(R.string.description_5), R.drawable.ic_order_delivered, ORDER_STATUS.get(7)));
+        if (GlobalData.isSelectedOrder != null){
+                if (GlobalData.isSelectedOrder.getPickUpRestaurant()==0){
+                    orderFlowList.add(new OrderFlow(getString(R.string.order_placed), getString(R.string.description_1), R.drawable.ic_order_placed, ORDER_STATUS.get(0)));
+                    orderFlowList.add(new OrderFlow(getString(R.string.order_confirmed), getString(R.string.description_2), R.drawable.ic_order_confirmed, ORDER_STATUS.get(1)));
+                    orderFlowList.add(new OrderFlow(getString(R.string.order_processed), getString(R.string.description_3), R.drawable.ic_order_processed, ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4)));
+                    orderFlowList.add(new OrderFlow(getString(R.string.order_pickedup), getString(R.string.description_4), R.drawable.ic_order_picked_up, ORDER_STATUS.get(5) + ORDER_STATUS.get(6)));
+                    orderFlowList.add(new OrderFlow(getString(R.string.order_delivered), getString(R.string.description_5), R.drawable.ic_order_delivered, ORDER_STATUS.get(7)));
+                }else   if (GlobalData.isSelectedOrder.getPickUpRestaurant()==1){
+                    orderFlowList.add(new OrderFlow(getString(R.string.order_placed), getString(R.string.description_1), R.drawable.ic_order_placed, ORDER_STATUS.get(0)));
+                    orderFlowList.add(new OrderFlow(getString(R.string.order_confirmed), getString(R.string.description_2), R.drawable.ic_order_confirmed, ORDER_STATUS.get(1)));
+                    orderFlowList.add(new OrderFlow(getString(R.string.order_processed), getString(R.string.description_3), R.drawable.ic_order_processed, ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4)+ORDER_STATUS.get(7)+ORDER_STATUS.get(8)+ORDER_STATUS.get(9)));
+//                    orderFlowList.add(new OrderFlow(getString(R.string.order_pickedup), getString(R.string.description_4), R.drawable.ic_order_picked_up, ORDER_STATUS.get(5) + ORDER_STATUS.get(6)));
+                    orderFlowList.add(new OrderFlow(getString(R.string.order_delivered), getString(R.string.description_5), R.drawable.ic_order_delivered, ORDER_STATUS.get(7)));
+                }else {
+                    orderFlowList.add(new OrderFlow(getString(R.string.order_placed), getString(R.string.description_1), R.drawable.ic_order_placed, ORDER_STATUS.get(0)));
+                    orderFlowList.add(new OrderFlow(getString(R.string.order_confirmed), getString(R.string.description_2), R.drawable.ic_order_confirmed, ORDER_STATUS.get(1)));
+                    orderFlowList.add(new OrderFlow(getString(R.string.order_processed), getString(R.string.description_3), R.drawable.ic_order_processed, ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4)));
+                    orderFlowList.add(new OrderFlow(getString(R.string.order_pickedup), getString(R.string.description_4), R.drawable.ic_order_picked_up, ORDER_STATUS.get(5) + ORDER_STATUS.get(6)));
+                    orderFlowList.add(new OrderFlow(getString(R.string.order_delivered), getString(R.string.description_5), R.drawable.ic_order_delivered, ORDER_STATUS.get(7)));
+                }
+        }
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         orderFlowRv.setLayoutManager(manager);
@@ -355,9 +371,9 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             priceAmount = order.getInvoice().getPayable();
             currency = order.getItems().get(0).getProduct().getPrices().getCurrency();
             if (itemQuantity == 1)
-                orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.item_count) + " , " + currency + priceAmount);
+                orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.item_count) + " , " + currency + GlobalData.roundoff(priceAmount));
             else
-                orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.items_counts) + " , " + currency + priceAmount);
+                orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.items_counts) + " , " + currency +  GlobalData.roundoff(priceAmount));
 
             orderIdTxt2.setText("#000" + order.getId().toString());
             orderOtp.setText(" : " + isSelectedOrder.getOrderOtp());
@@ -475,11 +491,13 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             mMap.getUiSettings().setRotateGesturesEnabled(false);
             mMap.getUiSettings().setTiltGesturesEnabled(false);
 
-            //Map
-            String url = getUrl(isSelectedOrder.getAddress().getLatitude(), isSelectedOrder.getAddress().getLongitude()
-                    , isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
-            FetchUrl fetchUrl = new FetchUrl();
-            fetchUrl.execute(url);
+            if (isSelectedOrder.getAddress() != null) {
+                //Map
+                String url = getUrl(isSelectedOrder.getAddress().getLatitude(), isSelectedOrder.getAddress().getLongitude()
+                        , isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
+                FetchUrl fetchUrl = new FetchUrl();
+                fetchUrl.execute(url);
+            }
         }
 
     }
@@ -613,36 +631,50 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
 
                             points.add(position);
                         }
+                        if (isSelectedOrder.getAddress() != null) {
+                            LatLng location = new LatLng(isSelectedOrder.getAddress().getLatitude(), isSelectedOrder.getAddress().getLongitude());
+                            MarkerOptions markerOptions = new MarkerOptions()
+                                    .position(location).title("Source").draggable(true)
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_home_marker));
+                            sourceMarker = mMap.addMarker(markerOptions);
 
-                        LatLng location = new LatLng(isSelectedOrder.getAddress().getLatitude(), isSelectedOrder.getAddress().getLongitude());
-                        MarkerOptions markerOptions = new MarkerOptions()
-                                .position(location).title("Source").draggable(true)
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_home_marker));
-                        sourceMarker = mMap.addMarker(markerOptions);
+                            destLatLng = new LatLng(isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
+                            if (destinationMarker != null)
+                                destinationMarker.remove();
+                            MarkerOptions destMarker = new MarkerOptions()
+                                    .position(destLatLng).title("Destination").draggable(true)
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_marker));
+                            destinationMarker = mMap.addMarker(destMarker);
+                            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                            builder.include(sourceMarker.getPosition());
+                            builder.include(destinationMarker.getPosition());
+                            LatLngBounds bounds = builder.build();
+                            final int width = getResources().getDisplayMetrics().widthPixels;
+                            final int height = getResources().getDisplayMetrics().heightPixels;
+                            final int padding = (int) (width * 0.20); // offset from edges of the map in pixels
+                            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 120);
+                            mMap.moveCamera(cu);
+                            // Adding all the points in the route to LineOptions
+                            lineOptions.addAll(points);
+                            lineOptions.width(5);
+                            lineOptions.color(Color.BLACK);
 
-                        destLatLng = new LatLng(isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
-                        if (destinationMarker != null)
-                            destinationMarker.remove();
-                        MarkerOptions destMarker = new MarkerOptions()
-                                .position(destLatLng).title("Destination").draggable(true)
-                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_marker));
-                        destinationMarker = mMap.addMarker(destMarker);
-                        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                        builder.include(sourceMarker.getPosition());
-                        builder.include(destinationMarker.getPosition());
-                        LatLngBounds bounds = builder.build();
-                        final int width = getResources().getDisplayMetrics().widthPixels;
-                        final int height = getResources().getDisplayMetrics().heightPixels;
-                        final int padding = (int) (width * 0.20); // offset from edges of the map in pixels
-                        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 120);
-                        mMap.moveCamera(cu);
-                        // Adding all the points in the route to LineOptions
-                        lineOptions.addAll(points);
-                        lineOptions.width(5);
-                        lineOptions.color(Color.BLACK);
-
-                        Log.d("onPostExecute", "onPostExecute lineoptions decoded");
-
+                            Log.d("onPostExecute", "onPostExecute lineoptions decoded");
+                        }else {
+                            destLatLng = new LatLng(isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
+                            if (destinationMarker != null)
+                                destinationMarker.remove();
+                            MarkerOptions destMarker = new MarkerOptions()
+                                    .position(destLatLng).title("Destination").draggable(true)
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_marker));
+                            destinationMarker = mMap.addMarker(destMarker);
+                            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                            builder.include(destinationMarker.getPosition());
+                            LatLngBounds bounds = builder.build();
+                            final int width = getResources().getDisplayMetrics().widthPixels;
+                            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 120);
+                            mMap.moveCamera(cu);
+                        }
                     }
                 } else {
                     mMap.clear();

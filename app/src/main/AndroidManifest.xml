@@ -184,6 +184,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name="com.oyola.app.activities.TermsAndConditions"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".activities.HotelViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -264,7 +267,7 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="3aef7a5b05836cf8166f23c95e43c52517bee917" />
+            android:value="995d4db952b022cae648a19c5cf55d68cc7ad58a" />
 
         <activity
             android:name=".activities.ResetPasswordActivity"

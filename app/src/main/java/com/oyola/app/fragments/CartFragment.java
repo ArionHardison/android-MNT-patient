@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,6 +47,7 @@ import com.oyola.app.helper.CustomDialog;
 import com.oyola.app.helper.GlobalData;
 import com.oyola.app.models.AddCart;
 import com.oyola.app.models.Cart;
+import com.oyola.app.models.DeliveryOption;
 import com.oyola.app.utils.Utils;
 import com.robinhood.ticker.TickerUtils;
 
@@ -103,6 +105,10 @@ public class CartFragment extends Fragment {
     TextView promoCodeApply;
     @BindView(R.id.bottom_layout)
     LinearLayout bottomLayout;
+    @BindView(R.id.layout_order_type)
+    LinearLayout layoutOrderType;
+    @BindView(R.id.layout_order_time)
+    LinearLayout layoutOrderTime;
     public static RelativeLayout dataLayout;
     public static RelativeLayout errorLayout;
     @BindView(R.id.location_info_layout)
@@ -129,6 +135,14 @@ public class CartFragment extends Fragment {
     TextView customNotes;
     @BindView(R.id.wallet_layout)
     LinearLayout walletLayout;
+    @BindView(R.id.asap_btn)
+    Button asapBtn;
+    @BindView(R.id.schedule_btn)
+    Button scheduleBtn;
+    @BindView(R.id.pickup_btn)
+    Button pickupBtn;
+    @BindView(R.id.delivery_btn)
+    Button deliveryBtn;
     private Context context;
     private ViewGroup toolbar;
     private View toolbarLayout;
@@ -158,8 +172,15 @@ public class CartFragment extends Fragment {
     ViewSkeletonScreen skeleton;
     ConnectionHelper connectionHelper;
     Activity activity;
+    boolean mIsPickUpAvailable = false;
+    boolean mIsDeliveryAvailable = false;
+    boolean mIsPickUpSelected = false;
+    boolean mIsDeliverySelected = false;
+    boolean isActivityResultCalled = false;
 
     public static HashMap<String, String> checkoutMap;
+    OrderDeliveryTypeFragment bottomSheetTypeDialogFragment;
+    Integer mEstimatedDeliveryTime = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -173,6 +194,8 @@ public class CartFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
         ButterKnife.bind(this, view);
         connectionHelper = new ConnectionHelper(context);
+
+        bottomSheetTypeDialogFragment = new OrderDeliveryTypeFragment();
 
         /*  Intialize Global Values*/
         itemTotalAmount = view.findViewById(R.id.item_total_amount);
@@ -202,7 +225,7 @@ public class CartFragment extends Fragment {
 
 
         //Intialize address Value
-        if (GlobalData.selectedAddress != null && GlobalData.selectedAddress.getLandmark() != null) {
+       /* if (GlobalData.selectedAddress != null && GlobalData.selectedAddress.getLandmark() != null) {
             if (GlobalData.addressList.getAddresses().size() == 1)
                 addAddressTxt.setText(getString(R.string.add_address));
             else
@@ -214,7 +237,38 @@ public class CartFragment extends Fragment {
             if (viewCartItemList != null && viewCartItemList.size() != 0)
                 addressDeliveryTime.setText(viewCartItemList.get(0).getProduct().getShop().getEstimatedDeliveryTime().toString() + " Mins");
         } else if (GlobalData.addressList != null) {
-            addAddressBtn.setBackgroundResource(R.drawable.button_corner_bg_theme);
+            addAddressBtn.setBackgroundResource(R.drawable.button_curved);
+            addAddressBtn.setText(getResources().getString(R.string.add_address));
+            locationErrorSubTitle.setText(GlobalData.addressHeader);
+            selectedAddressBtn.setVisibility(View.VISIBLE);
+            locationErrorLayout.setVisibility(View.VISIBLE);
+            locationInfoLayout.setVisibility(View.GONE);
+        } else {
+            if (GlobalData.selectedAddress != null)
+                locationErrorSubTitle.setText(GlobalData.selectedAddress.getMapAddress());
+            else
+                locationErrorSubTitle.setText(GlobalData.addressHeader);
+            locationErrorLayout.setVisibility(View.VISIBLE);
+            selectedAddressBtn.setVisibility(View.GONE);
+            locationInfoLayout.setVisibility(View.GONE);
+        }*/
+        return view;
+    }
+
+    private void initializeAddressDetails() {
+        if (GlobalData.selectedAddress != null && GlobalData.selectedAddress.getLandmark() != null) {
+            if (GlobalData.addressList.getAddresses().size() == 1)
+                addAddressTxt.setText(getString(R.string.add_address));
+            else
+                addAddressTxt.setText(getString(R.string.change_address));
+//            addAddressBtn.setBackgroundResource(R.drawable.button_corner_bg_green);
+//            addAddressBtn.setText(getResources().getString(R.string.proceed_to_pay));
+            addressHeader.setText(GlobalData.selectedAddress.getType());
+            addressDetail.setText(GlobalData.selectedAddress.getMapAddress());
+            if (viewCartItemList != null && viewCartItemList.size() != 0)
+                addressDeliveryTime.setText(viewCartItemList.get(0).getProduct().getShop().getEstimatedDeliveryTime().toString() + " Mins");
+        } else if (GlobalData.addressList != null) {
+            addAddressBtn.setBackgroundResource(R.drawable.button_curved);
             addAddressBtn.setText(getResources().getString(R.string.add_address));
             locationErrorSubTitle.setText(GlobalData.addressHeader);
             selectedAddressBtn.setVisibility(View.VISIBLE);
@@ -229,7 +283,6 @@ public class CartFragment extends Fragment {
             selectedAddressBtn.setVisibility(View.GONE);
             locationInfoLayout.setVisibility(View.GONE);
         }
-        return view;
     }
 
     private void getViewCart() {
@@ -237,7 +290,7 @@ public class CartFragment extends Fragment {
         call.enqueue(new Callback<AddCart>() {
             @Override
             public void onResponse(Call<AddCart> call, Response<AddCart> response) {
-                Log.d(TAG,response.toString());
+                Log.d(TAG, response.toString());
                 skeleton.hide();
                 if (response != null && !response.isSuccessful() && response.errorBody() != null) {
                     errorLayout.setVisibility(View.VISIBLE);
@@ -289,8 +342,40 @@ public class CartFragment extends Fragment {
                                         .placeholder(R.drawable.ic_restaurant_place_holder)
                                         .error(R.drawable.ic_restaurant_place_holder))
                                 .into(restaurantImage);
-                    }
+                        if (response.body().getProductList().get(0).getProduct().getShop().getEstimatedDeliveryTime() != null) {
+                            mEstimatedDeliveryTime = response.body().getProductList().get(0).getProduct().getShop().getEstimatedDeliveryTime();
+                        }
 
+                        if (response.body().getProductList() != null && response.body().getProductList().size() > 0) {
+                            List<DeliveryOption> mList = new ArrayList<>();
+                            mList = response.body().getProductList().get(0).getProduct().getShop().getDeliveryOptionList();
+                            if (mList != null && mList.size() > 0) {
+                                for (int i = 0; i < mList.size(); i++) {
+                                    if (mList.get(i).getName().equalsIgnoreCase("Takeaway")) {
+                                        mIsPickUpAvailable = true;
+                                    }
+                                    if (mList.get(i).getName().equalsIgnoreCase("Delivery")) {
+                                        mIsDeliveryAvailable = true;
+                                    }
+                                }
+                            }
+                        }
+                        if (mIsPickUpAvailable && mIsDeliveryAvailable) {
+                            if (!isActivityResultCalled) {
+                                layoutOrderType.setVisibility(View.VISIBLE);
+                                pickupBtn.setVisibility(View.VISIBLE);
+                                deliveryBtn.setVisibility(View.VISIBLE);
+                            }
+                        } else if (mIsPickUpAvailable) {
+                            layoutOrderType.setVisibility(View.VISIBLE);
+                            pickupBtn.setVisibility(View.VISIBLE);
+                            deliveryBtn.setVisibility(View.GONE);
+                        } else if (mIsDeliveryAvailable) {
+                            layoutOrderType.setVisibility(View.GONE);
+                            locationErrorLayout.setVisibility(View.VISIBLE);
+                            initializeAddressDetails();
+                        }
+                    }
                 }
             }
 
@@ -301,8 +386,6 @@ public class CartFragment extends Fragment {
             }
         });
     }
-
-
 
     private void getViewCartWithPromocode(String promotion) {
         Call<AddCart> call = apiInterface.getViewCartPromocode(promotion);
@@ -370,6 +453,33 @@ public class CartFragment extends Fragment {
                                 .load(image_url)
                                 .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.ic_restaurant_place_holder).error(R.drawable.ic_restaurant_place_holder))
                                 .into(restaurantImage);
+
+                        if (response.body().getProductList() != null && response.body().getProductList().size() > 0) {
+                            List<DeliveryOption> mList = new ArrayList<>();
+                            mList = response.body().getProductList().get(0).getProduct().getShop().getDeliveryOptionList();
+                            if (mList != null && mList.size() > 0) {
+                                for (int i = 0; i < mList.size(); i++) {
+                                    if (mList.get(i).getName().equalsIgnoreCase("Takeaway")) {
+                                        mIsPickUpAvailable = true;
+                                    }
+                                    if (mList.get(i).getName().equalsIgnoreCase("Delivery")) {
+                                        mIsDeliveryAvailable = true;
+                                    }
+                                }
+                            }
+                        }
+                        if (mIsPickUpAvailable && mIsPickUpAvailable) {
+                            layoutOrderType.setVisibility(View.VISIBLE);
+                            pickupBtn.setVisibility(View.VISIBLE);
+                            deliveryBtn.setVisibility(View.VISIBLE);
+                        } else if (mIsPickUpAvailable) {
+                            layoutOrderType.setVisibility(View.VISIBLE);
+                            pickupBtn.setVisibility(View.VISIBLE);
+                            deliveryBtn.setVisibility(View.GONE);
+                        } else if (mIsDeliveryAvailable) {
+                            layoutOrderType.setVisibility(View.GONE);
+                            locationErrorLayout.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
             }
@@ -486,17 +596,22 @@ public class CartFragment extends Fragment {
         System.out.println("CartFragment");
         toolbar = getActivity().findViewById(R.id.toolbar);
         if (toolbar != null) {
-            toolbar.setVisibility(View.GONE);
-            dummyImageView.setVisibility(View.VISIBLE);
+            if (getArguments() != null) {
+                if (getArguments().getBoolean("show_toolbar")) {
+                    toolbar.setVisibility(View.VISIBLE);
+                }
+            } else {
+                toolbar.setVisibility(View.GONE);
+                dummyImageView.setVisibility(View.VISIBLE);
+            }
         } else {
-
             dummyImageView.setVisibility(View.GONE);
         }
-
     }
 
 
-    @OnClick({R.id.add_address_txt, R.id.add_address_btn, R.id.selected_address_btn, R.id.proceed_to_pay_btn, R.id.promo_code_apply})
+    @OnClick({R.id.add_address_txt, R.id.add_address_btn, R.id.selected_address_btn, R.id.proceed_to_pay_btn,
+            R.id.promo_code_apply, R.id.asap_btn, R.id.schedule_btn, R.id.pickup_btn, R.id.delivery_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.add_address_txt:
@@ -525,7 +640,15 @@ public class CartFragment extends Fragment {
 
 
             case R.id.proceed_to_pay_btn:
-                /**  If address is filled */
+                mIsPickUpSelected = false;
+                mIsDeliverySelected = true;
+                Bundle bundle = new Bundle();
+                bundle.putString("deliveryType", "DELIVERY");
+                bundle.putInt("estDeliveryTime", 0);
+                bottomSheetTypeDialogFragment.setArguments(bundle);
+                bottomSheetTypeDialogFragment.setCancelable(false);
+                bottomSheetTypeDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), bottomSheetTypeDialogFragment.getTag());
+
                 if (connectionHelper.isConnectingToInternet()) {
 //                    checkOut(GlobalData.getInstance().selectedAddress.getId());
                     checkoutMap = new HashMap<>();
@@ -540,9 +663,6 @@ public class CartFragment extends Fragment {
                         checkoutMap.put("wallet", "1");
                     else
                         checkoutMap.put("wallet", "0");
-                    startActivity(new Intent(context, AccountPaymentActivity.class)
-                            .putExtra("is_show_wallet", false).putExtra("is_show_cash", true));
-                    activity.overridePendingTransition(R.anim.anim_nothing, R.anim.slide_out_right);
                 } else {
                     Utils.displayMessage(activity, context, getString(R.string.oops_connect_your_internet));
                 }
@@ -553,7 +673,65 @@ public class CartFragment extends Fragment {
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
 //                activity.finish();
                 break;
+            case R.id.pickup_btn:
+                /*mIsPickUpSelected = true;
+                mIsDeliverySelected = false;
+                locationErrorLayout.setVisibility(View.GONE);
+                locationInfoLayout.setVisibility(View.GONE);
+                layoutOrderType.setVisibility(View.GONE);
+                layoutOrderTime.setVisibility(View.VISIBLE);*/
+                Bundle mBundle = new Bundle();
+                mBundle.putString("deliveryType", "PICKUP");
+                mBundle.putInt("estDeliveryTime", mEstimatedDeliveryTime);
 
+                if (connectionHelper.isConnectingToInternet()) {
+//                    checkOut(GlobalData.getInstance().selectedAddress.getId());
+                    checkoutMap = new HashMap<>();
+                    checkoutMap.put("note", "" + customNotes.getText());
+
+                    if (!promo_code.equalsIgnoreCase("")) {
+                        checkoutMap.put("promocode_id", promo_code);
+                    }
+
+                    if (useWalletChkBox.isChecked())
+                        checkoutMap.put("wallet", "1");
+                    else
+                        checkoutMap.put("wallet", "0");
+                } else {
+                    Utils.displayMessage(activity, context, getString(R.string.oops_connect_your_internet));
+                }
+
+                bottomSheetTypeDialogFragment.setArguments(mBundle);
+                bottomSheetTypeDialogFragment.setCancelable(false);
+                bottomSheetTypeDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), bottomSheetTypeDialogFragment.getTag());
+                break;
+            case R.id.delivery_btn:
+                mIsPickUpSelected = false;
+                mIsDeliverySelected = true;
+                locationErrorLayout.setVisibility(View.VISIBLE);
+                locationInfoLayout.setVisibility(View.GONE);
+                layoutOrderType.setVisibility(View.GONE);
+                layoutOrderTime.setVisibility(View.GONE);
+                initializeAddressDetails();
+                break;
+            case R.id.schedule_btn:
+                if (mIsPickUpSelected) {
+                    Toast.makeText(context, "Pickup order in schedule selected", Toast.LENGTH_SHORT).show();
+                } else if (mIsDeliverySelected) {
+                    Toast.makeText(context, "Address selected scheduled", Toast.LENGTH_SHORT).show();
+                } else {
+
+                }
+                break;
+            case R.id.asap_btn:
+                if (mIsPickUpSelected) {
+                    Toast.makeText(context, "Pickup order in asap selected", Toast.LENGTH_SHORT).show();
+                } else if (mIsDeliverySelected) {
+                    Toast.makeText(context, "Address selected asap", Toast.LENGTH_SHORT).show();
+                } else {
+
+                }
+                break;
         }
     }
 
@@ -563,9 +741,12 @@ public class CartFragment extends Fragment {
         System.out.print("CartFragment");
         if (requestCode == ADDRESS_SELECTION && resultCode == Activity.RESULT_OK) {
             System.out.print("CartFragment : Success");
+            isActivityResultCalled = true;
+            layoutOrderType.setVisibility(View.GONE);
             if (GlobalData.selectedAddress != null) {
                 locationErrorLayout.setVisibility(View.GONE);
                 locationInfoLayout.setVisibility(View.VISIBLE);
+                layoutOrderType.setVisibility(View.GONE);
                 //Intialize address Value
                 if (GlobalData.selectedAddress != null && GlobalData.selectedAddress.getLandmark() != null) {
                     if (GlobalData.addressList.getAddresses().size() == 1)
@@ -582,6 +763,7 @@ public class CartFragment extends Fragment {
             }
         } else if (requestCode == ADDRESS_SELECTION && resultCode == Activity.RESULT_CANCELED) {
             System.out.print("CartFragment : Failure");
+            isActivityResultCalled = true;
 
         } else if (requestCode == PROMOCODE_APPLY) {
             if (data != null) {

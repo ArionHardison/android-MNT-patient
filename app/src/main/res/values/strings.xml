@@ -17,6 +17,7 @@
     <string name="register_this_account">"Don't have an account?"</string>
     <string name="let_impress_you">"Let's impress you with our dishes"</string>
     <string name="hundred_restaurant">"100 Restaurants"</string>
+    <string name="your_favourites">Your Favourites</string>
     <string name="discover">"Discover"</string>
     <string name="otp">Otp</string>
     <string name="eta">ETA</string>
@@ -178,6 +179,7 @@
     <string name="please_enter_your_confirm_password">Please enter your confirm password</string>
     <string name="password_and_confirm_password_doesnot_match">Password and confirm password doesn\'t match</string>
     <string name="profile_updated_successfully">Profile updated successfully.</string>
+    <string name="updated_successfully">Updated successfully.</string>
     <string name="network_error_toast">Something went wrong</string>
     <string name="add_ons">AddOns</string>
     <string name="custom_notes">Custom Notes</string>
@@ -228,7 +230,7 @@
     <string name="scheduled">Scheduled</string>
     <string name="choose_a_date">Choose a date</string>
     <string name="choose_a_time">Choose a time</string>
-    <string name="schedule_a_ride">Scheduled Orders</string>
+    <string name="schedule_a_ride">Schedule Order</string>
     <string name="schedule_ride">Scheduled Rides</string>
     <string name="schedule_request">Schedule Request</string>
     <string name="please_select_date_time">Please select date time</string>
@@ -365,5 +367,16 @@
     <string name="no_address_found">No address found</string>
     <string name="no_geocoder_available">No geocoder available</string>
     <string name="search_here">Search here</string>
-    <string name="signup_privacy">By signing up you agree to oyola\'s Terms of Service, Privacy Policy and Content Policies</string>
+    <string name="agree_policies">By signing up you agree to Oyola\'s <u>Terms of Service</u>, <u>Privacy Policy</u> and <u>Content Policies</u></string>
+    <string name="favourite_food">Favourite Food</string>
+    <string name="done">Done</string>
+    <string name="oops_no_internet">Oops! No internet connection</string>
+    <string name="terms_and_conditions">"Terms and Conditions"</string>
+    <string name="pick_up">Pick Up</string>
+    <string name="delivery">Delivery</string>
+    <string name="schedule">Schedule</string>
+    <string name="asap">ASAP</string>
+    <string name="pick_your_order">Pick Up your order in</string>
+    <string name="delivery_content">For Self Pickup, No delivery charge</string>
+
 </resources>

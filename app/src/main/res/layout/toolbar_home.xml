@@ -65,6 +65,17 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/favourite_selection_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/_5sdp"
+            android:paddingRight="@dimen/_5sdp"
+            android:tint="@color/colorPrimary"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_favorite_light"
+            android:visibility="visible" />
+
+        <ImageView
             android:id="@+id/filter_selection_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

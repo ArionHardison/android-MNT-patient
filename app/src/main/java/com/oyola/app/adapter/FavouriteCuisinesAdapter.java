@@ -3,6 +3,9 @@ package com.oyola.app.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,12 +29,15 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.MyViewHolder> {
+/**
+ * Created by Prasanth on 18-10-2019.
+ */
+public class FavouriteCuisinesAdapter extends RecyclerView.Adapter<FavouriteCuisinesAdapter.MyViewHolder> {
     private List<Shop> list;
     private Context context;
     private Activity activity;
 
-    public RestaurantsAdapter(List<Shop> list, Context con, Activity act) {
+    public FavouriteCuisinesAdapter(List<Shop> list, Context con, Activity act) {
         this.list = list;
         this.context = con;
         this.activity = act;
@@ -40,7 +46,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.restaurant_list_item, parent, false);
+                .inflate(R.layout.favourite_list_item, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -63,8 +69,10 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
                 .load(shops.getAvatar())
                 .apply(new RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .placeholder(R.drawable.logo_app)
-                        .error(R.drawable.logo_app))
+                        .placeholder(R.drawable.ic_banner)
+                        .error(R.drawable.ic_banner))
+                .apply(RequestOptions.circleCropTransform().transforms(
+                        new CenterCrop(), new RoundedCorners(30)))
                 .into(holder.dishImg);
         holder.restaurantName.setText(shops.getName());
         holder.category.setText(shops.getDescription());
@@ -118,13 +126,16 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         public void onClick(View v) {
             if (v.getId() == itemView.getId()) {
                 GlobalData.selectedShop = list.get(getAdapterPosition());
-                if (!GlobalData.selectedShop.getShopstatus().equalsIgnoreCase("CLOSED")) {
-                    context.startActivity(new Intent(context, HotelViewActivity.class)
-                            .putExtra("position", getAdapterPosition()).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
-                    list.get(getAdapterPosition()).getCuisines();
-                } else
-                    Toast.makeText(context, context.getResources().getString(R.string.the_shop_is_closed), Toast.LENGTH_SHORT).show();
+                if (GlobalData.selectedShop.getShopstatus() != null) {
+                    if (!GlobalData.selectedShop.getShopstatus().equalsIgnoreCase("CLOSED")) {
+                        context.startActivity(new Intent(context, HotelViewActivity.class)
+                                .putExtra("position", getAdapterPosition()).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
+                        list.get(getAdapterPosition()).getCuisines();
+                    } else {
+                        Toast.makeText(context, context.getResources().getString(R.string.the_shop_is_closed), Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         }
     }

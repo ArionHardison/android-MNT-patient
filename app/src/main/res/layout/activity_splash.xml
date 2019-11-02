@@ -14,5 +14,6 @@
         android:scaleType="centerInside"
         android:src="@drawable/logo_app" />
 
+
 </RelativeLayout>
 

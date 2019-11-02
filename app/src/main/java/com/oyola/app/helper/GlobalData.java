@@ -65,7 +65,8 @@ public class GlobalData {
     public static List<DisputeMessage> disputeMessageList;
     public static List<Order> pastOrderList;
     public static AddressList addressList = null;
-    public static List<String> ORDER_STATUS = Arrays.asList("ORDERED", "RECEIVED", "ASSIGNED", "PROCESSING", "REACHED", "PICKEDUP", "ARRIVED", "COMPLETED");
+    public static List<String> ORDER_STATUS = Arrays.asList("ORDERED", "RECEIVED", "ASSIGNED",
+            "PROCESSING", "REACHED", "PICKEDUP", "ARRIVED","SCHEDULED","PICKUP_USER","READY", "COMPLETED");
 
     public static Shop selectedShop;
     public static DisputeMessage isSelectedDispute;
@@ -101,7 +102,6 @@ public class GlobalData {
     }
 
     public static double roundoff(double data) {
-
         double value = Math.round(data);
         return value;
     }

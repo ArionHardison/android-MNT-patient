@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="@string/add_custom_notes"
         android:padding="@dimen/activity_vertical_margin_half"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorPink"
         android:textSize="@dimen/text_medium"
         tools:ignore="MissingPrefix" />
 
@@ -35,7 +35,7 @@
         android:id="@+id/custom_note_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="@color/colorPink"
         android:text="@string/submit"
         android:textColor="@color/colorWhite" />
 

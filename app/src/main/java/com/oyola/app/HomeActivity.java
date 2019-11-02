@@ -99,6 +99,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
 
     FusedLocationProviderClient mFusedLocationClient;
     boolean is_ChangeLanguage = false;
+    boolean mIsFromSignup = false;
     Retrofit retrofit;
     FragmentTransaction transaction;
 
@@ -112,7 +113,11 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
 
         is_ChangeLanguage = getIntent().getBooleanExtra("change_language", false);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            mIsFromSignup = bundle.getBoolean("isFromSignUp");
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                     ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -209,6 +214,10 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
             bottomNavigation.setCurrentItem(3);
         } else {
             fragment = new HomeFragment();
+            Bundle mBundle = new Bundle();
+            mBundle.putBoolean("isFromSignUp", mIsFromSignup);
+            fragment.setArguments(mBundle);
+
             transaction.add(R.id.main_container, fragment).commit();
             bottomNavigation.setCurrentItem(0);
         }
@@ -220,6 +229,9 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
                 switch (position) {
                     case 0:
                         fragment = new HomeFragment();
+                        Bundle mBundle = new Bundle();
+                        mBundle.putBoolean("isFromSignUp", mIsFromSignup);
+                        fragment.setArguments(mBundle);
                         break;
                     case 1:
                         fragment = new SearchFragment();

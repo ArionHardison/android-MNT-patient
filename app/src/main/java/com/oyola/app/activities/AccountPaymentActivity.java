@@ -4,13 +4,17 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -75,7 +79,7 @@ import static com.oyola.app.helper.GlobalData.isCardChecked;
 //import com.google.android.gms.wallet.Cart;
 //import com.google.android.gms.wallet.LineItem;
 
-public class AccountPaymentActivity extends AppCompatActivity  {
+public class AccountPaymentActivity extends AppCompatActivity {
 //    public class AccountPaymentActivity extends AppCompatActivity implements PaymentMethodNonceCreatedListener,
 //            BraintreeCancelListener, BraintreeErrorListener, DropInResult.DropInResultListener {
 
@@ -90,6 +94,8 @@ public class AccountPaymentActivity extends AppCompatActivity  {
     NumberFormat numberFormat = GlobalData.getNumberFormat();
     @BindView(R.id.add_new_cart)
     TextView addNewCart;
+    @BindView(R.id.total_pay_amount)
+    TextView mTxtTotalPayAmount;
 
 //    //Braintree integration
 //    private static final String KEY_AUTHORIZATION = "com.braintreepayments.demo.KEY_AUTHORIZATION";
@@ -126,6 +132,9 @@ public class AccountPaymentActivity extends AppCompatActivity  {
     public static Button proceedToPayBtn;
     boolean isWalletVisible = false;
     boolean isCashVisible = false;
+    Integer mEstimatedDeliveryTime = 0;
+    String mRestaurantType = "";
+    boolean mIsImmediate = false;
 
 
     @Override
@@ -151,6 +160,9 @@ public class AccountPaymentActivity extends AppCompatActivity  {
         });
         isWalletVisible = getIntent().getBooleanExtra("is_show_wallet", false);
         isCashVisible = getIntent().getBooleanExtra("is_show_cash", false);
+        mIsImmediate = getIntent().getBooleanExtra("is_immediate", false);
+        mEstimatedDeliveryTime = getIntent().getIntExtra("est_delivery_time", 0);
+        mRestaurantType = getIntent().getStringExtra("delivery_type");
 
 
         cardArrayList = new ArrayList<>();
@@ -203,7 +215,6 @@ public class AccountPaymentActivity extends AppCompatActivity  {
             }
         });
 
-
 //        if (savedInstanceState != null) {
 //            if (savedInstanceState.containsKey(KEY_NONCE)) {
 //                mNonce = savedInstanceState.getParcelable(KEY_NONCE);
@@ -225,8 +236,17 @@ public class AccountPaymentActivity extends AppCompatActivity  {
                     GlobalData.profileModel.setWalletBalance(response.body().getUser().getWalletBalance());
                     GlobalData.isSelectedOrder = new Order();
                     GlobalData.isSelectedOrder = response.body();
-                    startActivity(new Intent(context, CurrentOrderDetailActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                    finish();
+                    if (mRestaurantType.equalsIgnoreCase("PICKUP")) {
+                        if (mIsImmediate) {
+                            showPickUpSuccessDialog();
+                        } else {
+                            startActivity(new Intent(context, CurrentOrderDetailActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                            finish();
+                        }
+                    } else {
+                        startActivity(new Intent(context, CurrentOrderDetailActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        finish();
+                    }
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
@@ -429,147 +449,29 @@ public class AccountPaymentActivity extends AppCompatActivity  {
         }
     }
 
-//    @Override
-//    public void onResult(DropInResult result) {
-//
-//        mPaymentMethodType = result.getPaymentMethodType();
-//
-//        mPaymentMethodIcon.setImageResource(result.getPaymentMethodType().getDrawable());
-//        if (result.getPaymentMethodNonce() != null) {
-//            displayResult(result.getPaymentMethodNonce(), result.getDeviceData());
-//        } else if (result.getPaymentMethodType() == PaymentMethodType.ANDROID_PAY) {
-//            mPaymentMethodTitle.setText(PaymentMethodType.ANDROID_PAY.getLocalizedName());
-//            mPaymentMethodDescription.setText("");
-//            mPaymentMethod.setVisibility(VISIBLE);
-//        }
-//
-//    }
-//
-//    @Override
-//    public void onCancel(int requestCode) {
-//
-//    }
-//
-//    @Override
-//    public void onError(Exception error) {
-//
-//    }
-//
-//    @Override
-//    public void onPaymentMethodNonceCreated(PaymentMethodNonce paymentMethodNonce) {
-//        displayResult(paymentMethodNonce, null);
-//        safelyCloseLoadingView();
-//        if (mShouldMakePurchase) {
-//            purchase(null);
-//        }
-//
-//    }
-//
-//
-//    public void purchase(View v) {
-//        if (mPaymentMethodType == PaymentMethodType.ANDROID_PAY && mNonce == null) {
-//            ArrayList<CountrySpecification> countries = new ArrayList<>();
-//            for (String countryCode : Settings.getAndroidPayAllowedCountriesForShipping(this)) {
-//                countries.add(new CountrySpecification(countryCode));
-//            }
-//
-//            mShouldMakePurchase = true;
-//
-//            AndroidPay.requestAndroidPay(mBraintreeFragment, getAndroidPayCart(),
-//                    Settings.isAndroidPayShippingAddressRequired(this),
-//                    Settings.isAndroidPayPhoneNumberRequired(this), countries);
-//        } else {
-//            Intent intent = new Intent(this, CreateTransactionActivity.class)
-//                    .putExtra(CreateTransactionActivity.EXTRA_PAYMENT_METHOD_NONCE, mNonce);
-//            startActivity(intent);
-//
-//
-//            mPurchased = true;
-//        }
-//    }
-//
-//    private void displayResult(PaymentMethodNonce paymentMethodNonce, String deviceData) {
-//        mNonce = paymentMethodNonce;
-//        mPaymentMethodType = PaymentMethodType.forType(mNonce);
-//
-//        mPaymentMethodIcon.setImageResource(PaymentMethodType.forType(mNonce).getDrawable());
-//        mPaymentMethodTitle.setText(paymentMethodNonce.getTypeLabel());
-//        mPaymentMethodDescription.setText(paymentMethodNonce.getDescription());
-//        mPaymentMethod.setVisibility(VISIBLE);
-//
-//        mNonceString.setText(getString(R.string.nonce) + ": " + mNonce.getNonce());
-//        mNonceString.setVisibility(VISIBLE);
-//
-//        String details = "";
-//        if (mNonce instanceof CardNonce) {
-//            CardNonce cardNonce = (CardNonce) mNonce;
-//
-//            details = "Card Last Two: " + cardNonce.getLastTwo() + "\n";
-//            details += "3DS isLiabilityShifted: " + cardNonce.getThreeDSecureInfo().isLiabilityShifted() + "\n";
-//            details += "3DS isLiabilityShiftPossible: " + cardNonce.getThreeDSecureInfo().isLiabilityShiftPossible();
-//        } else if (mNonce instanceof PayPalAccountNonce) {
-//            PayPalAccountNonce paypalAccountNonce = (PayPalAccountNonce) mNonce;
-//
-//            details = "First name: " + paypalAccountNonce.getFirstName() + "\n";
-//            details += "Last name: " + paypalAccountNonce.getLastName() + "\n";
-//            details += "Email: " + paypalAccountNonce.getEmail() + "\n";
-//            details += "Phone: " + paypalAccountNonce.getPhone() + "\n";
-//            details += "Payer id: " + paypalAccountNonce.getPayerId() + "\n";
-//            details += "Client metadata id: " + paypalAccountNonce.getClientMetadataId() + "\n";
-//            details += "Billing address: " + formatAddress(paypalAccountNonce.getBillingAddress()) + "\n";
-//            details += "Shipping address: " + formatAddress(paypalAccountNonce.getShippingAddress());
-//        } else if (mNonce instanceof AndroidPayCardNonce) {
-//            AndroidPayCardNonce androidPayCardNonce = (AndroidPayCardNonce) mNonce;
-//
-//            details = "Underlying Card Last Two: " + androidPayCardNonce.getLastTwo() + "\n";
-//            details += "Email: " + androidPayCardNonce.getEmail() + "\n";
-//            details += "Billing address: " + formatAddress(androidPayCardNonce.getBillingAddress()) + "\n";
-//            details += "Shipping address: " + formatAddress(androidPayCardNonce.getShippingAddress());
-//        } else if (mNonce instanceof VenmoAccountNonce) {
-//            VenmoAccountNonce venmoAccountNonce = (VenmoAccountNonce) mNonce;
-//
-//            details = "Username: " + venmoAccountNonce.getUsername();
-//        }
-//
-//        mNonceDetails.setText(details);
-//        mNonceDetails.setVisibility(VISIBLE);
-//
-//        mDeviceData.setText("Device Data: " + deviceData);
-//        mDeviceData.setVisibility(VISIBLE);
-//
-//        mAddPaymentMethodButton.setVisibility(GONE);
-//        mPurchaseButton.setEnabled(true);
-//    }
-//
-//    private void clearNonce() {
-//        mPaymentMethod.setVisibility(GONE);
-//        mNonceString.setVisibility(GONE);
-//        mNonceDetails.setVisibility(GONE);
-//        mDeviceData.setVisibility(GONE);
-//        mPurchaseButton.setEnabled(false);
-//    }
-
-//    private String formatAddress(PostalAddress address) {
-//        return address.getRecipientName() + " " + address.getStreetAddress() + " " +
-//                address.getExtendedAddress() + " " + address.getLocality() + " " + address.getRegion() +
-//                " " + address.getPostalCode() + " " + address.getCountryCodeAlpha2();
-//    }
-//
-//    private String formatAddress(UserAddress address) {
-//        if (address == null) {
-//            return "null";
-//        }
-//        return address.getName() + " " + address.getAddress1() + " " + address.getAddress2() + " " +
-//                address.getAddress3() + " " + address.getAddress4() + " " + address.getAddress5() + " " +
-//                address.getLocality() + " " + address.getAdministrativeArea() + " " + address.getPostalCode() + " " +
-//                address.getSortingCode() + " " + address.getCountryCode();
-//    }
-
-//
-//    private void safelyCloseLoadingView() {
-//        if (mLoading != null && mLoading.isShowing()) {
-//            mLoading.dismiss();
-//        }
-//    }
-
+    private void showPickUpSuccessDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(AccountPaymentActivity.this);
+        final FrameLayout frameView = new FrameLayout(AccountPaymentActivity.this);
+        builder.setView(frameView);
+        final AlertDialog alertDialog = builder.create();
+        LayoutInflater inflater = alertDialog.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.layout_order_pickup, frameView);
+        alertDialog.setCancelable(false);
+        Button mBtnOk = dialogView.findViewById(R.id.btn_ok);
+        TextView mTxtTime =
+                dialogView.findViewById(R.id.txt_time);
+        mTxtTime.setText(mEstimatedDeliveryTime + " mins");
+        mBtnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                startActivity(new Intent(context, CurrentOrderDetailActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                finish();
+            }
+        });
+        if (alertDialog.getWindow() != null) {
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+        alertDialog.show();
+    }
 }

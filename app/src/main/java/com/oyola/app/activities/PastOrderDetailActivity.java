@@ -116,9 +116,13 @@ public class PastOrderDetailActivity extends AppCompatActivity {
 
             restaurantName.setText(order.getShop().getName());
             restaurantAddress.setText(order.getShop().getAddress());
-            userAddressTitle.setText(order.getAddress().getType());
-            userAddress.setText(order.getAddress().getMapAddress());
-
+            if (order.getAddress()!=null) {
+                userAddressTitle.setText(order.getAddress().getType());
+                userAddress.setText(order.getAddress().getMapAddress());
+            }else {
+                userAddressTitle.setText("");
+                userAddress.setText("");
+            }
             //set Fragment
             orderFullViewFragment = new OrderViewFragment();
             fragmentManager = getSupportFragmentManager();

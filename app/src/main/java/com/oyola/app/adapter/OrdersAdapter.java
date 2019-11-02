@@ -122,6 +122,15 @@ public class OrdersAdapter extends SectionedRecyclerViewAdapter<OrdersAdapter.Vi
     public void onBindViewHolder(ViewHolder holder, final int section, final int relativePosition, int absolutePosition) {
         final Order object = list.get(section).getOrders().get(relativePosition);
         holder.restaurantNameTxt.setText(object.getShop().getName());
+        if (object.getPickUpRestaurant()!=null){
+            if (object.getPickUpRestaurant()==0){
+                holder.orderType.setText("Order Type : DELIVERY");
+            }else   if (object.getPickUpRestaurant()==1){
+                holder.orderType.setText("Order Type : PICKUP");
+            }else {
+                holder.orderType.setText("Order Type : DELIVERY");
+            }
+        }
         holder.restaurantAddressTxt.setText(object.getShop().getAddress());
         int lastPostion = relativePosition + 1;
         if (list.get(section).getOrders().size() == 1) {
@@ -260,7 +269,8 @@ public class OrdersAdapter extends SectionedRecyclerViewAdapter<OrdersAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView headerTxt;
-        TextView restaurantNameTxt,disputeTxt, restaurantAddressTxt, totalAmount, dishNameTxt, dateTimeTxt;
+        TextView restaurantNameTxt,disputeTxt, restaurantAddressTxt, totalAmount, dishNameTxt,
+                dateTimeTxt,orderType;
         Button reorderBtn;
         ImageView disputeStatusImage;
         View dividerLine;
@@ -282,6 +292,7 @@ public class OrdersAdapter extends SectionedRecyclerViewAdapter<OrdersAdapter.Vi
                 dishNameTxt = itemView.findViewById(R.id.dish_name);
                 dateTimeTxt = itemView.findViewById(R.id.date_time);
                 dividerLine = itemView.findViewById(R.id.divider_line);
+                orderType = itemView.findViewById(R.id.order_type);
             }
 
 

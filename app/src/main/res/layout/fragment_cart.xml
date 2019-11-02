@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorWhite">
 
 
@@ -51,7 +51,6 @@
                         android:layout_marginBottom="8dp"
                         android:layout_toEndOf="@+id/restaurant_image"
                         android:maxLines="1"
-                        android:text="Sangeetha"
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/text_medium" />
 
@@ -65,7 +64,6 @@
                         android:layout_marginTop="-5dp"
                         android:layout_toEndOf="@+id/restaurant_image"
                         android:maxLines="1"
-                        android:text="Sangeetha"
                         android:textColor="@color/colorSecondaryText"
                         android:textSize="@dimen/text_small" />
                 </RelativeLayout>
@@ -136,8 +134,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textAlignment="textEnd"
-                            tools:text="$220"
-                            android:textColor="@color/colorSecondaryText" />
+                            android:textColor="@color/colorSecondaryText"
+                            tools:text="$220" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -159,8 +157,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textAlignment="textEnd"
-                            tools:text="$20"
-                            android:textColor="@color/colorSecondaryText" />
+                            android:textColor="@color/colorSecondaryText"
+                            tools:text="$20" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -183,9 +181,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textAlignment="textEnd"
-                            tools:text="$30"
                             android:textColor="@color/colorSecondaryText"
-                            android:textSize="@dimen/text_small" />
+                            android:textSize="@dimen/text_small"
+                            tools:text="$30" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -233,8 +231,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            tools:text="$0"
-                            android:textColor="@color/colorSecondaryText" />
+                            android:textColor="@color/colorSecondaryText"
+                            tools:text="$0" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -247,8 +245,8 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/shop_discount"
                             android:gravity="start"
+                            android:text="@string/shop_discount"
                             android:textColor="@color/colorSecondaryText" />
 
                         <TextView
@@ -257,8 +255,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end"
-                            tools:text="- $30"
-                            android:textColor="@color/colorSecondaryText" />
+                            android:textColor="@color/colorSecondaryText"
+                            tools:text="- $30" />
                     </LinearLayout>
                     <!--
                                         <LinearLayout
@@ -354,10 +352,10 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:visibility="gone"
                     android:layout_height="1sp"
                     android:layout_marginTop="@dimen/activity_vertical_margin_half"
-                    android:background="#eee" />
+                    android:background="#eee"
+                    android:visibility="gone" />
 
 
             </LinearLayout>
@@ -380,7 +378,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -456,6 +454,41 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/layout_order_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/_7sdp"
+                android:visibility="visible"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingBottom="@dimen/_7sdp">
+
+
+                <Button
+                    android:id="@+id/pickup_btn"
+                    style="@style/ButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:text="@string/pick_up"
+                    android:textColor="@color/colorTextWhite" />
+
+                <Button
+                    android:id="@+id/delivery_btn"
+                    style="@style/ButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:text="@string/delivery"
+                    android:textColor="@color/colorTextWhite"
+                    android:visibility="visible" />
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/location_error_layout"
@@ -502,29 +535,66 @@
 
                     <Button
                         android:id="@+id/add_address_btn"
+                        style="@style/ButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_margin="@dimen/_5sdp"
                         android:layout_weight="1"
-                        android:background="@drawable/button_corner_bg_theme"
                         android:text="@string/add_address"
-                        android:textColor="@color/colorTextWhite" />
+                        android:textColor="@color/colorTextWhite"
+                        android:visibility="visible" />
+
 
                     <Button
                         android:id="@+id/selected_address_btn"
+                        style="@style/ButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_margin="@dimen/_5sdp"
                         android:layout_weight="1"
-                        android:background="@drawable/button_corner_bg_green"
                         android:text="@string/select_address"
                         android:textColor="@color/colorTextWhite"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
                 </LinearLayout>
 
             </RelativeLayout>
 
+            <LinearLayout
+                android:id="@+id/layout_order_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/_7sdp"
+                android:visibility="gone"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingBottom="@dimen/_7sdp">
+
+                <Button
+                    android:id="@+id/schedule_btn"
+                    style="@style/ButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:text="@string/schedule"
+                    android:textColor="@color/colorTextWhite" />
+
+
+                <Button
+                    android:id="@+id/asap_btn"
+                    style="@style/ButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:layout_weight="1"
+                    android:text="@string/asap"
+                    android:textColor="@color/colorTextWhite"
+                    android:visibility="visible" />
+
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/dummy_image_view"

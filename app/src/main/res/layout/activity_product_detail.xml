@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:fitsSystemWindows="true"
+       android:background="@color/colorWhite"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -66,7 +67,8 @@
         android:layout_height="@dimen/_45sdp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:background="@color/colorGreen"
+        android:layout_margin="@dimen/_5sdp"
+        style="@style/ButtonStyle"
         android:gravity="center_vertical"
         android:paddingBottom="@dimen/_5sdp"
         android:paddingLeft="@dimen/activity_vertical_margin"

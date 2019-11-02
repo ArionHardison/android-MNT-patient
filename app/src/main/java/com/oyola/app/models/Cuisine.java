@@ -15,6 +15,9 @@ public class Cuisine {
     @SerializedName("pivot")
     @Expose
     private Pivot pivot;
+    @SerializedName("is_selected")
+    @Expose
+    private boolean selected = false;
 
     public Integer getId() {
         return id;
@@ -40,4 +43,11 @@ public class Cuisine {
         this.pivot = pivot;
     }
 
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 }

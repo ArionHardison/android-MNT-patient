@@ -13,6 +13,9 @@ public class RestaurantsData {
     @SerializedName("banners")
     @Expose
     private List<Banner> banners = null;
+    @SerializedName("favorite_cuisine_shop")
+    @Expose
+    private List<Shop> favouriteCuisines = null;
 
     public List<Shop> getShops() {
         return shops;
@@ -30,4 +33,11 @@ public class RestaurantsData {
         this.banners = banners;
     }
 
+    public List<Shop> getFavouriteCuisines() {
+        return favouriteCuisines;
+    }
+
+    public void setFavouriteCuisines(List<Shop> favouriteCuisines) {
+        this.favouriteCuisines = favouriteCuisines;
+    }
 }

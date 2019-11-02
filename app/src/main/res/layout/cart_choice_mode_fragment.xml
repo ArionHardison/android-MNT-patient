@@ -98,9 +98,10 @@
             android:layout_height="@dimen/_32sdp"
             android:layout_margin="@dimen/activity_vertical_margin"
             android:layout_weight="1"
-            android:background="@drawable/button_corner_radius_green"
+            android:tint="@color/colorButton"
+            android:background="@drawable/button_corner_radius_red"
             android:text="@string/i_will_choose"
-            android:textColor="@color/colorGreen" />
+            android:textColor="@color/colorButton" />
 
         <Button
             android:id="@+id/repeat_btn"
@@ -108,7 +109,7 @@
             android:layout_height="@dimen/_32sdp"
             android:layout_margin="@dimen/activity_vertical_margin"
             android:layout_weight="1"
-            android:background="@drawable/button_corner_bg_green"
+            style="@style/ButtonStyle"
             android:text="@string/repeat"
             android:textColor="@color/colorWhite" />
 

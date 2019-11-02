@@ -32,6 +32,7 @@
     </array>
 
     <color name="colorBlack">#000000</color>
+    <color name="colorGrey">#D3D3D3</color>
     <color name="colorDivider">#BDBDBD</color>
     <color name="colorEmailLogin">#636363</color>
     <color name="colorGray">#9E9E9E</color>

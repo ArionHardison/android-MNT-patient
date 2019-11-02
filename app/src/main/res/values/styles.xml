@@ -11,11 +11,9 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
-
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
-        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/colorPrimary
-        </item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="windowNoTitle">true</item>
     </style>
 
