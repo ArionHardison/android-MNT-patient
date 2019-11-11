@@ -85,7 +85,7 @@ public class OrderDeliveryTypeFragment extends BottomSheetDialogFragment {
         dialog.setContentView(contentView);
         ButterKnife.bind(this, contentView);
         myCalendar = Calendar.getInstance();
-        myCalendar.setTimeInMillis(System.currentTimeMillis()+30*60*1000);
+        myCalendar.setTimeInMillis(System.currentTimeMillis() + 30 * 60 * 1000);
         dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -101,9 +101,9 @@ public class OrderDeliveryTypeFragment extends BottomSheetDialogFragment {
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                 myCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
                 myCalendar.set(Calendar.MINUTE, selectedMinute);
-                if (myCalendar.getTimeInMillis()>System.currentTimeMillis()){
+                if (myCalendar.getTimeInMillis() > System.currentTimeMillis()) {
                     time.setText(mSimpleTimeFormat.format(myCalendar.getTime()));
-                }else {
+                } else {
                     Toast.makeText(mContext, "Please select future time", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -113,18 +113,18 @@ public class OrderDeliveryTypeFragment extends BottomSheetDialogFragment {
         date.setText(mSimpleDateFormat.format(myCalendar.getTime()));
         time.setText(mSimpleTimeFormat.format(myCalendar.getTime()));
 
-        if (mRestaurantType.equalsIgnoreCase("PICKUP")){
+        if (mRestaurantType.equalsIgnoreCase("PICKUP")) {
             mTxtDeliveryContent.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             mTxtDeliveryContent.setVisibility(View.GONE);
         }
     }
 
-    @OnClick({R.id.schedule_btn, R.id.asap_btn, R.id.imgBack, R.id.date, R.id.time, R.id.btn_done})
+    @OnClick({R.id.schedule_btn, R.id.asap_btn, R.id.tvClose, R.id.imgBack, R.id.date, R.id.time, R.id.btn_done})
     public void onCLick(View v) {
         switch (v.getId()) {
             case R.id.schedule_btn:
-                mImgBack.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.ic_back));
+                mImgBack.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_back));
                 mLayOrderTime.setVisibility(View.GONE);
                 mLaySchedule.setVisibility(View.VISIBLE);
                 break;
@@ -138,12 +138,13 @@ public class OrderDeliveryTypeFragment extends BottomSheetDialogFragment {
                 }
 
                 break;
+            case R.id.tvClose:
             case R.id.imgBack:
                 if (mLaySchedule.getVisibility() == View.VISIBLE) {
                     mLayOrderTime.setVisibility(View.VISIBLE);
                     mLaySchedule.setVisibility(View.GONE);
 //                    mImgBack.setImageResource(R.drawable.ic_close_black);
-                    mImgBack.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.ic_close_black));
+                    mImgBack.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_close_black));
                 } else if (mLayOrderTime.getVisibility() == View.VISIBLE) {
                     dismiss();
                 }
@@ -156,7 +157,7 @@ public class OrderDeliveryTypeFragment extends BottomSheetDialogFragment {
                 break;
             case R.id.btn_done:
                 dismiss();
-                String mSelectedTime=mServerTimeFormat.format(myCalendar.getTime());
+                String mSelectedTime = mServerTimeFormat.format(myCalendar.getTime());
                 if (mRestaurantType.equalsIgnoreCase("PICKUP")) {
                     checkoutMap.put("pickup_from_restaurants", "1");
                     checkoutMap.put("delivery_date", mSelectedTime);
