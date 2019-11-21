@@ -24,6 +24,7 @@
     <string name="call">Call</string>
     <string name="offers_near_you">"Offers Near You"</string>
     <string name="filter">Filter</string>
+    <string name="offers">Offers</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="manage_address">Manage Address</string>
     <string name="payment">Payment</string>
@@ -43,12 +44,14 @@
     <string name="work">"Work"</string>
     <string name="other">"Other"</string>
     <string name="save">"Save"</string>
+    <string name="save_proceed">Save And Proceed</string>
     <string name="saved_addresses">"Saved Addresses"</string>
     <string name="edit">"Edit"</string>
     <string name="delete">"Delete"</string>
     <string name="delete_confirm">"Do you really want to delete?"</string>
     <string name="orders">"Orders"</string>
     <string name="apply_filter">"Apply Filter"</string>
+    <string name="view_results">View Results"</string>
 
     <string name="large_text">
         "Material is the metaphor.\n"
@@ -73,14 +76,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="next">Next</string>
-    <string name="verification_code_txt">Verification Code</string>
+    <string name="verification_code_txt">Enter Verification Code</string>
     <string name="continue_txt">Continue</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="new_password">New Password</string>
     <string name="change">Change</string>
     <string name="register">Register</string>
-    <string name="cart_error_title">Good food is always getting cooked</string>
-    <string name="cart_error_description">Please order the dishes</string>
+    <string name="cart_error_title">Delicious Food is Getting Cooked</string>
+    <string name="cart_error_description">Please order something amazing</string>
     <string name="proceed_to_pay">Proceed to pay</string>
     <string name="add_address">Add Address</string>
     <string name="change_address">Change Address</string>
@@ -90,7 +93,7 @@
     <string name="enter_secret_key">Enter your secret key</string>
     <string name="account">Account</string>
     <string name="login_or_sign_up_to_place_order">Login or Signup to place your order</string>
-    <string name="please_login_and_order_dishes">Please login and order our dishes</string>
+    <string name="please_login_and_order_dishes">Please login and order something amazing</string>
     <string name="manage_address_error_title">Knock Knock ! Who\'s there ?</string>
     <string name="manage_address_error_description">Saving address helps you check out faster</string>
 
@@ -103,12 +106,26 @@
     <string name="order_delivered">Order Delivered</string>
     <string name="order_cancelled">Order Cancelled</string>
 
+    <string name="order_placed_new">Order Received</string>
+    <string name="order_scheduled_new">Order Scheduled</string>
+    <string name="order_confirmed_new">Order Accepted</string>
+    <string name="order_processed_new">Being Prepared</string>
+    <string name="order_pickedup_new">Ready for Pickup</string>
+    <string name="order_delivered_new">Arrived</string>
+    <string name="order_cancelled_new">Order Cancelled</string>
+
     <!--Order Flow Description-->
     <string name="description_1">We have received your order.</string>
     <string name="description_2">Your order has been confirmed.</string>
     <string name="description_3">Your food is getting cooked.</string>
     <string name="description_4">Your food is on its way.</string>
     <string name="description_5">Enjoy your meal.</string>
+
+    <string name="description_1_new">Your order has been received.</string>
+    <string name="description_2_new">Your order has been confirmed.</string>
+    <string name="description_3_new">Your order is being prepared.</string>
+    <string name="description_4_new">Your order is ready for pickup.</string>
+    <string name="description_5_new">Your order has arrived successfully.</string>
 
     <!--Past Order Page-->
     <string name="order_delivered_successfully">Order Delivered Successfully</string>
@@ -132,7 +149,7 @@
     <string name="pay">pay</string>
     <string name="promo_apply_text">Apply promo code to avail exciting offers</string>
     <string name="apply">Apply</string>
-    <string name="promocode">Promocode</string>
+    <string name="promocode">Promo Code</string>
     <string name="use_wallet">Use wallet</string>
     <string name="google_login_failed">Google login failed</string>
     <string name="dispute">Dispute</string>
@@ -192,7 +209,11 @@
     <string name="remove_item_from_cart">Remove item from cart</string>
     <string name="remove_item_from_cart_description">The item has multiple customization added.Proceed to cart to remove item?</string>
     <string name="add_custom_notes">Add Custom Notes</string>
+    <string name="add_special_instructions">Add special instruction</string>
+    <string name="search_favourite">Search for your favourite kitchen or food</string>
     <string name="featured_products">Featured Products</string>
+    <string name="featured_items">Featured Items</string>
+    <string name="order_summary">Order Summary</string>
     <string name="reorder_confirm_message">Your cart contains dishes from %1$s. Do you want to discard the selection and add dishes from %2$s ?</string>
     <string name="no_result">No Results</string>
     <string name="what_is_love">what is love</string>
@@ -209,7 +230,8 @@
     <string name="dispute_reason_description">Are you facing any issue which we can assist with? Please reach out to us we will be happy to help !</string>
     <string name="chat_us">Chat us</string>
     <string name="call_us">Call us</string>
-    <string name="please_type_verification_code">Please type the verification code</string>
+    <string name="please_type_verification_code">Type the verification code sent to your phone </string>
+    <string name="phone">phone </string>
     <string name="did_not_get_otp">Didn\'t get the OTP</string>
     <string name="resend_otp">Resend OTP</string>
     <string name="add_item">Add Item</string>
@@ -257,14 +279,15 @@
     <string name="chage_password">Change Password</string>
     <string name="my_account_profile">Manage Address, Favorites, Payment, Orders, Change Password</string>
     <string name="item_total">Item Total</string>
-    <string name="delivery_fees">Delivery Fees</string>
-    <string name="service_tax">Service Tax</string>
+    <string name="sub_total">Sub Total</string>
+    <string name="delivery_fees">Delivery Fee</string>
+    <string name="service_tax">Service Fee</string>
     <string name="promo_code">Promo Code</string>
     <string name="shop_discount">Shop Discount</string>
+    <string name="discount">Discount</string>
     <string name="delivery_charges">Delivery Charges</string>
     <string name="promocode_amount">Promocode amount</string>
     <string name="wallet_detection">Wallet Detection</string>
-    <string name="total">Total</string>
     <string name="order_details">DETAILS</string>
     <string name="order_help">HELP</string>
     <string name="connect_with_social">Connect with social</string>
@@ -280,7 +303,9 @@
     <string name="please_selecct_your_card">Please select your card</string>
     <string name="save_delivery_location">Save delivery location</string>
     <string name="house_flat_no">House / Flat No</string>
+    <string name="number">Number</string>
     <string name="landmark">Landmark</string>
+    <string name="street">Street</string>
     <string name="save_as">Save As</string>
     <string name="skip">Skip</string>
     <string name="update_address">Update Address</string>
@@ -296,6 +321,7 @@
     <string name="view_cart_txt">View Cart</string>
     <string name="items_counts">Items</string>
     <string name="to_pay">To Pay</string>
+    <string name="total">Total</string>
     <string name="enter_your_notes">Enter your notes.</string>
     <string name="you_seem_location">You Seem to be in a new Location</string>
     <string name="enable_location_services">Enable Location Services</string>
@@ -338,15 +364,19 @@
         <item>@string/welcome_title_4</item>
     </string-array>
     <string-array name="walk_through_description">
-        <item>@string/order_anything</item>
-        <item>@string/order_anything</item>
-        <item>@string/order_anything</item>
-        <item>@string/track_orders</item>
+        <item>@string/welcome_description_1</item>
+        <item>@string/welcome_description_2</item>
+        <item>@string/welcome_description_3</item>
+        <item>@string/welcome_description_4</item>
     </string-array>
-    <string name="welcome_title_1">Find where to eat</string>
-    <string name="welcome_title_2">Place your order</string>
-    <string name="welcome_title_3">Get your order</string>
-    <string name="welcome_title_4">Track your order and enjoy!</string>
+    <string name="welcome_title_1">Find local kitchens</string>
+    <string name="welcome_title_2">Order now or Order ahead</string>
+    <string name="welcome_title_3">Fast and Free Delivery</string>
+    <string name="welcome_title_4">Track your Order and Enjoy</string>
+    <string name="welcome_description_1">Order anything you crave from \n amazing cooks around you</string>
+    <string name="welcome_description_2">Place your order and make your day \n delicious</string>
+    <string name="welcome_description_3">Delivery is almost always free! \n Hey, you can Pick up too!</string>
+    <string name="welcome_description_4">Track your orders in real-time and \n enjoy delicious home cooked food.</string>
     <string name="order_anything">Order anything you want from your favorite restaurant</string>
     <string name="track_orders">Track your orders while the food is arriving and rate</string>
     <string name="get_started">Get started</string>
@@ -354,8 +384,9 @@
     <string name="login_google">Continue with Google</string>
     <string name="login_mobile">Continue with Mobile</string>
     <string name="login_later">I will Log In later</string>
-    <string name="welcome_user">Hi, %s</string>
-    <string name="set_location">Set your location to start exploring specialist kitchens around you</string>
+    <string name="welcome_user">Hi,</string>
+    <string name="set_location1">Experience a wide range of healthy meals prepared fresh for you.</string>
+    <string name="set_location2">Set your location to start exploring specialist kitchens around you</string>
     <string name="use_current_location">Use current location</string>
     <string name="set_location_manually">or set location manually</string>
     <string name="select_location">Select location</string>
@@ -368,7 +399,7 @@
     <string name="no_geocoder_available">No geocoder available</string>
     <string name="search_here">Search here</string>
     <string name="agree_policies">By signing up you agree to Oyola\'s <u>Terms of Service</u>, <u>Privacy Policy</u> and <u>Content Policies</u></string>
-    <string name="favourite_food">Favourite Food</string>
+    <string name="favourite_food">Your favourites?</string>
     <string name="done">Done</string>
     <string name="oops_no_internet">Oops! No internet connection</string>
     <string name="terms_and_conditions">"Terms and Conditions"</string>

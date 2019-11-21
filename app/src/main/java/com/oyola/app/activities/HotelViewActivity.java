@@ -483,7 +483,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
                     Category category = new Category();
                     featureProductList = new ArrayList<>();
                     featureProductList = response.body().getFeaturedProducts();
-                    category.setName(getResources().getString(R.string.featured_products));
+                    category.setName(getResources().getString(R.string.featured_items));
                     category.setProducts(featureProductList);
                     categoryList.add(category);
                     categoryList.addAll(response.body().getCategories());

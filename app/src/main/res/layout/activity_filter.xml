@@ -91,6 +91,6 @@
         android:background="@color/colorAccent"
         android:clickable="false"
         android:enabled="false"
-        android:text="@string/apply_filter"
+        android:text="@string/view_results"
         android:textColor="@color/colorWhite" />
 </RelativeLayout>

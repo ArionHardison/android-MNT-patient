@@ -135,8 +135,8 @@ public class SearchFragment extends Fragment {
         searchCloseImg = (ImageView) toolbarLayout.findViewById(R.id.search_close_img);
         //ViewPager Adapter
         adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFragment(new RestaurantSearchFragment(), "RESTAURANT");
-        adapter.addFragment(new ProductSearchFragment(), "DISHES");
+        adapter.addFragment(new RestaurantSearchFragment(), "KITCHEN");
+        adapter.addFragment(new ProductSearchFragment(), "FOOD");
         viewPager.setOffscreenPageLimit(2);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

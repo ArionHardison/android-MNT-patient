@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_6sdp"
-            android:text="@string/sent_to_your" />
+            android:text="@string/phone" />
 
         <TextView
             android:id="@+id/mobile_number_txt"
@@ -103,6 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
+            android:visibility="gone"
             android:text="@string/did_not_get_otp" />
 
         <TextView

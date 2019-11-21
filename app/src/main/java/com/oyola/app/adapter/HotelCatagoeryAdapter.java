@@ -577,7 +577,7 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
                 dialog.dismiss();
                 HotelViewActivity.categoryList.clear();
                 Category category = new Category();
-                category.setName(context.getResources().getString(R.string.featured_products));
+                category.setName(context.getResources().getString(R.string.featured_items));
                 category.setProducts(response.body().getFeaturedProducts());
                 HotelViewActivity.categoryList.add(category);
                 HotelViewActivity.categoryList.addAll(response.body().getCategories());

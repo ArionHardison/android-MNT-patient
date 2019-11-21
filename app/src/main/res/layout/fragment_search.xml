@@ -10,9 +10,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/search_favourite_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#eee"
+            android:padding="16dp"
+            android:text="@string/search_favourite"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="@dimen/text_medium" />
+
         <!-- our tablayout to display tabs  -->
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
+            android:layout_below="@+id/search_favourite_txt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"

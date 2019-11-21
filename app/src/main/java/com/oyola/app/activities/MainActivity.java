@@ -1,10 +1,14 @@
 package com.oyola.app.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
+import com.oyola.app.HomeActivity;
 import com.oyola.app.R;
+import com.oyola.app.helper.GlobalData;
 import com.oyola.app.utils.Constants;
 
 import butterknife.BindView;
@@ -20,8 +24,9 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        initializeViewReferences();
+        ButterKnife.bind(this);
+        if (GlobalData.profileModel != null)
+            userNameText.setText("Hi," + " " + GlobalData.profileModel.getName());
     }
 
     @OnClick({R.id.ll_use_current_location, R.id.tv_set_location_manually})
@@ -39,10 +44,16 @@ public class MainActivity extends BaseActivity {
             default:
                 break;
         }
-        launchActivity(LocationPickActivity.class, bundle);
+        launchActivityForResult(SaveDeliveryLocationActivity.class, 100);
     }
 
-    private void initializeViewReferences() {
-        ButterKnife.bind(this);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Intent intent=new Intent(this, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("isFromSignUp",true);
+        startActivity(intent);
+        finish();
     }
 }

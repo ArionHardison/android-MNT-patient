@@ -24,7 +24,7 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/tv_set_location"
+        android:id="@+id/tv_set_location1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_user_name"
@@ -34,7 +34,22 @@
         android:layout_marginEnd="25dp"
         android:fontFamily="@font/nunito_regular"
         android:gravity="center"
-        android:text="@string/set_location"
+        android:text="@string/set_location1"
+        android:textColor="@color/colorSecondaryText"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_set_location2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_set_location1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="25dp"
+        android:fontFamily="@font/nunito_regular"
+        android:gravity="center"
+        android:text="@string/set_location2"
         android:textColor="@color/colorSecondaryText"
         android:textSize="14sp" />
 

@@ -39,7 +39,7 @@
         android:id="@+id/featured_product_title"
         android:textColor="@color/colorTextBlack"
         android:textSize="@dimen/text_medium"
-        android:text="@string/featured_products"
+        android:text="@string/featured_items"
         android:gravity="start|center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

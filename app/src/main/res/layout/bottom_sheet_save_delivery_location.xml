@@ -90,7 +90,7 @@
                     android:id="@+id/flat_no"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/house_flat_no"
+                    android:hint="@string/number"
                     android:inputType="textPostalAddress"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/text_medium" />
@@ -108,7 +108,7 @@
                     android:id="@+id/landmark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/landmark"
+                    android:hint="@string/street"
                     android:imeOptions="actionDone"
                     android:inputType="textPostalAddress"
                     android:textColor="@color/colorPrimaryText"
@@ -285,7 +285,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/ButtonStyle"
-            android:text="@string/save"
+            android:textAllCaps="true"
+            android:text="@string/save_proceed"
             android:textColor="@color/colorWhite" />
 
     </LinearLayout>

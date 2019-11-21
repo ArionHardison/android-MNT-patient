@@ -76,7 +76,7 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
         cuisineList1.add(cuisine1);
         cuisineList1.add(cuisine2);
         FilterModel model = new FilterModel();
-        model.setHeader("Show Restaurants With");
+        model.setHeader("Show Kitchens With");
         model.setCuisines(cuisineList1);
         modelList.add(model);
         filters = new ArrayList<>();
