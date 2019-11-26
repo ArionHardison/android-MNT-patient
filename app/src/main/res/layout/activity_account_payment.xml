@@ -109,7 +109,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/colorSecondaryText"
                     android:textSize="@dimen/text_medium"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
 
                 <ListView
@@ -117,14 +117,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <View
                         android:layout_width="match_parent"

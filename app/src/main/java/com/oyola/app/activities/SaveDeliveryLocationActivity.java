@@ -717,13 +717,15 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
         if (address.getMapAddress().isEmpty() && address.getMapAddress().equals(getResources().getString(R.string.getting_address))) {
             Toast.makeText(this, R.string.please_enter_address, Toast.LENGTH_SHORT).show();
             return false;
-        } else if (address.getBuilding().isEmpty()) {
+        }
+       /* else if (address.getBuilding().isEmpty()) {
             Toast.makeText(this, R.string.please_enter_flat, Toast.LENGTH_SHORT).show();
             return false;
         } else if (address.getLandmark().isEmpty()) {
             Toast.makeText(this, R.string.please_enter_landmark, Toast.LENGTH_SHORT).show();
             return false;
-        } else if (address.getLatitude() == null || address.getLongitude() == null) {
+        }*/
+        else if (address.getLatitude() == null || address.getLongitude() == null) {
             Toast.makeText(this, "Lat & long cannot be left blank", Toast.LENGTH_SHORT).show();
             return false;
         } else {
@@ -776,7 +778,7 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                 if (address.getType().equalsIgnoreCase("other") || address.getType().equalsIgnoreCase("")) {
                     address.setType(otherAddressHeaderEt.getText().toString());
                 }
-                if (address.getBuilding().equalsIgnoreCase("")) {
+               /* if (address.getBuilding().equalsIgnoreCase("")) {
                     Toast.makeText(context, R.string.please_enter_house_and_flat, Toast.LENGTH_SHORT).show();
                 } else if (address.getLandmark().equalsIgnoreCase("")) {
                     Toast.makeText(context, R.string.please_enter_landmark, Toast.LENGTH_SHORT).show();
@@ -788,7 +790,15 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                         updateAddress();
                     else
                         saveAddress("NO");
-                }
+                }*/
+
+                if (address.getType().equalsIgnoreCase(""))
+                    address.setType("other");
+
+                if (address.getId() != null)
+                    updateAddress();
+                else
+                    saveAddress("NO");
                 break;
             case R.id.skip_txt:
                 address.setMapAddress(addressEdit.getText().toString());

@@ -84,6 +84,12 @@ public class FavouriteCuisinesAdapter extends RecyclerView.Adapter<FavouriteCuis
         }
         if (shops.getShopstatus() != null)
             holder.tvClosedShop.setVisibility(shops.getShopstatus().equalsIgnoreCase("CLOSED") ? View.VISIBLE : View.GONE);
+     /*   {if (shops.getShopstatus().equalsIgnoreCase("CLOSED")){
+                holder.tvClosedShop.setVisibility(View.VISIBLE);
+            }else{
+                holder.tvClosedShop.setVisibility( View.GONE);
+            }
+        }*/
 
         if (shops.getRating() != null) {
             double rating = new BigDecimal(shops.getRating()).setScale(1, RoundingMode.HALF_UP).doubleValue();

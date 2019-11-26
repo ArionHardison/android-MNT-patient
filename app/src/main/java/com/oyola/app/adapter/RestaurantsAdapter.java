@@ -63,8 +63,8 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
                 .load(shops.getAvatar())
                 .apply(new RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .placeholder(R.drawable.logo_app)
-                        .error(R.drawable.logo_app))
+                        .placeholder(R.drawable.ic_banner)
+                        .error(R.drawable.ic_banner))
                 .into(holder.dishImg);
         holder.restaurantName.setText(shops.getName());
         holder.category.setText(shops.getDescription());

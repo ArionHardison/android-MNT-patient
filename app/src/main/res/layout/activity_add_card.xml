@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:background="@drawable/button_corner_bg_theme"
+        android:backgroundTint="@color/colorPrimary"
         android:text="@string/add"
         android:textColor="@android:color/white"
         android:textSize="16sp" />

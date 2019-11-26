@@ -442,7 +442,11 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                     bannerList.addAll(response.body().getBanners());
                     cuisinesRestaurantList.clear();
                     cuisinesRestaurantList.addAll(response.body().getFavouriteCuisines());
-                    restaurantCountTxt.setText("" + restaurantList.size() + " Restaurants");
+                    if (restaurantList.size()>1) {
+                        restaurantCountTxt.setText("" + restaurantList.size() + " " + getString(R.string.kitchens));
+                    }else {
+                        restaurantCountTxt.setText("" + restaurantList.size() + " " + getString(R.string.kitchen));
+                    }
                     adapterRestaurant.notifyDataSetChanged();
                     mCuisinesAdapter.notifyDataSetChanged();
                     bannerAdapter.notifyDataSetChanged();

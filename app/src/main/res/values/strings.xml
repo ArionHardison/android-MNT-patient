@@ -409,5 +409,7 @@
     <string name="asap">ASAP</string>
     <string name="pick_your_order">Pick Up your order in</string>
     <string name="delivery_content">For Self Pickup, No delivery charge</string>
+    <string name="kitchens">Kitchens</string>
+    <string name="kitchen">Kitchen</string>
 
 </resources>
