@@ -145,12 +145,13 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     Activity activity;
     boolean mIsFromSignUp = false;
     CuisineSelectFragment mFragment;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.context = getContext();
         activity = getActivity();
-        mFragment= new CuisineSelectFragment();
+        mFragment = new CuisineSelectFragment();
         mFragment.setListener(this);
 
     }
@@ -421,41 +422,42 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 //                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 } else if (response.isSuccessful()) {
-                    //Check Restaurant list
-                    if (response.body().getShops().size() == 0) {
-                        title.setVisibility(View.GONE);
-                        errorLayout.setVisibility(View.GONE);
-                    } else {
-                        title.setVisibility(View.VISIBLE);
-                        errorLayout.setVisibility(View.GONE);
-                    }
+                    if (isAdded() && isVisible() && getUserVisibleHint()) {
+                        //Check Restaurant list
+                        if (response.body().getShops().size() == 0) {
+                            title.setVisibility(View.GONE);
+                            errorLayout.setVisibility(View.GONE);
+                        } else {
+                            title.setVisibility(View.VISIBLE);
+                            errorLayout.setVisibility(View.GONE);
+                        }
 
-                    //Check Banner list
-                    if (response.body().getBanners().size() == 0 || isFilterApplied)
-                        impressiveDishesLayout.setVisibility(View.GONE);
-                    else
-                        impressiveDishesLayout.setVisibility(View.VISIBLE);
-                    GlobalData.shopList = response.body().getShops();
-                    restaurantList.clear();
-                    restaurantList.addAll(GlobalData.shopList);
-                    bannerList.clear();
-                    bannerList.addAll(response.body().getBanners());
-                    cuisinesRestaurantList.clear();
-                    cuisinesRestaurantList.addAll(response.body().getFavouriteCuisines());
-                    if (restaurantList.size()>1) {
-                        restaurantCountTxt.setText("" + restaurantList.size() + " " + getString(R.string.kitchens));
-                    }else {
-                        restaurantCountTxt.setText("" + restaurantList.size() + " " + getString(R.string.kitchen));
+                        //Check Banner list
+                        if (response.body().getBanners().size() == 0 || isFilterApplied)
+                            impressiveDishesLayout.setVisibility(View.GONE);
+                        else
+                            impressiveDishesLayout.setVisibility(View.VISIBLE);
+                        GlobalData.shopList = response.body().getShops();
+                        restaurantList.clear();
+                        restaurantList.addAll(GlobalData.shopList);
+                        bannerList.clear();
+                        bannerList.addAll(response.body().getBanners());
+                        cuisinesRestaurantList.clear();
+                        cuisinesRestaurantList.addAll(response.body().getFavouriteCuisines());
+                        if (restaurantList.size() > 1) {
+                            restaurantCountTxt.setText("" + restaurantList.size() + " " + getString(R.string.kitchens));
+                        } else {
+                            restaurantCountTxt.setText("" + restaurantList.size() + " " + getString(R.string.kitchen));
+                        }
+                        adapterRestaurant.notifyDataSetChanged();
+                        mCuisinesAdapter.notifyDataSetChanged();
+                        bannerAdapter.notifyDataSetChanged();
+                        if (cuisinesRestaurantList.size() > 0) {
+                            favouriteTitle.setVisibility(View.VISIBLE);
+                        } else {
+                            favouriteTitle.setVisibility(View.GONE);
+                        }
                     }
-                    adapterRestaurant.notifyDataSetChanged();
-                    mCuisinesAdapter.notifyDataSetChanged();
-                    bannerAdapter.notifyDataSetChanged();
-                    if (cuisinesRestaurantList.size() > 0) {
-                        favouriteTitle.setVisibility(View.VISIBLE);
-                    } else {
-                        favouriteTitle.setVisibility(View.GONE);
-                    }
-
                 }
             }
 
