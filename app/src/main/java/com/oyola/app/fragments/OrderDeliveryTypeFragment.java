@@ -57,6 +57,7 @@ public class OrderDeliveryTypeFragment extends BottomSheetDialogFragment {
     SimpleDateFormat mSimpleTimeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
     SimpleDateFormat mServerTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
     Calendar myCalendar;
+    BottomListener listener;
 
     public static OrderDeliveryTypeFragment newInstance(String mType) {
         OrderDeliveryTypeFragment typeFragment = new OrderDeliveryTypeFragment();
@@ -146,6 +147,9 @@ public class OrderDeliveryTypeFragment extends BottomSheetDialogFragment {
 //                    mImgBack.setImageResource(R.drawable.ic_close_black);
                     mImgBack.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_close_black));
                 } else if (mLayOrderTime.getVisibility() == View.VISIBLE) {
+                    if (listener!=null) {
+                        listener.onCancelClick();
+                    }
                     dismiss();
                 }
                 break;
@@ -193,5 +197,12 @@ public class OrderDeliveryTypeFragment extends BottomSheetDialogFragment {
         Calendar myCalendar = Calendar.getInstance();
         TimePickerDialog mTimePicker = new TimePickerDialog(getContext(), timeSetListener, myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE), true);
         mTimePicker.show();
+    }
+
+    public void setListener(BottomListener listener) {
+        this.listener = listener;
+    }
+    public interface BottomListener{
+        void onCancelClick();
     }
 }

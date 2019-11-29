@@ -119,9 +119,9 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textStyle="bold"
                         android:text="@string/order_summary"
-                        android:textColor="@color/colorBlack" />
+                        android:textColor="@color/colorBlack"
+                        android:textStyle="bold" />
 
 
                     <LinearLayout
@@ -147,6 +147,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/lay_delivery_fees"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -467,35 +468,54 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_7sdp"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/_7sdp"
-                android:visibility="visible"
                 android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingBottom="@dimen/_7sdp">
+                android:paddingBottom="@dimen/_7sdp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/txt_delivery_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:text="@string/delivery_content"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp"
+                    android:visibility="gone"/>
 
 
-                <Button
-                    android:id="@+id/pickup_btn"
-                    style="@style/ButtonStyle"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp"
-                    android:layout_margin="@dimen/_5sdp"
-                    android:layout_weight="1"
-                    android:text="@string/pick_up"
-                    android:textColor="@color/colorTextWhite" />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_7sdp"
+                    android:visibility="visible">
 
-                <Button
-                    android:id="@+id/delivery_btn"
-                    style="@style/ButtonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp"
-                    android:layout_margin="@dimen/_5sdp"
-                    android:layout_weight="1"
-                    android:text="@string/delivery"
-                    android:textColor="@color/colorTextWhite"
-                    android:visibility="visible" />
+                    <Button
+                        android:id="@+id/pickup_btn"
+                        style="@style/ButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:text="@string/pick_up"
+                        android:textColor="@color/colorTextWhite" />
 
+                    <Button
+                        android:id="@+id/delivery_btn"
+                        style="@style/ButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:text="@string/delivery"
+                        android:textColor="@color/colorTextWhite"
+                        android:visibility="visible" />
+
+                </LinearLayout>
             </LinearLayout>
 
             <RelativeLayout
@@ -576,9 +596,9 @@
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/_7sdp"
-                android:visibility="gone"
                 android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingBottom="@dimen/_7sdp">
+                android:paddingBottom="@dimen/_7sdp"
+                android:visibility="gone">
 
                 <Button
                     android:id="@+id/schedule_btn"
