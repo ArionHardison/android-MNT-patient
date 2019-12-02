@@ -269,9 +269,9 @@ public class MobileNumberActivity extends AppCompatActivity {
             mCountryDialCodeTextView.setText(country.getDialCode());
             country_code = country.getDialCode();
         } else {
-            mCountryFlagImageView.setImageResource(R.drawable.flag_in);
-            mCountryDialCodeTextView.setText("IN");
-            country_code = "+91";
+            mCountryFlagImageView.setImageResource(R.drawable.flag_au);
+            mCountryDialCodeTextView.setText("AU");
+            country_code = "+61";
         }
     }
 

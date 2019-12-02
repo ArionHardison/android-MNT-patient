@@ -58,7 +58,7 @@
                 android:layout_marginStart="@dimen/_6sdp"
                 android:layout_toEndOf="@+id/countryImage"
                 android:gravity="center"
-                android:text="+91"
+                android:text="+61"
                 android:textSize="@dimen/text_normal" />
 
             <EditText

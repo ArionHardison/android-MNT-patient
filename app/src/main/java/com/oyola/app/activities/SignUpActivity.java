@@ -120,7 +120,7 @@ public class SignUpActivity extends AppCompatActivity {
     @BindView(R.id.confirm_password_layout)
     RelativeLayout confirmPasswordLayout;
     private CountryPicker mCountryPicker;
-    String country_code = "+91";
+    String country_code = "+61";
     private static final int REQUEST_LOCATION = 1450;
     GoogleApiClient mGoogleApiClient;
     private String hashcode = "";
@@ -243,9 +243,9 @@ public class SignUpActivity extends AppCompatActivity {
             countryNumber.setText(country.getDialCode());
             country_code = country.getDialCode();
         } else {
-            countryImage.setImageResource(R.drawable.flag_in);
-            countryNumber.setText("IN");
-            country_code = "+91";
+            countryImage.setImageResource(R.drawable.flag_au);
+            countryNumber.setText("AU");
+            country_code = "+61";
         }
     }
 
