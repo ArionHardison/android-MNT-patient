@@ -18,6 +18,9 @@ public class Otp {
     @SerializedName("user")
     @Expose
     private String user;
+    @SerializedName("error")
+    @Expose
+    private String error;
 
     public String getMessage() {
         return message;
@@ -49,5 +52,13 @@ public class Otp {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

@@ -178,9 +178,29 @@ public class MobileNumberActivity extends AppCompatActivity {
                 customDialog.dismiss();
                 if (response.isSuccessful()) {
                     if (mIsFromSocial) {
-                        if (response.body().getUser().equalsIgnoreCase("yes")) {
-                            Toast.makeText(MobileNumberActivity.this, "Mobile number already exists", Toast.LENGTH_SHORT).show();
+                        if (response.body().getError().equalsIgnoreCase("no")) {
+                            if (response.body().getUser().equalsIgnoreCase("yes")) {
+                                Toast.makeText(MobileNumberActivity.this, "Mobile number already exists", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(MobileNumberActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(MobileNumberActivity.this, OtpActivity.class);
+                                intent.putExtra("otp", response.body().getOtp());
+                                if (response.body().getUser().equalsIgnoreCase("yes")) {
+                                    intent.putExtra("isUserExist", true);
+                                } else {
+                                    intent.putExtra("isUserExist", false);
+                                }
+                                intent.putExtra("mobile", mobileNumber);
+                                intent.putExtra("mIsFromSocial", mIsFromSocial);
+                                intent.putExtra("social_login_model", mModel);
+                                startActivity(intent);
+                                finish();
+                            }
                         } else {
+                            Toast.makeText(MobileNumberActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        if (response.body().getError().equalsIgnoreCase("no")) {
                             Toast.makeText(MobileNumberActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(MobileNumberActivity.this, OtpActivity.class);
                             intent.putExtra("otp", response.body().getOtp());
@@ -189,27 +209,15 @@ public class MobileNumberActivity extends AppCompatActivity {
                             } else {
                                 intent.putExtra("isUserExist", false);
                             }
+
                             intent.putExtra("mobile", mobileNumber);
                             intent.putExtra("mIsFromSocial", mIsFromSocial);
                             intent.putExtra("social_login_model", mModel);
                             startActivity(intent);
                             finish();
-                        }
-                    } else {
-                        Toast.makeText(MobileNumberActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MobileNumberActivity.this, OtpActivity.class);
-                        intent.putExtra("otp", response.body().getOtp());
-                        if (response.body().getUser().equalsIgnoreCase("yes")) {
-                            intent.putExtra("isUserExist", true);
                         } else {
-                            intent.putExtra("isUserExist", false);
+                            Toast.makeText(MobileNumberActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         }
-
-                        intent.putExtra("mobile", mobileNumber);
-                        intent.putExtra("mIsFromSocial", mIsFromSocial);
-                        intent.putExtra("social_login_model", mModel);
-                        startActivity(intent);
-                        finish();
                     }
                 } else {
                     try {
@@ -263,14 +271,14 @@ public class MobileNumberActivity extends AppCompatActivity {
     }
 
     private void getUserCountryInfo() {
-        Country country = Country.getCountrydetails("IN");
+        Country country = Country.getCountryFromSIM(this);
         if (country != null) {
             mCountryFlagImageView.setImageResource(country.getFlag());
             mCountryDialCodeTextView.setText(country.getDialCode());
             country_code = country.getDialCode();
         } else {
             mCountryFlagImageView.setImageResource(R.drawable.flag_au);
-            mCountryDialCodeTextView.setText("AU");
+            mCountryDialCodeTextView.setText("+61");
             country_code = "+61";
         }
     }

@@ -237,14 +237,14 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void getUserCountryInfo() {
-        Country country = Country.getCountrydetails("IN");
+        Country country = Country.getCountryFromSIM(this);
         if (country != null) {
             countryImage.setImageResource(country.getFlag());
             countryNumber.setText(country.getDialCode());
             country_code = country.getDialCode();
         } else {
             countryImage.setImageResource(R.drawable.flag_au);
-            countryNumber.setText("AU");
+            countryNumber.setText("+61");
             country_code = "+61";
         }
     }

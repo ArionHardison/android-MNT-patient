@@ -236,12 +236,12 @@ public class OtpActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<RegisterModel> call, @NonNull Response<RegisterModel> response) {
                 if (response.isSuccessful()) {
-                    if (mIsFromSocial){
+                    if (mIsFromSocial) {
                         HashMap<String, String> map = new HashMap<>();
                         map.put("login_by", mModel.getmLoginBy());
                         map.put("accessToken", mModel.getmAccessToken());
                         socialLogin(map);
-                    }else {
+                    } else {
                         HashMap<String, String> map = new HashMap<>();
                         map.put("username", mMobile);
                         map.put("password", "123456");
@@ -337,12 +337,12 @@ public class OtpActivity extends AppCompatActivity {
                     GlobalData.addressList = new AddressList();
                     GlobalData.addressList.setAddresses(response.body().getAddresses());
                     Toast.makeText(context, getResources().getString(R.string.regsiter_success), Toast.LENGTH_SHORT).show();
-                    if (mIsFromSocial){
-                        Intent intent=new Intent(context, HomeActivity.class);
+                    if (mIsFromSocial) {
+                        Intent intent = new Intent(context, HomeActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        intent.putExtra("isFromSignUp",true);
+                        intent.putExtra("isFromSignUp", true);
                         startActivity(intent);
-                    }else {
+                    } else {
                         startActivity(new Intent(context, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     }
                     finish();
@@ -380,10 +380,14 @@ public class OtpActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<Otp> call, @NonNull Response<Otp> response) {
                 customDialog.dismiss();
                 if (response.isSuccessful()) {
-                    mOtp = response.body().getOtp();
-                    Toast.makeText(context, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    otpEntryView.setText("");
-                    otpEntryView.setText(String.valueOf(mOtp));
+                    if (response.body().getError().equalsIgnoreCase("no")) {
+                        mOtp = response.body().getOtp();
+                        Toast.makeText(context, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                        otpEntryView.setText("");
+                        otpEntryView.setText(String.valueOf(mOtp));
+                    } else {
+                        Toast.makeText(OtpActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
