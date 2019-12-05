@@ -87,7 +87,7 @@ public class OrderDetailFragment extends Fragment {
             itemQuantity = order.getInvoice().getQuantity();
             itemTotalAmount.setText(currency + /*String.format("%.2f", */order.getInvoice().getGross());
             serviceTax.setText(currency + order.getInvoice().getTax() + "");
-            deliveryCharges.setText(currency + GlobalData.roundoff(order.getInvoice().getDeliveryCharge()));
+            deliveryCharges.setText(currency + order.getInvoice().getDeliveryCharge());
 
             discount = order.getInvoice().getDiscount();
 
@@ -95,7 +95,7 @@ public class OrderDetailFragment extends Fragment {
 
             promocodeAmount.setText(""+currency+"-"+order.getInvoice().getPromocode_amount());
             walletAmountDetection.setText(currency + order.getInvoice().getWalletAmount() + "");
-            totalAmount.setText(currency + GlobalData.roundoff(order.getInvoice().getPayable()));
+            totalAmount.setText(currency + order.getInvoice().getPayable());
         }
 
 

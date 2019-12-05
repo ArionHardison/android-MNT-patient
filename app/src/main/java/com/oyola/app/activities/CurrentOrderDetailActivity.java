@@ -337,19 +337,19 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                     orderFlowList.add(new OrderFlow(getString(R.string.order_confirmed_new), getString(R.string.description_2_new), R.drawable.ic_order_confirmed, ORDER_STATUS.get(1)));
                     orderFlowList.add(new OrderFlow(getString(R.string.order_processed_new), getString(R.string.description_3_new), R.drawable.ic_order_processed, ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4)));
                     orderFlowList.add(new OrderFlow(getString(R.string.order_pickedup_new), getString(R.string.description_4_new), R.drawable.ic_order_picked_up, ORDER_STATUS.get(5) + ORDER_STATUS.get(6)));
-                    orderFlowList.add(new OrderFlow(getString(R.string.order_delivered_new), getString(R.string.description_5_new), R.drawable.ic_order_delivered, ORDER_STATUS.get(7)));
+                    orderFlowList.add(new OrderFlow(getString(R.string.order_delivered_new), getString(R.string.description_5_new), R.drawable.ic_order_delivered, ORDER_STATUS.get(7)+ORDER_STATUS.get(10)));
                 }else   if (GlobalData.isSelectedOrder.getPickUpRestaurant()==1){
                     orderFlowList.add(new OrderFlow(getString(R.string.order_placed_new), getString(R.string.description_1_new), R.drawable.ic_order_placed, ORDER_STATUS.get(0)));
                     orderFlowList.add(new OrderFlow(getString(R.string.order_confirmed_new), getString(R.string.description_2_new), R.drawable.ic_order_confirmed, ORDER_STATUS.get(1)));
                     orderFlowList.add(new OrderFlow(getString(R.string.order_processed_new), getString(R.string.description_3_new), R.drawable.ic_order_processed, ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4)+ORDER_STATUS.get(7)+ORDER_STATUS.get(8)+ORDER_STATUS.get(9)));
 //                    orderFlowList.add(new OrderFlow(getString(R.string.order_pickedup), getString(R.string.description_4_new), R.drawable.ic_order_picked_up, ORDER_STATUS.get(5) + ORDER_STATUS.get(6)));
-                    orderFlowList.add(new OrderFlow(getString(R.string.order_delivered_new), getString(R.string.description_5_new), R.drawable.ic_order_delivered, ORDER_STATUS.get(7)));
+                    orderFlowList.add(new OrderFlow(getString(R.string.order_delivered_new), getString(R.string.description_5_new), R.drawable.ic_order_delivered, ORDER_STATUS.get(7)+ORDER_STATUS.get(10)));
                 }else {
                     orderFlowList.add(new OrderFlow(getString(R.string.order_placed_new), getString(R.string.description_1_new), R.drawable.ic_order_placed, ORDER_STATUS.get(0)));
                     orderFlowList.add(new OrderFlow(getString(R.string.order_confirmed_new), getString(R.string.description_2_new), R.drawable.ic_order_confirmed, ORDER_STATUS.get(1)));
                     orderFlowList.add(new OrderFlow(getString(R.string.order_processed_new), getString(R.string.description_3_new), R.drawable.ic_order_processed, ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4)));
                     orderFlowList.add(new OrderFlow(getString(R.string.order_pickedup_new), getString(R.string.description_4_new), R.drawable.ic_order_picked_up, ORDER_STATUS.get(5) + ORDER_STATUS.get(6)));
-                    orderFlowList.add(new OrderFlow(getString(R.string.order_delivered_new), getString(R.string.description_5_new), R.drawable.ic_order_delivered, ORDER_STATUS.get(7)));
+                    orderFlowList.add(new OrderFlow(getString(R.string.order_delivered_new), getString(R.string.description_5_new), R.drawable.ic_order_delivered, ORDER_STATUS.get(7)+ORDER_STATUS.get(10)));
                 }
         }
 
@@ -371,9 +371,9 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             priceAmount = order.getInvoice().getPayable();
             currency = order.getItems().get(0).getProduct().getPrices().getCurrency();
             if (itemQuantity == 1)
-                orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.item_count) + " , " + currency + GlobalData.roundoff(priceAmount));
+                orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.item_count) + " , " + currency +priceAmount);
             else
-                orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.items_counts) + " , " + currency +  GlobalData.roundoff(priceAmount));
+                orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.items_counts) + " , " + currency + priceAmount);
 
             orderIdTxt2.setText("#000" + order.getId().toString());
             orderOtp.setText(" : " + isSelectedOrder.getOrderOtp());
@@ -491,12 +491,24 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             mMap.getUiSettings().setRotateGesturesEnabled(false);
             mMap.getUiSettings().setTiltGesturesEnabled(false);
 
-            if (isSelectedOrder.getAddress() != null) {
-                //Map
-                String url = getUrl(isSelectedOrder.getAddress().getLatitude(), isSelectedOrder.getAddress().getLongitude()
-                        , isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
-                FetchUrl fetchUrl = new FetchUrl();
-                fetchUrl.execute(url);
+            if (isSelectedOrder.getPickUpRestaurant()==0) {
+                if (isSelectedOrder.getAddress() != null) {
+                    //Map
+                    String url = getUrl(isSelectedOrder.getAddress().getLatitude(), isSelectedOrder.getAddress().getLongitude()
+                            , isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
+                    FetchUrl fetchUrl = new FetchUrl();
+                    fetchUrl.execute(url);
+                }
+            }else {
+                destLatLng = new LatLng(isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
+                if (destinationMarker!=null)
+                    destinationMarker.remove();
+                MarkerOptions destMarker = new MarkerOptions()
+                        .position(destLatLng).title("Destination").draggable(true)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_marker));
+                destinationMarker = mMap.addMarker(destMarker);
+                CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(destLatLng, 14);
+                mMap.moveCamera(cu);
             }
         }
 
@@ -807,7 +819,23 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                     } else isSelectedOrder = response.body();
                     Log.i("isSelectedOrder : ", isSelectedOrder.toString());
 
-                    order_eta.setText(" : " + isSelectedOrder.getEta() + getResources().getString(R.string.order_minits));
+//                    order_eta.setText(" : " + isSelectedOrder.getEta() + getResources().getString(R.string.order_minits));
+
+                    if (isSelectedOrder.getStatus().equalsIgnoreCase("received")) {
+                        order_eta.setText(getString(R.string.eta) + " : " + isSelectedOrder.getOrderReadyTime() + " " + getResources().getString(R.string.order_minits));
+                    } else {
+                        order_eta.setText(getString(R.string.eta) + " : " + isSelectedOrder.getShop().getEstimatedDeliveryTime() + " " + getResources().getString(R.string.order_minits));
+                    }
+
+                  /*  if (isSelectedOrder.getEta() != null) {
+                        order_eta.setText(getString(R.string.eta) + " : " + isSelectedOrder.getEta() + " " + getResources().getString(R.string.order_minits));
+                    } else {
+                        if (isSelectedOrder.getStatus().equalsIgnoreCase("received")) {
+                            order_eta.setText(getString(R.string.eta) + " : " + isSelectedOrder.getOrderReadyTime() + " " + getResources().getString(R.string.order_minits));
+                        } else {
+                            order_eta.setText(getString(R.string.eta) + " : " + isSelectedOrder.getShop().getEstimatedDeliveryTime() + " " + getResources().getString(R.string.order_minits));
+                        }
+                    }*/
 
                     if (isSelectedOrder.getTransporter() != null) {
 

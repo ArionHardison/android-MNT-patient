@@ -48,6 +48,12 @@ public class AddCart {
     @SerializedName("payable")
     @Expose
     private Double payable;
+    @SerializedName("first_commission_admin")
+    @Expose
+    private Double firstCommision;
+    @SerializedName("second_commission_admin")
+    @Expose
+    private Double secondCommision;
 
 
     public Double getDeliveryCharges() {
@@ -154,4 +160,19 @@ public class AddCart {
         this.products = products;
     }
 
+    public Double getFirstCommision() {
+        return firstCommision;
+    }
+
+    public void setFirstCommision(Double firstCommision) {
+        this.firstCommision = firstCommision;
+    }
+
+    public Double getSecondCommision() {
+        return secondCommision;
+    }
+
+    public void setSecondCommision(Double secondCommision) {
+        this.secondCommision = secondCommision;
+    }
 }

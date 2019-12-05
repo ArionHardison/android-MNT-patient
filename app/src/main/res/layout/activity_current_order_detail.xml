@@ -115,6 +115,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/eta"
+                    android:visibility="gone"
                     android:textColor="@color/colorSecondaryText"
                     android:textSize="@dimen/text_small_large" />
 
@@ -243,6 +244,8 @@
             <RelativeLayout
                 android:id="@+id/map_touch_rel"
                 android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:layout_height="@dimen/_180sdp">
 
                 <fragment

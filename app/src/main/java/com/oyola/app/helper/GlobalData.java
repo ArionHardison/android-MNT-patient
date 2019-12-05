@@ -66,8 +66,8 @@ public class GlobalData {
     public static List<Order> pastOrderList;
     public static AddressList addressList = null;
     public static List<String> ORDER_STATUS = Arrays.asList("ORDERED", "RECEIVED", "ASSIGNED",
-            "PROCESSING", "REACHED", "PICKEDUP", "ARRIVED","SCHEDULED","PICKUP_USER","READY", "COMPLETED");
-
+            "PROCESSING", "REACHED", "PICKEDUP", "ARRIVED","SCHEDULED","PICKUP_USER","READY",
+            "COMPLETED","CANCELLED","'SEARCHING'");
     public static Shop selectedShop;
     public static DisputeMessage isSelectedDispute;
 

@@ -285,6 +285,8 @@
     <string name="promo_code">Promo Code</string>
     <string name="shop_discount">Shop Discount</string>
     <string name="discount">Discount</string>
+    <string name="first_comission">First Commission</string>
+    <string name="second_comission">Second Commission</string>
     <string name="delivery_charges">Delivery Charges</string>
     <string name="promocode_amount">Promocode amount</string>
     <string name="wallet_detection">Wallet Detection</string>
