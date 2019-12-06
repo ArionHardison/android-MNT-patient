@@ -154,7 +154,7 @@ public class OrderDeliveryTypeFragment extends BottomSheetDialogFragment {
                 }
                 break;
             case R.id.date:
-                datePicker(dateSetListener);
+//                datePicker(dateSetListener);
                 break;
             case R.id.time:
                 timePicker(timeSetListener);

@@ -103,7 +103,14 @@ public class PastOrderDetailActivity extends AppCompatActivity {
                 dotLineImg.setBackgroundResource(R.drawable.order_cancelled_line);
                 orderStatusTxt.setTextColor(ContextCompat.getColor(this, R.color.colorRed));
             } else {
-                orderStatusTxt.setText(getResources().getString(R.string.order_delivered_successfully_on) + getFormatTime(order.getOrdertiming().get(7).getCreatedAt()));
+                if (order.getOrdertiming()!=null&&order.getOrdertiming().size()>0){
+                    for (int i=0;i<order.getOrdertiming().size();i++){
+                        if (order.getOrdertiming().get(i).getStatus().equalsIgnoreCase("COMPLETED")){
+                            orderStatusTxt.setText(getResources().getString(R.string.order_delivered_successfully_on) + " "+getFormatTime(order.getOrdertiming().get(i).getCreatedAt()));
+                            break;
+                        }
+                    }
+                }
                 orderStatusTxt.setTextColor(ContextCompat.getColor(this, R.color.colorGreen));
                 orderSucceessImage.setImageResource(R.drawable.ic_circle_tick);
                 dotLineImg.setBackgroundResource(R.drawable.ic_line);
