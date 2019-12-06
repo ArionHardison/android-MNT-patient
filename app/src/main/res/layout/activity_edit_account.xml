@@ -76,7 +76,6 @@
         android:enabled="false"
         android:hint="@string/mobile_number"
         android:inputType="phone"
-        android:maxLength="14"
         android:textColor="@color/colorSecondaryText"
         android:textSize="@dimen/text_medium"
         app:layout_constraintEnd_toEndOf="parent"
