@@ -108,8 +108,6 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
     LinearLayout bottomLayout;
     @BindView(R.id.layout_order_type)
     LinearLayout layoutOrderType;
-    @BindView(R.id.layout_order_time)
-    LinearLayout layoutOrderTime;
     public static RelativeLayout dataLayout;
     public static RelativeLayout errorLayout;
     @BindView(R.id.location_info_layout)
@@ -136,10 +134,6 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
     TextView customNotes;
     @BindView(R.id.wallet_layout)
     LinearLayout walletLayout;
-    @BindView(R.id.asap_btn)
-    Button asapBtn;
-    @BindView(R.id.schedule_btn)
-    Button scheduleBtn;
     @BindView(R.id.pickup_btn)
     Button pickupBtn;
     @BindView(R.id.delivery_btn)
@@ -660,7 +654,7 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
 
 
     @OnClick({R.id.add_address_txt, R.id.add_address_btn, R.id.selected_address_btn, R.id.proceed_to_pay_btn,
-            R.id.promo_code_apply, R.id.asap_btn, R.id.schedule_btn, R.id.pickup_btn, R.id.delivery_btn})
+            R.id.promo_code_apply,R.id.pickup_btn, R.id.delivery_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.add_address_txt:
@@ -774,26 +768,7 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
                 locationErrorLayout.setVisibility(View.VISIBLE);
                 locationInfoLayout.setVisibility(View.GONE);
                 layoutOrderType.setVisibility(View.GONE);
-                layoutOrderTime.setVisibility(View.GONE);
                 initializeAddressDetails();
-                break;
-            case R.id.schedule_btn:
-                if (mIsPickUpSelected) {
-                    Toast.makeText(context, "Pickup order in schedule selected", Toast.LENGTH_SHORT).show();
-                } else if (mIsDeliverySelected) {
-                    Toast.makeText(context, "Address selected scheduled", Toast.LENGTH_SHORT).show();
-                } else {
-
-                }
-                break;
-            case R.id.asap_btn:
-                if (mIsPickUpSelected) {
-                    Toast.makeText(context, "Pickup order in asap selected", Toast.LENGTH_SHORT).show();
-                } else if (mIsDeliverySelected) {
-                    Toast.makeText(context, "Address selected asap", Toast.LENGTH_SHORT).show();
-                } else {
-
-                }
                 break;
         }
     }

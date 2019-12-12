@@ -413,5 +413,6 @@
     <string name="delivery_content">For Self Pickup, No delivery charge</string>
     <string name="kitchens">Kitchens</string>
     <string name="kitchen">Kitchen</string>
-
+    <string name="order_type_delivery">Order Type : DELIVERY</string>
+    <string name="order_type_takeaway">Order Type : PICKUP</string>
 </resources>

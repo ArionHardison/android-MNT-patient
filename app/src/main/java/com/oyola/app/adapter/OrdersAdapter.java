@@ -124,11 +124,11 @@ public class OrdersAdapter extends SectionedRecyclerViewAdapter<OrdersAdapter.Vi
         holder.restaurantNameTxt.setText(object.getShop().getName());
         if (object.getPickUpRestaurant()!=null){
             if (object.getPickUpRestaurant()==0){
-                holder.orderType.setText("Order Type : DELIVERY");
+                holder.orderType.setText(context1.getString(R.string.order_type_delivery));
             }else   if (object.getPickUpRestaurant()==1){
-                holder.orderType.setText("Order Type : PICKUP");
+                holder.orderType.setText(context1.getString(R.string.order_type_takeaway));
             }else {
-                holder.orderType.setText("Order Type : DELIVERY");
+                holder.orderType.setText(context1.getString(R.string.order_type_delivery));
             }
         }
         holder.restaurantAddressTxt.setText(object.getShop().getAddress());
