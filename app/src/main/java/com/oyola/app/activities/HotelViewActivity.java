@@ -35,6 +35,7 @@ import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.ViewSkeletonScreen;
 import com.oyola.app.HeaderView;
 import com.oyola.app.R;
+import com.oyola.app.adapter.CategoryAdapter;
 import com.oyola.app.adapter.HotelCatagoeryAdapter;
 import com.oyola.app.build.api.ApiClient;
 import com.oyola.app.build.api.ApiInterface;
@@ -42,6 +43,7 @@ import com.oyola.app.helper.ConnectionHelper;
 import com.oyola.app.helper.GlobalData;
 import com.oyola.app.models.AddCart;
 import com.oyola.app.models.Category;
+import com.oyola.app.models.CategoryModel;
 import com.oyola.app.models.Favorite;
 import com.oyola.app.models.Product;
 import com.oyola.app.models.Shop;
@@ -67,7 +69,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.oyola.app.adapter.HotelCatagoeryAdapter.bottomSheetDialogFragment;
 
-public class HotelViewActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
+public class HotelViewActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener,
+        CategoryAdapter.OnSelectedListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -75,6 +78,8 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
     RecyclerView recommendedDishesRv;
     @BindView(R.id.accompaniment_dishes_rv)
     RecyclerView accompanimentDishesRv;
+    @BindView(R.id.rv_category)
+    RecyclerView mRvCategory;
     @BindView(R.id.heart_btn)
     ShineButton heartBtn;
     @BindView(R.id.view_line)
@@ -135,6 +140,8 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
     public static List<Category> categoryList;
     public static List<Product> featureProductList;
     public static HotelCatagoeryAdapter catagoeryAdapter;
+    public static List<CategoryModel> mCategoryDetails;
+    public static CategoryAdapter mAdapter;
     ViewSkeletonScreen skeleton;
     boolean isFavourite = false;
 
@@ -157,6 +164,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
 
         appBarLayout.addOnOffsetChangedListener(this);
         categoryList = new ArrayList<>();
+        mCategoryDetails = new ArrayList<>();
         shops = GlobalData.selectedShop;
 
         if (shops != null) {
@@ -460,7 +468,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
                 HotelViewActivity.viewCartShopName.setVisibility(View.GONE);
 
             String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
-            HotelViewActivity.itemText.setText("" + itemQuantity + " " + getResources().getString(R.string.item_count) + " | " + currency + "" + Utils.getNewNumberFormat(priceAmount ));
+            HotelViewActivity.itemText.setText("" + itemQuantity + " " + getResources().getString(R.string.item_count) + " | " + currency + "" + Utils.getNewNumberFormat(priceAmount));
             if (HotelViewActivity.viewCartLayout.getVisibility() == View.GONE) {
                 // Start animation
                 HotelViewActivity.viewCartLayout.setVisibility(View.VISIBLE);
@@ -493,12 +501,15 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
                     accompanimentDishesRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
                     accompanimentDishesRv.setItemAnimator(new DefaultItemAnimator());
                     accompanimentDishesRv.setAdapter(catagoeryAdapter);
+
+                    setCategoryAdapter(categoryList);
                     if (GlobalData.addCart != null && GlobalData.addCart.getProductList().size() != 0) {
                         setViewcartBottomLayout(GlobalData.addCart);
                     } else {
                         viewCartLayout.setVisibility(View.GONE);
                     }
                     catagoeryAdapter.notifyDataSetChanged();
+
                 }
             }
 
@@ -511,6 +522,22 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
 
     }
 
+    private void setCategoryAdapter(List<Category> mList) {
+        mCategoryDetails = new ArrayList<>();
+        mCategoryDetails.clear();
+        mCategoryDetails.add(new CategoryModel("No Filter", true));
+        if (mList != null && mList.size() > 0) {
+            for (int i = 0; i < mList.size(); i++) {
+                if (!mList.get(i).getName().equalsIgnoreCase("Featured Items")) {
+                    mCategoryDetails.add(new CategoryModel(mList.get(i).getName(), false));
+                }
+            }
+        }
+        mAdapter = new CategoryAdapter(context, activity, mCategoryDetails, this);
+        mRvCategory.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        mRvCategory.setItemAnimator(new DefaultItemAnimator());
+        mRvCategory.setAdapter(mAdapter);
+    }
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -563,6 +590,12 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
             toolbarHeaderView.setVisibility(View.GONE);
             isHideToolbarView = !isHideToolbarView;
         }
+    }
+
+    @Override
+    public void onSelected(String data) {
+        if (catagoeryAdapter != null)
+            catagoeryAdapter.setCategoryList(data);
     }
 }
 

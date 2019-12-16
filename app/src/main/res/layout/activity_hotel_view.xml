@@ -13,8 +13,8 @@
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:fitsSystemWindows="true"
         android:background="@color/colorWhite"
+        android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -51,8 +51,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:padding="@dimen/_4sdp"
-                    android:background="#26000000">
+                    android:background="#26000000"
+                    android:padding="@dimen/_4sdp">
 
                     <TextView
                         android:id="@+id/resturantname_tv"
@@ -70,9 +70,9 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/resturantname_tv"
                         android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_3sdp"
                         android:text="Description"
                         android:textColor="#ffffff"
-                        android:layout_marginBottom="@dimen/_3sdp"
                         android:textSize="@dimen/_12sdp" />
                 </RelativeLayout>
 
@@ -437,6 +437,13 @@
                         android:orientation="vertical">
 
                         <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_category"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:orientation="horizontal" />
+
+                        <android.support.v7.widget.RecyclerView
                             android:id="@+id/accompaniment_dishes_rv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -490,15 +497,15 @@
 
     <RelativeLayout
         android:id="@+id/view_cart_layout"
+        style="@style/ButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
+        android:layout_margin="@dimen/_5sdp"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/activity_vertical_margin"
         android:paddingTop="@dimen/_5sdp"
-        style="@style/ButtonStyle"
-        android:layout_margin="@dimen/_5sdp"
         android:paddingRight="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/_5sdp"
         android:visibility="gone">

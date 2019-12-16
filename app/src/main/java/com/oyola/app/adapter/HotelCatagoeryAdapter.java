@@ -57,6 +57,7 @@ import com.robinhood.ticker.TickerView;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -73,7 +74,9 @@ import static com.oyola.app.helper.GlobalData.selectedShop;
 
 public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCatagoeryAdapter.ViewHolder> {
 
-    private List<Category> list;
+    private List<Category> mList;
+    private List<Category> mFilteredList;
+    private List<Category> mGlobalList;
     private LayoutInflater inflater;
     public static Context context;
     Activity activity;
@@ -98,7 +101,8 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
     public HotelCatagoeryAdapter(Context context, Activity activity, List<Category> list) {
         HotelCatagoeryAdapter.context = context;
         this.inflater = LayoutInflater.from(context);
-        this.list = list;
+        this.mGlobalList = list;
+        this.mList = list;
         this.activity = activity;
         if (GlobalData.addCart != null && GlobalData.addCart.getProductList().size() != 0) {
             addCart = GlobalData.addCart;
@@ -124,31 +128,31 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
 
     @Override
     public int getSectionCount() {
-        return list.size();
+        return mList.size();
     }
 
 
     @Override
     public int getItemCount(int section) {
-        return list.get(section).getProducts().size();
+        return mList.get(section).getProducts().size();
     }
 
     @Override
     public void onBindHeaderViewHolder(ViewHolder holder, final int section) {
 
-        if (list.get(section).getName().equalsIgnoreCase(context.getResources().getString(R.string.featured_products))) {
+        if (mList.get(section).getName().equalsIgnoreCase(context.getResources().getString(R.string.featured_items))) {
             holder.featureProductsTitle.setVisibility(View.VISIBLE);
             holder.categoryHeaderLayout.setVisibility(View.GONE);
         } else {
             holder.featureProductsTitle.setVisibility(View.GONE);
             holder.categoryHeaderLayout.setVisibility(View.VISIBLE);
-            holder.headerTxt.setText(list.get(section).getName());
+            holder.headerTxt.setText(mList.get(section).getName());
         }
 
         holder.headerTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(list.get(section).getName());
+                System.out.println(mList.get(section).getName());
             }
         });
     }
@@ -156,14 +160,14 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
     @SuppressLint("DefaultLocale")
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int section, final int relativePosition, int absolutePosition) {
-        Category category = list.get(section);
-        product = list.get(section).getProducts().get(relativePosition);
-        productList = list.get(section).getProducts();
+        Category category = mList.get(section);
+        product = mList.get(section).getProducts().get(relativePosition);
+        productList = mList.get(section).getProducts();
         holder.cardTextValueTicker.setCharacterList(NUMBER_LIST);
         holder.dishNameTxt.setText(product.getName());
         holder.cardTextValueTicker.setVisibility(View.GONE);
         holder.cardTextValue.setVisibility(View.VISIBLE);
-        if (category.getName().equalsIgnoreCase(context.getResources().getString(R.string.featured_products))) {
+        if (category.getName().equalsIgnoreCase(context.getResources().getString(R.string.featured_items))) {
             if (product.getFeaturedImages() != null && product.getFeaturedImages().size() > 0) {
                 holder.featuredImage.setVisibility(View.VISIBLE);
                 Glide.with(context)
@@ -201,9 +205,9 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
         holder.rootLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                product = list.get(section).getProducts().get(relativePosition);
+                product = mList.get(section).getProducts().get(relativePosition);
                 if (product.getOut_of_stock() != null && product.getOut_of_stock().equalsIgnoreCase("NO")) {
-                    GlobalData.isSelectedProduct = list.get(section).getProducts().get(relativePosition);
+                    GlobalData.isSelectedProduct = mList.get(section).getProducts().get(relativePosition);
                     context.startActivity(new Intent(context, ProductDetailActivity.class));
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                 }
@@ -248,7 +252,7 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
         holder.cardAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                product = list.get(section).getProducts().get(relativePosition);
+                product = mList.get(section).getProducts().get(relativePosition);
                 if (!Utils.isShopChanged(HotelViewActivity.shops.getId())) {
                     /** Intilaize Animation View Image */
                     avdProgress = AnimatedVectorDrawableCompat.create(context, R.drawable.add_cart_avd_line);
@@ -324,7 +328,7 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
                 holder.animationLineCartAdd.postDelayed(action, 3000);
 
                 /** Press Add Card Minus button */
-                product = list.get(section).getProducts().get(relativePosition);
+                product = mList.get(section).getProducts().get(relativePosition);
                 int cartId = 0;
                 for (int i = 0; i < addCart.getProductList().size(); i++) {
                     if (addCart.getProductList().get(i).getProductId().equals(product.getId())) {
@@ -397,7 +401,7 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
         holder.cardAddTextLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                product = list.get(section).getProducts().get(relativePosition);
+                product = mList.get(section).getProducts().get(relativePosition);
                 if (GlobalData.profileModel == null) {
                     activity.startActivity(new Intent(context, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     activity.overridePendingTransition(R.anim.slide_in_left, R.anim.anim_nothing);
@@ -452,7 +456,7 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
                                         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                                     } else {
                                         selectedShop = HotelViewActivity.shops;
-                                        product = list.get(section).getProducts().get(relativePosition);
+                                        product = mList.get(section).getProducts().get(relativePosition);
                                         holder.cardAddDetailLayout.setVisibility(View.VISIBLE);
                                         holder.cardAddTextLayout.setVisibility(View.GONE);
                                         holder.cardTextValue.setText("1");
@@ -516,6 +520,23 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
 
     }
 
+    public void setCategoryList(String mValue){
+        if (mValue.equalsIgnoreCase("No Filter")){
+            mList =mGlobalList;
+            notifyDataSetChanged();
+        }else {
+            for (int i=0;i<mGlobalList.size();i++){
+                if (mGlobalList.get(i).getName().equalsIgnoreCase(mValue)){
+                    mFilteredList =new ArrayList<>();
+                    mFilteredList.add(mGlobalList.get(i));
+                }
+            }
+            if (mFilteredList !=null&& mFilteredList.size()>0) {
+                mList= mFilteredList;
+                notifyDataSetChanged();
+            }
+        }
+    }
     public static void addCart(HashMap<String, String> map) {
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
