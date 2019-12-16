@@ -521,7 +521,7 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
     }
 
     public void setCategoryList(String mValue){
-        if (mValue.equalsIgnoreCase("No Filter")){
+        if (mValue.equalsIgnoreCase("All")){
             mList =mGlobalList;
             notifyDataSetChanged();
         }else {

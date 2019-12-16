@@ -525,7 +525,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
     private void setCategoryAdapter(List<Category> mList) {
         mCategoryDetails = new ArrayList<>();
         mCategoryDetails.clear();
-        mCategoryDetails.add(new CategoryModel("No Filter", true));
+        mCategoryDetails.add(new CategoryModel("All", true));
         if (mList != null && mList.size() > 0) {
             for (int i = 0; i < mList.size(); i++) {
                 if (!mList.get(i).getName().equalsIgnoreCase("Featured Items")) {
