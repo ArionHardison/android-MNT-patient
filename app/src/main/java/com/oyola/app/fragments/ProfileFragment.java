@@ -40,12 +40,14 @@ import com.google.android.gms.common.api.Status;
 import com.oyola.app.BuildConfig;
 import com.oyola.app.HomeActivity;
 import com.oyola.app.R;
+import com.oyola.app.activities.AccountPaymentActivity;
 import com.oyola.app.activities.ChangePasswordActivity;
 import com.oyola.app.activities.EditAccountActivity;
 import com.oyola.app.activities.FavouritesActivity;
 import com.oyola.app.activities.LoginActivity;
 import com.oyola.app.activities.ManageAddressActivity;
 import com.oyola.app.activities.OrdersActivity;
+import com.oyola.app.activities.PromotionActivity;
 import com.oyola.app.activities.WelcomeActivity;
 import com.oyola.app.adapter.ProfileSettingsAdapter;
 import com.oyola.app.helper.GlobalData;
@@ -150,18 +152,18 @@ public class ProfileFragment extends Fragment {
             case 1:
                 startActivity(new Intent(context, FavouritesActivity.class));
                 break;
-//            case 2:
-//                startActivity(new Intent(context, AccountPaymentActivity.class).putExtra("is_show_wallet", true).putExtra("is_show_cash", false));
-//                break;
             case 2:
+                startActivity(new Intent(context, AccountPaymentActivity.class).putExtra("is_show_wallet", false).putExtra("is_show_cash", false));
+                break;
+            case 3:
                 startActivity(new Intent(context, OrdersActivity.class));
                 break;
             /*case 3:
                 startActivity(new Intent(context, PromotionActivity.class));
                 break;*/
-            case 3:
-                changeLanguage();
-                break;
+//            case 3:
+//                changeLanguage();
+//                break;
 //            case 4:
 //                startActivity(new Intent(context, ChangePasswordActivity.class));
 //                break;
@@ -215,9 +217,10 @@ public class ProfileFragment extends Fragment {
             List<Integer> listIcons = new ArrayList<>();
             listIcons.add(R.drawable.ic_local_post);
             listIcons.add(R.drawable.ic_favorite_light);
-            //  listIcons.add(R.drawable.ic_payment_light);
+            listIcons.add(R.drawable.payment);
             listIcons.add(R.drawable.ic_orders_light);
-            listIcons.add(R.drawable.ic_g_translate_light);
+//            listIcons.add(R.drawable.ic_promotion_details);
+//            listIcons.add(R.drawable.ic_g_translate_light);
 
             /*if (!loginBy.equalsIgnoreCase("facebook") &&
                     !loginBy.equalsIgnoreCase("google")) {
