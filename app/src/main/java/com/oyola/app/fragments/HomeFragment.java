@@ -98,12 +98,14 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     TextView offerTitleHeader;
     @BindView(R.id.favourite_title_header)
     TextView favouriteTitle;
+    @BindView(R.id.freedelivery_title_header)
+    TextView freeDeliveryTitle;
     @BindView(R.id.error_layout)
     LinearLayout errorLayout;
     @BindView(R.id.impressive_dishes_layout)
     LinearLayout impressiveDishesLayout;
     private SkeletonScreen skeletonScreen, skeletonScreen2, skeletonText1, skeletonText2,
-            skeletonSpinner, skeletonFavourites, skeletonFavouriteTitle;
+            skeletonSpinner, skeletonFavourites, skeletonFavouriteTitle, skeletonFreeDelivery, skeletonFreeDeliveryTitle;
     private TextView addressLabel;
     private TextView addressTxt;
     private LinearLayout locationAddressLayout;
@@ -119,6 +121,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     RecyclerView restaurantsRv;
     @BindView(R.id.favourite_dishes_rv)
     RecyclerView favouritesRv;
+    @BindView(R.id.freedelivery_dishes_rv)
+    RecyclerView freeDeliveryRv;
     @BindView(R.id.discover_rv)
     RecyclerView discoverRv;
     int ADDRESS_SELECTION = 1;
@@ -135,9 +139,11 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
     List<Shop> restaurantList;
-    List<Shop> cuisinesRestaurantList;
+    List<Shop> favouriteRestaurantList;
+    List<Shop> freeDeliveryRestaurantList;
     RestaurantsAdapter adapterRestaurant;
-    FavouriteCuisinesAdapter mCuisinesAdapter;
+    FavouriteCuisinesAdapter mFavouritesAdapter;
+    FavouriteCuisinesAdapter mFreeDeliveryAdapter;
     public static boolean isFilterApplied = false;
     BannerAdapter bannerAdapter;
     List<Banner> bannerList;
@@ -251,6 +257,9 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         skeletonFavouriteTitle = Skeleton.bind(favouriteTitle)
                 .load(R.layout.skeleton_label)
                 .show();
+        skeletonFreeDeliveryTitle = Skeleton.bind(freeDeliveryTitle)
+                .load(R.layout.skeleton_label)
+                .show();
         skeletonText2 = Skeleton.bind(restaurantCountTxt)
                 .load(R.layout.skeleton_label)
                 .show();
@@ -274,17 +283,27 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         favouritesRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         favouritesRv.setItemAnimator(new DefaultItemAnimator());
         favouritesRv.setHasFixedSize(true);
+        freeDeliveryRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        freeDeliveryRv.setItemAnimator(new DefaultItemAnimator());
+        freeDeliveryRv.setHasFixedSize(true);
         restaurantList = new ArrayList<>();
-        cuisinesRestaurantList = new ArrayList<>();
+        favouriteRestaurantList = new ArrayList<>();
+        freeDeliveryRestaurantList = new ArrayList<>();
         adapterRestaurant = new RestaurantsAdapter(restaurantList, context, getActivity());
-        mCuisinesAdapter = new FavouriteCuisinesAdapter(cuisinesRestaurantList, context, getActivity());
+        mFavouritesAdapter = new FavouriteCuisinesAdapter(favouriteRestaurantList, context, getActivity());
+        mFreeDeliveryAdapter = new FavouriteCuisinesAdapter(freeDeliveryRestaurantList, context, getActivity());
         skeletonScreen = Skeleton.bind(restaurantsRv)
                 .adapter(adapterRestaurant)
                 .load(R.layout.skeleton_restaurant_list_item)
                 .count(2)
                 .show();
         skeletonFavourites = Skeleton.bind(favouritesRv)
-                .adapter(mCuisinesAdapter)
+                .adapter(mFavouritesAdapter)
+                .load(R.layout.skeleton_restaurant_list_item)
+                .count(2)
+                .show();
+        skeletonFreeDelivery = Skeleton.bind(freeDeliveryRv)
+                .adapter(mFreeDeliveryAdapter)
                 .load(R.layout.skeleton_restaurant_list_item)
                 .count(2)
                 .show();
@@ -409,9 +428,11 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             public void onResponse(Call<RestaurantsData> call, Response<RestaurantsData> response) {
                 skeletonScreen.hide();
                 skeletonFavourites.hide();
+                skeletonFreeDelivery.hide();
                 skeletonScreen2.hide();
                 skeletonText1.hide();
                 skeletonFavouriteTitle.hide();
+                skeletonFreeDeliveryTitle.hide();
                 skeletonText2.hide();
                 skeletonSpinner.hide();
                 if (response != null && !response.isSuccessful() && response.errorBody() != null) {
@@ -442,20 +463,28 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                         restaurantList.addAll(GlobalData.shopList);
                         bannerList.clear();
                         bannerList.addAll(response.body().getBanners());
-                        cuisinesRestaurantList.clear();
-                        cuisinesRestaurantList.addAll(response.body().getFavouriteCuisines());
-                        if (restaurantList.size() > 1) {
+                        favouriteRestaurantList.clear();
+                        favouriteRestaurantList.addAll(response.body().getFavouriteCuisines());
+                        freeDeliveryRestaurantList.clear();
+                        freeDeliveryRestaurantList.addAll(response.body().getFreeDeliveryShops());
+                      /*  if (restaurantList.size() > 1) {
                             restaurantCountTxt.setText("" + restaurantList.size() + " " + getString(R.string.kitchens));
                         } else {
                             restaurantCountTxt.setText("" + restaurantList.size() + " " + getString(R.string.kitchen));
-                        }
+                        }*/
                         adapterRestaurant.notifyDataSetChanged();
-                        mCuisinesAdapter.notifyDataSetChanged();
+                        mFavouritesAdapter.notifyDataSetChanged();
+                        mFreeDeliveryAdapter.notifyDataSetChanged();
                         bannerAdapter.notifyDataSetChanged();
-                        if (cuisinesRestaurantList.size() > 0) {
+                        if (favouriteRestaurantList.size() > 0) {
                             favouriteTitle.setVisibility(View.VISIBLE);
                         } else {
                             favouriteTitle.setVisibility(View.GONE);
+                        }
+                        if (freeDeliveryRestaurantList.size() > 0) {
+                            freeDeliveryTitle.setVisibility(View.VISIBLE);
+                        } else {
+                            freeDeliveryTitle.setVisibility(View.GONE);
                         }
                     }
                 }
@@ -655,9 +684,11 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 longitude = selectedAddress.getLongitude();
                 skeletonScreen.show();
                 skeletonFavourites.show();
+                skeletonFreeDelivery.show();
                 skeletonScreen2.show();
                 skeletonText1.show();
                 skeletonFavouriteTitle.show();
+                skeletonFreeDeliveryTitle.show();
                 skeletonText2.show();
                 skeletonSpinner.show();
                 findRestaurant();
@@ -672,9 +703,11 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             System.out.print("HomeFragment : Filter Success");
             skeletonScreen.show();
             skeletonFavourites.show();
+            skeletonFreeDelivery.show();
             skeletonScreen2.show();
             skeletonText1.show();
             skeletonFavouriteTitle.show();
+            skeletonFreeDeliveryTitle.show();
             skeletonText2.show();
             skeletonSpinner.show();
             findRestaurant();
@@ -704,9 +737,11 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     public void refreshHome() {
         skeletonScreen.show();
         skeletonFavourites.show();
+        skeletonFreeDelivery.show();
         skeletonScreen2.show();
         skeletonText1.show();
         skeletonFavouriteTitle.show();
+        skeletonFreeDeliveryTitle.show();
         skeletonText2.show();
         skeletonSpinner.show();
         findRestaurant();

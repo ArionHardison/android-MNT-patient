@@ -153,14 +153,14 @@ public class ProfileFragment extends Fragment {
                 startActivity(new Intent(context, FavouritesActivity.class));
                 break;
             case 2:
-                startActivity(new Intent(context, AccountPaymentActivity.class).putExtra("is_show_wallet", false).putExtra("is_show_cash", false));
+                startActivity(new Intent(context, AccountPaymentActivity.class).putExtra("is_show_wallet", true).putExtra("is_show_cash", false));
                 break;
             case 3:
                 startActivity(new Intent(context, OrdersActivity.class));
                 break;
-            /*case 3:
+            case 4:
                 startActivity(new Intent(context, PromotionActivity.class));
-                break;*/
+                break;
 //            case 3:
 //                changeLanguage();
 //                break;
@@ -219,7 +219,7 @@ public class ProfileFragment extends Fragment {
             listIcons.add(R.drawable.ic_favorite_light);
             listIcons.add(R.drawable.payment);
             listIcons.add(R.drawable.ic_orders_light);
-//            listIcons.add(R.drawable.ic_promotion_details);
+            listIcons.add(R.drawable.ic_promotion_details);
 //            listIcons.add(R.drawable.ic_g_translate_light);
 
             /*if (!loginBy.equalsIgnoreCase("facebook") &&

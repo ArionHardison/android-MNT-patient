@@ -51,6 +51,18 @@
             android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/text_small" />
 
+        <TextView
+            android:id="@+id/halal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            fontPath="fonts/Nunito-SemiBold.ttf"
+            android:padding="@dimen/_1sdp"
+            android:text="@string/halal"
+            android:textColor="@color/colorGreen"
+            android:textSize="@dimen/text_small" />
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

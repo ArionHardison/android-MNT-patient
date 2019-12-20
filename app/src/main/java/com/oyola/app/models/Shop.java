@@ -91,6 +91,15 @@ public class Shop {
     @SerializedName("deliveryoption")
     @Expose
     private List<DeliveryOption> deliveryOptionList=null;
+
+    @SerializedName("halal")
+    @Expose
+    private Integer halal ;
+
+    @SerializedName("free_delivery")
+    @Expose
+    private Integer freeDelivery ;
+
     public Integer getId() {
         return id;
     }
@@ -305,5 +314,21 @@ public class Shop {
 
     public void setDeliveryOptionList(List<DeliveryOption> deliveryOptionList) {
         this.deliveryOptionList = deliveryOptionList;
+    }
+
+    public Integer getHalal() {
+        return halal;
+    }
+
+    public void setHalal(Integer halal) {
+        this.halal = halal;
+    }
+
+    public Integer getFreeDelivery() {
+        return freeDelivery;
+    }
+
+    public void setFreeDelivery(Integer freeDelivery) {
+        this.freeDelivery = freeDelivery;
     }
 }

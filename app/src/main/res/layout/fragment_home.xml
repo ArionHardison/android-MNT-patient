@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:padding="@dimen/_8sdp"
-                    android:text="@string/offers"
+                    android:text="@string/just_for_you"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/text_tiny" />
 
@@ -69,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:padding="@dimen/_8sdp"
-                    android:text="@string/your_favourites"
+                    android:text="@string/recommended_for_you"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/text_tiny" />
 
@@ -77,7 +77,32 @@
                     android:id="@+id/favourite_dishes_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
+                    android:orientation="horizontal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/free_delivery_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/freedelivery_title_header"
+                    fontPath="fonts/Nunito-Bold.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:padding="@dimen/_8sdp"
+                    android:text="@string/free_delivery"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/text_tiny" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/freedelivery_dishes_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal" />
 
             </LinearLayout>
@@ -100,9 +125,9 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:maxLines="1"
+                    fontPath="fonts/Nunito-Bold.ttf"
                     android:padding="@dimen/_8sdp"
-                    android:text="@string/hundred_restaurant"
-                    android:textAllCaps="true"
+                    android:text="@string/kitchen_near_you"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/text_tiny" />
 

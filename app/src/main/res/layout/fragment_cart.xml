@@ -200,7 +200,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/activity_vertical_margin"
                         android:orientation="horizontal"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -587,42 +587,6 @@
                 </LinearLayout>
 
             </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_order_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_7sdp"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/_7sdp"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingBottom="@dimen/_7sdp"
-                android:visibility="gone">
-
-                <Button
-                    android:id="@+id/schedule_btn"
-                    style="@style/ButtonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp"
-                    android:layout_margin="@dimen/_5sdp"
-                    android:layout_weight="1"
-                    android:text="@string/schedule"
-                    android:textColor="@color/colorTextWhite" />
-
-
-                <Button
-                    android:id="@+id/asap_btn"
-                    style="@style/ButtonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp"
-                    android:layout_margin="@dimen/_5sdp"
-                    android:layout_weight="1"
-                    android:text="@string/asap"
-                    android:textColor="@color/colorTextWhite"
-                    android:visibility="visible" />
-
-            </LinearLayout>
 
             <ImageView
                 android:id="@+id/dummy_image_view"

@@ -41,7 +41,7 @@ public class Invoice {
     private double totalPay;
     @SerializedName("wallet_amount")
     @Expose
-    private int walletAmount;
+    private Double walletAmount;
     @SerializedName("payable")
     @Expose
     private double payable;
@@ -146,11 +146,11 @@ public class Invoice {
         this.totalPay = totalPay;
     }
 
-    public int getWalletAmount() {
+    public Double getWalletAmount() {
         return walletAmount;
     }
 
-    public void setWalletAmount(int walletAmount) {
+    public void setWalletAmount(Double walletAmount) {
         this.walletAmount = walletAmount;
     }
 

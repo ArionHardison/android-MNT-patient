@@ -59,8 +59,9 @@ public class OrderFlowAdapter extends RecyclerView.Adapter<OrderFlowAdapter.MyVi
         OrderFlow orderFlow = list.get(position);
         holder.statusTitle.setText(orderFlow.statusTitle);
         holder.statusDescription.setText(orderFlow.statusDescription);
-        holder.statusImage.setImageResource(orderFlow.statusImage);
+//        holder.statusImage.setImageResource(orderFlow.statusImage);
         if (orderFlow.status.contains(isSelectedOrder.getStatus())) {
+            holder.statusImage.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_dot_green));
             holder.statusTitle.setTextColor(ContextCompat.getColor(context, R.color.colorTextBlack));
             if (isSelectedOrder.getStatus().equals(GlobalData.ORDER_STATUS.get(GlobalData.ORDER_STATUS.size() - 1))) {
                 final Handler handler = new Handler();
@@ -83,13 +84,14 @@ public class OrderFlowAdapter extends RecyclerView.Adapter<OrderFlowAdapter.MyVi
                 CurrentOrderDetailActivity.orderCancelTxt.setVisibility(View.GONE);
             }
         } else {
+            holder.statusImage.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_dot_grey));
             holder.statusTitle.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryText));
         }
 
         if (list.size() == position + 1)
             holder.viewLine.setVisibility(View.GONE);
         else
-            holder.viewLine.setVisibility(View.VISIBLE);
+            holder.viewLine.setVisibility(View.INVISIBLE);
     }
 
     @Override

@@ -222,10 +222,21 @@
                         android:layerType="software"
                         android:visibility="gone" />
 
+                    <TextView
+                        android:id="@+id/halal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        fontPath="fonts/Nunito-SemiBold.ttf"
+                        android:padding="@dimen/_5sdp"
+                        android:text="@string/halal"
+                        android:textColor="@color/colorGreen"
+                        android:textSize="@dimen/text_small" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="10dp"
                         android:baselineAligned="false"
                         android:orientation="horizontal"
                         android:paddingLeft="@dimen/activity_horizontal_margin"

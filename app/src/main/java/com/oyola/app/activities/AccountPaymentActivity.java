@@ -94,8 +94,6 @@ public class AccountPaymentActivity extends AppCompatActivity {
     NumberFormat numberFormat = GlobalData.getNumberFormat();
     @BindView(R.id.add_new_cart)
     TextView addNewCart;
-    @BindView(R.id.total_pay_amount)
-    TextView mTxtTotalPayAmount;
 
 //    //Braintree integration
 //    private static final String KEY_AUTHORIZATION = "com.braintreepayments.demo.KEY_AUTHORIZATION";
@@ -240,11 +238,11 @@ public class AccountPaymentActivity extends AppCompatActivity {
                         if (mIsImmediate) {
                             showPickUpSuccessDialog();
                         } else {
-                            startActivity(new Intent(context, CurrentOrderDetailActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                            startActivity(new Intent(context, CurrentOrderDetailActivity.class).putExtra("is_order_page",true).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                             finish();
                         }
                     } else {
-                        startActivity(new Intent(context, CurrentOrderDetailActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        startActivity(new Intent(context, CurrentOrderDetailActivity.class).putExtra("is_order_page",true).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         finish();
                     }
                 } else {

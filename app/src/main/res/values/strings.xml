@@ -18,6 +18,8 @@
     <string name="let_impress_you">"Let's impress you with our dishes"</string>
     <string name="hundred_restaurant">"100 Kitchens"</string>
     <string name="your_favourites">Your Favourites</string>
+    <string name="recommended_for_you">Recommended for you</string>
+    <string name="free_delivery">Free Delivery</string>
     <string name="discover">"Discover"</string>
     <string name="otp">Otp</string>
     <string name="eta">ETA</string>
@@ -25,6 +27,7 @@
     <string name="offers_near_you">"Offers Near You"</string>
     <string name="filter">Filter</string>
     <string name="offers">Offers</string>
+    <string name="just_for_you">Just for you</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="manage_address">Manage Address</string>
     <string name="payment">Payment</string>
@@ -66,7 +69,7 @@
     <string name="fresh_description">Discover new dishes everyday and hold your favourite kitchen</string>
     <string name="signin">Sign in</string>
     <string name="signup">Sign up</string>
-    <string name="search">S e a r c h</string>
+    <string name="search">Search</string>
     <string name="search_description">View menus, photos and reviews for kitchens around you</string>
     <string name="bookmark">B o o k m a r k</string>
     <string name="bookmark_description">Add places you want to visit in the future to your bookmark</string>
@@ -277,7 +280,7 @@
     <string name="lang_arabic">Arabic</string>
     <string name="alert_logout">Are you sure you want to logout?</string>
     <string name="chage_password">Change Password</string>
-    <string name="my_account_profile">Manage Address, Favorites, Payment, Orders, Change Password</string>
+    <string name="my_account_profile">Manage Address, Favorites, Payment, Orders</string>
     <string name="item_total">Item Total</string>
     <string name="sub_total">Sub Total</string>
     <string name="delivery_fees">Delivery Fee</string>
@@ -415,4 +418,6 @@
     <string name="kitchen">Kitchen</string>
     <string name="order_type_delivery">Order Type : DELIVERY</string>
     <string name="order_type_takeaway">Order Type : PICKUP</string>
+    <string name="halal">Halal</string>
+    <string name="kitchen_near_you">Kitchens near you</string>
 </resources>

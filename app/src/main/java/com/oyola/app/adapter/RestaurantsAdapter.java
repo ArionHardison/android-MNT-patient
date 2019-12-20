@@ -85,6 +85,9 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
         if (shops.getEstimatedDeliveryTime() != null)
             holder.distanceTime.setText(shops.getEstimatedDeliveryTime().toString() + " Mins");
 
+        if (shops.getHalal()!=null){
+            holder.halal.setVisibility(shops.getHalal()==1 ? View.VISIBLE:View.GONE);
+        }
     }
 
     @Override
@@ -96,8 +99,8 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private LinearLayout itemView;
         private ImageView dishImg;
-        private TextView restaurantName, category, offer, rating, restaurantInfo, price, distanceTime;
-        private TextView tvClosedShop;
+        private TextView restaurantName, category, offer, rating, restaurantInfo, price,
+                distanceTime,tvClosedShop,halal;
 
 
         private MyViewHolder(View view) {
@@ -112,6 +115,7 @@ public class RestaurantsAdapter extends RecyclerView.Adapter<RestaurantsAdapter.
             restaurantInfo = view.findViewById(R.id.restaurant_info);
             distanceTime = view.findViewById(R.id.distance_time);
             price = view.findViewById(R.id.price);
+            halal = view.findViewById(R.id.halal);
             itemView.setOnClickListener(this);
         }
 

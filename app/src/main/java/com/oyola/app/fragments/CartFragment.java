@@ -257,7 +257,8 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
     }
 
     private void initializeAddressDetails() {
-        if (GlobalData.selectedAddress != null && GlobalData.selectedAddress.getLandmark() != null) {
+//        if (GlobalData.selectedAddress != null && GlobalData.selectedAddress.getLandmark() != null) {
+        if (GlobalData.selectedAddress != null) {
             if (GlobalData.addressList.getAddresses().size() == 1)
                 addAddressTxt.setText(getString(R.string.add_address));
             else
@@ -368,37 +369,49 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
                                 mTxtDeliveryContent.setVisibility(View.VISIBLE);
                                 deliveryBtn.setVisibility(View.VISIBLE);
                                 layoutDeliveryFees.setVisibility(View.VISIBLE);
+                                if (response.body().getProductList().get(0).getProduct().getShop().getFreeDelivery() != null) {
+                                    if (response.body().getProductList().get(0).getProduct().getShop().getFreeDelivery() == 1) {
+                                        deliveryFareCalculation();
+                                    }
+                                }
+                            } else {
+                                if (response.body().getProductList().get(0).getProduct().getShop().getFreeDelivery() != null) {
+                                    if (response.body().getProductList().get(0).getProduct().getShop().getFreeDelivery() == 1) {
+                                        deliveryFareCalculation();
+                                    }
+                                }
                             }
                         } else if (mIsPickUpAvailable) {
-                            mIsOnlyPickUpAvailable=true;
+                            mIsOnlyPickUpAvailable = true;
                             layoutOrderType.setVisibility(View.VISIBLE);
                             pickupBtn.setVisibility(View.VISIBLE);
                             deliveryBtn.setVisibility(View.GONE);
                             mTxtDeliveryContent.setVisibility(View.VISIBLE);
                             layoutDeliveryFees.setVisibility(View.GONE);
-                            if (addCart != null) {
-                                itemTotalAmount.setText(currency + "" + addCart.getTotalPrice());
-                                discountAmount.setText("- " + currency + "" + addCart.getShopDiscount());
-                                promocode_amount.setText("- " + currency + "" + addCart.getPromocodeAmount());
-                                serviceTax.setText(currency + Double.parseDouble(addCart.getTax()));
-
-                                Double mPayAmount = addCart.getPayable() - addCart.getDeliveryCharges();
-                                payAmount.setText(currency + "" + new DecimalFormat("##.##").format(mPayAmount));
-
-                                deliveryCharges.setText(addCart.getProductList().get(0).getProduct().getPrices().getCurrency()
-                                        + "" + addCart.getDeliveryCharges());
-                            }
+                            deliveryFareCalculation();
 
                         } else if (mIsDeliveryAvailable) {
                             layoutOrderType.setVisibility(View.GONE);
                             locationErrorLayout.setVisibility(View.VISIBLE);
                             layoutDeliveryFees.setVisibility(View.VISIBLE);
                             initializeAddressDetails();
+                            if (response.body().getProductList().get(0).getProduct().getShop().getFreeDelivery() != null) {
+                                if (response.body().getProductList().get(0).getProduct().getShop().getFreeDelivery() == 1) {
+                                    deliveryFareCalculation();
+                                }
+                            }
                         } else {
                             layoutOrderType.setVisibility(View.GONE);
-                            locationErrorLayout.setVisibility(View.VISIBLE);
                             layoutDeliveryFees.setVisibility(View.VISIBLE);
-                            initializeAddressDetails();
+                            if (!isActivityResultCalled) {
+                                locationErrorLayout.setVisibility(View.VISIBLE);
+                                initializeAddressDetails();
+                            }
+                            if (response.body().getProductList().get(0).getProduct().getShop().getFreeDelivery() != null) {
+                                if (response.body().getProductList().get(0).getProduct().getShop().getFreeDelivery() == 1) {
+                                    deliveryFareCalculation();
+                                }
+                            }
                         }
                     }
                 }
@@ -494,34 +507,48 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
                             }
                         }
                         if (mIsPickUpAvailable && mIsDeliveryAvailable) {
-                            layoutOrderType.setVisibility(View.VISIBLE);
-                            pickupBtn.setVisibility(View.VISIBLE);
-                            deliveryBtn.setVisibility(View.VISIBLE);
-                            mTxtDeliveryContent.setVisibility(View.VISIBLE);
-                            layoutDeliveryFees.setVisibility(View.VISIBLE);
+                            if (!isActivityResultCalled) {
+                                layoutOrderType.setVisibility(View.VISIBLE);
+                                pickupBtn.setVisibility(View.VISIBLE);
+                                deliveryBtn.setVisibility(View.VISIBLE);
+                                mTxtDeliveryContent.setVisibility(View.VISIBLE);
+                                layoutDeliveryFees.setVisibility(View.VISIBLE);
+                                if (response.body().getProductList().get(0).getProduct().getShop().getFreeDelivery() != null) {
+                                    if (response.body().getProductList().get(0).getProduct().getShop().getFreeDelivery() == 1) {
+                                        deliveryFareCalculation();
+                                    }
+                                }
+                            }
                         } else if (mIsPickUpAvailable) {
-                            mIsOnlyPickUpAvailable=true;
+                            mIsOnlyPickUpAvailable = true;
                             layoutOrderType.setVisibility(View.VISIBLE);
                             pickupBtn.setVisibility(View.VISIBLE);
                             deliveryBtn.setVisibility(View.GONE);
                             mTxtDeliveryContent.setVisibility(View.VISIBLE);
                             layoutDeliveryFees.setVisibility(View.GONE);
-                            if (addCart != null) {
-                                itemTotalAmount.setText(currency + "" + addCart.getTotalPrice());
-                                discountAmount.setText("- " + currency + "" + addCart.getShopDiscount());
-                                promocode_amount.setText("- " + currency + "" + addCart.getPromocodeAmount());
-                                serviceTax.setText(currency + Double.parseDouble(addCart.getTax()));
-
-                                Double mPayAmount = addCart.getPayable() - addCart.getDeliveryCharges();
-                                payAmount.setText(currency + "" + new DecimalFormat("##.##").format(mPayAmount));
-
-                                deliveryCharges.setText(addCart.getProductList().get(0).getProduct().getPrices().getCurrency()
-                                        + "" + addCart.getDeliveryCharges());
-                            }
+                            deliveryFareCalculation();
                         } else if (mIsDeliveryAvailable) {
                             layoutOrderType.setVisibility(View.GONE);
                             locationErrorLayout.setVisibility(View.VISIBLE);
                             layoutDeliveryFees.setVisibility(View.VISIBLE);
+                            initializeAddressDetails();
+                            if (response.body().getProductList().get(0).getProduct().getShop().getFreeDelivery() != null) {
+                                if (response.body().getProductList().get(0).getProduct().getShop().getFreeDelivery() == 1) {
+                                    deliveryFareCalculation();
+                                }
+                            }
+                        } else {
+                            layoutOrderType.setVisibility(View.GONE);
+                            layoutDeliveryFees.setVisibility(View.VISIBLE);
+                            if (!isActivityResultCalled) {
+                                locationErrorLayout.setVisibility(View.VISIBLE);
+                                initializeAddressDetails();
+                            }
+                            if (response.body().getProductList().get(0).getProduct().getShop().getFreeDelivery() != null) {
+                                if (response.body().getProductList().get(0).getProduct().getShop().getFreeDelivery() == 1) {
+                                    deliveryFareCalculation();
+                                }
+                            }
                         }
                     }
                 }
@@ -577,15 +604,15 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
             //TODO IF PROJECT HAVE PAYMENT GATEWAY ENABLE BELOW CODE OTHERWISE HIDDEN WALLET LAYOUT
             walletLayout.setVisibility(View.INVISIBLE);
 
-//            if (GlobalData.profileModel.getWalletBalance() != null) {
-//                float fd = Float.parseFloat(GlobalData.profileModel.getWalletBalance());
-//                if (fd > 0) {
-//                    amountTxt.setText(GlobalData.currencySymbol + " " + money);
-//                    walletLayout.setVisibility(View.VISIBLE);
-//                } else {
-//                    walletLayout.setVisibility(View.INVISIBLE);
-//                }
-//            }
+            if (GlobalData.profileModel.getWalletBalance() != null) {
+                float fd = Float.parseFloat(GlobalData.profileModel.getWalletBalance());
+                if (fd > 0) {
+                    amountTxt.setText(GlobalData.currencySymbol + " " + money);
+                    walletLayout.setVisibility(View.VISIBLE);
+                } else {
+                    walletLayout.setVisibility(View.INVISIBLE);
+                }
+            }
 
         } else {
             dataLayout.setVisibility(View.GONE);
@@ -654,7 +681,7 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
 
 
     @OnClick({R.id.add_address_txt, R.id.add_address_btn, R.id.selected_address_btn, R.id.proceed_to_pay_btn,
-            R.id.promo_code_apply,R.id.pickup_btn, R.id.delivery_btn})
+            R.id.promo_code_apply, R.id.pickup_btn, R.id.delivery_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.add_address_txt:
@@ -723,20 +750,7 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
                 locationInfoLayout.setVisibility(View.GONE);
                 layoutOrderType.setVisibility(View.GONE);
                 layoutOrderTime.setVisibility(View.VISIBLE);*/
-                layoutDeliveryFees.setVisibility(View.GONE);
-                if (addCart != null) {
-                    String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
-                    itemTotalAmount.setText(currency + "" + addCart.getTotalPrice());
-                    discountAmount.setText("- " + currency + "" + addCart.getShopDiscount());
-                    promocode_amount.setText("- " + currency + "" + addCart.getPromocodeAmount());
-                    serviceTax.setText(currency + Double.parseDouble(addCart.getTax()));
-
-                    Double mPayAmount = addCart.getPayable() - addCart.getDeliveryCharges();
-                    payAmount.setText(currency + "" + new DecimalFormat("##.##").format(mPayAmount));
-
-                    deliveryCharges.setText(addCart.getProductList().get(0).getProduct().getPrices().getCurrency()
-                            + "" + addCart.getDeliveryCharges());
-                }
+                deliveryFareCalculation();
                 Bundle mBundle = new Bundle();
                 mBundle.putString("deliveryType", "PICKUP");
                 mBundle.putInt("estDeliveryTime", mEstimatedDeliveryTime);
@@ -768,7 +782,18 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
                 locationErrorLayout.setVisibility(View.VISIBLE);
                 locationInfoLayout.setVisibility(View.GONE);
                 layoutOrderType.setVisibility(View.GONE);
+                if (GlobalData.selectedAddress != null) {
+                    locationErrorLayout.setVisibility(View.GONE);
+                    locationInfoLayout.setVisibility(View.VISIBLE);
+                    layoutOrderType.setVisibility(View.GONE);
+                }
                 initializeAddressDetails();
+                if (addCart != null)
+                    if (addCart.getProductList().get(0).getProduct().getShop().getFreeDelivery() != null) {
+                        if (addCart.getProductList().get(0).getProduct().getShop().getFreeDelivery() == 1) {
+                            deliveryFareCalculation();
+                        }
+                    }
                 break;
         }
     }
@@ -850,16 +875,55 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
     public void onCancelClick() {
         if (!mIsOnlyPickUpAvailable) {
             layoutDeliveryFees.setVisibility(View.VISIBLE);
+
             if (addCart != null) {
-                String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
-                itemTotalAmount.setText(currency + "" + addCart.getTotalPrice());
-                discountAmount.setText("- " + currency + "" + addCart.getShopDiscount());
-                promocode_amount.setText("- " + currency + "" + addCart.getPromocodeAmount());
-                serviceTax.setText(currency + Double.parseDouble(addCart.getTax()));
-                payAmount.setText(currency + "" + addCart.getPayable());
-                deliveryCharges.setText(addCart.getProductList().get(0).getProduct().getPrices().getCurrency()
-                        + "" + addCart.getDeliveryCharges());
+                if (addCart.getProductList().get(0).getProduct().getShop().getFreeDelivery() != null) {
+                    if (addCart.getProductList().get(0).getProduct().getShop().getFreeDelivery() == 1) {
+                        deliveryFareCalculation();
+                    } else {
+                        String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
+                        itemTotalAmount.setText(currency + "" + addCart.getTotalPrice());
+                        discountAmount.setText("- " + currency + "" + addCart.getShopDiscount());
+                        promocode_amount.setText("- " + currency + "" + addCart.getPromocodeAmount());
+                        serviceTax.setText(currency + Double.parseDouble(addCart.getTax()));
+                        payAmount.setText(currency + "" + addCart.getPayable());
+                        deliveryCharges.setText(addCart.getProductList().get(0).getProduct().getPrices().getCurrency()
+                                + "" + addCart.getDeliveryCharges());
+                    }
+                } else {
+                    String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
+                    itemTotalAmount.setText(currency + "" + addCart.getTotalPrice());
+                    discountAmount.setText("- " + currency + "" + addCart.getShopDiscount());
+                    promocode_amount.setText("- " + currency + "" + addCart.getPromocodeAmount());
+                    serviceTax.setText(currency + Double.parseDouble(addCart.getTax()));
+                    payAmount.setText(currency + "" + addCart.getPayable());
+                    deliveryCharges.setText(addCart.getProductList().get(0).getProduct().getPrices().getCurrency()
+                            + "" + addCart.getDeliveryCharges());
+                }
             }
+        } else {
+            if (addCart != null)
+                if (addCart.getProductList().get(0).getProduct().getShop().getFreeDelivery() != null) {
+                    if (addCart.getProductList().get(0).getProduct().getShop().getFreeDelivery() == 1) {
+                        deliveryFareCalculation();
+                    }
+                }
         }
+    }
+
+    private void deliveryFareCalculation() {
+        if (addCart != null) {
+            layoutDeliveryFees.setVisibility(View.GONE);
+            String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
+            itemTotalAmount.setText(currency + "" + addCart.getTotalPrice());
+            discountAmount.setText("- " + currency + "" + addCart.getShopDiscount());
+            promocode_amount.setText("- " + currency + "" + addCart.getPromocodeAmount());
+            serviceTax.setText(currency + Double.parseDouble(addCart.getTax()));
+            Double mPayAmount = addCart.getPayable() - addCart.getDeliveryCharges();
+            payAmount.setText(currency + "" + new DecimalFormat("##.##").format(mPayAmount));
+            deliveryCharges.setText(addCart.getProductList().get(0).getProduct().getPrices().getCurrency()
+                    + "" + addCart.getDeliveryCharges());
+        }
+
     }
 }

@@ -86,6 +86,8 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
     View viewLine;
     @BindView(R.id.restaurant_title2)
     TextView restaurantTitle2;
+    @BindView(R.id.halal)
+    TextView mTxtHalal;
     @BindView(R.id.restaurant_subtitle2)
     TextView restaurantSubtitle2;
     @BindView(R.id.resturantname_tv)
@@ -273,7 +275,9 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
             toolbarHeaderView.bindTo(shops.getName(), shops.getDescription());
             resturantname_tv.setText(shops.getName());
             resturant_descb_tv.setText(shops.getDescription());
-
+            if (shops.getHalal() != null) {
+                mTxtHalal.setVisibility(shops.getHalal() == 1 ? View.VISIBLE : View.GONE);
+            }
 //            floatHeaderView.bindTo(shops.getName(), shops.getDescription());
 
             //Set Categoery shopList adapter
@@ -502,7 +506,8 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
                     accompanimentDishesRv.setItemAnimator(new DefaultItemAnimator());
                     accompanimentDishesRv.setAdapter(catagoeryAdapter);
 
-                    setCategoryAdapter(categoryList);
+                    if (categoryList != null && categoryList.size() > 1)
+                        setCategoryAdapter(categoryList);
                     if (GlobalData.addCart != null && GlobalData.addCart.getProductList().size() != 0) {
                         setViewcartBottomLayout(GlobalData.addCart);
                     } else {

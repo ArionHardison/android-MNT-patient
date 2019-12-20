@@ -200,7 +200,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
         bottomNavigation.setBehaviorTranslationEnabled(true);
         bottomNavigation.setTranslucentNavigationEnabled(true);
 
-        bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_HIDE);
+        bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
 
 // Change colors
         bottomNavigation.setAccentColor(ContextCompat.getColor(this,R.color.colorAccent ));
