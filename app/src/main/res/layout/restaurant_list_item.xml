@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/light_grey"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="4dp">
+                app:cardElevation="0dp">
 
                 <FrameLayout
                     android:layout_width="@dimen/_95sdp"
@@ -154,6 +154,7 @@
                                 android:drawableStart="@drawable/star"
                                 android:gravity="start|center_vertical"
                                 android:maxLines="1"
+                                android:drawableTint="@color/yellow"
                                 android:paddingStart="0dp"
                                 android:paddingEnd="8dp"
                                 android:text="4.2"

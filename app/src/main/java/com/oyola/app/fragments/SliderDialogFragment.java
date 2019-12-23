@@ -51,7 +51,7 @@ public class SliderDialogFragment extends DialogFragment {
 
         Product product = GlobalData.isSelectedProduct;
         slider_image_list.addAll(product.getImages());
-        sliderPagerAdapter = new SliderPagerAdapter(getActivity(), slider_image_list, false);
+        sliderPagerAdapter = new SliderPagerAdapter(getActivity(), slider_image_list, false,true);
         productSlider.setAdapter(sliderPagerAdapter);
         productSlider.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

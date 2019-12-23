@@ -15,6 +15,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.oyola.app.R;
 import com.oyola.app.activities.HotelViewActivity;
@@ -54,6 +56,8 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.MyViewHold
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .placeholder(R.drawable.ic_banner)
                         .error(R.drawable.ic_banner))
+                .apply(RequestOptions.circleCropTransform().transforms(
+                        new CenterCrop(), new RoundedCorners(30)))
                 .into(holder.bannerImg);
         holder.bannerImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +79,7 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.MyViewHold
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView bannerImg;
+
         public MyViewHolder(View view) {
             super(view);
             bannerImg = view.findViewById(R.id.banner_img);

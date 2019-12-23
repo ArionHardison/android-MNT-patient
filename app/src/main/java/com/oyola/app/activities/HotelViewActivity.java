@@ -74,22 +74,14 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.recommended_dishes_rv)
-    RecyclerView recommendedDishesRv;
     @BindView(R.id.accompaniment_dishes_rv)
     RecyclerView accompanimentDishesRv;
     @BindView(R.id.rv_category)
     RecyclerView mRvCategory;
     @BindView(R.id.heart_btn)
     ShineButton heartBtn;
-    @BindView(R.id.view_line)
-    View viewLine;
-    @BindView(R.id.restaurant_title2)
-    TextView restaurantTitle2;
     @BindView(R.id.halal)
     TextView mTxtHalal;
-    @BindView(R.id.restaurant_subtitle2)
-    TextView restaurantSubtitle2;
     @BindView(R.id.resturantname_tv)
     TextView resturantname_tv;
     @BindView(R.id.resturant_descb_tv)
@@ -187,7 +179,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
             if (shops.getOfferPercent() == null || shops.getOfferPercent() == 0) {
                 offer.setVisibility(View.GONE);
             } else {
-                offer.setVisibility(View.VISIBLE);
+                offer.setVisibility(View.GONE);
                 offer.setText("Flat " + shops.getOfferPercent().toString() + "% offer on all Orders");
             }
             if (shops.getRating() != null) {
@@ -272,7 +264,8 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
 
             //Set title
             collapsingToolbar.setTitle(" ");
-            toolbarHeaderView.bindTo(shops.getName(), shops.getDescription());
+//            toolbarHeaderView.bindTo(shops.getName(), shops.getDescription());
+            toolbarHeaderView.bindTo(shops.getName());
             resturantname_tv.setText(shops.getName());
             resturant_descb_tv.setText(shops.getDescription());
             if (shops.getHalal() != null) {

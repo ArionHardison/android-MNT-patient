@@ -57,6 +57,9 @@ public class Product {
     @SerializedName("shop")
     @Expose
     private Shop shop;
+    @SerializedName("ingredients")
+    @Expose
+    private String ingredients;
 
     public Integer getId() {
         return id;
@@ -183,5 +186,13 @@ public class Product {
 
     public void setOut_of_stock(String out_of_stock) {
         this.out_of_stock = out_of_stock;
+    }
+
+    public String getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(String ingredients) {
+        this.ingredients = ingredients;
     }
 }

@@ -43,8 +43,9 @@
                     android:maxLines="1"
                     android:padding="@dimen/_8sdp"
                     android:text="@string/just_for_you"
+                    android:textStyle="bold"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/text_tiny" />
+                    android:textSize="@dimen/text_small" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/impressive_dishes_rv"
@@ -69,9 +70,10 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:padding="@dimen/_8sdp"
+                    android:textStyle="bold"
                     android:text="@string/recommended_for_you"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/text_tiny" />
+                    android:textSize="@dimen/text_small" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/favourite_dishes_rv"
@@ -96,8 +98,9 @@
                     android:maxLines="1"
                     android:padding="@dimen/_8sdp"
                     android:text="@string/free_delivery"
+                    android:textStyle="bold"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/text_tiny" />
+                    android:textSize="@dimen/text_small" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/freedelivery_dishes_rv"
@@ -128,8 +131,9 @@
                     fontPath="fonts/Nunito-Bold.ttf"
                     android:padding="@dimen/_8sdp"
                     android:text="@string/kitchen_near_you"
+                    android:textStyle="bold"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/text_tiny" />
+                    android:textSize="@dimen/text_small" />
 
                 <Spinner
                     android:id="@+id/catagoery_spinner"

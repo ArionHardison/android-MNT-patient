@@ -47,35 +47,6 @@
                     android:background="@drawable/transparent_bg_bottom"
                     android:fitsSystemWindows="true" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:background="#26000000"
-                    android:padding="@dimen/_4sdp">
-
-                    <TextView
-                        android:id="@+id/resturantname_tv"
-                        fontPath="fonts/Nunito-Regular.ttf"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Resturant Name"
-                        android:textColor="#ffffff"
-                        android:textSize="@dimen/_13sdp" />
-
-                    <TextView
-                        android:id="@+id/resturant_descb_tv"
-                        fontPath="fonts/Nunito-Regular.ttf"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/resturantname_tv"
-                        android:layout_marginTop="@dimen/_2sdp"
-                        android:layout_marginBottom="@dimen/_3sdp"
-                        android:text="Description"
-                        android:textColor="#ffffff"
-                        android:textSize="@dimen/_12sdp" />
-                </RelativeLayout>
-
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -160,338 +131,148 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-                android:orientation="vertical">
-
-                <View
-                    android:id="@+id/view_line"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:alpha="0"
-                    android:background="#EEE" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/resturantname_tv"
+                        fontPath="fonts/Nunito-Bold.ttf"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:id="@+id/restaurant_title2"
-                            fontPath="fonts/Nunito-Bold.ttf"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorPrimaryText"
-                            android:textSize="@dimen/text_large" />
-
-                        <TextView
-                            android:id="@+id/restaurant_subtitle2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textAllCaps="false"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="@dimen/text_medium" />
-
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="4dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/horizantal_dotted_line"
-                        android:layerType="software"
-                        android:visibility="gone" />
+                        android:textColor="@color/colorPink"
+                        android:textSize="@dimen/_15sdp" />
 
                     <TextView
-                        android:id="@+id/halal"
+                        android:id="@+id/resturant_descb_tv"
+                        fontPath="fonts/Nunito-Regular.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/resturantname_tv"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_3sdp"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/_12sdp" />
+
+                    <TextView
+                        android:id="@+id/rating"
+                        fontPath="fonts/Nunito-Bold.ttf"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:maxLines="1"
-                        fontPath="fonts/Nunito-SemiBold.ttf"
-                        android:padding="@dimen/_5sdp"
-                        android:text="@string/halal"
-                        android:textColor="@color/colorGreen"
+                        android:drawableStart="@drawable/star"
+                        android:gravity="center_horizontal"
+                        android:padding="@dimen/_1sdp"
+                        android:drawableTint="@color/colorPrimaryText"
+                        android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/text_small" />
+                </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:baselineAligned="false"
-                        android:orientation="horizontal"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:paddingRight="@dimen/activity_horizontal_margin">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="start"
-                                android:orientation="vertical">
-
-                                <RelativeLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="center">
-
-                                    <TextView
-                                        android:id="@+id/rating"
-                                        fontPath="fonts/Nunito-Bold.ttf"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="18dp"
-                                        android:drawableStart="@drawable/star"
-                                        android:gravity="center_horizontal"
-                                        android:textColor="@color/colorPrimaryText"
-                                        android:textSize="@dimen/text_small" />
-                                </RelativeLayout>
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:text="0 Rating"
-                                    android:textColor="@color/colorSecondaryText"
-                                    android:textSize="@dimen/text_tiny"
-                                    android:visibility="gone" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:visibility="gone">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="18dp"
-                                android:gravity="center_horizontal"
-                                android:textAllCaps="true"
-                                android:textColor="@color/colorPrimaryText"
-                                android:textSize="@dimen/text_small" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:maxLines="1"
-                                android:text="Delivery Time"
-                                android:textColor="@color/colorSecondaryText"
-                                android:textSize="@dimen/text_tiny" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:visibility="gone">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="end"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:id="@+id/delivery_time"
-                                    fontPath="fonts/Nunito-Bold.ttf"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="18dp"
-                                    android:gravity="center"
-                                    android:textAllCaps="true"
-                                    android:textColor="@color/colorPrimaryText"
-                                    android:textSize="@dimen/text_small" />
-
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:maxLines="1"
-                                    android:text="Delivery Time"
-                                    android:textColor="@color/colorSecondaryText"
-                                    android:textSize="@dimen/text_tiny" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="4dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/horizantal_dotted_line"
-                        android:layerType="software" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="vertical"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Non Veg"
-                            android:textAllCaps="true"
-                            android:textColor="@color/colorSecondaryText"
-                            android:textSize="@dimen/text_medium" />
-                    </LinearLayout>
-
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@color/light_grey"
-                        android:visibility="gone" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="16dp"
-                            android:orientation="horizontal"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp">
-
-                            <ImageView
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
-                                android:padding="1dp"
-                                android:src="@drawable/ic_polygon" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="5dp"
-                                android:text="Recommended "
-                                android:textAllCaps="true"
-                                android:textColor="@color/colorSecondaryText"
-                                android:textSize="@dimen/text_small" />
-
-
-                        </LinearLayout>
-
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/recommended_dishes_rv"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:orientation="horizontal" />
-
-                    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/offer"
+                        android:id="@+id/delivery_time"
+                        fontPath="fonts/Nunito-Bold.ttf"
+                        android:layout_width="match_parent"
+                        android:layout_height="18dp"
+                        android:gravity="center"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/text_small" />
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_offers"
-                        android:drawablePadding="10dp"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:paddingTop="@dimen/activity_horizontal_margin"
-                        android:paddingRight="@dimen/activity_horizontal_margin"
-                        android:text="Flat 20% offer on all orders"
-                        android:textColor="@color/colorRed"
-                        android:textSize="@dimen/text_small"
-                        android:visibility="gone" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/rv_category"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:clickable="true"
-                            android:orientation="horizontal" />
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/accompaniment_dishes_rv"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:clickable="true"
-                            android:nestedScrollingEnabled="false"
-                            android:orientation="vertical"
-                            android:padding="@dimen/activity_horizontal_margin" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:orientation="vertical" />
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="Delivery Time"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/text_tiny" />
                 </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/halal"
+                fontPath="fonts/Nunito-SemiBold.ttf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:padding="@dimen/_5sdp"
+                android:text="@string/halal"
+                android:textColor="@color/colorGreen"
+                android:textSize="@dimen/text_small" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:background="@drawable/horizantal_dotted_line"
+                android:layerType="software" />
+
+            <TextView
+                android:id="@+id/offer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_offers"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:padding="@dimen/_5sdp"
+                android:text="Flat 20% offer on all orders"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_small"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:padding="@dimen/_5sdp"
+                    android:orientation="horizontal" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/accompaniment_dishes_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_5sdp" />
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/shadow_view"
-                android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="vertical" />
+        </LinearLayout>
 
-                <Spinner
-                    android:layout_width="150dp"
-                    android:layout_height="40dp"
-                    android:background="@null">
-
-                </Spinner>
-
-            </RelativeLayout>
-
-        </RelativeLayout>
 
     </android.support.v4.widget.NestedScrollView>
 

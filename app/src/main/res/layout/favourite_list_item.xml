@@ -10,20 +10,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_marginRight="@dimen/_5sdp">
+            android:layout_height="150dp">
 
             <ImageView
                 android:id="@+id/dish_img"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_gravity="center"
                 android:scaleType="fitXY"
                 android:src="@drawable/bg_login" />
@@ -47,17 +45,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
+            android:padding="@dimen/_2sdp"
             android:text="Funkies"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/text_small" />
+            android:textSize="@dimen/text_medium" />
 
         <TextView
             android:id="@+id/halal"
+            fontPath="fonts/Nunito-SemiBold.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            fontPath="fonts/Nunito-SemiBold.ttf"
-            android:padding="@dimen/_1sdp"
+            android:padding="@dimen/_2sdp"
             android:text="@string/halal"
             android:textColor="@color/colorGreen"
             android:textSize="@dimen/text_small" />
@@ -75,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="Close soon"
+                android:padding="@dimen/_2sdp"
                 android:textColor="@color/colorRed"
                 android:visibility="gone"
                 tools:text="Close soon"
@@ -115,6 +115,7 @@
                     android:drawableStart="@drawable/star"
                     android:gravity="start|center_vertical"
                     android:maxLines="1"
+                    android:drawableTint="@color/yellow"
                     android:paddingStart="0dp"
                     android:paddingEnd="8dp"
                     android:text="4.2"

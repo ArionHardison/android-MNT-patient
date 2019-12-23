@@ -47,5 +47,6 @@
     <color name="color_theme">#EF4756</color>
     <color name="colorPinkLight">#F59099</color>
     <color name="colorWhite">#FFF</color>
+    <color name="yellow">#EEB829</color>
     <color name="colorButton">@color/colorPink</color>
 </resources>

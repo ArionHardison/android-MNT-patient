@@ -85,6 +85,10 @@ public class ProductDetailActivity extends AppCompatActivity {
     TextView realPrice;
     @BindView(R.id.showPrice)
     TextView showPrice;
+    @BindView(R.id.txt_ingredients)
+    TextView txtIngredients;
+    @BindView(R.id.txt_header_ingredients)
+    TextView txtHeaderIngredients;
 
     Product product;
     List<Addon> addonList;
@@ -142,6 +146,12 @@ public class ProductDetailActivity extends AppCompatActivity {
             if (product.getName() != null) {
                 productName.setText(product.getName());
             }
+            if (product.getIngredients()!=null){
+                txtIngredients.setText(product.getIngredients());
+            }else {
+                txtHeaderIngredients.setVisibility(View.GONE);
+                txtIngredients.setVisibility(View.GONE);
+            }
             if (product.getPrices() != null && product.getPrices().getCurrency() != null) {
                 if (product.getPrices().getDiscount() > 0) {
                     Spannable spannable = new SpannableString(product.getPrices().getCurrency() + product.getPrices().getPrice());
@@ -173,7 +183,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             addOnsRv.setAdapter(addOnsAdapter);
 
             slider_image_list.addAll(product.getImages());
-            sliderPagerAdapter = new SliderPagerAdapter(this, slider_image_list, true);
+            sliderPagerAdapter = new SliderPagerAdapter(this, slider_image_list, true,false);
             productSlider.setAdapter(sliderPagerAdapter);
             addBottomDots(0);
 

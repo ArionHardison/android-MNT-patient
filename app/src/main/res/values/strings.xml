@@ -420,4 +420,5 @@
     <string name="order_type_takeaway">Order Type : PICKUP</string>
     <string name="halal">Halal</string>
     <string name="kitchen_near_you">Kitchens near you</string>
+    <string name="ingredients">Ingredients</string>
 </resources>
