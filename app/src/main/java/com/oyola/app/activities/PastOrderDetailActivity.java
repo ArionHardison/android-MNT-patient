@@ -77,6 +77,10 @@ public class PastOrderDetailActivity extends AppCompatActivity {
     NestedScrollView nestedScrollView;
     @BindView(R.id.dot_line_img)
     ImageView dotLineImg;
+    @BindView(R.id.doted_line_layout)
+    RelativeLayout layoutDotLine;
+    @BindView(R.id.order_type)
+    TextView orderType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,13 +127,25 @@ public class PastOrderDetailActivity extends AppCompatActivity {
 
             restaurantName.setText(order.getShop().getName());
             restaurantAddress.setText(order.getShop().getAddress());
-            if (order.getAddress()!=null) {
-                userAddressTitle.setText(order.getAddress().getType());
-                userAddress.setText(order.getAddress().getMapAddress());
-            }else {
-                userAddressTitle.setText("");
-                userAddress.setText("");
+            if (order.getPickUpRestaurant() != null) {
+                if (order.getPickUpRestaurant() == 0) {
+                    orderType.setText(getString(R.string.order_type_delivery));
+                    if (order.getAddress()!=null) {
+                        userAddressTitle.setText(order.getAddress().getType());
+                        userAddress.setText(order.getAddress().getMapAddress());
+                    }
+                } else if (order.getPickUpRestaurant() == 1) {
+                    orderType.setText(getString(R.string.order_type_takeaway));
+                    destinationLayout.setVisibility(View.GONE);
+                    layoutDotLine.setVisibility(View.GONE);
+                } else {
+                    if (order.getAddress()!=null) {
+                        userAddressTitle.setText(order.getAddress().getType());
+                        userAddress.setText(order.getAddress().getMapAddress());
+                    }
+                }
             }
+
             //set Fragment
             orderFullViewFragment = new OrderViewFragment();
             fragmentManager = getSupportFragmentManager();

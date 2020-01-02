@@ -172,9 +172,9 @@ public class AccountPaymentActivity extends AppCompatActivity {
         else
             walletPaymentLayout.setVisibility(GONE);
         if (isCashVisible)
-            cashPaymentLayout.setVisibility(GONE);
+            cashPaymentLayout.setVisibility(VISIBLE);
         else
-            cashPaymentLayout.setVisibility(GONE);
+            cashPaymentLayout.setVisibility(VISIBLE);
 
         cashPaymentLayout.setOnClickListener(new View.OnClickListener() {
             @Override

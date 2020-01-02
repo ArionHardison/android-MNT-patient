@@ -21,10 +21,9 @@
             android:layout_weight="0.6"
             android:drawablePadding="@dimen/activity_vertical_margin"
             android:background="@android:color/transparent"
-            android:button="@null"
-            android:drawableStart="@drawable/check_selector"
             android:gravity="center_vertical"
             android:maxLines="1"
+            android:theme="@style/checkBoxStyle"
             android:text="Spicy Prawn Tika $220"
             android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/text_small" />

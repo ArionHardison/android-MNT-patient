@@ -607,7 +607,7 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
             if (GlobalData.profileModel.getWalletBalance() != null) {
                 float fd = Float.parseFloat(GlobalData.profileModel.getWalletBalance());
                 if (fd > 0) {
-                    amountTxt.setText(GlobalData.currencySymbol + " " + money);
+                    amountTxt.setText(GlobalData.currencySymbol + "" + money);
                     walletLayout.setVisibility(View.VISIBLE);
                 } else {
                     walletLayout.setVisibility(View.INVISIBLE);
