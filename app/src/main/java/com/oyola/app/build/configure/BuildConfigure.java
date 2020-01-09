@@ -20,6 +20,7 @@ public class BuildConfigure {
 
     //Stripe for card payment
     public static String STRIPE_PK = "pk_test_TEHdf47cyjfJYcN8EoasRpfn00YKo9pJ21";
+//    public static String STRIPE_PK = "pk_test_pAqnif8mJ1kwh16JXuApB3Y5";
 
 
 }

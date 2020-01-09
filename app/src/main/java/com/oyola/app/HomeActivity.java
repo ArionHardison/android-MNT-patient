@@ -197,7 +197,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
         bottomNavigation.setDefaultBackgroundColor(ContextCompat.getColor(this,R.color.background_color));
 
         // Disable the translation inside the CoordinatorLayout
-        bottomNavigation.setBehaviorTranslationEnabled(true);
+        bottomNavigation.setBehaviorTranslationEnabled(false);
         bottomNavigation.setTranslucentNavigationEnabled(true);
 
         bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
