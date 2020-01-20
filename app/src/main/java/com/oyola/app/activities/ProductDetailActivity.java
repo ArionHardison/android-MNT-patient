@@ -17,6 +17,7 @@ import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.StrikethroughSpan;
 import android.util.Log;
 import android.view.View;
@@ -142,10 +143,21 @@ public class ProductDetailActivity extends AppCompatActivity {
                 }
             }
 
-
             if (product.getName() != null) {
-                productName.setText(product.getName());
+                Spannable wordOne = new SpannableString(product.getName());
+                wordOne.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.colorTextBlack)), 0, wordOne.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                productName.setText(wordOne);
             }
+
+            Spannable wordTwo;
+            if (product.getCalories() != null) {
+                wordTwo = new SpannableString(" " + product.getCalories() + " Cal");
+            } else {
+                wordTwo = new SpannableString(" 0 Cal");
+            }
+            wordTwo.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.checkbox_green)), 0, wordTwo.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            productName.append(wordTwo);
+
             if (product.getIngredients()!=null){
                 txtIngredients.setText(product.getIngredients());
             }else {

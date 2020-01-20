@@ -60,6 +60,9 @@ public class Product {
     @SerializedName("ingredients")
     @Expose
     private String ingredients;
+    @SerializedName("calories")
+    @Expose
+    private Double calories;
 
     public Integer getId() {
         return id;
@@ -194,5 +197,13 @@ public class Product {
 
     public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public Double getCalories() {
+        return calories;
+    }
+
+    public void setCalories(Double calories) {
+        this.calories = calories;
     }
 }

@@ -1,7 +1,11 @@
 package com.oyola.app.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +70,18 @@ public class AddOnsAdapter extends RecyclerView.Adapter<AddOnsAdapter.MyViewHold
         holder.cardAddDetailLayout.setVisibility(View.GONE);
         addon = list.get(position);
         holder.cardTextValueTicker.setCharacterList(NUMBER_LIST);
-        holder.addonName.setText(addon.getAddon().getName() + " " + currency + list.get(position).getPrice());
+        Spannable wordOne = new SpannableString(addon.getAddon().getName() + " " + currency + list.get(position).getPrice());
+        wordOne.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.colorSecondaryText)), 0, wordOne.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        holder.addonName.setText(wordOne);
+        Spannable wordTwo;
+        if (addon.getAddon().getCalories() != null) {
+            wordTwo = new SpannableString(" " + addon.getAddon().getCalories() + " Cal");
+        } else {
+            wordTwo = new SpannableString(" 0 Cal");
+        }
+        wordTwo.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.checkbox_green)), 0, wordTwo.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        holder.addonName.append(wordTwo);
+//        holder.addonName.setText(addon.getAddon().getName() + " " + currency + list.get(position).getPrice());
         addon.setQuantity(1);
         holder.cardTextValue.setText("1");
         holder.cardTextValueTicker.setText("1");

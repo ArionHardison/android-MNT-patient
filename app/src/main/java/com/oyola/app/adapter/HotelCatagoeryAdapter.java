@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.StrikethroughSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -164,7 +165,23 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
         product = mList.get(section).getProducts().get(relativePosition);
         productList = mList.get(section).getProducts();
         holder.cardTextValueTicker.setCharacterList(NUMBER_LIST);
-        holder.dishNameTxt.setText(product.getName());
+        if (product.getName() != null) {
+            Spannable wordOne = new SpannableString(product.getName());
+            wordOne.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.colorTextBlack)), 0, wordOne.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            holder.dishNameTxt.setText(wordOne);
+        }
+
+        Spannable wordTwo;
+        if (product.getCalories() != null) {
+            wordTwo = new SpannableString(" " + product.getCalories() + " Cal");
+        } else {
+            wordTwo = new SpannableString(" 0 Cal");
+        }
+        wordTwo.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.checkbox_green)), 0, wordTwo.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        holder.dishNameTxt.append(wordTwo);
+
+//        holder.dishNameTxt.setText(product.getName());
+
         holder.cardTextValueTicker.setVisibility(View.GONE);
         holder.cardTextValue.setVisibility(View.VISIBLE);
         if (category.getName().equalsIgnoreCase(context.getResources().getString(R.string.featured_items))) {
@@ -520,23 +537,24 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
 
     }
 
-    public void setCategoryList(String mValue){
-        if (mValue.equalsIgnoreCase("All")){
-            mList =mGlobalList;
+    public void setCategoryList(String mValue) {
+        if (mValue.equalsIgnoreCase("All")) {
+            mList = mGlobalList;
             notifyDataSetChanged();
-        }else {
-            for (int i=0;i<mGlobalList.size();i++){
-                if (mGlobalList.get(i).getName().equalsIgnoreCase(mValue)){
-                    mFilteredList =new ArrayList<>();
+        } else {
+            for (int i = 0; i < mGlobalList.size(); i++) {
+                if (mGlobalList.get(i).getName().equalsIgnoreCase(mValue)) {
+                    mFilteredList = new ArrayList<>();
                     mFilteredList.add(mGlobalList.get(i));
                 }
             }
-            if (mFilteredList !=null&& mFilteredList.size()>0) {
-                mList= mFilteredList;
+            if (mFilteredList != null && mFilteredList.size() > 0) {
+                mList = mFilteredList;
                 notifyDataSetChanged();
             }
         }
     }
+
     public static void addCart(HashMap<String, String> map) {
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);

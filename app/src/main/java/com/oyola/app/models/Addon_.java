@@ -21,6 +21,9 @@ public class Addon_ {
     @SerializedName("deleted_at")
     @Expose
     private Object deletedAt;
+    @SerializedName("calories")
+    @Expose
+    private Double calories;
 
     private  boolean isChecked=false;
 
@@ -83,4 +86,11 @@ public class Addon_ {
         return this;
     }
 
+    public Double getCalories() {
+        return calories;
+    }
+
+    public void setCalories(Double calories) {
+        this.calories = calories;
+    }
 }
