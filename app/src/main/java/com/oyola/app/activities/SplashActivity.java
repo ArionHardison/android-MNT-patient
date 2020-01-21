@@ -178,6 +178,8 @@ public class SplashActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 if (response.isSuccessful()) {
                     SharedHelper.putKey(context, "logged", "true");
+                    if (response.body().getReferralCode()!=null)
+                    SharedHelper.putKey(context, "referral_code", response.body().getReferralCode());
                     GlobalData.profileModel = response.body();
                     GlobalData.currencySymbol = profileModel.getCurrency();
                     GlobalData.currency = profileModel.getCurrency_code();

@@ -48,6 +48,7 @@ import com.oyola.app.activities.LoginActivity;
 import com.oyola.app.activities.ManageAddressActivity;
 import com.oyola.app.activities.OrdersActivity;
 import com.oyola.app.activities.PromotionActivity;
+import com.oyola.app.activities.ReferralActivity;
 import com.oyola.app.activities.WelcomeActivity;
 import com.oyola.app.adapter.ProfileSettingsAdapter;
 import com.oyola.app.helper.GlobalData;
@@ -158,6 +159,9 @@ public class ProfileFragment extends Fragment {
             case 3:
                 startActivity(new Intent(context, OrdersActivity.class));
                 break;
+            case 4:
+                startActivity(new Intent(context, ReferralActivity.class));
+                break;
            /* case 4:
                 startActivity(new Intent(context, PromotionActivity.class));
                 break;*/
@@ -219,6 +223,7 @@ public class ProfileFragment extends Fragment {
             listIcons.add(R.drawable.ic_favorite_light);
             listIcons.add(R.drawable.payment);
             listIcons.add(R.drawable.ic_orders_light);
+            listIcons.add(R.drawable.ic_share);
 //            listIcons.add(R.drawable.ic_promotion_details);
 //            listIcons.add(R.drawable.ic_g_translate_light);
 

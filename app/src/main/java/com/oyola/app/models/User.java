@@ -65,6 +65,9 @@ public class User {
     @SerializedName("customer_support")
     @Expose
     private String customer_support;
+    @SerializedName("referral_code")
+    @Expose
+    private String referralCode;
     @SerializedName("addresses")
     @Expose
     private List<Address> addresses = null;
@@ -233,4 +236,11 @@ public class User {
         this.cart = cart;
     }
 
+    public String getReferralCode() {
+        return referralCode;
+    }
+
+    public void setReferralCode(String referralCode) {
+        this.referralCode = referralCode;
+    }
 }

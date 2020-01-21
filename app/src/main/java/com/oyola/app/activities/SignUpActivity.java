@@ -111,6 +111,8 @@ public class SignUpActivity extends AppCompatActivity {
     TextView countryNumber;
     @BindView(R.id.et_mobile_number)
     EditText etMobileNumber;
+    @BindView(R.id.edt_referral)
+    EditText etReferralCode;
     @BindView(R.id.mobile_number_layout)
     RelativeLayout mobileNumberLayout;
     @BindView(R.id.linearLayout)
@@ -125,6 +127,7 @@ public class SignUpActivity extends AppCompatActivity {
     GoogleApiClient mGoogleApiClient;
     private String hashcode = "";
     String mMobile = "";
+    String mReferralCode = "";
 
 
     @Override
@@ -411,6 +414,7 @@ public class SignUpActivity extends AppCompatActivity {
     public void initValues() {
         name = nameEdit.getText().toString();
         email = emailEdit.getText().toString();
+        mReferralCode = etReferralCode.getText().toString();
         strConfirmPassword = confirmPassword.getText().toString();
         if (TextUtils.isEmpty(name)) {
             Toast.makeText(this, getResources().getString(R.string.please_enter_username), Toast.LENGTH_SHORT).show();
@@ -435,6 +439,7 @@ public class SignUpActivity extends AppCompatActivity {
             map.put("phone", mMobile);
             map.put("password", "123456");
             map.put("password_confirmation", "123456");
+            map.put("referral_code", mReferralCode);
 
             if (connectionHelper.isConnectingToInternet()) {
                 signup(map);

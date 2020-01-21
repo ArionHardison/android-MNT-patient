@@ -398,7 +398,6 @@ public class ProductsAdapter extends SectionedRecyclerViewAdapter<ProductsAdapte
 
     }
 
-
     public static void addCart(HashMap<String, String> map) {
         Call<AddCart> call = apiInterface.postAddCart(map);
         call.enqueue(new Callback<AddCart>() {
@@ -441,7 +440,6 @@ public class ProductsAdapter extends SectionedRecyclerViewAdapter<ProductsAdapte
         });
 
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView headerTxt;
