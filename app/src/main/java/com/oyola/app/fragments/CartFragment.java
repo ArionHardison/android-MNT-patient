@@ -811,7 +811,7 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
                 locationInfoLayout.setVisibility(View.VISIBLE);
                 layoutOrderType.setVisibility(View.GONE);
                 //Intialize address Value
-                if (GlobalData.selectedAddress != null && GlobalData.selectedAddress.getLandmark() != null) {
+                if (GlobalData.selectedAddress != null) {
                     if (GlobalData.addressList.getAddresses().size() == 1)
                         addAddressTxt.setText(getString(R.string.add_address));
                     else
