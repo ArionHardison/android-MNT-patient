@@ -495,11 +495,11 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
                     categoryList.add(category);
                     categoryList.addAll(response.body().getCategories());
                     GlobalData.categoryList = categoryList;
-                    GlobalData.selectedShop.setCategories(categoryList);
-                    catagoeryAdapter = new HotelCatagoeryAdapter(context, activity, categoryList);
-                    accompanimentDishesRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-                    accompanimentDishesRv.setItemAnimator(new DefaultItemAnimator());
-                    accompanimentDishesRv.setAdapter(catagoeryAdapter);
+                        GlobalData.selectedShop.setCategories(categoryList);
+                        catagoeryAdapter = new HotelCatagoeryAdapter(context, activity, categoryList);
+                        accompanimentDishesRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+                        accompanimentDishesRv.setItemAnimator(new DefaultItemAnimator());
+                        accompanimentDishesRv.setAdapter(catagoeryAdapter);
 
                     if (categoryList != null && categoryList.size() > 1)
                         setCategoryAdapter(categoryList);
