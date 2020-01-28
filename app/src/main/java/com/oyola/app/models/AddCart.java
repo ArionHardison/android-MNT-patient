@@ -29,7 +29,6 @@ public class AddCart {
     @SerializedName("orignal_price")
     @Expose
     private Double orignal_price;
-
     @SerializedName("shop_discount")
     @Expose
     private String shopDiscount;

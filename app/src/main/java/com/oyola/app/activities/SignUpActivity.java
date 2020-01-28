@@ -328,6 +328,8 @@ public class SignUpActivity extends AppCompatActivity {
                     map.put("grant_type", GRANT_TYPE);
                     map.put("client_id", BuildConfigure.CLIENT_ID);
                     map.put("client_secret", BuildConfigure.CLIENT_SECRET);
+                    Toast.makeText(SignUpActivity.this, "Successfully registered",
+                            Toast.LENGTH_SHORT).show();
                     login(map);
                 } else if (response.errorBody() != null) {
                     customDialog.dismiss();
@@ -398,7 +400,9 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<LoginModel> call, @NonNull Response<LoginModel> response) {
                 if (response.body() != null) {
-                    SharedHelper.putKey(context, "access_token", response.body().getTokenType() + " " + response.body().getAccessToken());
+                    SharedHelper.putKey(context, "access_token",
+                            response.body().getTokenType() + "" +
+                                    " " + response.body().getAccessToken());
                     getProfile();
                 }
 

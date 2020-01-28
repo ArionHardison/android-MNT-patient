@@ -11,13 +11,13 @@ public class Prices {
     private Integer id;
     @SerializedName("price")
     @Expose
-    private int price;
+    private double price;
     @SerializedName("currency")
     @Expose
     private String currency;
     @SerializedName("discount")
     @Expose
-    private int discount;
+    private double discount;
     @SerializedName("discount_type")
     @Expose
     private String discountType;
@@ -34,7 +34,7 @@ public class Prices {
         this.id = id;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
@@ -58,7 +58,7 @@ public class Prices {
         this.currency = currency;
     }
 
-    public int getDiscount() {
+    public double getDiscount() {
         return discount;
     }
 

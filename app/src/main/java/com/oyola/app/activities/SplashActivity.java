@@ -235,7 +235,8 @@ public class SplashActivity extends AppCompatActivity {
                     .putExtra("customdata", getIntent().getSerializableExtra("customdata")));
             finish();
         } else {
-            startActivity(new Intent(context, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            startActivity(new Intent(context, HomeActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
             finish();
         }
 

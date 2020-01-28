@@ -29,7 +29,7 @@ public class Invoice {
     private int promocode_amount;
     @SerializedName("delivery_charge")
     @Expose
-    private Integer deliveryCharge;
+    private double deliveryCharge;
     @SerializedName("tax")
     @Expose
     private double tax;
@@ -114,7 +114,7 @@ public class Invoice {
         this.promocode_amount = promocode_amount;
     }
 
-    public Integer getDeliveryCharge() {
+    public double getDeliveryCharge() {
         return deliveryCharge;
     }
 

@@ -183,7 +183,8 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
         //  priceAmount = product.getCalculated_price();
 
         holder.priceTxt.setText(product.getPrices().getCurrency() +
-                " " + Utils.getNewNumberFormat((list.get(position).getQuantity() * product.getPrices().getOrignalPrice())));
+                " " + Utils.getNewNumberFormat((list.get(position).getQuantity()
+                * product.getPrices().getOrignalPrice())));
         if (!product.getFoodType().equalsIgnoreCase("veg")) {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_nonveg));
         } else {

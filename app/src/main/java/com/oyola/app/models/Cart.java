@@ -19,7 +19,7 @@ public class Cart {
     private Object promocodeId;
     @SerializedName("calculated_price")
     @Expose
-    private int calculated_price;
+    private double calculated_price;
     @SerializedName("order_id")
     @Expose
     private Object orderId;
@@ -39,7 +39,7 @@ public class Cart {
     @Expose
     private List<CartAddon> cartAddons = null;
 
-    public int getCalculated_price() {
+    public double getCalculated_price() {
         return calculated_price;
     }
 

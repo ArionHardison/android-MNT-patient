@@ -736,9 +736,12 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
-            behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        }
+//        if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+//            behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//        }
+        startActivity(new Intent(this, MainActivity.class)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+        overridePendingTransition(R.anim.anim_nothing, R.anim.slide_out_right);
         finish();
         overridePendingTransition(R.anim.anim_nothing, R.anim.slide_out_right);
     }
