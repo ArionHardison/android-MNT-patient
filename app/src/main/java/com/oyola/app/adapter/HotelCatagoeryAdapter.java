@@ -420,6 +420,7 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
             public void onClick(View v) {
                 product = mList.get(section).getProducts().get(relativePosition);
                 if (GlobalData.profileModel == null) {
+                    GlobalData.notificationCount=0;
                     activity.startActivity(new Intent(context, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     activity.overridePendingTransition(R.anim.slide_in_left, R.anim.anim_nothing);
                     activity.finish();

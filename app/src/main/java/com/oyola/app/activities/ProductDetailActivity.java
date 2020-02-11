@@ -3,6 +3,7 @@ package com.oyola.app.activities;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -115,7 +116,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(ContextCompat.getDrawable(this,R.drawable.ic_back));
+        getSupportActionBar().setHomeAsUpIndicator(ContextCompat.getDrawable(this, R.drawable.ic_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,9 +160,9 @@ public class ProductDetailActivity extends AppCompatActivity {
             wordTwo.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.checkbox_green)), 0, wordTwo.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             productName.append(wordTwo);
 
-            if (product.getIngredients()!=null){
+            if (product.getIngredients() != null) {
                 txtIngredients.setText(product.getIngredients());
-            }else {
+            } else {
                 txtHeaderIngredients.setVisibility(View.GONE);
                 txtIngredients.setVisibility(View.GONE);
             }
@@ -196,71 +197,73 @@ public class ProductDetailActivity extends AppCompatActivity {
             addOnsRv.setAdapter(addOnsAdapter);
 
             slider_image_list.addAll(product.getImages());
-            sliderPagerAdapter = new SliderPagerAdapter(this, slider_image_list, true,false);
+            sliderPagerAdapter = new SliderPagerAdapter(this, slider_image_list, true, false);
             productSlider.setAdapter(sliderPagerAdapter);
             addBottomDots(0);
 
             addItemLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    final HashMap<String, String> map = new HashMap<>();
-                    map.put("product_id", product.getId().toString());
-                    map.put("note", custom_notes.getText().toString());
-                    if (product.getCart() != null && product.getCart().size() == 1) {
-                        map.put("quantity", String.valueOf(product.getCart().get(0).getQuantity() + 1));
-                        map.put("cart_id", String.valueOf(product.getCart().get(0).getId()));
-                    } else if (product.getAddons().isEmpty() && cartId != 0) {
-                        map.put("quantity", String.valueOf(quantity + 1));
-                        map.put("cart_id", String.valueOf(cartId));
+                    if (GlobalData.profileModel == null) {
+                        startActivity(new Intent(context, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        overridePendingTransition(R.anim.slide_in_left, R.anim.anim_nothing);
+                        finish();
+                        Toast.makeText(context, context.getResources().getString(R.string.please_login_and_order_dishes), Toast.LENGTH_SHORT).show();
                     } else {
-                        map.put("quantity", "1");
-                        if (!list.isEmpty()) {
-                            for (int i = 0; i < list.size(); i++) {
-                                Addon addon = list.get(i);
-                                if (addon.getAddon().getChecked()) {
-                                    map.put("product_addons[" + "" + i + "]", addon.getId().toString());
-                                    map.put("addons_qty[" + "" + i + "]", addon.getQuantity().toString());
+                        final HashMap<String, String> map = new HashMap<>();
+                        map.put("product_id", product.getId().toString());
+                        map.put("note", custom_notes.getText().toString());
+                        if (product.getCart() != null && product.getCart().size() == 1) {
+                            map.put("quantity", String.valueOf(product.getCart().get(0).getQuantity() + 1));
+                            map.put("cart_id", String.valueOf(product.getCart().get(0).getId()));
+                        } else if (product.getAddons().isEmpty() && cartId != 0) {
+                            map.put("quantity", String.valueOf(quantity + 1));
+                            map.put("cart_id", String.valueOf(cartId));
+                        } else {
+                            map.put("quantity", "1");
+                            if (!list.isEmpty()) {
+                                for (int i = 0; i < list.size(); i++) {
+                                    Addon addon = list.get(i);
+                                    if (addon.getAddon().getChecked()) {
+                                        map.put("product_addons[" + "" + i + "]", addon.getId().toString());
+                                        map.put("addons_qty[" + "" + i + "]", addon.getQuantity().toString());
+                                    }
                                 }
                             }
                         }
+                        Log.e("AddCart_add", map.toString());
+
+                        if (!Utils.isShopChanged(product.getShopId())) {
+                            addItem(map);
+                        } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle(context.getResources().getString(R.string.replace_cart_item))
+                                    .setMessage(context.getResources().getString(R.string.do_you_want_to_discart_the_selection_and_add_dishes_from_the_restaurant))
+                                    .setPositiveButton(context.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // continue with delete
+                                            clearCart();
+                                            addItem(map);
+
+                                        }
+                                    })
+                                    .setNegativeButton(context.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // do nothing
+                                            dialog.dismiss();
+
+                                        }
+                                    });
+                            AlertDialog alert = builder.create();
+                            alert.show();
+                            Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+                            nbutton.setTextColor(ContextCompat.getColor(context, R.color.theme));
+                            nbutton.setTypeface(nbutton.getTypeface(), Typeface.BOLD);
+                            Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+                            pbutton.setTextColor(ContextCompat.getColor(context, R.color.theme));
+                            pbutton.setTypeface(pbutton.getTypeface(), Typeface.BOLD);
+                        }
                     }
-                    Log.e("AddCart_add", map.toString());
-
-                    if (!Utils.isShopChanged(product.getShopId())) {
-                        addItem(map);
-                    } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        builder.setTitle(context.getResources().getString(R.string.replace_cart_item))
-                                .setMessage(context.getResources().getString(R.string.do_you_want_to_discart_the_selection_and_add_dishes_from_the_restaurant))
-                                .setPositiveButton(context.getResources().getString(R.string.yes), new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // continue with delete
-                                        clearCart();
-                                        addItem(map);
-
-                                    }
-                                })
-                                .setNegativeButton(context.getResources().getString(R.string.no), new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // do nothing
-                                        dialog.dismiss();
-
-                                    }
-                                });
-                        AlertDialog alert = builder.create();
-                        alert.show();
-                        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
-                        nbutton.setTextColor(ContextCompat.getColor(context, R.color.theme));
-                        nbutton.setTypeface(nbutton.getTypeface(), Typeface.BOLD);
-                        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
-                        pbutton.setTextColor(ContextCompat.getColor(context, R.color.theme));
-                        pbutton.setTypeface(pbutton.getTypeface(), Typeface.BOLD);
-                    }
-
-
-//                }
-
-
                 }
             });
 
@@ -346,7 +349,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         } else {
             commonAccess = "";
             ViewCartAdapter.addCart(map, this);
-          //  finish();
+            //  finish();
         }
 
     }
