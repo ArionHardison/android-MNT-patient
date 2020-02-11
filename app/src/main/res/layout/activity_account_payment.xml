@@ -210,7 +210,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/button_corner_bg_green"
+                android:background="@color/colorButton"
                 android:text="@string/proceed"
                 android:textColor="@color/colorTextWhite"
                 android:visibility="gone" />

@@ -620,7 +620,6 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
                 category.setProducts(response.body().getFeaturedProducts());
                 HotelViewActivity.categoryList.add(category);
                 HotelViewActivity.categoryList.addAll(response.body().getCategories());
-                GlobalData.categoryList = HotelViewActivity.categoryList;
                 GlobalData.selectedShop.setCategories(HotelViewActivity.categoryList);
                 HotelViewActivity.catagoeryAdapter.notifyDataSetChanged();
             }

@@ -458,7 +458,7 @@
                     android:id="@+id/proceed_to_pay_btn"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_35sdp"
-                    android:background="@drawable/button_corner_bg_green"
+                    android:background="@color/colorButton"
                     android:text="@string/continue_txt"
                     android:textColor="@color/colorTextWhite" />
 
