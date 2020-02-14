@@ -584,9 +584,7 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
             } else if (GlobalData.addCart != null) {
                 if (GlobalData.addCart.getProductList().size() > 0) {
 
-
                     String currency = GlobalData.addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
-
                     itemTotalAmount.setText(currency + " " + /*String.format("%.2f", */GlobalData.addCart.getTotalPrice());
                     deliveryCharges.setText(currency + " " + GlobalData.addCart.getDeliveryCharges().toString());
                     discountAmount.setText("- " + currency + "" + GlobalData.addCart.getShopDiscount());

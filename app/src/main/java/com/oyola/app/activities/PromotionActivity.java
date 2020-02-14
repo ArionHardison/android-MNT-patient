@@ -143,7 +143,7 @@ public class PromotionActivity extends AppCompatActivity implements PromotionsAd
                 customDialog.dismiss();
                 if (response.isSuccessful()) {
                     Toast.makeText(PromotionActivity.this, getResources().getString(R.string.promo_code_apply_successfully), Toast.LENGTH_SHORT).show();
-                    GlobalData.profileModel.setWalletBalance(response.body().getWalletMoney());
+//                    GlobalData.profileModel.setWalletBalance(response.body().getWalletMoney());
                     /*GlobalData.addCart = null;
                     GlobalData.addCart = response.body();*/
                     gotoFlow(String.valueOf(promotions.getId()));

@@ -69,7 +69,6 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
     public static Shop selectedShop = GlobalData.selectedShop;
     public static CartChoiceModeFragment bottomSheetDialogFragment;
 
-
     //Animation number
     private static final char[] NUMBER_LIST = TickerUtils.getDefaultNumberList();
 

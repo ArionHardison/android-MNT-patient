@@ -145,7 +145,9 @@ public class CartChoiceModeFragment extends BottomSheetDialogFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.i_will_choose_btn:
-                context.startActivity(new Intent(context, ProductDetailActivity.class));
+                Intent intent = new Intent(context, ProductDetailActivity.class);
+                intent.putExtra("isNewSelection", true);
+                context.startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                 break;
             case R.id.repeat_btn:

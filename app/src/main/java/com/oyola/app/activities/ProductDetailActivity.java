@@ -107,11 +107,12 @@ public class ProductDetailActivity extends AppCompatActivity {
     public static TextView itemText;
     public static TextView viewCart;
     public static RelativeLayout addItemLayout;
-
+    private boolean isNewSelection;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
+        isNewSelection = getIntent().getBooleanExtra("isNewSelection", false);
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -214,8 +215,25 @@ public class ProductDetailActivity extends AppCompatActivity {
                         map.put("product_id", product.getId().toString());
                         map.put("note", custom_notes.getText().toString());
                         if (product.getCart() != null && product.getCart().size() == 1) {
-                            map.put("quantity", String.valueOf(product.getCart().get(0).getQuantity() + 1));
-                            map.put("cart_id", String.valueOf(product.getCart().get(0).getId()));
+//                            map.put("quantity", String.valueOf(product.getCart().get(0).getQuantity() + 1));
+//                            map.put("cart_id", String.valueOf(product.getCart().get(0).getId()));
+
+                            if (!isNewSelection) {
+                                map.put("quantity", String.valueOf(product.getCart().get(0).getQuantity() + 1));
+                                map.put("cart_id", String.valueOf(product.getCart().get(0).getId()));
+                            } else {
+                                map.put("quantity", String.valueOf(product.getCart().get(0).getQuantity()));
+                            }
+                            if (!list.isEmpty()) {
+                                for (int i = 0; i < list.size(); i++) {
+                                    Addon addon = list.get(i);
+                                    if (addon.getAddon().getChecked()) {
+                                        map.put("product_addons[" + "" + i + "]", addon.getId().toString());
+                                        map.put("addons_qty[" + "" + i + "]", addon.getQuantity().toString());
+                                    }
+                                }
+                            }
+
                         } else if (product.getAddons().isEmpty() && cartId != 0) {
                             map.put("quantity", String.valueOf(quantity + 1));
                             map.put("cart_id", String.valueOf(cartId));
