@@ -173,9 +173,9 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
 
         Spannable wordTwo;
         if (product.getCalories() != null) {
-            wordTwo = new SpannableString(" " + product.getCalories() + " Cal");
+            wordTwo = new SpannableString(" " + product.getCalories() + " " + context.getString(R.string.calories_symbol));
         } else {
-            wordTwo = new SpannableString(" 0 Cal");
+            wordTwo = new SpannableString(" 0 "  + context.getString(R.string.calories_symbol));
         }
         wordTwo.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.checkbox_green)), 0, wordTwo.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         holder.dishNameTxt.append(wordTwo);
@@ -420,7 +420,7 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
             public void onClick(View v) {
                 product = mList.get(section).getProducts().get(relativePosition);
                 if (GlobalData.profileModel == null) {
-                    GlobalData.notificationCount=0;
+                    GlobalData.notificationCount = 0;
                     activity.startActivity(new Intent(context, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     activity.overridePendingTransition(R.anim.slide_in_left, R.anim.anim_nothing);
                     activity.finish();

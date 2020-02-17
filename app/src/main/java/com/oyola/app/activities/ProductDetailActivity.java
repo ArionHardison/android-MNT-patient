@@ -108,6 +108,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     public static TextView viewCart;
     public static RelativeLayout addItemLayout;
     private boolean isNewSelection;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,9 +155,9 @@ public class ProductDetailActivity extends AppCompatActivity {
 
             Spannable wordTwo;
             if (product.getCalories() != null) {
-                wordTwo = new SpannableString(" " + product.getCalories() + " Cal");
+                wordTwo = new SpannableString(" " + product.getCalories() + " " + getString(R.string.calories_symbol));
             } else {
-                wordTwo = new SpannableString(" 0 Cal");
+                wordTwo = new SpannableString(" 0 " + getString(R.string.calories_symbol));
             }
             wordTwo.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.checkbox_green)), 0, wordTwo.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             productName.append(wordTwo);

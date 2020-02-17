@@ -426,5 +426,6 @@
     <string name="referral_code">Referral Code</string>
     <string name="invite_friends">Invite Friends</string>
     <string name="share">Share</string>
+    <string name="calories_symbol">kJ</string>
     <string name="referrral_content">Hey Checkout this app, %1$s \nUser - https://play.google.com/store/apps/details?id=com.oyola.app\nInstall this app with referral code %2$s</string>
 </resources>

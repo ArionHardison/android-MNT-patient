@@ -75,9 +75,9 @@ public class AddOnsAdapter extends RecyclerView.Adapter<AddOnsAdapter.MyViewHold
         holder.addonName.setText(wordOne);
         Spannable wordTwo;
         if (addon.getAddon().getCalories() != null) {
-            wordTwo = new SpannableString(" " + addon.getAddon().getCalories() + " Cal");
+            wordTwo = new SpannableString(" " + addon.getAddon().getCalories() + " "+context.getString(R.string.calories_symbol));
         } else {
-            wordTwo = new SpannableString(" 0 Cal");
+            wordTwo = new SpannableString(" 0 "+ context.getString(R.string.calories_symbol));
         }
         wordTwo.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.checkbox_green)), 0, wordTwo.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         holder.addonName.append(wordTwo);
