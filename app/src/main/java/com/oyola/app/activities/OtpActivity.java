@@ -331,6 +331,7 @@ public class OtpActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 if (response.isSuccessful()) {
                     SharedHelper.putKey(context, "logged", "true");
+                    SharedHelper.putKey(context, "referral_code", response.body().getReferralCode());
                     GlobalData.profileModel = response.body();
                     GlobalData.addCart = new AddCart();
                     GlobalData.addCart.setProductList(response.body().getCart());

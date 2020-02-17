@@ -481,6 +481,7 @@ public class ProfileFragment extends Fragment {
                             signOut();
                         SharedHelper.putKey(context, "logged", "false");
                         SharedHelper.putKey(context, "access_token", "");
+                        SharedHelper.putKey(context, "referral_code", "");
                         startActivity(new Intent(context, WelcomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         GlobalData.profileModel = null;
                         GlobalData.addCart = null;

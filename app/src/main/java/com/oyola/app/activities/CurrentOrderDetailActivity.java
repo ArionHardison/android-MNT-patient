@@ -331,26 +331,26 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
 
     public void updateOrderDeatail() {
         List<OrderFlow> orderFlowList = new ArrayList<>();
-        if (GlobalData.isSelectedOrder != null){
-                if (GlobalData.isSelectedOrder.getPickUpRestaurant()==0){
-                    orderFlowList.add(new OrderFlow(getString(R.string.order_placed_new), getString(R.string.description_1_new), R.drawable.ic_order_placed, ORDER_STATUS.get(0)));
-                    orderFlowList.add(new OrderFlow(getString(R.string.order_confirmed_new), getString(R.string.description_2_new), R.drawable.ic_order_confirmed, ORDER_STATUS.get(1)));
-                    orderFlowList.add(new OrderFlow(getString(R.string.order_processed_new), getString(R.string.description_3_new), R.drawable.ic_order_processed, ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4)));
-                    orderFlowList.add(new OrderFlow(getString(R.string.order_pickedup_new), getString(R.string.description_4_new), R.drawable.ic_order_picked_up, ORDER_STATUS.get(5) + ORDER_STATUS.get(6)));
-                    orderFlowList.add(new OrderFlow(getString(R.string.order_delivered_new), getString(R.string.description_5_new), R.drawable.ic_order_delivered, ORDER_STATUS.get(7)+ORDER_STATUS.get(10)));
-                }else   if (GlobalData.isSelectedOrder.getPickUpRestaurant()==1){
-                    orderFlowList.add(new OrderFlow(getString(R.string.order_placed_new), getString(R.string.description_1_new), R.drawable.ic_order_placed, ORDER_STATUS.get(0)));
-                    orderFlowList.add(new OrderFlow(getString(R.string.order_confirmed_new), getString(R.string.description_2_new), R.drawable.ic_order_confirmed, ORDER_STATUS.get(1)));
-                    orderFlowList.add(new OrderFlow(getString(R.string.order_processed_new), getString(R.string.description_3_new), R.drawable.ic_order_processed, ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4)+ORDER_STATUS.get(7)+ORDER_STATUS.get(8)+ORDER_STATUS.get(9)));
+        if (GlobalData.isSelectedOrder != null) {
+            if (GlobalData.isSelectedOrder.getPickUpRestaurant() == 0) {
+                orderFlowList.add(new OrderFlow(getString(R.string.order_placed_new), getString(R.string.description_1_new), R.drawable.ic_order_placed, ORDER_STATUS.get(0)));
+                orderFlowList.add(new OrderFlow(getString(R.string.order_confirmed_new), getString(R.string.description_2_new), R.drawable.ic_order_confirmed, ORDER_STATUS.get(1)));
+                orderFlowList.add(new OrderFlow(getString(R.string.order_processed_new), getString(R.string.description_3_new), R.drawable.ic_order_processed, ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4)));
+                orderFlowList.add(new OrderFlow(getString(R.string.order_pickedup_new), getString(R.string.description_4_new), R.drawable.ic_order_picked_up, ORDER_STATUS.get(5) + ORDER_STATUS.get(6)));
+                orderFlowList.add(new OrderFlow(getString(R.string.order_delivered_new), getString(R.string.description_5_new), R.drawable.ic_order_delivered, ORDER_STATUS.get(7) + ORDER_STATUS.get(10)));
+            } else if (GlobalData.isSelectedOrder.getPickUpRestaurant() == 1) {
+                orderFlowList.add(new OrderFlow(getString(R.string.order_placed_new), getString(R.string.description_1_new), R.drawable.ic_order_placed, ORDER_STATUS.get(0)));
+                orderFlowList.add(new OrderFlow(getString(R.string.order_confirmed_new), getString(R.string.description_2_new), R.drawable.ic_order_confirmed, ORDER_STATUS.get(1)));
+                orderFlowList.add(new OrderFlow(getString(R.string.order_processed_new), getString(R.string.description_3_new), R.drawable.ic_order_processed, ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4) + ORDER_STATUS.get(7) + ORDER_STATUS.get(8) + ORDER_STATUS.get(9)));
 //                    orderFlowList.add(new OrderFlow(getString(R.string.order_pickedup), getString(R.string.description_4_new), R.drawable.ic_order_picked_up, ORDER_STATUS.get(5) + ORDER_STATUS.get(6)));
-                    orderFlowList.add(new OrderFlow(getString(R.string.order_delivered_new), getString(R.string.description_5_new), R.drawable.ic_order_delivered, ORDER_STATUS.get(7)+ORDER_STATUS.get(10)));
-                }else {
-                    orderFlowList.add(new OrderFlow(getString(R.string.order_placed_new), getString(R.string.description_1_new), R.drawable.ic_order_placed, ORDER_STATUS.get(0)));
-                    orderFlowList.add(new OrderFlow(getString(R.string.order_confirmed_new), getString(R.string.description_2_new), R.drawable.ic_order_confirmed, ORDER_STATUS.get(1)));
-                    orderFlowList.add(new OrderFlow(getString(R.string.order_processed_new), getString(R.string.description_3_new), R.drawable.ic_order_processed, ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4)));
-                    orderFlowList.add(new OrderFlow(getString(R.string.order_pickedup_new), getString(R.string.description_4_new), R.drawable.ic_order_picked_up, ORDER_STATUS.get(5) + ORDER_STATUS.get(6)));
-                    orderFlowList.add(new OrderFlow(getString(R.string.order_delivered_new), getString(R.string.description_5_new), R.drawable.ic_order_delivered, ORDER_STATUS.get(7)+ORDER_STATUS.get(10)));
-                }
+                orderFlowList.add(new OrderFlow(getString(R.string.order_delivered_new), getString(R.string.description_5_new), R.drawable.ic_order_delivered, ORDER_STATUS.get(7) + ORDER_STATUS.get(10)));
+            } else {
+                orderFlowList.add(new OrderFlow(getString(R.string.order_placed_new), getString(R.string.description_1_new), R.drawable.ic_order_placed, ORDER_STATUS.get(0)));
+                orderFlowList.add(new OrderFlow(getString(R.string.order_confirmed_new), getString(R.string.description_2_new), R.drawable.ic_order_confirmed, ORDER_STATUS.get(1)));
+                orderFlowList.add(new OrderFlow(getString(R.string.order_processed_new), getString(R.string.description_3_new), R.drawable.ic_order_processed, ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4)));
+                orderFlowList.add(new OrderFlow(getString(R.string.order_pickedup_new), getString(R.string.description_4_new), R.drawable.ic_order_picked_up, ORDER_STATUS.get(5) + ORDER_STATUS.get(6)));
+                orderFlowList.add(new OrderFlow(getString(R.string.order_delivered_new), getString(R.string.description_5_new), R.drawable.ic_order_delivered, ORDER_STATUS.get(7) + ORDER_STATUS.get(10)));
+            }
         }
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -371,12 +371,13 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             priceAmount = order.getInvoice().getPayable();
             currency = order.getItems().get(0).getProduct().getPrices().getCurrency();
             if (itemQuantity == 1)
-                orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.item_count) + " , " + currency +priceAmount);
+                orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.item_count) + " , " + currency + priceAmount);
             else
                 orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.items_counts) + " , " + currency + priceAmount);
 
             orderIdTxt2.setText("#000" + order.getId().toString());
-            orderOtp.setText(" : " + isSelectedOrder.getOrderOtp());
+            if (isSelectedOrder.getOrderOtp() != null)
+                orderOtp.setText(getString(R.string.otp) + " : " + isSelectedOrder.getOrderOtp());
             orderPlacedTime.setText(getTimeFromString(order.getCreatedAt()));
 
             //set Fragment
@@ -491,7 +492,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             mMap.getUiSettings().setRotateGesturesEnabled(false);
             mMap.getUiSettings().setTiltGesturesEnabled(false);
 
-            if (isSelectedOrder.getPickUpRestaurant()==0) {
+            if (isSelectedOrder.getPickUpRestaurant() == 0) {
                 if (isSelectedOrder.getAddress() != null) {
                     //Map
                     String url = getUrl(isSelectedOrder.getAddress().getLatitude(), isSelectedOrder.getAddress().getLongitude()
@@ -499,9 +500,9 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                     FetchUrl fetchUrl = new FetchUrl();
                     fetchUrl.execute(url);
                 }
-            }else {
+            } else {
                 destLatLng = new LatLng(isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
-                if (destinationMarker!=null)
+                if (destinationMarker != null)
                     destinationMarker.remove();
                 MarkerOptions destMarker = new MarkerOptions()
                         .position(destLatLng).title("Destination").draggable(true)
@@ -672,7 +673,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                             lineOptions.color(Color.BLACK);
 
                             Log.d("onPostExecute", "onPostExecute lineoptions decoded");
-                        }else {
+                        } else {
                             destLatLng = new LatLng(isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
                             if (destinationMarker != null)
                                 destinationMarker.remove();

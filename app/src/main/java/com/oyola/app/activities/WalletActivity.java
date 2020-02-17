@@ -77,6 +77,7 @@ public class WalletActivity extends AppCompatActivity {
     LinearLayout errorLayout;
 
     WalletHistoryAdapter walletHistoryAdapter;
+    String walletMoney = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,7 +155,9 @@ public class WalletActivity extends AppCompatActivity {
                     if (addCart.getProductList() != null && addCart.getProductList().size() != 0)
                         GlobalData.addCartShopId = addCart.getProductList().get(0).getProduct().getShopId();
 
-                    String walletMoney = GlobalData.profileModel.getWalletBalance();
+                    if (GlobalData.profileModel.getWalletBalance() != null) {
+                        walletMoney = GlobalData.profileModel.getWalletBalance();
+                    }
                     walletAmountTxt.setText(currencySymbol + " " + String.valueOf(walletMoney));
 
 //                    checkActivty();
