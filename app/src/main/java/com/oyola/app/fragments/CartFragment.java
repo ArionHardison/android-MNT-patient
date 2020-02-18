@@ -582,17 +582,22 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
                     getViewCartWithPromocode(promo_code);
                 }
             } else if (GlobalData.addCart != null) {
-                if (GlobalData.addCart.getProductList().size() > 0) {
+               /* if (GlobalData.addCart.getProductList().size() > 0) {
 
                     String currency = GlobalData.addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
-                    itemTotalAmount.setText(currency + " " + /*String.format("%.2f", */GlobalData.addCart.getTotalPrice());
+                    itemTotalAmount.setText(currency + " " + *//*String.format("%.2f", *//*GlobalData.addCart.getTotalPrice());
                     deliveryCharges.setText(currency + " " + GlobalData.addCart.getDeliveryCharges().toString());
                     discountAmount.setText("- " + currency + "" + GlobalData.addCart.getShopDiscount());
                     serviceTax.setText(currency + " " + GlobalData.addCart.getTax() + "");
-                    payAmount.setText(currency + " " + /*String.format("%.2f", */GlobalData.addCart.getPayable());
+                    payAmount.setText(currency + " " + *//*String.format("%.2f", *//*GlobalData.addCart.getPayable());
                     dataLayout.setVisibility(View.VISIBLE);
                     errorLayout.setVisibility(View.GONE);
                     skeleton.hide();
+                }*/
+                if (promo_code.equalsIgnoreCase("")) {
+                    getViewCart();
+                } else {
+                    getViewCartWithPromocode(promo_code);
                 }
 
             } else {
@@ -924,4 +929,5 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
         }
 
     }
+
 }

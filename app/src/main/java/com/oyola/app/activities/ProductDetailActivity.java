@@ -240,6 +240,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                             map.put("cart_id", String.valueOf(cartId));
                         } else {
                             map.put("quantity", "1");
+                            map.put("cart_id", "0");
                             if (!list.isEmpty()) {
                                 for (int i = 0; i < list.size(); i++) {
                                     Addon addon = list.get(i);
@@ -338,7 +339,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void addItem(HashMap<String, String> map) {
-        if (commonAccess.equalsIgnoreCase("")) {
+//        if (commonAccess.equalsIgnoreCase("")) {
             customDialog.show();
             Call<AddCart> call = apiInterface.postAddCart(map);
             call.enqueue(new Callback<AddCart>() {
@@ -365,11 +366,11 @@ public class ProductDetailActivity extends AppCompatActivity {
 
                 }
             });
-        } else {
-            commonAccess = "";
-            ViewCartAdapter.addCart(map, this);
-            //  finish();
-        }
+//        } else {
+//            commonAccess = "";
+//            ViewCartAdapter.addCart(map, this);
+             /* finish();*/
+//        }
 
     }
 
