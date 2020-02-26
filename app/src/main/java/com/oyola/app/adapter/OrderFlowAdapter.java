@@ -63,7 +63,7 @@ public class OrderFlowAdapter extends RecyclerView.Adapter<OrderFlowAdapter.MyVi
         if (orderFlow.status.contains(isSelectedOrder.getStatus())) {
             holder.statusImage.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_dot_green));
             holder.statusTitle.setTextColor(ContextCompat.getColor(context, R.color.colorTextBlack));
-            if (isSelectedOrder.getStatus().equals(GlobalData.ORDER_STATUS.get(GlobalData.ORDER_STATUS.size() - 1))) {
+            if (isSelectedOrder.getStatus().equals(GlobalData.ORDER_STATUS.get(GlobalData.ORDER_STATUS.size() - 3))) {
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
