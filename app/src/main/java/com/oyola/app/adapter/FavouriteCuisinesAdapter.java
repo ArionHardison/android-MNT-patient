@@ -80,7 +80,8 @@ public class FavouriteCuisinesAdapter extends RecyclerView.Adapter<FavouriteCuis
             holder.offer.setVisibility(View.GONE);
         } else {
             holder.offer.setVisibility(View.VISIBLE);
-            holder.offer.setText("Flat " + shops.getOfferPercent().toString() + "% offer on all Orders");
+//            holder.offer.setText("Flat " + shops.getOfferPercent().toString() + "% offer on all Orders");
+            holder.offer.setText("Get " + shops.getOfferPercent().toString() + "% off on Minimum Amount " +GlobalData.currencySymbol+shops.getOfferMinAmount());
         }
         if (shops.getShopstatus() != null)
             holder.tvClosedShop.setVisibility(shops.getShopstatus().equalsIgnoreCase("CLOSED") ? View.VISIBLE : View.GONE);

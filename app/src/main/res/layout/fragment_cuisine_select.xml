@@ -44,6 +44,7 @@
         android:background="@drawable/button_bottom_round"
         android:fontFamily="@font/nunito_semibold"
         android:text="@string/done"
+        android:gravity="center"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/text_normal" />
 
