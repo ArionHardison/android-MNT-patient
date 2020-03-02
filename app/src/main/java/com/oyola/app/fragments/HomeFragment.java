@@ -42,6 +42,7 @@ import com.oyola.app.build.api.ApiClient;
 import com.oyola.app.build.api.ApiInterface;
 import com.oyola.app.helper.ConnectionHelper;
 import com.oyola.app.helper.GlobalData;
+import com.oyola.app.helper.SharedHelper;
 import com.oyola.app.models.Address;
 import com.oyola.app.models.Banner;
 import com.oyola.app.models.Cuisine;
@@ -357,6 +358,12 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         filterBtn = toolbarLayout.findViewById(R.id.filter);
         filterSelectionImage = toolbarLayout.findViewById(R.id.filter_selection_image);
         favouriteSelectionImage = toolbarLayout.findViewById(R.id.favourite_selection_image);
+
+        if (SharedHelper.getKey(context, "logged") != null && SharedHelper.getKey(context, "logged").equalsIgnoreCase("true")) {
+            favouriteSelectionImage.setVisibility(View.VISIBLE);
+        } else {
+            favouriteSelectionImage.setVisibility(View.GONE);
+        }
         filterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
