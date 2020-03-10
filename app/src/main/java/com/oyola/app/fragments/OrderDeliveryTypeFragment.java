@@ -30,6 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.oyola.app.fragments.CartFragment.checkoutMap;
+import static com.oyola.app.fragments.CartFragment.locationInfoLayout;
 
 /**
  * Created by Prasanth on 23-10-2019.
@@ -131,6 +132,7 @@ public class OrderDeliveryTypeFragment extends BottomSheetDialogFragment {
                 break;
             case R.id.asap_btn:
                 dismiss();
+                locationInfoLayout.setVisibility(View.GONE);
                 if (mRestaurantType.equalsIgnoreCase("PICKUP")) {
                     checkoutMap.put("pickup_from_restaurants", "1");
                     callPaymentActivity(true);
@@ -147,7 +149,7 @@ public class OrderDeliveryTypeFragment extends BottomSheetDialogFragment {
 //                    mImgBack.setImageResource(R.drawable.ic_close_black);
                     mImgBack.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_close_black));
                 } else if (mLayOrderTime.getVisibility() == View.VISIBLE) {
-                    if (listener!=null) {
+                    if (listener != null) {
                         listener.onCancelClick();
                     }
                     dismiss();
@@ -161,6 +163,7 @@ public class OrderDeliveryTypeFragment extends BottomSheetDialogFragment {
                 break;
             case R.id.btn_done:
                 dismiss();
+                locationInfoLayout.setVisibility(View.GONE);
                 String mSelectedTime = mServerTimeFormat.format(myCalendar.getTime());
                 if (mRestaurantType.equalsIgnoreCase("PICKUP")) {
                     checkoutMap.put("pickup_from_restaurants", "1");
@@ -202,7 +205,8 @@ public class OrderDeliveryTypeFragment extends BottomSheetDialogFragment {
     public void setListener(BottomListener listener) {
         this.listener = listener;
     }
-    public interface BottomListener{
+
+    public interface BottomListener {
         void onCancelClick();
     }
 }

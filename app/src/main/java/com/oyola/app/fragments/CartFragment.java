@@ -110,8 +110,7 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
     LinearLayout layoutOrderType;
     public static RelativeLayout dataLayout;
     public static RelativeLayout errorLayout;
-    @BindView(R.id.location_info_layout)
-    LinearLayout locationInfoLayout;
+    public static LinearLayout locationInfoLayout;
     @BindView(R.id.location_error_layout)
     RelativeLayout locationErrorLayout;
     @BindView(R.id.restaurant_image)
@@ -208,6 +207,7 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
         dataLayout = view.findViewById(R.id.data_layout);
         lnrPromocodeAmount = view.findViewById(R.id.lnrPromocodeAmount);
         errorLayout = view.findViewById(R.id.error_layout);
+        locationInfoLayout = view.findViewById(R.id.location_info_layout);
 
         GlobalData.addCart = null;
 
