@@ -186,8 +186,10 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                 * product.getPrices().getOrignalPrice())));
         if (!product.getFoodType().equalsIgnoreCase("veg")) {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_nonveg));
+            holder.foodImageType.setVisibility(View.GONE);
         } else {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_veg));
+            holder.foodImageType.setVisibility(View.VISIBLE);
         }
         selectedShop = product.getShop();
 

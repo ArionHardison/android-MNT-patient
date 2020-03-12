@@ -47,8 +47,10 @@ public class RecommendedDishesAdapter extends RecyclerView.Adapter<RecommendedDi
         if (dish.getIsVeg()) {
 //            holder.dishNameTxt.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_veg, 0, 0, 0);
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_nonveg));
+            holder.foodImageType.setVisibility(View.GONE);
         } else {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_veg));
+            holder.foodImageType.setVisibility(View.VISIBLE);
         }
 
 

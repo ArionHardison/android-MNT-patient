@@ -625,9 +625,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         Geocoder geocoder = new Geocoder(context, Locale.getDefault());
         try {
             List<android.location.Address> addresses = geocoder.getFromLocation(lat, lng, 1);
-            android.location.Address address = addresses.get(0);
+            if (addresses != null && addresses.size() > 0) {
+                android.location.Address address = addresses.get(0);
 //            String addressLine = address.getAddressLine(0);
-            String addressLine = addresses.get(0).getAddressLine(0);
+                String addressLine = addresses.get(0).getAddressLine(0);
 
 
 /*                String add = obj.getAddressLine(0);
@@ -639,12 +640,15 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 add = add + "\n" + obj.getLocality();
                 add = add + "\n" + obj.getSubThoroughfare();*/
 
-            Log.v("seenu", "Address" + addressLine);
-            return addressLine;
-            // Toast.makeText(this, "Address=>" + add,
-            // Toast.LENGTH_SHORT).show();
+                Log.v("seenu", "Address" + addressLine);
+                return addressLine;
+                // Toast.makeText(this, "Address=>" + add,
+                // Toast.LENGTH_SHORT).show();
 
-            // TennisAppActivity.showDialog(add);
+                // TennisAppActivity.showDialog(add);
+            } else {
+                return null;
+            }
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

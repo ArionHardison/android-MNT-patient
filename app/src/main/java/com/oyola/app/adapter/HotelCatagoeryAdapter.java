@@ -242,8 +242,10 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
 
         if (!product.getFoodType().equalsIgnoreCase("veg")) {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_nonveg));
+            holder.foodImageType.setVisibility(View.GONE);
         } else {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_veg));
+            holder.foodImageType.setVisibility(View.VISIBLE);
         }
 
         if (product.getOut_of_stock() != null)

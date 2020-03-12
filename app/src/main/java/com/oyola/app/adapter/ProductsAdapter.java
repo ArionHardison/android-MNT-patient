@@ -162,8 +162,10 @@ public class ProductsAdapter extends SectionedRecyclerViewAdapter<ProductsAdapte
 
         if (!product.getFoodType().equalsIgnoreCase("veg")) {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_nonveg));
+            holder.foodImageType.setVisibility(View.GONE);
         } else {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_veg));
+            holder.foodImageType.setVisibility(View.VISIBLE);
         }
         holder.cardAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override

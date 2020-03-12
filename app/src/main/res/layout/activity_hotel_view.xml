@@ -254,6 +254,7 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:padding="@dimen/_5sdp"
+                    android:overScrollMode="never"
                     android:orientation="horizontal" />
 
                 <android.support.v7.widget.RecyclerView

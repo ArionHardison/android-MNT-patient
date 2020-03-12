@@ -73,8 +73,10 @@ public class AccompanimentDishesAdapter extends RecyclerView.Adapter<Accompanime
 
         if (dish.getIsVeg()) {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_nonveg));
+            holder.foodImageType.setVisibility(View.GONE);
         } else {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_veg));
+            holder.foodImageType.setVisibility(View.VISIBLE);
         }
 
     }

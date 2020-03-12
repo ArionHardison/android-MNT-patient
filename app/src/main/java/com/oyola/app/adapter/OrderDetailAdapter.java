@@ -59,10 +59,13 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
             }
         }
         holder.price.setText(item.getProduct().getPrices().getCurrency() + priceAmount);
-        if (item.getProduct().getFoodType().equalsIgnoreCase("veg"))
+        if (item.getProduct().getFoodType().equalsIgnoreCase("veg")) {
             holder.dishImg.setImageResource(R.drawable.ic_veg);
-        else
+            holder.dishImg.setVisibility(View.VISIBLE);
+        }else {
             holder.dishImg.setImageResource(R.drawable.ic_nonveg);
+            holder.dishImg.setVisibility(View.GONE);
+        }
 
         if (item.getCartAddons() != null && !item.getCartAddons().isEmpty()) {
             List<CartAddon> cartAddonList = item.getCartAddons();

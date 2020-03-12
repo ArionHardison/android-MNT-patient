@@ -66,6 +66,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.oyola.app.adapter.ViewCartAdapter.bottomSheetDialogFragment;
+import static com.oyola.app.helper.GlobalData.addCart;
 
 
 /**
@@ -176,7 +177,6 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
     boolean mIsPickUpSelected = false;
     boolean mIsDeliverySelected = false;
     boolean isActivityResultCalled = false;
-    AddCart addCart;
 
     public static HashMap<String, String> checkoutMap;
     OrderDeliveryTypeFragment bottomSheetTypeDialogFragment;
@@ -209,7 +209,7 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
         errorLayout = view.findViewById(R.id.error_layout);
         locationInfoLayout = view.findViewById(R.id.location_info_layout);
 
-        GlobalData.addCart = null;
+        addCart = null;
 
         HomeActivity.updateNotificationCount(context, 0);
         customDialog = new CustomDialog(context);
@@ -311,7 +311,7 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
                     if (itemCount == 0) {
                         errorLayout.setVisibility(View.VISIBLE);
                         dataLayout.setVisibility(View.GONE);
-                        GlobalData.addCart = null;
+                        addCart = null;
                     } else {
                         addCart = response.body();
                         viewCartItemList.clear();
@@ -448,8 +448,8 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
                     if (itemCount == 0) {
                         errorLayout.setVisibility(View.VISIBLE);
                         dataLayout.setVisibility(View.GONE);
-                        GlobalData.addCart = response.body();
-                        GlobalData.addCart = null;
+                        addCart = response.body();
+                        addCart = null;
                     } else {
                         addCart = response.body();
 
@@ -575,13 +575,13 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
             errorLayout.setVisibility(View.GONE);
             skeleton.show();
             errorLayoutDescription.setText(getResources().getString(R.string.cart_error_description));
-            if (connectionHelper.isConnectingToInternet() && GlobalData.addCart == null) {
+            if (connectionHelper.isConnectingToInternet() && addCart == null) {
                 if (promo_code.equalsIgnoreCase("")) {
                     getViewCart();
                 } else {
                     getViewCartWithPromocode(promo_code);
                 }
-            } else if (GlobalData.addCart != null) {
+            } else if (addCart != null) {
                /* if (GlobalData.addCart.getProductList().size() > 0) {
 
                     String currency = GlobalData.addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
