@@ -485,6 +485,8 @@ public class ProfileFragment extends Fragment {
                         startActivity(new Intent(context, WelcomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         GlobalData.profileModel = null;
                         GlobalData.addCart = null;
+                        GlobalData.address = "";
+                        GlobalData.selectedAddress = null;
                         GlobalData.notificationCount = 0;
                         getActivity().finish();
 

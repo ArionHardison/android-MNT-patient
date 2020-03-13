@@ -312,7 +312,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
     }
 
     private void goToCall() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                 if (TransporterNumber != null && !TransporterNumber.isEmpty()) {
                     Intent intent = new Intent(Intent.ACTION_CALL);
@@ -326,6 +326,14 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             Intent intent = new Intent(Intent.ACTION_CALL);
             intent.setData(Uri.parse("tel:" + TransporterNumber));
             startActivity(intent);
+        }*/
+
+        if (TransporterNumber != null && !TransporterNumber.isEmpty()) {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + TransporterNumber));
+            startActivity(intent);
+        } else {
+            Toast.makeText(context, R.string.no_number_available, Toast.LENGTH_LONG).show();
         }
     }
 

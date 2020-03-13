@@ -107,10 +107,10 @@ public class PastOrderDetailActivity extends AppCompatActivity {
                 dotLineImg.setBackgroundResource(R.drawable.order_cancelled_line);
                 orderStatusTxt.setTextColor(ContextCompat.getColor(this, R.color.colorRed));
             } else {
-                if (order.getOrdertiming()!=null&&order.getOrdertiming().size()>0){
-                    for (int i=0;i<order.getOrdertiming().size();i++){
-                        if (order.getOrdertiming().get(i).getStatus().equalsIgnoreCase("COMPLETED")){
-                            orderStatusTxt.setText(getResources().getString(R.string.order_delivered_successfully_on) + " "+getFormatTime(order.getOrdertiming().get(i).getCreatedAt()));
+                if (order.getOrdertiming() != null && order.getOrdertiming().size() > 0) {
+                    for (int i = 0; i < order.getOrdertiming().size(); i++) {
+                        if (order.getOrdertiming().get(i).getStatus().equalsIgnoreCase("COMPLETED")) {
+                            orderStatusTxt.setText(getResources().getString(R.string.order_delivered_successfully_on) + " " + getFormatTime(order.getOrdertiming().get(i).getCreatedAt()));
                             break;
                         }
                     }
@@ -119,18 +119,20 @@ public class PastOrderDetailActivity extends AppCompatActivity {
                 orderSucceessImage.setImageResource(R.drawable.ic_circle_tick);
                 dotLineImg.setBackgroundResource(R.drawable.ic_line);
             }
-            currency = order.getItems().get(0).getProduct().getPrices().getCurrency();
+            if (order.getItems() != null && order.getItems().size() > 0) {
+                currency = order.getItems().get(0).getProduct().getPrices().getCurrency();
+            }
             if (itemQuantity == 1)
                 orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.item_count) + " , " + currency + priceAmount);
             else
-                orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.items_counts)+ " , " + currency + priceAmount);
+                orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.items_counts) + " , " + currency + priceAmount);
 
             restaurantName.setText(order.getShop().getName());
             restaurantAddress.setText(order.getShop().getAddress());
             if (order.getPickUpRestaurant() != null) {
                 if (order.getPickUpRestaurant() == 0) {
                     orderType.setText(getString(R.string.order_type_delivery));
-                    if (order.getAddress()!=null) {
+                    if (order.getAddress() != null) {
                         userAddressTitle.setText(order.getAddress().getType());
                         userAddress.setText(order.getAddress().getMapAddress());
                     }
@@ -139,7 +141,7 @@ public class PastOrderDetailActivity extends AppCompatActivity {
                     destinationLayout.setVisibility(View.GONE);
                     layoutDotLine.setVisibility(View.GONE);
                 } else {
-                    if (order.getAddress()!=null) {
+                    if (order.getAddress() != null) {
                         userAddressTitle.setText(order.getAddress().getType());
                         userAddress.setText(order.getAddress().getMapAddress());
                     }

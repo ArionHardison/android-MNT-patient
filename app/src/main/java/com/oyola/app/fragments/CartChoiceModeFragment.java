@@ -44,6 +44,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.oyola.app.fragments.CartFragment.locationInfoLayout;
+
 /**
  * Created by santhosh@appoets.com on 13-11-2017.
  */
@@ -145,6 +147,7 @@ public class CartChoiceModeFragment extends BottomSheetDialogFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.i_will_choose_btn:
+                locationInfoLayout.setVisibility(View.GONE);
                 Intent intent = new Intent(context, ProductDetailActivity.class);
                 intent.putExtra("isNewSelection", true);
                 context.startActivity(intent);

@@ -713,31 +713,35 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
 
 
             case R.id.proceed_to_pay_btn:
-                mIsPickUpSelected = false;
-                mIsDeliverySelected = true;
-                Bundle bundle = new Bundle();
-                bundle.putString("deliveryType", "DELIVERY");
-                bundle.putInt("estDeliveryTime", 0);
-                bottomSheetTypeDialogFragment.setArguments(bundle);
-                bottomSheetTypeDialogFragment.setCancelable(false);
-                bottomSheetTypeDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), bottomSheetTypeDialogFragment.getTag());
-
-                if (connectionHelper.isConnectingToInternet()) {
-//                    checkOut(GlobalData.getInstance().selectedAddress.getId());
-                    checkoutMap = new HashMap<>();
-                    checkoutMap.put("user_address_id", "" + GlobalData.selectedAddress.getId());
-                    checkoutMap.put("note", "" + customNotes.getText());
-
-                    if (!promo_code.equalsIgnoreCase("")) {
-                        checkoutMap.put("promocode_id", promo_code);
-                    }
-
-                    if (useWalletChkBox.isChecked())
-                        checkoutMap.put("wallet", "1");
-                    else
-                        checkoutMap.put("wallet", "0");
+                if (GlobalData.selectedAddress.getId() == null) {
+                    Utils.displayMessage(activity, context, getString(R.string.add_address_error));
                 } else {
-                    Utils.displayMessage(activity, context, getString(R.string.oops_connect_your_internet));
+                    mIsPickUpSelected = false;
+                    mIsDeliverySelected = true;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("deliveryType", "DELIVERY");
+                    bundle.putInt("estDeliveryTime", 0);
+                    bottomSheetTypeDialogFragment.setArguments(bundle);
+                    bottomSheetTypeDialogFragment.setCancelable(false);
+                    bottomSheetTypeDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), bottomSheetTypeDialogFragment.getTag());
+
+                    if (connectionHelper.isConnectingToInternet()) {
+
+                        checkoutMap = new HashMap<>();
+                        checkoutMap.put("user_address_id", "" + GlobalData.selectedAddress.getId());
+                        checkoutMap.put("note", "" + customNotes.getText());
+
+                        if (!promo_code.equalsIgnoreCase("")) {
+                            checkoutMap.put("promocode_id", promo_code);
+                        }
+
+                        if (useWalletChkBox.isChecked())
+                            checkoutMap.put("wallet", "1");
+                        else
+                            checkoutMap.put("wallet", "0");
+                    } else {
+                        Utils.displayMessage(activity, context, getString(R.string.oops_connect_your_internet));
+                    }
                 }
                 break;
 

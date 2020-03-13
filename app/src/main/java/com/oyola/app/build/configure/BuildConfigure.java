@@ -14,8 +14,8 @@ public class BuildConfigure {
     public static String CLIENT_ID = "2";
 
     //Pubnub for Chat
-    public static String PUBNUB_PUBLISH_KEY = "pub-c-97296c9c-1fab-4d99-9d8f-37193407ae7e";
-    public static String PUBNUB_SUBSCRIBE_KEY = "sub-c-68a1a30a-17d2-11e9-b43f-7a31102fe3bb";
+    public static String PUBNUB_PUBLISH_KEY = "pub-c-568c005c-f530-415f-8523-20a843c49004";
+    public static String PUBNUB_SUBSCRIBE_KEY = "sub-c-d4fe244e-64ff-11ea-94ed-e20534093ea4";
     public static String PUBNUB_CHANNEL_NAME = "21";
 
     //Stripe for card payment

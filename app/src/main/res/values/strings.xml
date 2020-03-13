@@ -427,5 +427,9 @@
     <string name="invite_friends">Invite Friends</string>
     <string name="share">Share</string>
     <string name="calories_symbol">kJ</string>
+    <string name="vegetarian">Vegetarian</string>
+    <string name="cuisines">Cuisines</string>
+    <string name="show_kitchens_with">Show Kitchens With</string>
+    <string name="add_address_error">Please add address before checkout</string>
     <string name="referrral_content">Hey Checkout this app, %1$s \nUser - https://play.google.com/store/apps/details?id=com.oyola.app\nInstall this app with referral code %2$s</string>
 </resources>

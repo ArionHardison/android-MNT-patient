@@ -25,6 +25,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:padding="8dp"
+                android:tint="@color/colorPrimary"
                 android:src="@drawable/ic_app_name"/>
 
             <LinearLayout

@@ -74,7 +74,7 @@ public class OrderDetailFragment extends Fragment {
         Order order = GlobalData.isSelectedOrder;
         //set Item List Values
         itemList = new ArrayList<>();
-        if(order!=null){
+        if (order != null) {
             itemList.addAll(order.getItems());
             //Offer Restaurant Adapter
             orderRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
@@ -83,7 +83,9 @@ public class OrderDetailFragment extends Fragment {
             OrderDetailAdapter orderItemListAdapter = new OrderDetailAdapter(itemList, context);
             orderRecyclerView.setAdapter(orderItemListAdapter);
 
-            currency = order.getItems().get(0).getProduct().getPrices().getCurrency();
+            if (order.getItems() != null && order.getItems().size() > 0) {
+                currency = order.getItems().get(0).getProduct().getPrices().getCurrency();
+            }
             itemQuantity = order.getInvoice().getQuantity();
             itemTotalAmount.setText(currency + /*String.format("%.2f", */order.getInvoice().getGross());
             serviceTax.setText(currency + order.getInvoice().getTax() + "");
@@ -91,9 +93,9 @@ public class OrderDetailFragment extends Fragment {
 
             discount = order.getInvoice().getDiscount();
 
-            discountAmount.setText(currency+"-"+/*GlobalData.roundoff(*/discount/*)*/);
+            discountAmount.setText(currency + "-" +/*GlobalData.roundoff(*/discount/*)*/);
 
-            promocodeAmount.setText(""+currency+"-"+order.getInvoice().getPromocode_amount());
+            promocodeAmount.setText("" + currency + "-" + order.getInvoice().getPromocode_amount());
             walletAmountDetection.setText(currency + order.getInvoice().getWalletAmount() + "");
             totalAmount.setText(currency + order.getInvoice().getPayable());
         }

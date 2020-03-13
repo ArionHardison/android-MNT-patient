@@ -69,14 +69,14 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
         List<FilterModel> modelList = new ArrayList<>();
         List<String> filters = new ArrayList<>();
         Cuisine cuisine1 = new Cuisine();
-        cuisine1.setName("Offers");
+        cuisine1.setName(getString(R.string.offers));
         Cuisine cuisine2 = new Cuisine();
-        cuisine2.setName("Pure veg");
+        cuisine2.setName(getString(R.string.vegetarian));
         List<Cuisine> cuisineList1 = new ArrayList<>();
         cuisineList1.add(cuisine1);
         cuisineList1.add(cuisine2);
         FilterModel model = new FilterModel();
-        model.setHeader("Show Kitchens With");
+        model.setHeader(getString(R.string.show_kitchens_with));
         model.setCuisines(cuisineList1);
         modelList.add(model);
         filters = new ArrayList<>();
@@ -85,7 +85,7 @@ public class FilterActivity extends AppCompatActivity implements View.OnClickLis
                 filters.add(obj.getName());
             }
             model = new FilterModel();
-            model.setHeader("Cuisines");
+            model.setHeader(getString(R.string.cuisines));
             model.setCuisines(GlobalData.cuisineList);
             modelList.add(model);
             modelListReference.clear();

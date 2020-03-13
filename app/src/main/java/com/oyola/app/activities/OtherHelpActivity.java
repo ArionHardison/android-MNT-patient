@@ -209,7 +209,7 @@ public class OtherHelpActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.chat_us:
                 fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.chat_fragment, new ChatFragment(), "Tamil");
+                fragmentTransaction.replace(R.id.chat_fragment, new ChatFragment(), "Chat");
                 fragmentTransaction.commit();
                 break;
             case R.id.dispute:

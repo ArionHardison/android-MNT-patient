@@ -211,7 +211,7 @@ public class OrderHelpFragment extends Fragment {
             public void onResponse(@NonNull Call<Order> call, @NonNull Response<Order> response) {
                 customDialog.dismiss();
                 if (response.isSuccessful()) {
-                    Toast.makeText(context,R.string.dispate_create_success, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.dispate_create_success, Toast.LENGTH_SHORT).show();
                     getActivity().finish();
                 } else {
                     try {
@@ -268,7 +268,7 @@ public class OrderHelpFragment extends Fragment {
     }
 
 
-    @OnClick({R.id.chat_us, R.id.dispute,R.id.email_us})
+    @OnClick({R.id.chat_us, R.id.dispute, R.id.email_us})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.chat_us:
@@ -285,7 +285,7 @@ public class OrderHelpFragment extends Fragment {
     }
 
     private void goToCall() {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+         /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                     if (isSelectedOrder.getUser().getCustomer_support() != null && !isSelectedOrder.getUser().getCustomer_support().isEmpty()) {
                         Intent intent = new Intent(Intent.ACTION_CALL);
@@ -305,8 +305,16 @@ public class OrderHelpFragment extends Fragment {
                 }else {
                     Toast.makeText(context,R.string.no_number_available,Toast.LENGTH_LONG).show();
                 }
-            }
+            }*/
+        if (isSelectedOrder.getUser().getCustomer_support() != null && !isSelectedOrder.getUser().getCustomer_support().isEmpty()) {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + isSelectedOrder.getUser().getCustomer_support()));
+            startActivity(intent);
+        } else {
+            Toast.makeText(context, R.string.no_number_available, Toast.LENGTH_LONG).show();
         }
+
+    }
 
     private void goGmail() {
         Intent intent = new Intent(Intent.ACTION_SEND);
