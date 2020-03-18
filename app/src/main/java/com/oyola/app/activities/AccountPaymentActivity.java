@@ -50,6 +50,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.oyola.app.fragments.CartFragment.checkoutMap;
+import static com.oyola.app.helper.GlobalData.addCart;
 import static com.oyola.app.helper.GlobalData.cardArrayList;
 import static com.oyola.app.helper.GlobalData.currencySymbol;
 import static com.oyola.app.helper.GlobalData.isCardChecked;
@@ -138,86 +140,91 @@ public class AccountPaymentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account_payment);
-        ButterKnife.bind(this);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         context = AccountPaymentActivity.this;
         customDialog = new CustomDialog(context);
-        cashPaymentLayout = findViewById(R.id.cash_payment_layout);
-        walletPaymentLayout = findViewById(R.id.wallet_payment_layout);
-        proceedToPayBtn = findViewById(R.id.proceed_to_pay_btn);
-        cashCheckBox = findViewById(R.id.cash_check_box);
+        if (checkoutMap.get("wallet") != null && checkoutMap.get("wallet").equals("1")
+                && addCart.getPayable() < Double.parseDouble(GlobalData.profileModel.getWalletBalance())) {
+            checkOut(checkoutMap);
+        } else {
+            setContentView(R.layout.activity_account_payment);
+            ButterKnife.bind(this);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            cashPaymentLayout = findViewById(R.id.cash_payment_layout);
+            walletPaymentLayout = findViewById(R.id.wallet_payment_layout);
+            proceedToPayBtn = findViewById(R.id.proceed_to_pay_btn);
+            cashCheckBox = findViewById(R.id.cash_check_box);
 
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        isWalletVisible = getIntent().getBooleanExtra("is_show_wallet", false);
-        isCashVisible = getIntent().getBooleanExtra("is_show_cash", false);
-        mIsImmediate = getIntent().getBooleanExtra("is_immediate", false);
-        mEstimatedDeliveryTime = getIntent().getIntExtra("est_delivery_time", 0);
-        mRestaurantType = getIntent().getStringExtra("delivery_type");
-
-
-        cardArrayList = new ArrayList<>();
-        accountPaymentAdapter = new AccountPaymentAdapter(AccountPaymentActivity.this, cardArrayList, !isCashVisible);
-        paymentMethodLv.setAdapter(accountPaymentAdapter);
-
-        if (isWalletVisible)
-            walletPaymentLayout.setVisibility(VISIBLE);
-        else
-            walletPaymentLayout.setVisibility(GONE);
-        if (isCashVisible)
-            cashPaymentLayout.setVisibility(GONE);
-        else
-            cashPaymentLayout.setVisibility(GONE);
-
-        cashPaymentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cashCheckBox.setChecked(true);
-                isCardChecked = false;
-                accountPaymentAdapter.notifyDataSetChanged();
-                proceedToPayBtn.setVisibility(VISIBLE);
-                for (int i = 0; i < cardArrayList.size(); i++) {
-                    cardArrayList.get(i).setChecked(false);
+            setSupportActionBar(toolbar);
+            toolbar.setNavigationIcon(R.drawable.ic_back);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
                 }
-                accountPaymentAdapter.notifyDataSetChanged();
-            }
-        });
+            });
+            isWalletVisible = getIntent().getBooleanExtra("is_show_wallet", false);
+            isCashVisible = getIntent().getBooleanExtra("is_show_cash", false);
+            mIsImmediate = getIntent().getBooleanExtra("is_immediate", false);
+            mEstimatedDeliveryTime = getIntent().getIntExtra("est_delivery_time", 0);
+            mRestaurantType = getIntent().getStringExtra("delivery_type");
 
-        proceedToPayBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isCardChecked) {
+
+            cardArrayList = new ArrayList<>();
+            accountPaymentAdapter = new AccountPaymentAdapter(AccountPaymentActivity.this, cardArrayList, !isCashVisible);
+            paymentMethodLv.setAdapter(accountPaymentAdapter);
+
+            if (isWalletVisible)
+                walletPaymentLayout.setVisibility(VISIBLE);
+            else
+                walletPaymentLayout.setVisibility(GONE);
+            if (isCashVisible)
+                cashPaymentLayout.setVisibility(GONE);
+            else
+                cashPaymentLayout.setVisibility(GONE);
+
+            cashPaymentLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    cashCheckBox.setChecked(true);
+                    isCardChecked = false;
+                    accountPaymentAdapter.notifyDataSetChanged();
+                    proceedToPayBtn.setVisibility(VISIBLE);
                     for (int i = 0; i < cardArrayList.size(); i++) {
-                        if (cardArrayList.get(i).isChecked()) {
-                            Card card = cardArrayList.get(i);
-                            CartFragment.checkoutMap.put("payment_mode", "stripe");
-                            CartFragment.checkoutMap.put("card_id", String.valueOf(card.getId()));
-                            checkOut(CartFragment.checkoutMap);
-                            return;
-                        }
+                        cardArrayList.get(i).setChecked(false);
                     }
-                } else if (cashCheckBox.isChecked()) {
-                    CartFragment.checkoutMap.put("payment_mode", "cash");
-                    checkOut(CartFragment.checkoutMap);
-                } else {
-                    Toast.makeText(context, R.string.please_select_payment_mode, Toast.LENGTH_SHORT).show();
+                    accountPaymentAdapter.notifyDataSetChanged();
                 }
+            });
 
-            }
-        });
+            proceedToPayBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (isCardChecked) {
+                        for (int i = 0; i < cardArrayList.size(); i++) {
+                            if (cardArrayList.get(i).isChecked()) {
+                                Card card = cardArrayList.get(i);
+                                CartFragment.checkoutMap.put("payment_mode", "stripe");
+                                CartFragment.checkoutMap.put("card_id", String.valueOf(card.getId()));
+                                checkOut(CartFragment.checkoutMap);
+                                return;
+                            }
+                        }
+                    } else if (cashCheckBox.isChecked()) {
+                        CartFragment.checkoutMap.put("payment_mode", "cash");
+                        checkOut(CartFragment.checkoutMap);
+                    } else {
+                        Toast.makeText(context, R.string.please_select_payment_mode, Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
 
 //        if (savedInstanceState != null) {
 //            if (savedInstanceState.containsKey(KEY_NONCE)) {
 //                mNonce = savedInstanceState.getParcelable(KEY_NONCE);
 //            }
 //        }
+        }
     }
 
     private void checkOut(HashMap<String, String> map) {
@@ -273,6 +280,11 @@ public class AccountPaymentActivity extends AppCompatActivity {
                     cardArrayList.clear();
                     cardArrayList.addAll(response.body());
                     accountPaymentAdapter.notifyDataSetChanged();
+                    if (cardArrayList.size() == 1) {
+                        cardArrayList.get(0).setChecked(true);
+                        GlobalData.isCardChecked = true;
+                        proceedToPayBtn.performClick();
+                    }
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
@@ -411,9 +423,11 @@ public class AccountPaymentActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        String walletMoney = GlobalData.profileModel.getWalletBalance();
-        walletAmtTxt.setText(currencySymbol + " " + walletMoney);
-        getCardList();
+        if (checkoutMap.get("wallet") == null || !checkoutMap.get("wallet").equals("1")
+                || !(addCart.getPayable() < Double.parseDouble(GlobalData.profileModel.getWalletBalance()))) {
+            String walletMoney = GlobalData.profileModel.getWalletBalance();
+            walletAmtTxt.setText(currencySymbol + " " + walletMoney);
+            getCardList();
 //        if (mPurchased) {
 //            mPurchased = false;
 //            clearNonce();
@@ -428,8 +442,8 @@ public class AccountPaymentActivity extends AppCompatActivity {
 //                mAddPaymentMethodButton.setVisibility(VISIBLE);
 //            }
 //        }
+        }
     }
-
 
     @OnClick({R.id.wallet_layout, R.id.add_new_cart})
     public void onViewClicked(View view) {

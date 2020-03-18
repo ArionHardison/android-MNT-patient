@@ -54,8 +54,10 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
         double priceAmount = item.getProduct().getPrices().getOrignalPrice() * item.getQuantity();
         if (list.get(position).getCartAddons() != null && !list.get(position).getCartAddons().isEmpty()) {
             for (int j = 0; j < list.get(position).getCartAddons().size(); j++) {
-                priceAmount = priceAmount + (list.get(position).getQuantity() * (list.get(position).getCartAddons().get(j).getQuantity() *
-                        list.get(position).getCartAddons().get(j).getAddonProduct().getPrice()));
+                priceAmount = priceAmount + (list.get(position).getQuantity() *
+                        list.get(position).getCartAddons().get(j).getQuantity() *
+                        (list.get(position).getCartAddons().get(j).getAddonProduct() != null ?
+                                list.get(position).getCartAddons().get(j).getAddonProduct().getPrice() : 0));
             }
         }
         holder.price.setText(item.getProduct().getPrices().getCurrency() + priceAmount);
@@ -70,10 +72,11 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
         if (item.getCartAddons() != null && !item.getCartAddons().isEmpty()) {
             List<CartAddon> cartAddonList = item.getCartAddons();
             for (int i = 0; i < cartAddonList.size(); i++) {
-                if (i == 0)
-                    holder.addons.setText(cartAddonList.get(i).getAddonProduct().getAddon().getName());
-                else
-                    holder.addons.append(", " + cartAddonList.get(i).getAddonProduct().getAddon().getName());
+                if (cartAddonList.get(i).getAddonProduct() != null)
+                    if (i == 0)
+                        holder.addons.setText(cartAddonList.get(i).getAddonProduct().getAddon().getName());
+                    else
+                        holder.addons.append(", " + cartAddonList.get(i).getAddonProduct().getAddon().getName());
             }
 
             holder.addons.setVisibility(View.VISIBLE);
