@@ -142,7 +142,7 @@ public class AccountPaymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         context = AccountPaymentActivity.this;
         customDialog = new CustomDialog(context);
-        if (checkoutMap.get("wallet") != null && checkoutMap.get("wallet").equals("1")
+        if (checkoutMap != null && checkoutMap.containsKey("wallet") && checkoutMap.get("wallet").equals("1")
                 && addCart.getPayable() < Double.parseDouble(GlobalData.profileModel.getWalletBalance())) {
             checkOut(checkoutMap);
         } else {
@@ -203,9 +203,11 @@ public class AccountPaymentActivity extends AppCompatActivity {
                         for (int i = 0; i < cardArrayList.size(); i++) {
                             if (cardArrayList.get(i).isChecked()) {
                                 Card card = cardArrayList.get(i);
-                                CartFragment.checkoutMap.put("payment_mode", "stripe");
-                                CartFragment.checkoutMap.put("card_id", String.valueOf(card.getId()));
-                                checkOut(CartFragment.checkoutMap);
+                                if (CartFragment.checkoutMap != null) {
+                                    CartFragment.checkoutMap.put("payment_mode", "stripe");
+                                    CartFragment.checkoutMap.put("card_id", String.valueOf(card.getId()));
+                                    checkOut(CartFragment.checkoutMap);
+                                }
                                 return;
                             }
                         }
@@ -423,7 +425,8 @@ public class AccountPaymentActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (checkoutMap.get("wallet") == null || !checkoutMap.get("wallet").equals("1")
+        if (checkoutMap == null || !checkoutMap.containsKey("wallet") ||
+                !checkoutMap.get("wallet").equals("1")
                 || !(addCart.getPayable() < Double.parseDouble(GlobalData.profileModel.getWalletBalance()))) {
             String walletMoney = GlobalData.profileModel.getWalletBalance();
             walletAmtTxt.setText(currencySymbol + " " + walletMoney);

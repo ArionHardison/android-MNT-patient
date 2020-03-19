@@ -36,7 +36,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getData() != null) {
             Log.d(TAG, "From: " + remoteMessage.getFrom());
             Log.d(TAG, "Notification Message Body: " + remoteMessage.getData());
-            if (Objects.requireNonNull(remoteMessage.getData().get("custom")).isEmpty()) {
+            if (remoteMessage.getData().containsKey("custom")) {
                 Log.d(TAG, "CustomData" + remoteMessage.getData().get("custom"));
                 customdata = new Gson().fromJson(remoteMessage.getData().get("custom"), NotificationData.class);
             }

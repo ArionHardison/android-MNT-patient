@@ -35,7 +35,6 @@ import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.ViewSkeletonScreen;
 import com.oyola.app.HomeActivity;
 import com.oyola.app.R;
-import com.oyola.app.activities.AccountPaymentActivity;
 import com.oyola.app.activities.PromotionActivity;
 import com.oyola.app.activities.SaveDeliveryLocationActivity;
 import com.oyola.app.activities.SetDeliveryLocationActivity;
