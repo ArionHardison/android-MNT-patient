@@ -14,10 +14,10 @@ public class AddCart {
     private Double deliveryCharges;
     @SerializedName("delivery_free_minimum")
     @Expose
-    private Integer deliveryFreeMinimum;
+    private Double deliveryFreeMinimum;
     @SerializedName("tax_percentage")
     @Expose
-    private Integer taxPercentage;
+    private Double taxPercentage;
     @SerializedName("carts")
     @Expose
     private List<Cart> products = new ArrayList<>();
@@ -37,7 +37,7 @@ public class AddCart {
     private String tax;
     @SerializedName("promocode_amount")
     @Expose
-    private int promocodeAmount;
+    private Double promocodeAmount;
     @SerializedName("net")
     @Expose
     private Double net;
@@ -63,19 +63,19 @@ public class AddCart {
         this.deliveryCharges = deliveryCharges;
     }
 
-    public Integer getDeliveryFreeMinimum() {
+    public Double getDeliveryFreeMinimum() {
         return deliveryFreeMinimum;
     }
 
-    public void setDeliveryFreeMinimum(Integer deliveryFreeMinimum) {
+    public void setDeliveryFreeMinimum(Double deliveryFreeMinimum) {
         this.deliveryFreeMinimum = deliveryFreeMinimum;
     }
 
-    public Integer getTaxPercentage() {
+    public Double getTaxPercentage() {
         return taxPercentage;
     }
 
-    public void setTaxPercentage(Integer taxPercentage) {
+    public void setTaxPercentage(Double taxPercentage) {
         this.taxPercentage = taxPercentage;
     }
 
@@ -119,11 +119,11 @@ public class AddCart {
         this.tax = tax;
     }
 
-    public int getPromocodeAmount() {
+    public Double getPromocodeAmount() {
         return promocodeAmount;
     }
 
-    public void setPromocodeAmount(int promocodeAmount) {
+    public void setPromocodeAmount(Double promocodeAmount) {
         this.promocodeAmount = promocodeAmount;
     }
 
