@@ -118,17 +118,17 @@
     <string name="order_cancelled_new">Order Cancelled</string>
 
     <!--Order Flow Description-->
-    <string name="description_1">We have received your order.</string>
-    <string name="description_2">Your order has been confirmed.</string>
-    <string name="description_3">Your food is getting cooked.</string>
-    <string name="description_4">Your food is on its way.</string>
-    <string name="description_5">Enjoy your meal.</string>
+    <string name="description_1">Your order has been received.</string>
+    <string name="description_2">Your order has been confirmed by kitchen.</string>
+    <string name="description_3">Your order is being prepared by kitchen.</string>
+    <string name="description_4">Your order is ready for pickup by delivery boy.</string>
+    <string name="description_5">Your order has arrived successfully.</string>
 
     <string name="description_1_new">Your order has been received.</string>
-    <string name="description_2_new">Your order has been confirmed.</string>
-    <string name="description_3_new">Your order is being prepared.</string>
+    <string name="description_2_new">Your order has been confirmed by kitchen.</string>
+    <string name="description_3_new">Your order is being prepared by kitchen.</string>
     <string name="description_4_new">Your order is ready for pickup.</string>
-    <string name="description_5_new">Your order has arrived successfully.</string>
+    <string name="description_5_new">Your order has been successfully completed.</string>
 
     <!--Past Order Page-->
     <string name="order_delivered_successfully">Order Delivered Successfully</string>

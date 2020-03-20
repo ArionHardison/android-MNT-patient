@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,7 +33,6 @@ import android.widget.Toast;
 import com.oyola.app.R;
 import com.oyola.app.adapter.AddOnsAdapter;
 import com.oyola.app.adapter.SliderPagerAdapter;
-import com.oyola.app.adapter.ViewCartAdapter;
 import com.oyola.app.build.api.ApiClient;
 import com.oyola.app.build.api.ApiInterface;
 import com.oyola.app.helper.CustomDialog;
@@ -57,7 +57,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-import static com.oyola.app.MyApplication.commonAccess;
 import static com.oyola.app.MyApplication.currency;
 import static com.oyola.app.adapter.AddOnsAdapter.list;
 import static com.oyola.app.helper.GlobalData.selectedShop;
@@ -79,6 +78,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     RecyclerView addOnsRv;
     @BindView(R.id.product_name)
     TextView productName;
+    @BindView(R.id.food_type_image)
+    ImageView foodImageType;
     @BindView(R.id.product_description)
     TextView productDescription;
 
@@ -152,7 +153,13 @@ public class ProductDetailActivity extends AppCompatActivity {
                 wordOne.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.colorTextBlack)), 0, wordOne.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 productName.setText(wordOne);
             }
-
+            if (!product.getFoodType().equalsIgnoreCase("veg")) {
+                foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_nonveg));
+                foodImageType.setVisibility(View.INVISIBLE);
+            } else {
+                foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_veg));
+                foodImageType.setVisibility(View.VISIBLE);
+            }
             Spannable wordTwo;
             if (product.getCalories() != null) {
                 wordTwo = new SpannableString(" " + product.getCalories() + " " + getString(R.string.calories_symbol));
