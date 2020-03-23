@@ -20,14 +20,13 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-
 import com.oyola.app.HomeActivity;
 import com.oyola.app.R;
-import com.oyola.app.models.CuisinesModel;
 import com.oyola.app.build.api.ApiClient;
 import com.oyola.app.build.api.ApiInterface;
 import com.oyola.app.helper.ConnectionHelper;
 import com.oyola.app.models.Cuisine;
+import com.oyola.app.models.CuisinesModel;
 import com.oyola.app.utils.Utils;
 
 import java.util.ArrayList;
@@ -133,7 +132,6 @@ public class CuisineSelectFragment extends DialogFragment {
     public void onResume() {
         super.onResume();
         Window window = getDialog().getWindow();
-        window.setLayout(1000, 1000);
         window.setGravity(Gravity.CENTER);
     }
 
