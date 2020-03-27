@@ -55,6 +55,9 @@
     <string name="orders">"Orders"</string>
     <string name="apply_filter">"Apply Filter"</string>
     <string name="view_results">View Results"</string>
+    <string name="address_line_1">"Address Line 1"</string>
+    <string name="address_line_2">"Address Line 2"</string>
+    <string name="address_line_3">"Address Line 3"</string>
 
     <string name="large_text">
         "Material is the metaphor.\n"
