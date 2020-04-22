@@ -137,6 +137,7 @@ public class OrderDeliveryTypeFragment extends BottomSheetDialogFragment {
                     checkoutMap.put("pickup_from_restaurants", "1");
                     callPaymentActivity(true);
                 } else if (mRestaurantType.equalsIgnoreCase("DELIVERY")) {
+                    checkoutMap.put("pickup_from_restaurants", "0");
                     callPaymentActivity(true);
                 }
 
@@ -170,6 +171,7 @@ public class OrderDeliveryTypeFragment extends BottomSheetDialogFragment {
                     checkoutMap.put("delivery_date", mSelectedTime);
                     callPaymentActivity(false);
                 } else if (mRestaurantType.equalsIgnoreCase("DELIVERY")) {
+                    checkoutMap.put("pickup_from_restaurants", "0");
                     checkoutMap.put("delivery_date", mSelectedTime);
                     callPaymentActivity(false);
                 }
