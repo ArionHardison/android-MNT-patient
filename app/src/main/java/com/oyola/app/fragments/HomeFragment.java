@@ -175,10 +175,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             if (selectedAddress != null && GlobalData.profileModel != null) {
                 GlobalData.addressHeader = selectedAddress.getType();
                 addressLabel.setText(selectedAddress.getType());
-                addressTxt.setText(selectedAddress.getMapAddress());
+                addressTxt.setText((selectedAddress.getBuilding() != null ? selectedAddress.getBuilding() + ", " : "") + selectedAddress.getMapAddress());
                 latitude = selectedAddress.getLatitude();
                 longitude = selectedAddress.getLongitude();
-                GlobalData.addressHeader = selectedAddress.getMapAddress();
+                GlobalData.addressHeader = (selectedAddress.getBuilding() != null ? selectedAddress.getBuilding() + ", " : "") + selectedAddress.getMapAddress();
             } else if (addressList != null && addressList.getAddresses().size() != 0 && GlobalData.profileModel != null) {
                 for (int i = 0; i < addressList.getAddresses().size(); i++) {
                     Address address1 = addressList.getAddresses().get(i);
@@ -187,7 +187,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                         addressLabel.setText(GlobalData.addressHeader);
                         addressTxt.setText(GlobalData.address);
                         addressLabel.setText(selectedAddress.getType());
-                        addressTxt.setText(selectedAddress.getMapAddress());
+                        addressTxt.setText((selectedAddress.getBuilding() != null ? selectedAddress.getBuilding() + ", " : "") + selectedAddress.getMapAddress());
                         latitude = selectedAddress.getLatitude();
                         longitude = selectedAddress.getLongitude();
                         break;
@@ -576,10 +576,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             if (selectedAddress != null && GlobalData.profileModel != null) {
                 GlobalData.addressHeader = selectedAddress.getType();
                 addressLabel.setText(selectedAddress.getType());
-                addressTxt.setText(selectedAddress.getMapAddress());
+                addressTxt.setText((selectedAddress.getBuilding() != null ? selectedAddress.getBuilding() + ", " : "") + selectedAddress.getMapAddress());
                 latitude = selectedAddress.getLatitude();
                 longitude = selectedAddress.getLongitude();
-                GlobalData.addressHeader = selectedAddress.getMapAddress();
+                GlobalData.addressHeader = (selectedAddress.getBuilding() != null ? selectedAddress.getBuilding() + ", " : "") + selectedAddress.getMapAddress();
             } else if (addressList != null && addressList.getAddresses().size() != 0 && GlobalData.profileModel != null) {
                 for (int i = 0; i < addressList.getAddresses().size(); i++) {
                     Address address1 = addressList.getAddresses().get(i);
@@ -590,7 +590,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                         addressLabel.setText(GlobalData.addressHeader);
                         addressTxt.setText(GlobalData.address);
                         addressLabel.setText(selectedAddress.getType());
-                        addressTxt.setText(selectedAddress.getMapAddress());
+                        addressTxt.setText((selectedAddress.getBuilding() != null ? selectedAddress.getBuilding() + ", " : "") + selectedAddress.getMapAddress());
                         latitude = selectedAddress.getLatitude();
                         longitude = selectedAddress.getLongitude();
                         break;
@@ -690,7 +690,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 addressLabel.setText(GlobalData.addressHeader);
                 addressTxt.setText(GlobalData.address);
                 addressLabel.setText(selectedAddress.getType());
-                addressTxt.setText(selectedAddress.getMapAddress());
+                addressTxt.setText((selectedAddress.getBuilding() != null ? selectedAddress.getBuilding() + ", " : "") + selectedAddress.getMapAddress());
                 latitude = selectedAddress.getLatitude();
                 longitude = selectedAddress.getLongitude();
                 skeletonScreen.show();

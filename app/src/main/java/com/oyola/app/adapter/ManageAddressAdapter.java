@@ -51,7 +51,7 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Address obj = list.get(position);
         holder.addressLabelTxt.setText(obj.getType());
-        holder.addressTxt.setText(obj.getBuilding() + ", " + obj.getMapAddress());
+        holder.addressTxt.setText((obj.getBuilding() != null ? obj.getBuilding() + ", " : "") + obj.getMapAddress());
         setIcon(holder.iconImg, obj.getType());
     }
 

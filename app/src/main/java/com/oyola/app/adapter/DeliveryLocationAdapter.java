@@ -82,7 +82,7 @@ public class DeliveryLocationAdapter extends SectionedRecyclerViewAdapter<Delive
     public void onBindViewHolder(ViewHolder holder, int section, int relativePosition, int absolutePosition) {
         final Address object = list.get(section).getAddresses().get(relativePosition);
         holder.addressLabel.setText(object.getType());
-        holder.address.setText(object.getMapAddress());
+        holder.address.setText((object.getBuilding() != null ? object.getBuilding() + ", " : "") + object.getMapAddress());
 
         setIcon(holder.icon, object.getType());
 

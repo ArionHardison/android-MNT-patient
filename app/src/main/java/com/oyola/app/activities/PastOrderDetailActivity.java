@@ -134,7 +134,7 @@ public class PastOrderDetailActivity extends AppCompatActivity {
                     orderType.setText(getString(R.string.order_type_delivery));
                     if (order.getAddress() != null) {
                         userAddressTitle.setText(order.getAddress().getType());
-                        userAddress.setText(order.getAddress().getMapAddress());
+                        userAddress.setText((order.getAddress().getBuilding() != null ? order.getAddress().getBuilding() + ", " : "") + order.getAddress().getMapAddress());
                     }
                 } else if (order.getPickUpRestaurant() == 1) {
                     orderType.setText(getString(R.string.order_type_takeaway));
@@ -143,7 +143,7 @@ public class PastOrderDetailActivity extends AppCompatActivity {
                 } else {
                     if (order.getAddress() != null) {
                         userAddressTitle.setText(order.getAddress().getType());
-                        userAddress.setText(order.getAddress().getMapAddress());
+                        userAddress.setText((order.getAddress().getBuilding() != null ? order.getAddress().getBuilding() + ", " : "") + order.getAddress().getMapAddress());
                     }
                 }
             }

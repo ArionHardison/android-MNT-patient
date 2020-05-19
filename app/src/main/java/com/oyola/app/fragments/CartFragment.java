@@ -66,6 +66,7 @@ import retrofit2.Response;
 
 import static com.oyola.app.adapter.ViewCartAdapter.bottomSheetDialogFragment;
 import static com.oyola.app.helper.GlobalData.addCart;
+import static com.oyola.app.helper.GlobalData.selectedAddress;
 
 
 /**
@@ -265,7 +266,8 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
 //            addAddressBtn.setBackgroundResource(R.drawable.button_corner_bg_green);
 //            addAddressBtn.setText(getResources().getString(R.string.proceed_to_pay));
             addressHeader.setText(GlobalData.selectedAddress.getType());
-            addressDetail.setText(GlobalData.selectedAddress.getMapAddress());
+            addressDetail.setText((selectedAddress.getBuilding() != null ? selectedAddress.getBuilding() + ", " : "") +
+                    GlobalData.selectedAddress.getMapAddress());
             if (viewCartItemList != null && viewCartItemList.size() != 0)
                 addressDeliveryTime.setText(viewCartItemList.get(0).getProduct().getShop().getEstimatedDeliveryTime().toString() + " Mins");
         } else if (GlobalData.addressList != null) {
@@ -277,7 +279,8 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
             locationInfoLayout.setVisibility(View.GONE);
         } else {
             if (GlobalData.selectedAddress != null)
-                locationErrorSubTitle.setText(GlobalData.selectedAddress.getMapAddress());
+                locationErrorSubTitle.setText((selectedAddress.getBuilding() != null ? selectedAddress.getBuilding() + ", " : "") +
+                        GlobalData.selectedAddress.getMapAddress());
             else
                 locationErrorSubTitle.setText(GlobalData.addressHeader);
             locationErrorLayout.setVisibility(View.VISIBLE);
@@ -824,7 +827,8 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
                         addAddressTxt.setText(getString(R.string.change_address));
                 }
                 addressHeader.setText(GlobalData.selectedAddress.getType());
-                addressDetail.setText(GlobalData.selectedAddress.getMapAddress());
+                addressDetail.setText((selectedAddress.getBuilding() != null ? selectedAddress.getBuilding() + ", " : "") +
+                        GlobalData.selectedAddress.getMapAddress());
                 addressDeliveryTime.setText(viewCartItemList.get(0).getProduct().getShop().getEstimatedDeliveryTime().toString() + " Mins");
             } else {
                 locationErrorLayout.setVisibility(View.VISIBLE);
