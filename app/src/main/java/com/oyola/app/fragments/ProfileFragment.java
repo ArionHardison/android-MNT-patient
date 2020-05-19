@@ -41,7 +41,6 @@ import com.oyola.app.BuildConfig;
 import com.oyola.app.HomeActivity;
 import com.oyola.app.R;
 import com.oyola.app.activities.AccountPaymentActivity;
-import com.oyola.app.activities.ChangePasswordActivity;
 import com.oyola.app.activities.EditAccountActivity;
 import com.oyola.app.activities.FavouritesActivity;
 import com.oyola.app.activities.LoginActivity;
@@ -64,12 +63,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-
-/**
- * Created by santhosh@appoets.com on 22-08-2017.
- */
-
 public class ProfileFragment extends Fragment {
+
     @BindView(R.id.text_line)
     TextView textLine;
     @BindView(R.id.app_version)
@@ -113,21 +108,14 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
-
         return view;
     }
-
 
     @Override
     public void onResume() {
         super.onResume();
         HomeActivity.updateNotificationCount(context, GlobalData.notificationCount);
         initView();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     @Override
@@ -142,7 +130,6 @@ public class ProfileFragment extends Fragment {
         if (toolbar != null) {
             toolbar.removeView(toolbarLayout);
         }
-
     }
 
     private void openSettingPage(int position) {
@@ -160,11 +147,11 @@ public class ProfileFragment extends Fragment {
                 startActivity(new Intent(context, OrdersActivity.class));
                 break;
             case 4:
+                startActivity(new Intent(context, PromotionActivity.class));
+                break;
+            case 5:
                 startActivity(new Intent(context, ReferralActivity.class));
                 break;
-           /* case 4:
-                startActivity(new Intent(context, PromotionActivity.class));
-                break;*/
 //            case 3:
 //                changeLanguage();
 //                break;
@@ -186,7 +173,6 @@ public class ProfileFragment extends Fragment {
     }
 
     public void onActivityCreated(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState);
         System.out.println("ProfileFragment");
         toolbar = getActivity().findViewById(R.id.toolbar);
@@ -204,7 +190,6 @@ public class ProfileFragment extends Fragment {
                     startActivity(new Intent(context, EditAccountActivity.class));
                 }
             });
-
             editBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -223,8 +208,8 @@ public class ProfileFragment extends Fragment {
             listIcons.add(R.drawable.ic_favorite_light);
             listIcons.add(R.drawable.payment);
             listIcons.add(R.drawable.ic_orders_light);
+            listIcons.add(R.drawable.ic_promotion_details);
             listIcons.add(R.drawable.ic_share);
-//            listIcons.add(R.drawable.ic_promotion_details);
 //            listIcons.add(R.drawable.ic_g_translate_light);
 
             /*if (!loginBy.equalsIgnoreCase("facebook") &&
@@ -250,21 +235,15 @@ public class ProfileFragment extends Fragment {
             String VERSION_NAME = BuildConfig.VERSION_NAME;
             int versionCode = BuildConfig.VERSION_CODE;
             appVersion.setText("App version " + VERSION_NAME + " (" + versionCode + ")");
-
         } else {
             toolbar.setVisibility(View.GONE);
             //set Error Layout
             scrollView.setVisibility(View.GONE);
             errorLayout.setVisibility(View.VISIBLE);
-
-
         }
-
-
     }
 
     private void changeLanguage() {
-
         List<String> languages = Arrays.asList(getResources().getStringArray(R.array.languages));
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getLayoutInflater();
@@ -276,7 +255,6 @@ public class ProfileFragment extends Fragment {
         final RadioGroup chooseLanguage = convertView.findViewById(R.id.choose_language);
         final RadioButton english = convertView.findViewById(R.id.english);
         final RadioButton arabic = convertView.findViewById(R.id.arabic);
-
         String dd = LocaleUtils.getLanguage(context);
         switch (dd) {
             case "en":
@@ -301,12 +279,10 @@ public class ProfileFragment extends Fragment {
                         setLanguage("Arabic");
                         alert.dismiss();
                         break;
-
                 }
             }
         });
         alert.show();
-
     }
 
     @OnClick(R.id.error_layout)
@@ -331,7 +307,6 @@ public class ProfileFragment extends Fragment {
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 .putExtra("change_language", true));
         getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-
     }
 
     private void initView() {
@@ -384,7 +359,7 @@ public class ProfileFragment extends Fragment {
 
     public static void expand(final View v) {
         v.measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        final int targtetHeight = v.getMeasuredHeight();
+        final int targetHeight = v.getMeasuredHeight();
 
         v.getLayoutParams().height = 0;
         v.setVisibility(View.VISIBLE);
@@ -393,7 +368,7 @@ public class ProfileFragment extends Fragment {
             protected void applyTransformation(float interpolatedTime, Transformation t) {
                 v.getLayoutParams().height = interpolatedTime == 1
                         ? ViewGroup.LayoutParams.WRAP_CONTENT
-                        : (int) (targtetHeight * interpolatedTime);
+                        : (int) (targetHeight * interpolatedTime);
                 v.requestLayout();
             }
 
@@ -403,13 +378,12 @@ public class ProfileFragment extends Fragment {
             }
         };
 
-        a.setDuration((int) (targtetHeight / v.getContext().getResources().getDisplayMetrics().density));
+        a.setDuration((int) (targetHeight / v.getContext().getResources().getDisplayMetrics().density));
         v.startAnimation(a);
     }
 
     public static void collapse(final View v) {
         final int initialHeight = v.getMeasuredHeight();
-
         Animation a = new Animation() {
             @Override
             protected void applyTransformation(float interpolatedTime, Transformation t) {
@@ -426,11 +400,9 @@ public class ProfileFragment extends Fragment {
                 return true;
             }
         };
-
         a.setDuration((int) (initialHeight / v.getContext().getResources().getDisplayMetrics().density));
         v.startAnimation(a);
     }
-
 
     private void signOut() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -445,7 +417,6 @@ public class ProfileFragment extends Fragment {
         mGoogleApiClient.registerConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
             @Override
             public void onConnected(@Nullable Bundle bundle) {
-
 //                FirebaseAuth.getInstance().signOut();
                 if (mGoogleApiClient.isConnected()) {
                     Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
@@ -489,7 +460,6 @@ public class ProfileFragment extends Fragment {
                         GlobalData.selectedAddress = null;
                         GlobalData.notificationCount = 0;
                         getActivity().finish();
-
                     }
                 })
                 .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -507,5 +477,4 @@ public class ProfileFragment extends Fragment {
         pbutton.setTextColor(ContextCompat.getColor(context, R.color.theme));
         pbutton.setTypeface(pbutton.getTypeface(), Typeface.BOLD);
     }
-
 }

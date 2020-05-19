@@ -30,9 +30,9 @@ import com.oyola.app.models.Cart;
 import com.oyola.app.models.CartAddon;
 import com.oyola.app.models.Product;
 import com.oyola.app.models.Shop;
+import com.oyola.app.utils.Utils;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
-import com.oyola.app.utils.Utils;
 
 import org.json.JSONObject;
 
@@ -44,10 +44,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.oyola.app.MyApplication.commonAccess;
-
-/**
- * Created by santhosh@appoets.com on 22-08-2017.
- */
 
 public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyViewHolder> {
 
@@ -68,7 +64,6 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
     public static Runnable action;
     public static Shop selectedShop = GlobalData.selectedShop;
     public static CartChoiceModeFragment bottomSheetDialogFragment;
-
     //Animation number
     private static final char[] NUMBER_LIST = TickerUtils.getDefaultNumberList();
 
@@ -82,7 +77,6 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.single_product_item, parent, false);
-
         return new MyViewHolder(itemView);
     }
 
@@ -107,8 +101,6 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
         dataResponse = false;
         dialog.show();
         Call<AddCart> call = apiInterface.postAddCart(map);
-
-
         Log.e(" Call<AddCart>==>", "" + map);
         call.enqueue(new Callback<AddCart>() {
             @Override
@@ -116,7 +108,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                 avdProgress.stop();
                 dialog.dismiss();
                 dataResponse = true;
-                if (response != null && !response.isSuccessful() && response.errorBody() != null) {
+                if (!response.isSuccessful() && response.errorBody() != null) {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
@@ -145,14 +137,12 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                         CartFragment.discountAmount.setText("- " + currency + "" + response.body().getShopDiscount());
                         CartFragment.serviceTax.setText(currency + "" + response.body().getTax());
                         CartFragment.payAmount.setText(currency + "" + response.body().getPayable());
-
                     } else {
                         GlobalData.notificationCount = itemQuantity;
                         CartFragment.errorLayout.setVisibility(View.VISIBLE);
                         CartFragment.dataLayout.setVisibility(View.GONE);
                         Toast.makeText(context, "Cart is empty", Toast.LENGTH_SHORT).show();
                     }
-
                 }
             }
 
@@ -161,9 +151,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
 
             }
         });
-
     }
-
 
     @Override
     public int getItemCount() {
@@ -180,10 +168,25 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
         holder.cardTextValue.setText(list.get(position).getQuantity().toString());
         holder.cardTextValueTicker.setText(list.get(position).getQuantity().toString());
         //  priceAmount = product.getCalculated_price();
-
-        holder.priceTxt.setText(product.getPrices().getCurrency() +
-                " " + Utils.getNewNumberFormat((list.get(position).getQuantity()
-                * product.getPrices().getOrignalPrice())));
+        List<CartAddon> cartAddonList = list.get(position).getCartAddons();
+        if (cartAddonList.isEmpty()) {
+            holder.addons.setText("");
+            holder.priceTxt.setText(product.getPrices().getCurrency() +
+                    " " + Utils.getNewNumberFormat((list.get(position).getQuantity()
+                    * product.getPrices().getOrignalPrice())));
+        } else {
+            double addOnAmount = 0;
+            for (int i = 0; i < cartAddonList.size(); i++) {
+                addOnAmount = addOnAmount + cartAddonList.get(i).getAddonProduct().getPrice();
+                if (i == 0)
+                    holder.addons.setText(cartAddonList.get(i).getAddonProduct().getAddon().getName());
+                else
+                    holder.addons.append(", " + cartAddonList.get(i).getAddonProduct().getAddon().getName());
+            }
+            holder.priceTxt.setText(product.getPrices().getCurrency() +
+                    " " + Utils.getNewNumberFormat((list.get(position).getQuantity() *
+                    (product.getPrices().getOrignalPrice() + addOnAmount))));
+        }
         if (!product.getFoodType().equalsIgnoreCase("veg")) {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_nonveg));
             holder.foodImageType.setVisibility(View.GONE);
@@ -192,7 +195,12 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
             holder.foodImageType.setVisibility(View.VISIBLE);
         }
         selectedShop = product.getShop();
-
+        if (list.get(position).getNote() != null) {
+            holder.tvNotes.setVisibility(View.VISIBLE);
+            holder.tvNotes.setText(list.get(position).getNote());
+        } else {
+            holder.tvNotes.setVisibility(View.GONE);
+        }
         if (product.getAddons().size() > 0) {
             holder.customize.setVisibility(View.VISIBLE);
             holder.addons.setVisibility(View.VISIBLE);
@@ -200,24 +208,10 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
             holder.customize.setVisibility(View.GONE);
             holder.addons.setVisibility(View.GONE);
         }
-
-        List<CartAddon> cartAddonList = list.get(position).getCartAddons();
-        if (cartAddonList.isEmpty()) {
-            holder.addons.setText("");
-        } else {
-            for (int i = 0; i < cartAddonList.size(); i++) {
-                if (i == 0)
-                    holder.addons.setText(cartAddonList.get(i).getAddonProduct().getAddon().getName());
-                else
-                    holder.addons.append(", " + cartAddonList.get(i).getAddonProduct().getAddon().getName());
-            }
-        }
-
-
         holder.cardAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /** Intilaize Animation View Image */
+                /* Intilaize Animation View Image */
                 holder.animationLineCartAdd.setVisibility(View.VISIBLE);
                 //Intialize
                 avdProgress = AnimatedVectorDrawableCompat.create(context, R.drawable.add_cart_avd_line);
@@ -233,7 +227,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     }
                 };
                 holder.animationLineCartAdd.postDelayed(action, 3000);
-                /** Press Add Card Add button */
+                /* Press Add Card Add button */
                 product = list.get(position).getProduct();
                 if (product.getAddons() != null && !product.getAddons().isEmpty()) {
                     GlobalData.isSelectedProduct = product;
@@ -242,7 +236,8 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     Log.d(TAG, new Gson().toJson(list.get(position)));
                     commonAccess = "Chooice";
                     bottomSheetDialogFragment = new CartChoiceModeFragment();
-                    bottomSheetDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+                    bottomSheetDialogFragment.show(((AppCompatActivity) context)
+                            .getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
                     CartChoiceModeFragment.isViewcart = true;
                     CartChoiceModeFragment.isSearch = false;
                 } else {
@@ -258,13 +253,12 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                 }
             }
         });
-
         holder.cardMinusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /** Intilaize Animation View Image */
+                /* Initialize Animation View Image */
                 holder.animationLineCartAdd.setVisibility(View.VISIBLE);
-                //Intialize
+                //Initialize
                 avdProgress = AnimatedVectorDrawableCompat.create(context, R.drawable.add_cart_avd_line);
                 holder.animationLineCartAdd.setBackground(avdProgress);
                 avdProgress.start();
@@ -279,7 +273,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                 };
                 holder.animationLineCartAdd.postDelayed(action, 3000);
                 int countMinusValue;
-                /** Press Add Card Minus button */
+                /* Press Add Card Minus button */
                 product = list.get(position).getProduct();
                 if (holder.cardTextValue.getText().toString().equalsIgnoreCase("1")) {
                     countMinusValue = Integer.parseInt(holder.cardTextValue.getText().toString()) - 1;
@@ -299,7 +293,6 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     Log.e("AddCart_Minus", map.toString());
                     addCart(map, holder.itemView.getContext());
                     remove(productList);
-
                 } else {
                     countMinusValue = Integer.parseInt(holder.cardTextValue.getText().toString()) - 1;
                     holder.cardTextValue.setText("" + countMinusValue);
@@ -317,17 +310,14 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     Log.e("AddCart_Minus", map.toString());
                     addCart(map, holder.itemView.getContext());
                 }
-
-
             }
         });
-
         holder.customize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /** Intilaize Animation View Image */
+                /* Initialize Animation View Image */
                 holder.animationLineCartAdd.setVisibility(View.VISIBLE);
-                //Intialize
+                //Initialize
                 avdProgress = AnimatedVectorDrawableCompat.create(context, R.drawable.add_cart_avd_line);
                 holder.animationLineCartAdd.setBackground(avdProgress);
                 avdProgress.start();
@@ -338,7 +328,6 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                             avdProgress.start();
                             holder.animationLineCartAdd.postDelayed(action, 3000);
                         }
-
                     }
                 };
                 holder.animationLineCartAdd.postDelayed(action, 3000);
@@ -347,20 +336,21 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                 GlobalData.isSelctedCart = productList;
                 GlobalData.cartAddons = productList.getCartAddons();
                 AddonBottomSheetFragment bottomSheetDialogFragment = new AddonBottomSheetFragment();
-                bottomSheetDialogFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+                bottomSheetDialogFragment.show(((AppCompatActivity) context)
+                        .getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
                 AddonBottomSheetFragment.selectedCart = list.get(position);
                 // Right here!
-
             }
         });
-
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+
         TickerView cardTextValueTicker;
         RelativeLayout cardAddDetailLayout, cardAddTextLayout, cardInfoLayout;
         private ImageView dishImg, foodImageType, cardAddBtn, cardMinusBtn, animationLineCartAdd;
-        private TextView dishNameTxt, priceTxt, cardTextValue, cardAddInfoText, cardAddOutOfStock, customizableTxt, addons, customize;
+        private TextView dishNameTxt, priceTxt, cardTextValue, cardAddInfoText, cardAddOutOfStock,
+                customizableTxt, addons, customize, tvNotes;
 
         private MyViewHolder(View view) {
             super(view);
@@ -371,6 +361,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
             customizableTxt = itemView.findViewById(R.id.customizable_txt);
             addons = itemView.findViewById(R.id.addons);
             customize = itemView.findViewById(R.id.customize);
+            tvNotes = itemView.findViewById(R.id.tvNotes);
             /*    Add card Button Layout*/
             cardAddDetailLayout = itemView.findViewById(R.id.add_card_layout);
             cardAddTextLayout = itemView.findViewById(R.id.add_card_text_layout);
@@ -382,6 +373,4 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
             cardTextValueTicker = itemView.findViewById(R.id.card_value_ticker);
         }
     }
-
-
 }

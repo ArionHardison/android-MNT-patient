@@ -27,6 +27,8 @@ import com.oyola.app.utils.Utils;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -55,9 +57,7 @@ public class OrdersActivity extends AppCompatActivity {
     Context context;
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
     List<OrderModel> modelList = new ArrayList<>();
-    Intent orderIntent;
     ConnectionHelper connectionHelper;
-    Runnable orderStatusRunnable;
     CustomDialog customDialog;
 
     @Override
@@ -86,9 +86,7 @@ public class OrdersActivity extends AppCompatActivity {
         adapter = new OrdersAdapter(this, activity, modelListReference);
         ordersRv.setAdapter(adapter);
         ordersRv.setHasFixedSize(false);
-
     }
-
 
     private void getPastOrders() {
         Call<List<Order>> call = apiInterface.getPastOders();
@@ -98,6 +96,12 @@ public class OrdersActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     pastOrderList.clear();
                     pastOrderList = response.body();
+                    Collections.sort(pastOrderList, new Comparator<Order>() {
+                        @Override
+                        public int compare(Order lhs, Order rhs) {
+                            return rhs.getCreatedAt().compareTo(lhs.getCreatedAt());
+                        }
+                    });
                     OrderModel model = new OrderModel();
                     model.setHeader(getString(R.string.past_orders));
                     model.setOrders(pastOrderList);
@@ -126,7 +130,6 @@ public class OrdersActivity extends AppCompatActivity {
                 Toast.makeText(OrdersActivity.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private void getOngoingOrders() {
@@ -138,6 +141,12 @@ public class OrdersActivity extends AppCompatActivity {
                     onGoingOrderList.clear();
                     modelListReference.clear();
                     onGoingOrderList = response.body();
+                    Collections.sort(onGoingOrderList, new Comparator<Order>() {
+                        @Override
+                        public int compare(Order lhs, Order rhs) {
+                            return rhs.getCreatedAt().compareTo(lhs.getCreatedAt());
+                        }
+                    });
                     modelList.clear();
                     OrderModel model = new OrderModel();
                     model.setHeader("Current Orders");
@@ -163,12 +172,6 @@ public class OrdersActivity extends AppCompatActivity {
                 customDialog.dismiss();
             }
         });
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
     }
 
     @Override
@@ -183,7 +186,6 @@ public class OrdersActivity extends AppCompatActivity {
         } else {
             Utils.displayMessage(activity, context, getString(R.string.oops_connect_your_internet));
         }
-
     }
 
     @Override
@@ -193,18 +195,6 @@ public class OrdersActivity extends AppCompatActivity {
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         overridePendingTransition(R.anim.anim_nothing, R.anim.slide_out_right);
         finish();
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 
     @Override

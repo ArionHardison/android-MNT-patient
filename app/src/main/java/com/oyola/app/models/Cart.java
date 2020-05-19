@@ -28,7 +28,7 @@ public class Cart {
     private Integer quantity;
     @SerializedName("note")
     @Expose
-    private Object note;
+    private String note;
     @SerializedName("savedforlater")
     @Expose
     private Integer savedforlater;
@@ -87,11 +87,11 @@ public class Cart {
         this.quantity = quantity;
     }
 
-    public Object getNote() {
+    public String getNote() {
         return note;
     }
 
-    public void setNote(Object note) {
+    public void setNote(String note) {
         this.note = note;
     }
 
