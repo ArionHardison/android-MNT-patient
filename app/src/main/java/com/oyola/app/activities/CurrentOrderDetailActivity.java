@@ -1,10 +1,8 @@
 package com.oyola.app.activities;
 
-
 import android.Manifest;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -144,6 +142,8 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
     TextView orderIdTxt2;
     @BindView(R.id.order_placed_time)
     TextView orderPlacedTime;
+    @BindView(R.id.tvShopAddress)
+    TextView tvShopAddress;
 
     Fragment orderFullViewFragment;
     FragmentManager fragmentManager;
@@ -153,7 +153,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
     @BindView(R.id.order_flow_rv)
     RecyclerView orderFlowRv;
     int rating = 5;
-    SupportMapFragment mapFragment;
     public static TextView orderCancelTxt;
     public static Location prevLoc;
     Context context;
@@ -166,7 +165,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
     RelativeLayout mapTouchRel;
     @BindView(R.id.transparent_image)
     ImageView transparentImage;
-    private BroadcastReceiver mReceiver;
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
     Handler handler;
     Runnable orderStatusRunnable;
@@ -174,7 +172,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
     CustomDialog customDialog;
     GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
-
 
     private Marker sourceMarker;
     private Marker destinationMarker;
@@ -184,7 +181,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
 
     String TransporterNumber = "";
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
-
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -230,7 +226,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             }
         });
 
-
         handler = new Handler();
         orderStatusRunnable = new Runnable() {
             public void run() {
@@ -241,11 +236,9 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                     getParticularOrders(isSelectedOrder.getId());
 //                    }
                 }
-
                 handler.postDelayed(this, 5000);
             }
         };
-
 
         transparentImage.setOnTouchListener(new View.OnTouchListener() {
 
@@ -254,20 +247,15 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                 int action = event.getAction();
                 switch (action) {
                     case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_MOVE:
                         // Disallow ScrollView to intercept touch events.
                         nestedScrollView.requestDisallowInterceptTouchEvent(true);
                         // Disable touch on transparent view
                         return false;
-
                     case MotionEvent.ACTION_UP:
                         // Allow ScrollView to intercept touch events.
                         nestedScrollView.requestDisallowInterceptTouchEvent(false);
                         return true;
-
-                    case MotionEvent.ACTION_MOVE:
-                        nestedScrollView.requestDisallowInterceptTouchEvent(true);
-                        return false;
-
                     default:
                         return true;
                 }
@@ -275,7 +263,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
         });
 
         if (GlobalData.isSelectedOrder != null) {
-            updateOrderDeatail();
+            updateOrderDetail();
 /*            Order order = GlobalData.isSelectedOrder;
             orderIdTxt.setText("ORDER #000" + order.getId().toString());
             itemQuantity = order.getInvoice().getQuantity();
@@ -308,7 +296,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);*/
         }
-
     }
 
     private void goToCall() {
@@ -327,7 +314,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             intent.setData(Uri.parse("tel:" + TransporterNumber));
             startActivity(intent);
         }*/
-
         if (TransporterNumber != null && !TransporterNumber.isEmpty()) {
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel:" + TransporterNumber));
@@ -337,7 +323,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
         }
     }
 
-    public void updateOrderDeatail() {
+    public void updateOrderDetail() {
         List<OrderFlow> orderFlowList = new ArrayList<>();
         if (GlobalData.isSelectedOrder != null) {
             if (GlobalData.isSelectedOrder.getPickUpRestaurant() == 0) {
@@ -387,6 +373,12 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             if (isSelectedOrder.getOrderOtp() != null)
                 orderOtp.setText(getString(R.string.otp) + " : " + isSelectedOrder.getOrderOtp());
             orderPlacedTime.setText(getTimeFromString(order.getCreatedAt()));
+            if (order.getPickUpRestaurant() == 1) {
+                tvShopAddress.setVisibility(View.VISIBLE);
+                tvShopAddress.setText((order.getShop().getMapsAddress() != null ? order.getShop().getMapsAddress() : ""));
+            } else {
+                tvShopAddress.setVisibility(View.GONE);
+            }
 
             //set Fragment
             orderFullViewFragment = new OrderViewFragment();
@@ -397,8 +389,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     buildGoogleApiClient();
-                } else {
-                    //Request Location Permission
                 }
             } else {
                 buildGoogleApiClient();
@@ -407,7 +397,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             mapFragment.getMapAsync(this);
         }
     }
-
 
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -418,7 +407,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                 .build();
         mGoogleApiClient.connect();
     }
-
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -474,10 +462,8 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
         } catch (Resources.NotFoundException e) {
             Log.i("Map:Style", "Can't find style. Error: ");
         }
-
         mMap = googleMap;
         setupMap();
-
     }
 
     void setupMap() {
@@ -485,8 +471,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             mMap.getUiSettings().setCompassEnabled(false);
             mMap.setBuildingsEnabled(true);
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
                 // here to request the missing permissions, and then overriding
                 //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
                 //                                          int[] grantResults)
@@ -520,7 +504,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                 mMap.moveCamera(cu);
             }
         }
-
     }
 
     // Fetches data from url passed
@@ -578,15 +561,13 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
 
             StringBuilder sb = new StringBuilder();
 
-            String line = "";
+            String line;
             while ((line = br.readLine()) != null) {
                 sb.append(line);
             }
-
             data = sb.toString();
             Log.d("downloadUrl", data);
             br.close();
-
         } catch (Exception e) {
             Log.d("Exception", e.toString());
         } finally {
@@ -604,10 +585,8 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
         // Parsing the data in non-ui thread
         @Override
         protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
-
             JSONObject jObject;
             List<List<HashMap<String, String>>> routes = null;
-
             try {
                 jObject = new JSONObject(jsonData[0]);
                 Log.d("ParserTask", jsonData[0]);
@@ -618,7 +597,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                 routes = parser.parse(jObject);
                 Log.d("ParserTask", "Executing routes");
                 Log.d("ParserTask", routes.toString());
-
             } catch (Exception e) {
                 Log.d("ParserTask", e.toString());
                 e.printStackTrace();
@@ -631,7 +609,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
         protected void onPostExecute(List<List<HashMap<String, String>>> result) {
             ArrayList<LatLng> points = null;
             PolylineOptions lineOptions = null;
-
             if (result != null) {
                 // Traversing through all the routes
                 if (result.size() > 0) {
@@ -645,11 +622,9 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                         // Fetching all the points in i-th route
                         for (int j = 0; j < path.size(); j++) {
                             HashMap<String, String> point = path.get(j);
-
                             double lat = Double.parseDouble(point.get("lat"));
                             double lng = Double.parseDouble(point.get("lng"));
                             LatLng position = new LatLng(lat, lng);
-
                             points.add(position);
                         }
                         if (isSelectedOrder.getAddress() != null) {
@@ -679,7 +654,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                             lineOptions.addAll(points);
                             lineOptions.width(5);
                             lineOptions.color(Color.BLACK);
-
                             Log.d("onPostExecute", "onPostExecute lineoptions decoded");
                         } else {
                             destLatLng = new LatLng(isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
@@ -699,30 +673,23 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                     }
                 } else {
                     mMap.clear();
-
                 }
-
             }
-
             // Drawing polyline in the Google Map for the i-th route
-            if (lineOptions != null && points != null) {
+            if (lineOptions != null) {
                 mMap.addPolyline(lineOptions);
-
             } else {
                 Log.d("onPostExecute", "without Polylines drawn");
             }
         }
     }
 
-
     private String getUrl(double source_latitude, double source_longitude, double dest_latitude, double dest_longitude) {
-
         // Origin of route
         String str_origin = "origin=" + source_latitude + "," + source_longitude;
 
         // Destination of route
         String str_dest = "destination=" + dest_latitude + "," + dest_longitude;
-
 
         // Sensor enabled
         String sensor = "sensor=false";
@@ -734,7 +701,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
         String output = "json";
 
         // Building the url to the web service
-
         return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
     }
 
@@ -772,7 +738,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             }
         });
         alertDialog.show();
-
     }
 
     private void cancelOrder(String reason) {
@@ -824,7 +789,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                 if (response.isSuccessful()) {
                     if (GlobalData.isSelectedOrder == null) {
                         isSelectedOrder = response.body();
-                        updateOrderDeatail();
+                        updateOrderDetail();
                     } else isSelectedOrder = response.body();
                     Log.i("isSelectedOrder : ", isSelectedOrder.toString());
 
@@ -836,7 +801,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                         order_eta.setText(getString(R.string.eta) + " : " + isSelectedOrder.getShop().getEstimatedDeliveryTime() + " " + getResources().getString(R.string.order_minits));
                     }
 
-                  /*  if (isSelectedOrder.getEta() != null) {
+                    /*if (isSelectedOrder.getEta() != null) {
                         order_eta.setText(getString(R.string.eta) + " : " + isSelectedOrder.getEta() + " " + getResources().getString(R.string.order_minits));
                     } else {
                         if (isSelectedOrder.getStatus().equalsIgnoreCase("received")) {
@@ -847,9 +812,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                     }*/
 
                     if (isSelectedOrder.getTransporter() != null) {
-
                         transporter_details.setVisibility(View.VISIBLE);
-
                         Glide.with(context)
                                 .load(isSelectedOrder.getTransporter().getAvatar())
                                 .apply(new RequestOptions()
@@ -859,22 +822,18 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                                 .into(transporter_image);
                         transporterName.setText(isSelectedOrder.getTransporter().getName());
                         TransporterNumber = isSelectedOrder.getTransporter().getPhone();
-
                     } else {
                         transporter_details.setVisibility(View.GONE);
                     }
-
                     if (isSelectedOrder.getStatus().equals("PICKEDUP") ||
                             isSelectedOrder.getStatus().equals("ARRIVED") || isSelectedOrder.getStatus().equals("ASSIGNED")) {
                         liveNavigation(isSelectedOrder.getTransporter().getLatitude(),
                                 isSelectedOrder.getTransporter().getLongitude());
                     }
-
                     if (!isSelectedOrder.getStatus().equalsIgnoreCase(previousStatus)) {
                         previousStatus = isSelectedOrder.getStatus();
                         adapter.notifyDataSetChanged();
                     }
-
                     if (isSelectedOrder.getStatus().equals("CANCELLED")) {
                         orderStatusLayout.setVisibility(View.VISIBLE);
                         orderFlowRv.setVisibility(View.GONE);
@@ -886,11 +845,13 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                         orderStatusLayout.setVisibility(View.GONE);
                         orderFlowRv.setVisibility(View.VISIBLE);
                     }
-
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
+                        if (!jObjError.optString("error").equals(""))
+                            Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
+                        if (!jObjError.optString("message").equals(""))
+                            Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
                     }
@@ -904,14 +865,13 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
         });
     }
 
-
     public void liveNavigation(Double lat, Double lng) {
         Log.e("Livenavigation", "ProLat" + lat + " ProLng" + lng);
         if (lat != null && lng != null) {
             Location targetLocation = new Location("providerlocation");//provider name is unnecessary
             targetLocation.setLatitude(lat);//your coords of course
             targetLocation.setLongitude(lng);
-            Float rotation = 0.0f;
+            float rotation = 0.0f;
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(new LatLng(lat, lng))
                     .rotation(rotation)
@@ -919,7 +879,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             if (providerMarker != null) {
                 animateMarker(targetLocation, providerMarker);
             } else {
-
                 try {
                     providerMarker = mMap.addMarker(markerOptions);
                 } catch (Exception e) {
@@ -934,9 +893,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
         if (marker != null) {
             final LatLng startPosition = marker.getPosition();
             final LatLng endPosition = new LatLng(destination.getLatitude(), destination.getLongitude());
-
             final float startRotation = marker.getRotation();
-
             if (prevLoc == null) {
                 prevLoc = destination;
             }
@@ -962,7 +919,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                     }
                 }
             });
-
             valueAnimator.start();
         }
     }
@@ -984,6 +940,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
     }
 
     private interface LatLngInterpolator {
+
         LatLng interpolate(float fraction, LatLng a, LatLng b);
 
         class LinearFixed implements LatLngInterpolator {
@@ -1000,7 +957,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             }
         }
     }
-
 
     public float getBearing(LatLng oldPosition, LatLng newPosition) {
         double deltaLongitude = newPosition.longitude - oldPosition.longitude;
@@ -1070,7 +1026,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                     goToCall();
                 } else
                     Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-
             }
         }
     }
@@ -1112,7 +1067,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                     Log.d("gfgfgf", "onCheckedChanged: " + rating);
                 }
             });
-
             final EditText comment = dialogView.findViewById(R.id.comment);
             Button feedbackSubmit = dialogView.findViewById(R.id.feedback_submit);
             feedbackSubmit.setOnClickListener(new View.OnClickListener() {
@@ -1127,11 +1081,9 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                         rateTransporter(map);
                         alertDialog.dismiss();
                     }
-
                 }
             });
             alertDialog.show();
-
         } catch (Exception e) {
             e.printStackTrace();
         }

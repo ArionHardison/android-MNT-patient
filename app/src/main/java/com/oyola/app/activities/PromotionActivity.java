@@ -19,7 +19,6 @@ import com.oyola.app.adapter.PromotionsAdapter;
 import com.oyola.app.build.api.ApiClient;
 import com.oyola.app.build.api.ApiInterface;
 import com.oyola.app.helper.CustomDialog;
-import com.oyola.app.helper.GlobalData;
 import com.oyola.app.models.PromotionResponse;
 import com.oyola.app.models.Promotions;
 
@@ -41,21 +40,20 @@ public class PromotionActivity extends AppCompatActivity implements PromotionsAd
     Toolbar toolbar;
     @BindView(R.id.promotions_rv)
     RecyclerView promotionsRv;
+    @BindView(R.id.error_layout)
+    LinearLayout errorLayout;
+    private PromotionsAdapter promotionsAdapter;
 
     ArrayList<Promotions> promotionsModelArrayList;
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
     Context context = PromotionActivity.this;
     CustomDialog customDialog;
-    @BindView(R.id.error_layout)
-    LinearLayout errorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_promotion);
         ButterKnife.bind(this);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -64,38 +62,39 @@ public class PromotionActivity extends AppCompatActivity implements PromotionsAd
                 onBackPressed();
             }
         });
-
         promotionsModelArrayList = new ArrayList<>();
         customDialog = new CustomDialog(context);
-
         //Offer Restaurant Adapter
         promotionsRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         promotionsRv.setItemAnimator(new DefaultItemAnimator());
         promotionsRv.setHasFixedSize(true);
-        PromotionsAdapter orderItemListAdapter = new PromotionsAdapter(promotionsModelArrayList, this);
-        promotionsRv.setAdapter(orderItemListAdapter);
-
+        promotionsAdapter = new PromotionsAdapter(promotionsModelArrayList, this);
+        promotionsRv.setAdapter(promotionsAdapter);
         getPromoDetails();
     }
 
     private void getPromoDetails() {
         customDialog.show();
-
         Call<List<Promotions>> call = apiInterface.getWalletPromoCode();
         call.enqueue(new Callback<List<Promotions>>() {
             @Override
             public void onResponse(@NonNull Call<List<Promotions>> call, @NonNull Response<List<Promotions>> response) {
                 customDialog.dismiss();
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && response.body() != null) {
                     promotionsModelArrayList.clear();
                     Log.e("onResponse: ", response.toString());
                     promotionsModelArrayList.addAll(response.body());
                     if (promotionsModelArrayList.size() == 0) {
                         errorLayout.setVisibility(View.VISIBLE);
+                        promotionsRv.setVisibility(View.GONE);
                     } else {
-                        promotionsRv.getAdapter().notifyDataSetChanged();
+                        errorLayout.setVisibility(View.GONE);
+                        promotionsRv.setVisibility(View.VISIBLE);
+                        promotionsAdapter.notifyDataSetChanged();
                     }
                 } else {
+                    errorLayout.setVisibility(View.VISIBLE);
+                    promotionsRv.setVisibility(View.GONE);
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().toString());
                         Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
@@ -107,6 +106,8 @@ public class PromotionActivity extends AppCompatActivity implements PromotionsAd
 
             @Override
             public void onFailure(@NonNull Call<List<Promotions>> call, @NonNull Throwable t) {
+                errorLayout.setVisibility(View.VISIBLE);
+                promotionsRv.setVisibility(View.GONE);
                 customDialog.dismiss();
             }
         });
@@ -136,13 +137,13 @@ public class PromotionActivity extends AppCompatActivity implements PromotionsAd
     @Override
     public void onApplyBtnClick(final Promotions promotions) {
         customDialog.show();
-        Call<PromotionResponse> call = apiInterface.applyWalletPromoCode(String.valueOf(promotions.getId()),promotions.getPromoCode());
+        Call<PromotionResponse> call = apiInterface.applyWalletPromoCode(String.valueOf(promotions.getId()), promotions.getPromoCode());
         call.enqueue(new Callback<PromotionResponse>() {
             @Override
             public void onResponse(@NonNull Call<PromotionResponse> call, @NonNull Response<PromotionResponse> response) {
                 customDialog.dismiss();
                 if (response.isSuccessful()) {
-                    Toast.makeText(PromotionActivity.this, getResources().getString(R.string.promo_code_apply_successfully), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PromotionActivity.this, getString(R.string.promo_code_apply_successfully), Toast.LENGTH_SHORT).show();
 //                    GlobalData.profileModel.setWalletBalance(response.body().getWalletMoney());
                     /*GlobalData.addCart = null;
                     GlobalData.addCart = response.body();*/
@@ -153,6 +154,7 @@ public class PromotionActivity extends AppCompatActivity implements PromotionsAd
                         Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
 //                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
                     }
                 }
             }
@@ -199,11 +201,9 @@ public class PromotionActivity extends AppCompatActivity implements PromotionsAd
       /*  startActivity(new Intent(this, AccountPaymentActivity.class).putExtra("is_show_wallet", true).putExtra("is_show_cash", false));
         overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
         finish();*/
-
         Intent intent = new Intent();
         intent.putExtra("promotion", walletMoney);
         setResult(201, intent);
         finish();
     }
-
 }

@@ -23,21 +23,15 @@ import java.util.List;
 import static com.oyola.app.activities.FilterActivity.isReset;
 import static com.oyola.app.fragments.HomeFragment.isFilterApplied;
 
-/**
- * Created by santhosh@appoets.com on 28-08-2017.
- */
-
 public class FilterAdapter extends SectionedRecyclerViewAdapter<FilterAdapter.ViewHolder> {
 
-    private List<FilterModel> list = new ArrayList<>();
+    private List<FilterModel> list;
     private LayoutInflater inflater;
     public static ArrayList<Integer> cuisineIdList = new ArrayList<>();
     public static boolean isOfferApplied = false;
     public static boolean isPureVegApplied = false;
-    boolean once = true;
 
     public FilterAdapter(Context context, List<FilterModel> list) {
-        Context context1 = context;
         this.inflater = LayoutInflater.from(context);
         this.list = list;
     }
@@ -50,8 +44,6 @@ public class FilterAdapter extends SectionedRecyclerViewAdapter<FilterAdapter.Vi
                 v = inflater.inflate(R.layout.header_filter, parent, false);
                 return new ViewHolder(v, true);
             case VIEW_TYPE_ITEM:
-                v = inflater.inflate(R.layout.filter_list_item, parent, false);
-                return new ViewHolder(v, false);
             default:
                 v = inflater.inflate(R.layout.filter_list_item, parent, false);
                 return new ViewHolder(v, false);
@@ -62,7 +54,6 @@ public class FilterAdapter extends SectionedRecyclerViewAdapter<FilterAdapter.Vi
     public int getSectionCount() {
         return list.size();
     }
-
 
     @Override
     public int getItemCount(int section) {
@@ -76,7 +67,6 @@ public class FilterAdapter extends SectionedRecyclerViewAdapter<FilterAdapter.Vi
             holder.viewBox.setVisibility(View.GONE);
         else
             holder.viewBox.setVisibility(View.VISIBLE);
-
         holder.headerTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,15 +104,13 @@ public class FilterAdapter extends SectionedRecyclerViewAdapter<FilterAdapter.Vi
                 } else {
                     holder.chkSelected.setChecked(false);
                 }
-
             } else {
                 if (list.get(section).getCuisines().get(relativePosition).getName().equalsIgnoreCase("Offers"))
                     holder.chkSelected.setChecked(isOfferApplied);
-                else if (list.get(section).getCuisines().get(relativePosition).getName().equalsIgnoreCase("Pure veg"))
+                else if (list.get(section).getCuisines().get(relativePosition).getName().equalsIgnoreCase("Vegetarian"))
                     holder.chkSelected.setChecked(isPureVegApplied);
             }
         }
-
         if (isFilterApplied) {
             FilterActivity.applyFilterBtn.setAlpha(1);
             FilterActivity.resetTxt.setAlpha(1);
@@ -131,8 +119,6 @@ public class FilterAdapter extends SectionedRecyclerViewAdapter<FilterAdapter.Vi
             FilterActivity.applyFilterBtn.setEnabled(true);
             FilterActivity.resetTxt.setEnabled(true);
         }
-
-
         holder.chkSelected.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -143,7 +129,7 @@ public class FilterAdapter extends SectionedRecyclerViewAdapter<FilterAdapter.Vi
                     } else {
                         if (list.get(section).getCuisines().get(relativePosition).getName().equalsIgnoreCase("Offers"))
                             isOfferApplied = true;
-                        else if (list.get(section).getCuisines().get(relativePosition).getName().equalsIgnoreCase("Pure veg"))
+                        else if (list.get(section).getCuisines().get(relativePosition).getName().equalsIgnoreCase("Vegetarian"))
                             isPureVegApplied = true;
                     }
                     FilterActivity.applyFilterBtn.setAlpha(1);
@@ -152,7 +138,6 @@ public class FilterAdapter extends SectionedRecyclerViewAdapter<FilterAdapter.Vi
                     FilterActivity.applyFilterBtn.setEnabled(true);
                     FilterActivity.resetTxt.setEnabled(true);
                     FilterActivity.resetTxt.setClickable(true);
-
                 } else {
                     if (list.get(section).getHeader().equalsIgnoreCase("Cuisines")) {
                         Cuisine cuisine = list.get(section).getCuisines().get(relativePosition);
@@ -165,7 +150,7 @@ public class FilterAdapter extends SectionedRecyclerViewAdapter<FilterAdapter.Vi
                     } else {
                         if (list.get(section).getCuisines().get(relativePosition).getName().equalsIgnoreCase("Offers"))
                             isOfferApplied = false;
-                        else if (list.get(section).getCuisines().get(relativePosition).getName().equalsIgnoreCase("Pure veg"))
+                        else if (list.get(section).getCuisines().get(relativePosition).getName().equalsIgnoreCase("Vegetarian"))
                             isPureVegApplied = false;
                     }
                     if (cuisineIdList.size() == 0 && !isPureVegApplied && !isOfferApplied) {
@@ -177,16 +162,14 @@ public class FilterAdapter extends SectionedRecyclerViewAdapter<FilterAdapter.Vi
                             FilterActivity.resetTxt.setClickable(false);
                             FilterActivity.resetTxt.setEnabled(false);
                         }
-
                     }
-
                 }
             }
         });
-
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         TextView headerTxt;
         CheckBox chkSelected;
         View viewLine, viewBox;
@@ -195,15 +178,13 @@ public class FilterAdapter extends SectionedRecyclerViewAdapter<FilterAdapter.Vi
         public ViewHolder(View itemView, boolean isHeader) {
             super(itemView);
             if (isHeader) {
-                headerTxt = (TextView) itemView.findViewById(R.id.header);
-                viewBox = (View) itemView.findViewById(R.id.view_box);
+                headerTxt = itemView.findViewById(R.id.header);
+                viewBox = itemView.findViewById(R.id.view_box);
             } else {
-                itemLayout = (LinearLayout) itemView.findViewById(R.id.item_layout);
-                chkSelected = (CheckBox) itemView.findViewById(R.id.chk_selected);
-                viewLine = (View) itemView.findViewById(R.id.view_line);
+                itemLayout = itemView.findViewById(R.id.item_layout);
+                chkSelected = itemView.findViewById(R.id.chk_selected);
+                viewLine = itemView.findViewById(R.id.view_line);
             }
-
         }
-
     }
 }

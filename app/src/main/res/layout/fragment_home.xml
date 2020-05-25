@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:padding="@dimen/_8sdp"
-                    android:text="@string/just_for_you"
+                    android:text="@string/offers"
                     android:textStyle="bold"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/text_small" />

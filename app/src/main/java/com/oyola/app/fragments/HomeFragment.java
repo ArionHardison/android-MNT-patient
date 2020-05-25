@@ -78,11 +78,6 @@ import static com.oyola.app.helper.GlobalData.latitude;
 import static com.oyola.app.helper.GlobalData.longitude;
 import static com.oyola.app.helper.GlobalData.selectedAddress;
 
-
-/**
- * Created by santhosh@appoets.com on 22-08-2017.
- */
-
 public class HomeFragment extends Fragment implements AdapterView.OnItemSelectedListener,
         CuisineSelectFragment.OnSuccessListener {
 
@@ -160,7 +155,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         activity = getActivity();
         mFragment = new CuisineSelectFragment();
         mFragment.setListener(this);
-
     }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -169,7 +163,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             // Get extra data included in the Intent
             String message = intent.getStringExtra("message");
             Log.d("receiver", "Got message: " + message);
-
             errorLoadingLayout.setVisibility(View.GONE);
             locationAddressLayout.setVisibility(View.VISIBLE);
             if (selectedAddress != null && GlobalData.profileModel != null) {
@@ -220,12 +213,9 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 //            new CuisineSelectFragment().show(getFragmentManager(), "CuisineSelectFragment");
         }
         return view;
-
     }
 
-
     public void onActivityCreated(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState);
         System.out.println("HomeFragment");
         commonAccess = "";
@@ -271,7 +261,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
         //Spinner
         //Creating the ArrayAdapter instance having the country shopList
-        ArrayAdapter aa = new ArrayAdapter(context, R.layout.spinner_layout, catagoery);
+        ArrayAdapter<String> aa = new ArrayAdapter<>(context, R.layout.spinner_layout, catagoery);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
         catagoerySpinner.setAdapter(aa);
@@ -379,17 +369,14 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             }
         });
         toolbar.addView(toolbarLayout);
-        //intialize image line
+        //initialize image line
         initializeAvd();
-
-//Get cuisine values
+        //Get cuisine values
         if (connectionHelper.isConnectingToInternet()) {
             getCuisines();
         } else {
             Utils.displayMessage(activity, context, getString(R.string.oops_connect_your_internet));
         }
-
-
     }
 
     private void showFavouritesDialog() {
@@ -415,17 +402,14 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                     map.put("cuisine[" + "" + i + "]", cuisineIdArrayList.get(i).toString());
                 }
             }
-
         } else {
             filterSelectionImage.setVisibility(View.GONE);
         }
-
         if (connectionHelper.isConnectingToInternet()) {
             getRestaurant(map);
         } else {
             Utils.displayMessage(activity, context, getString(R.string.oops_connect_your_internet));
         }
-
     }
 
     private void getRestaurant(HashMap<String, String> map) {
@@ -442,7 +426,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 skeletonFreeDeliveryTitle.hide();
                 skeletonText2.hide();
                 skeletonSpinner.hide();
-                if (response != null && !response.isSuccessful() && response.errorBody() != null) {
+                if (!response.isSuccessful() && response.errorBody() != null) {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
@@ -452,7 +436,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 } else if (response.isSuccessful()) {
                     if (isAdded() && isVisible() && getUserVisibleHint()) {
                         //Check Restaurant list
-                        if (response.body().getShops().size() == 0) {
+                        if (response.body().getShops().isEmpty()) {
                             title.setVisibility(View.GONE);
                             errorLayout.setVisibility(View.GONE);
                         } else {
@@ -461,10 +445,15 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                         }
 
                         //Check Banner list
-                        if (response.body().getBanners().size() == 0 || isFilterApplied)
+                        if (response.body().getBanners().isEmpty() || isFilterApplied) {
                             impressiveDishesLayout.setVisibility(View.GONE);
-                        else
+                            if (isFilterApplied)
+                                errorLayout.setVisibility(View.VISIBLE);
+                            else
+                                errorLayout.setVisibility(View.GONE);
+                        } else {
                             impressiveDishesLayout.setVisibility(View.VISIBLE);
+                        }
                         GlobalData.shopList = response.body().getShops();
                         restaurantList.clear();
                         restaurantList.addAll(GlobalData.shopList);
@@ -474,7 +463,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                         favouriteRestaurantList.addAll(response.body().getFavouriteCuisines());
                         freeDeliveryRestaurantList.clear();
                         freeDeliveryRestaurantList.addAll(response.body().getFreeDeliveryShops());
-                      /*  if (restaurantList.size() > 1) {
+                        /*if (restaurantList.size() > 1) {
                             restaurantCountTxt.setText("" + restaurantList.size() + " " + getString(R.string.kitchens));
                         } else {
                             restaurantCountTxt.setText("" + restaurantList.size() + " " + getString(R.string.kitchen));
@@ -510,7 +499,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         call.enqueue(new Callback<List<Cuisine>>() {
             @Override
             public void onResponse(Call<List<Cuisine>> call, Response<List<Cuisine>> response) {
-                if (response != null && !response.isSuccessful() && response.errorBody() != null) {
+                if (!response.isSuccessful() && response.errorBody() != null) {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
@@ -528,13 +517,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
             }
         });
-
-
     }
 
     public double getDoubleThreeDigits(Double value) {
         return new BigDecimal(value.toString()).setScale(3, RoundingMode.HALF_UP).doubleValue();
-
     }
 
     Runnable action = new Runnable() {
@@ -556,11 +542,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         avdProgress.start();
         animationLineImage.
                 postDelayed(action, 3000); // Will repeat animation in every 1 second
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
     }
 
     @Override
@@ -616,9 +597,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 }
             }
             findRestaurant();
-
         }
-
     }
 
     public String getAddress(double lat, double lng) {
@@ -629,8 +608,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 android.location.Address address = addresses.get(0);
 //            String addressLine = address.getAddressLine(0);
                 String addressLine = addresses.get(0).getAddressLine(0);
-
-
 /*                String add = obj.getAddressLine(0);
                 add = add + "\n" + obj.getCountryName();
                 add = add + "\n" + obj.getCountryCode();
@@ -639,18 +616,15 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 add = add + "\n" + obj.getSubAdminArea();
                 add = add + "\n" + obj.getLocality();
                 add = add + "\n" + obj.getSubThoroughfare();*/
-
                 Log.v("seenu", "Address" + addressLine);
                 return addressLine;
                 // Toast.makeText(this, "Address=>" + add,
                 // Toast.LENGTH_SHORT).show();
-
                 // TennisAppActivity.showDialog(add);
             } else {
                 return null;
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
 //            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -658,16 +632,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
         activity = getActivity();
-
     }
 
     @Override
@@ -678,7 +646,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         }
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
         super.onDestroy();
-
     }
 
     @Override
@@ -703,13 +670,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 skeletonText2.show();
                 skeletonSpinner.show();
                 findRestaurant();
-
             }
         } else if (requestCode == ADDRESS_SELECTION && resultCode == Activity.RESULT_CANCELED) {
             System.out.print("HomeFragment : Failure");
-
         }
-
         if (requestCode == FILTER_APPLIED_CHECK && resultCode == Activity.RESULT_OK) {
             System.out.print("HomeFragment : Filter Success");
             skeletonScreen.show();
@@ -722,12 +686,9 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             skeletonText2.show();
             skeletonSpinner.show();
             findRestaurant();
-
         } else if (requestCode == ADDRESS_SELECTION && resultCode == Activity.RESULT_CANCELED) {
             System.out.print("HomeFragment : Filter Failure");
-
         }
-
     }
 
     @Override
@@ -738,10 +699,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
-    }
-
-    public void showToast(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
