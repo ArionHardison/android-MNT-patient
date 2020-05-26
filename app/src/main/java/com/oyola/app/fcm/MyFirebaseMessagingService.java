@@ -1,6 +1,5 @@
 package com.oyola.app.fcm;
 
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -22,74 +21,72 @@ import com.oyola.app.helper.SharedHelper;
 import com.oyola.app.models.NotificationData;
 
 import java.util.Arrays;
-import java.util.Objects;
-
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMsgService";
-    NotificationData customdata;
+    NotificationData customData;
+    String pushMessage;
+    int orderId;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-
         if (remoteMessage.getData() != null) {
             Log.d(TAG, "From: " + remoteMessage.getFrom());
             Log.d(TAG, "Notification Message Body: " + remoteMessage.getData());
             if (remoteMessage.getData().containsKey("custom")) {
                 Log.d(TAG, "CustomData" + remoteMessage.getData().get("custom"));
-                customdata = new Gson().fromJson(remoteMessage.getData().get("custom"), NotificationData.class);
+                customData = new Gson().fromJson(remoteMessage.getData().get("custom"), NotificationData.class);
             }
-//            Log.d(TAG, "onMessageReceived: " + customdata.getCustomData().get(0).getOrderId());
-
+//            Log.d(TAG, "onMessageReceived: " + customData.getCustomData().get(0).getOrderId());
+            /*orderId = Integer.parseInt(remoteMessage.getData().get("message")
+                    .substring(0, (remoteMessage.getData().get("message").indexOf(getString(R.string.order_id)) +
+                            getString(R.string.order_id).length())));*/
+            pushMessage = remoteMessage.getData().get("message")
+                    .substring(0, (remoteMessage.getData().get("message").indexOf(getString(R.string.order_id)) +
+                            getString(R.string.order_id).length())).replace(getString(R.string.order_id), "");
+            orderId = Integer.parseInt(remoteMessage.getData().get("message").replace(pushMessage, "")
+                    .replace(getString(R.string.order_id), ""));
+            Log.d(TAG, "FCM Notification " + orderId);
             //Calling method to generate notification
-            sendNotification(remoteMessage.getData().get("message"));
+            sendNotification(pushMessage);
         } else {
             Log.d(TAG, "FCM Notification failed");
         }
     }
 
-    public void onNewToken(String s){
+    public void onNewToken(String s) {
         super.onNewToken(s);
-        SharedHelper.putKey(getApplicationContext(),"device_token",""+s);
-        Log.e(TAG,""+s);
-        Log.e("New_Token",s);
+        SharedHelper.putKey(getApplicationContext(), "device_token", "" + s);
+        Log.e(TAG, "" + s);
+        Log.e("New_Token", s);
     }
 
     private void sendNotification(String messageBody) {
         Log.d(TAG, "messageBody " + messageBody);
         GlobalData.access_token = SharedHelper.getKey(getApplicationContext(), "access_token");
         Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
-
-        if (customdata != null && customdata.getCustomData().get(0).getOrderId() != null) {
-
+        if (customData != null && customData.getCustomData().get(0).getOrderId() != null) {
             GlobalData.ORDER_STATUS = Arrays.asList("ORDERED", "RECEIVED", "ASSIGNED", "PROCESSING", "REACHED", "PICKEDUP", "ARRIVED", "COMPLETED");
-            intent.putExtra("customdata", customdata);
-            intent.putExtra("order_staus", "ongoing");
-
+            intent.putExtra("customData", customData);
+            intent.putExtra("order_status", "ongoing");
         } else {
-            intent.putExtra("order_staus", "dispute");
-
-
+            intent.putExtra("order_status", "dispute");
         }
-
+        intent.putExtra("orderId", orderId);
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("Notification", messageBody);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "PUSH");
         NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
         inboxStyle.addLine(messageBody);
-
         long when = System.currentTimeMillis();         // notification time
-
         String CHANNEL_ID = "my_channel_01";    // The id of the channel.
         CharSequence name = "Channel human readable title";// The user-visible name of the channel.
         int importance = 0;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
             importance = NotificationManager.IMPORTANCE_HIGH;
-
         Notification notification;
         notification = mBuilder
                 .setWhen(when)
@@ -105,15 +102,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setChannelId(CHANNEL_ID)
                 .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS)
                 .build();
-
         NotificationManager notificationManager = (NotificationManager)
                 getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             android.app.NotificationChannel mChannel = new android.app.NotificationChannel(CHANNEL_ID, name, importance);
             notificationManager.createNotificationChannel(mChannel);
         }
-
         notificationManager.notify(0, notification);
     }
 
@@ -133,5 +127,4 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             return R.drawable.ic_stat_push;
         }
     }
-
 }

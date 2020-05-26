@@ -435,4 +435,6 @@
     <string name="show_kitchens_with">Show Kitchens With</string>
     <string name="add_address_error">Please add address before checkout</string>
     <string name="referrral_content">Hey Checkout this app, %1$s \nUser - https://play.google.com/store/apps/details?id=com.oyola.app\nInstall this app with referral code %2$s</string>
+
+    <string name="order_id">"?order_id="</string>
 </resources>

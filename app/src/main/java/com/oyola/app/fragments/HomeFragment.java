@@ -438,10 +438,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                         //Check Restaurant list
                         if (response.body().getShops().isEmpty()) {
                             title.setVisibility(View.GONE);
-                            errorLayout.setVisibility(View.GONE);
                         } else {
                             title.setVisibility(View.VISIBLE);
-                            errorLayout.setVisibility(View.GONE);
                         }
 
                         //Check Banner list
@@ -453,6 +451,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                                 errorLayout.setVisibility(View.GONE);
                         } else {
                             impressiveDishesLayout.setVisibility(View.VISIBLE);
+                            errorLayout.setVisibility(View.GONE);
                         }
                         GlobalData.shopList = response.body().getShops();
                         restaurantList.clear();

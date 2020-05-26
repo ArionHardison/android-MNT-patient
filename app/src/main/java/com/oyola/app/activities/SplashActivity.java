@@ -30,7 +30,6 @@ import com.oyola.app.models.AddCart;
 import com.oyola.app.models.AddressList;
 import com.oyola.app.models.User;
 import com.oyola.app.utils.LocaleUtils;
-import com.oyola.app.utils.Utils;
 
 import org.json.JSONObject;
 
@@ -56,15 +55,15 @@ public class SplashActivity extends AppCompatActivity {
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
     ConnectionHelper connectionHelper;
     String device_token, device_UDID;
-    Utils utils = new Utils();
     String TAG = "Login";
+    int orderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_splash);
-
+        orderId = getIntent().getIntExtra("orderId", -1);
         context = SplashActivity.this;
         connectionHelper = new ConnectionHelper(context);
         getDeviceToken();
@@ -81,7 +80,6 @@ public class SplashActivity extends AppCompatActivity {
                 Log.d(TAG, "Successfully started retriever");
             }
         });
-
         task.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
@@ -91,37 +89,30 @@ public class SplashActivity extends AppCompatActivity {
         });*/
         String dd = SharedHelper.getKey(context, "language");
         switch (dd) {
-            case "English":
-                LocaleUtils.setLocale(context, "en");
-                break;
             case "Japanese":
                 LocaleUtils.setLocale(context, "ar");
                 break;
+            case "English":
             default:
                 LocaleUtils.setLocale(context, "en");
                 break;
         }
-
-
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 //Do something after 3000ms
-                if (SharedHelper.getKey(context, "logged") != null &&SharedHelper.getKey(context, "logged").equalsIgnoreCase("true")) {
+                if (SharedHelper.getKey(context, "logged") != null && SharedHelper.getKey(context, "logged").equalsIgnoreCase("true")) {
                     if (connectionHelper.isConnectingToInternet()) {
                         getDeviceToken();
                         getProfile();
                     } else displayMessage(getString(R.string.oops_connect_your_internet));
                 } else {
-
                     startActivity(new Intent(SplashActivity.this, WelcomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     finish();
                 }
-
             }
         }, 3000);
-
         getHashKey();
     }
 
@@ -154,7 +145,6 @@ public class SplashActivity extends AppCompatActivity {
             device_token = "COULD NOT GET FCM TOKEN";
             Log.d(TAG, "Failed to complete token refresh");
         }
-
         try {
             device_UDID = android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
             Log.d(TAG, "Device UDID:" + device_UDID);
@@ -167,7 +157,6 @@ public class SplashActivity extends AppCompatActivity {
 
     private void getProfile() {
         retryCount++;
-
         HashMap<String, String> map = new HashMap<>();
         map.put("device_type", "android");
         map.put("device_id", device_UDID);
@@ -178,22 +167,20 @@ public class SplashActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 if (response.isSuccessful()) {
                     SharedHelper.putKey(context, "logged", "true");
-                    if (response.body().getReferralCode()!=null)
-                    SharedHelper.putKey(context, "referral_code", response.body().getReferralCode());
+                    if (response.body().getReferralCode() != null)
+                        SharedHelper.putKey(context, "referral_code", response.body().getReferralCode());
                     GlobalData.profileModel = response.body();
                     GlobalData.currencySymbol = profileModel.getCurrency();
                     GlobalData.currency = profileModel.getCurrency_code();
                     GlobalData.terms = profileModel.getTerms();
                     GlobalData.privacy = profileModel.getPrivacy();
-
                     addCart = new AddCart();
                     addCart.setProductList(response.body().getCart());
                     GlobalData.addressList = new AddressList();
                     GlobalData.addressList.setAddresses(response.body().getAddresses());
                     if (addCart.getProductList() != null && addCart.getProductList().size() != 0)
                         GlobalData.addCartShopId = addCart.getProductList().get(0).getProduct().getShopId();
-                    checkActivty();
-
+                    checkActivity();
                 } else {
                     if (response.code() == 401) {
                         Toast.makeText(context, "UnAuthenticated", Toast.LENGTH_LONG).show();
@@ -208,8 +195,6 @@ public class SplashActivity extends AppCompatActivity {
                         Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
                     }
                 }
-
-
             }
 
             @Override
@@ -217,29 +202,31 @@ public class SplashActivity extends AppCompatActivity {
                 if (retryCount < 5) {
                     getProfile();
                 }
-
             }
         });
     }
 
-    private void checkActivty() {
-
+    private void checkActivity() {
         if (getIntent().getSerializableExtra("customdata") != null &&
                 getIntent().getStringExtra("order_staus").equalsIgnoreCase("ongoing")) {
-
             startActivity(new Intent(SplashActivity.this, CurrentOrderDetailActivity.class)
                     .putExtra("customdata", getIntent().getSerializableExtra("customdata")));
             finish();
-        } else if (getIntent().getStringExtra("order_staus") != null && getIntent().getStringExtra("order_staus").equalsIgnoreCase("dispute")) {
+        } else if (getIntent().getStringExtra("order_staus") != null &&
+                getIntent().getStringExtra("order_staus").equalsIgnoreCase("dispute")) {
             startActivity(new Intent(SplashActivity.this, OrdersActivity.class)
                     .putExtra("customdata", getIntent().getSerializableExtra("customdata")));
             finish();
         } else {
-            startActivity(new Intent(context, HomeActivity.class)
-                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            if (orderId > 0) {
+                startActivity(new Intent(SplashActivity.this, CurrentOrderDetailActivity.class)
+                        .putExtra("orderId", orderId));
+            } else {
+                startActivity(new Intent(context, HomeActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            }
             finish();
         }
-
     }
 
     public void displayMessage(String toastString) {
@@ -258,6 +245,4 @@ public class SplashActivity extends AppCompatActivity {
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
-
-
 }

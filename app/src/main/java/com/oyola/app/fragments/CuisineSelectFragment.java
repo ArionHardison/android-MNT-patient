@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -82,20 +81,13 @@ public class CuisineSelectFragment extends DialogFragment {
             getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         }
         unbinder = ButterKnife.bind(this, view);
-
         mAdapter = new RecyclerViewAdapter(list, singleSelection);
-//        cuisineRv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        cuisineRv.setLayoutManager(new GridLayoutManager(getContext(), 3));
         cuisineRv.setAdapter(mAdapter);
-
         connectionHelper = new ConnectionHelper(getActivity());
-
-
         if (connectionHelper.isConnectingToInternet())
             getCuisines();
         else
             Utils.displayMessage(getActivity(), context, getString(R.string.oops_no_internet));
-
         return view;
     }
 
@@ -156,10 +148,8 @@ public class CuisineSelectFragment extends DialogFragment {
                 if (isAdded()) {
                     Utils.displayMessage(getActivity(), context, getString(R.string.something_went_wrong));
                 }
-
             }
         });
-
     }
 
     //    private void updateFavouriteCuisines(Map<String, Integer> mMap) {
@@ -181,10 +171,8 @@ public class CuisineSelectFragment extends DialogFragment {
                 if (isAdded()) {
                     Utils.displayMessage(getActivity(), context, getString(R.string.something_went_wrong));
                 }
-
             }
         });
-
     }
 
     public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
@@ -215,19 +203,20 @@ public class CuisineSelectFragment extends DialogFragment {
                     model.setSelected(false);
                 }
             }
-
-//            holder.view.setBackgroundColor(model.isSelected() ? getResources().getColor(R.color.colorPrimary) : Color.WHITE);
             holder.textView.setTextColor(model.isSelected() ? Color.WHITE : Color.BLACK);
-            holder.textView.setBackground(model.isSelected() ? ContextCompat.getDrawable(getContext(), R.drawable.bg_round_corner_red) : ContextCompat.getDrawable(getContext(), R.drawable.bg_round_corner_white));
+            holder.textView.setBackground(model.isSelected() ?
+                    ContextCompat.getDrawable(getContext(), R.drawable.bg_round_corner_red) :
+                    ContextCompat.getDrawable(getContext(), R.drawable.bg_round_corner_white));
             holder.textView.setTag(position);
             holder.textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     selected_pos = (int) view.getTag();
                     model.setSelected(!model.isSelected());
-//                    holder.view.setBackgroundColor(model.isSelected() ? getResources().getColor(R.color.colorPrimary) : Color.WHITE);
                     holder.textView.setTextColor(model.isSelected() ? Color.WHITE : Color.BLACK);
-                    holder.textView.setBackground(model.isSelected() ? ContextCompat.getDrawable(getContext(), R.drawable.bg_round_corner_red) : ContextCompat.getDrawable(getContext(), R.drawable.bg_round_corner_white));
+                    holder.textView.setBackground(model.isSelected() ?
+                            ContextCompat.getDrawable(getContext(), R.drawable.bg_round_corner_red) :
+                            ContextCompat.getDrawable(getContext(), R.drawable.bg_round_corner_white));
                     if (singleSelection) {
                         notifyDataSetChanged();
                     }
@@ -248,12 +237,10 @@ public class CuisineSelectFragment extends DialogFragment {
 
         class MyViewHolder extends RecyclerView.ViewHolder {
 
-            private View view;
             private TextView textView;
 
             private MyViewHolder(View itemView) {
                 super(itemView);
-                view = itemView;
                 textView = itemView.findViewById(R.id.name);
             }
         }
@@ -262,7 +249,6 @@ public class CuisineSelectFragment extends DialogFragment {
     public void setListener(OnSuccessListener listener) {
         this.listener = listener;
     }
-
 
     public interface OnSuccessListener {
         void refreshHome();

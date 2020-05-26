@@ -52,6 +52,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdate;
@@ -181,6 +182,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
 
     String TransporterNumber = "";
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
+    private Location currentLocation;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -192,6 +194,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
 
         isOrderPage = getIntent().getBooleanExtra("is_order_page", false);
         final NotificationData customdata = (NotificationData) getIntent().getSerializableExtra("customdata");
+        final int orderId = getIntent().getIntExtra("orderId", -1);
 
         //set Toolbar
         setSupportActionBar(toolbar);
@@ -231,6 +234,8 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             public void run() {
                 if (customdata != null) {
                     getParticularOrders(customdata.getCustomData().get(0).getOrderId());
+                } else if (orderId != -1) {
+                    getParticularOrders(orderId);
                 } else {
 //                    if (isSelectedOrder!=null) {
                     getParticularOrders(isSelectedOrder.getId());
@@ -410,7 +415,15 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(1000);
+        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+        }
     }
 
     @Override
@@ -425,7 +438,26 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
 
     @Override
     public void onLocationChanged(Location location) {
-
+        currentLocation = location;
+        if (isSelectedOrder.getPickUpRestaurant() == 1) {
+            if (currentLocation != null) {
+                //Map
+                String url = getUrl(currentLocation.getLatitude(), currentLocation.getLongitude()
+                        , isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
+                FetchUrl fetchUrl = new FetchUrl();
+                fetchUrl.execute(url);
+            } else {
+                destLatLng = new LatLng(isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
+                if (destinationMarker != null)
+                    destinationMarker.remove();
+                MarkerOptions destMarker = new MarkerOptions()
+                        .position(destLatLng).title("Destination").draggable(true)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_marker));
+                destinationMarker = mMap.addMarker(destMarker);
+                CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(destLatLng, 14);
+                mMap.moveCamera(cu);
+            }
+        }
     }
 
     @Override
@@ -493,15 +525,23 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                     fetchUrl.execute(url);
                 }
             } else {
-                destLatLng = new LatLng(isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
-                if (destinationMarker != null)
-                    destinationMarker.remove();
-                MarkerOptions destMarker = new MarkerOptions()
-                        .position(destLatLng).title("Destination").draggable(true)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_marker));
-                destinationMarker = mMap.addMarker(destMarker);
-                CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(destLatLng, 14);
-                mMap.moveCamera(cu);
+                if (currentLocation != null) {
+                    //Map
+                    String url = getUrl(currentLocation.getLatitude(), currentLocation.getLongitude()
+                            , isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
+                    FetchUrl fetchUrl = new FetchUrl();
+                    fetchUrl.execute(url);
+                } else {
+                    destLatLng = new LatLng(isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
+                    if (destinationMarker != null)
+                        destinationMarker.remove();
+                    MarkerOptions destMarker = new MarkerOptions()
+                            .position(destLatLng).title("Destination").draggable(true)
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_marker));
+                    destinationMarker = mMap.addMarker(destMarker);
+                    CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(destLatLng, 14);
+                    mMap.moveCamera(cu);
+                }
             }
         }
     }
@@ -656,6 +696,12 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                             lineOptions.color(Color.BLACK);
                             Log.d("onPostExecute", "onPostExecute lineoptions decoded");
                         } else {
+                            LatLng location = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+                            MarkerOptions markerOptions = new MarkerOptions()
+                                    .position(location).title("Source").draggable(true)
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_home_marker));
+                            sourceMarker = mMap.addMarker(markerOptions);
+
                             destLatLng = new LatLng(isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
                             if (destinationMarker != null)
                                 destinationMarker.remove();
@@ -664,11 +710,19 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_marker));
                             destinationMarker = mMap.addMarker(destMarker);
                             LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                            builder.include(sourceMarker.getPosition());
                             builder.include(destinationMarker.getPosition());
                             LatLngBounds bounds = builder.build();
                             final int width = getResources().getDisplayMetrics().widthPixels;
+                            final int height = getResources().getDisplayMetrics().heightPixels;
+                            final int padding = (int) (width * 0.20); // offset from edges of the map in pixels
                             CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 120);
                             mMap.moveCamera(cu);
+                            // Adding all the points in the route to LineOptions
+                            lineOptions.addAll(points);
+                            lineOptions.width(5);
+                            lineOptions.color(Color.BLACK);
+                            Log.d("onPostExecute", "onPostExecute lineoptions decoded");
                         }
                     }
                 } else {
@@ -811,7 +865,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                         }
                     }*/
 
-                    if (isSelectedOrder.getTransporter() != null) {
+                    if (isSelectedOrder.getTransporter() != null && context != null) {
                         transporter_details.setVisibility(View.VISIBLE);
                         Glide.with(context)
                                 .load(isSelectedOrder.getTransporter().getAvatar())
