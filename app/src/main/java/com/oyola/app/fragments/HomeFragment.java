@@ -393,6 +393,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         }
         if (isFilterApplied) {
             filterSelectionImage.setVisibility(View.VISIBLE);
+            map.put("filter", "normal");
             if (isOfferApplied)
                 map.put("offer", "1");
             if (isPureVegApplied)
