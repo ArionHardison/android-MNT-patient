@@ -30,7 +30,6 @@ import com.oyola.app.models.Cart;
 import com.oyola.app.models.CartAddon;
 import com.oyola.app.models.Product;
 import com.oyola.app.models.Shop;
-import com.oyola.app.utils.Utils;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
 
@@ -169,23 +168,28 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
         holder.cardTextValueTicker.setText(list.get(position).getQuantity().toString());
         //  priceAmount = product.getCalculated_price();
         List<CartAddon> cartAddonList = list.get(position).getCartAddons();
+        double totalAmount = list.get(position).getQuantity() * product.getPrices().getOrignalPrice();
+        holder.priceTxt.setText(product.getPrices().getCurrency() + totalAmount);
         if (cartAddonList.isEmpty()) {
-            holder.addons.setText("");
-            holder.priceTxt.setText(product.getPrices().getCurrency() +
-                    " " + Utils.getNewNumberFormat((list.get(position).getQuantity()
-                    * product.getPrices().getOrignalPrice())));
+            holder.addons.setText(context.getString(R.string.no_addons));
+            holder.tvAddonPrice.setVisibility(View.GONE);
         } else {
-            double addOnAmount = 0;
+            holder.tvAddonPrice.setVisibility(View.VISIBLE);
             for (int i = 0; i < cartAddonList.size(); i++) {
-                addOnAmount = addOnAmount + cartAddonList.get(i).getAddonProduct().getPrice();
-                if (i == 0)
-                    holder.addons.setText(cartAddonList.get(i).getAddonProduct().getAddon().getName());
-                else
-                    holder.addons.append(", " + cartAddonList.get(i).getAddonProduct().getAddon().getName());
+                String value = context.getString(R.string.addon_,
+                        cartAddonList.get(i).getAddonProduct().getAddon().getName(),
+                        cartAddonList.get(i).getQuantity(), product.getPrices().getCurrency() +
+                                cartAddonList.get(i).getAddonProduct().getPrice());
+                double addOnAmount = cartAddonList.get(i).getAddonProduct().getPrice() *
+                        cartAddonList.get(i).getQuantity();
+                if (i == 0) {
+                    holder.addons.setText(value);
+                    holder.tvAddonPrice.setText(product.getPrices().getCurrency() + addOnAmount);
+                } else {
+                    holder.addons.append("\n" + value);
+                    holder.tvAddonPrice.append("\n" + product.getPrices().getCurrency() + addOnAmount);
+                }
             }
-            holder.priceTxt.setText(product.getPrices().getCurrency() +
-                    " " + Utils.getNewNumberFormat((list.get(position).getQuantity() *
-                    (product.getPrices().getOrignalPrice() + addOnAmount))));
         }
         if (!product.getFoodType().equalsIgnoreCase("veg")) {
             holder.foodImageType.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_nonveg));
@@ -349,7 +353,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
         TickerView cardTextValueTicker;
         RelativeLayout cardAddDetailLayout, cardAddTextLayout, cardInfoLayout;
         private ImageView dishImg, foodImageType, cardAddBtn, cardMinusBtn, animationLineCartAdd;
-        private TextView dishNameTxt, priceTxt, cardTextValue, cardAddInfoText, cardAddOutOfStock,
+        private TextView dishNameTxt, priceTxt, tvAddonPrice, cardTextValue, cardAddInfoText, cardAddOutOfStock,
                 customizableTxt, addons, customize, tvNotes;
 
         private MyViewHolder(View view) {
@@ -358,6 +362,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
             animationLineCartAdd = itemView.findViewById(R.id.animation_line_cart_add);
             dishNameTxt = itemView.findViewById(R.id.dish_name_text);
             priceTxt = itemView.findViewById(R.id.price_text);
+            tvAddonPrice = itemView.findViewById(R.id.tvAddonPrice);
             customizableTxt = itemView.findViewById(R.id.customizable_txt);
             addons = itemView.findViewById(R.id.addons);
             customize = itemView.findViewById(R.id.customize);

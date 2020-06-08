@@ -34,7 +34,6 @@ public class OrderDetailFragment extends Fragment {
     @BindView(R.id.order_recycler_view)
     RecyclerView orderRecyclerView;
     Unbinder unbinder;
-    Context context = getActivity();
     @BindView(R.id.item_total_amount)
     TextView itemTotalAmount;
     @BindView(R.id.service_tax)
@@ -77,10 +76,10 @@ public class OrderDetailFragment extends Fragment {
         if (order != null) {
             itemList.addAll(order.getItems());
             //Offer Restaurant Adapter
-            orderRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+            orderRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
             orderRecyclerView.setItemAnimator(new DefaultItemAnimator());
             orderRecyclerView.setHasFixedSize(true);
-            OrderDetailAdapter orderItemListAdapter = new OrderDetailAdapter(itemList, context);
+            OrderDetailAdapter orderItemListAdapter = new OrderDetailAdapter(itemList, getContext());
             orderRecyclerView.setAdapter(orderItemListAdapter);
 
             if (order.getItems() != null && order.getItems().size() > 0) {

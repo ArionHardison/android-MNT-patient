@@ -5,21 +5,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.oyola.app.R;
 import com.oyola.app.models.CartAddon;
 import com.oyola.app.models.Item;
 
 import java.util.List;
 
-/**
- * Created by santhosh@appoets.com on 22-08-2017.
- */
+public class OrderDetailAdapter extends SectionedRecyclerViewAdapter<OrderDetailAdapter.ViewHolder> {
 
-public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.MyViewHolder> {
     private List<Item> list;
     private Context context;
 
@@ -29,11 +26,30 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.order_detail_list_item, parent, false);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v;
+        switch (viewType) {
+            case VIEW_TYPE_HEADER:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_detail_list_item, parent, false);
+                return new ViewHolder(v, true);
+            case VIEW_TYPE_ITEM:
+            default:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_addons_list_item, parent, false);
+                return new ViewHolder(v, false);
+        }
+    }
 
-        return new MyViewHolder(itemView);
+    @Override
+    public int getSectionCount() {
+        return list.size();
+    }
+
+    @Override
+    public int getItemCount(int section) {
+        if (list.get(section).getCartAddons().isEmpty())
+            return 1;
+        else
+            return list.get(section).getCartAddons().size();
     }
 
     public void add(Item item, int position) {
@@ -48,72 +64,59 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        Item item = list.get(position);
-        holder.dishName.setText(item.getProduct().getName() + " x " + item.getQuantity());
-        double priceAmount = item.getProduct().getPrices().getOrignalPrice() * item.getQuantity();
-        if (list.get(position).getCartAddons() != null && !list.get(position).getCartAddons().isEmpty()) {
-            for (int j = 0; j < list.get(position).getCartAddons().size(); j++) {
-                priceAmount = priceAmount + (list.get(position).getQuantity() *
-                        list.get(position).getCartAddons().get(j).getQuantity() *
-                        (list.get(position).getCartAddons().get(j).getAddonProduct() != null ?
-                                list.get(position).getCartAddons().get(j).getAddonProduct().getPrice() : 0));
-            }
-        }
-        holder.price.setText(item.getProduct().getPrices().getCurrency() + priceAmount);
-        if (item.getProduct().getFoodType().equalsIgnoreCase("veg")) {
-            holder.dishImg.setImageResource(R.drawable.ic_veg);
-            holder.dishImg.setVisibility(View.VISIBLE);
-        }else {
-            holder.dishImg.setImageResource(R.drawable.ic_nonveg);
-            holder.dishImg.setVisibility(View.GONE);
-        }
-
-        if (item.getCartAddons() != null && !item.getCartAddons().isEmpty()) {
-            List<CartAddon> cartAddonList = item.getCartAddons();
-            for (int i = 0; i < cartAddonList.size(); i++) {
-                if (cartAddonList.get(i).getAddonProduct() != null)
-                    if (i == 0)
-                        holder.addons.setText(cartAddonList.get(i).getAddonProduct().getAddon().getName());
-                    else
-                        holder.addons.append(", " + cartAddonList.get(i).getAddonProduct().getAddon().getName());
-            }
-
-            holder.addons.setVisibility(View.VISIBLE);
+    public void onBindHeaderViewHolder(ViewHolder holder, final int section) {
+        Item item = list.get(section);
+        String value = context.getString(R.string.product_, item.getProduct().getName(), item.getQuantity(),
+                item.getProduct().getPrices().getCurrency() +
+                        item.getProduct().getPrices().getOrignalPrice());
+        holder.productDetail.setText(value);
+        double totalAmount = item.getQuantity() * item.getProduct().getPrices().getOrignalPrice();
+        holder.productPrice.setText(item.getProduct().getPrices().getCurrency() + totalAmount);
+        if (item.getProduct().getNote() != null) {
+            holder.tvNotes.setVisibility(View.VISIBLE);
+            holder.tvNotes.setText(item.getProduct().getNote());
         } else {
-            holder.addons.setVisibility(View.GONE);
+            holder.tvNotes.setVisibility(View.GONE);
         }
     }
 
     @Override
-    public int getItemCount() {
-        return list.size();
+    public void onBindViewHolder(ViewHolder holder, int section, int relativePosition, int absolutePosition) {
+        if (!list.get(section).getCartAddons().isEmpty()) {
+            CartAddon object = list.get(section).getCartAddons().get(relativePosition);
+            holder.itemLayout.setVisibility(View.VISIBLE);
+            String value = context.getString(R.string.addon_,
+                    object.getAddonProduct().getAddon().getName(), object.getQuantity(),
+                    list.get(section).getProduct().getPrices().getCurrency() +
+                            object.getAddonProduct().getPrice());
+            holder.addonDetail.setText(value);
+            Double totalAmount = object.getAddonProduct().getPrice() * object.getQuantity();
+            holder.addonPrice.setText(list.get(section).getProduct().getPrices().getCurrency() + totalAmount);
+        } else {
+            holder.itemLayout.setVisibility(View.GONE);
+        }
     }
 
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private LinearLayout itemView;
-        private ImageView dishImg;
-        private TextView dishName, addons, price;
+        TextView productDetail;
+        TextView productPrice;
+        TextView tvNotes;
+        TextView addonDetail;
+        TextView addonPrice;
+        LinearLayout itemLayout;
 
-        private MyViewHolder(View view) {
-            super(view);
-            itemView = view.findViewById(R.id.item_view);
-            dishName = view.findViewById(R.id.restaurant_name);
-            addons = view.findViewById(R.id.addons);
-            dishImg = view.findViewById(R.id.food_type_image);
-            price = view.findViewById(R.id.price);
-            itemView.setOnClickListener(this);
-        }
-
-        public void onClick(View v) {
-            if (v.getId() == itemView.getId()) {
-//                context.startActivity(new Intent(context, HotelViewActivity.class));
-                //Toast.makeText(v.getContext(), "ROW PRESSED = " + String.valueOf(getAdapterPosition()), Toast.LENGTH_SHORT).show();
+        public ViewHolder(View itemView, boolean isHeader) {
+            super(itemView);
+            if (isHeader) {
+                productDetail = itemView.findViewById(R.id.product_detail);
+                productPrice = itemView.findViewById(R.id.product_price);
+                tvNotes = itemView.findViewById(R.id.tvNotes);
+            } else {
+                addonPrice = itemView.findViewById(R.id.addon_price);
+                addonDetail = itemView.findViewById(R.id.addon_detail);
+                itemLayout = itemView.findViewById(R.id.item_layout);
             }
         }
-
     }
-
-
 }

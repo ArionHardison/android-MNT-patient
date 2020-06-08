@@ -39,6 +39,9 @@ public class Product {
     @SerializedName("status")
     @Expose
     private String status;
+    @SerializedName("note")
+    @Expose
+    private String note;
     @SerializedName("prices")
     @Expose
     private Prices prices;
@@ -205,5 +208,13 @@ public class Product {
 
     public void setCalories(Double calories) {
         this.calories = calories;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

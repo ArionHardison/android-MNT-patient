@@ -313,4 +313,6 @@
     <string name="the_shop_is_closed">المتجر مغلق</string>
     <string name="enter_your_reason">أدخل السبب الخاص بك؟</string>
     <string name="welcome">Welcome</string>
+    <string name="addon_">%s(%d x %s)</string>
+    <string name="product_">%s(%d x %s)</string>
 </resources>

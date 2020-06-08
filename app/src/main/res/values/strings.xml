@@ -437,4 +437,6 @@
     <string name="referrral_content">Hey Checkout this app, %1$s \nUser - https://play.google.com/store/apps/details?id=com.oyola.app\nInstall this app with referral code %2$s</string>
 
     <string name="order_id">"?order_id="</string>
+    <string name="addon_">%s(%d x %s)</string>
+    <string name="product_">%s(%d x %s)</string>
 </resources>
