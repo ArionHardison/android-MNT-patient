@@ -178,10 +178,10 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
             for (int i = 0; i < cartAddonList.size(); i++) {
                 String value = context.getString(R.string.addon_,
                         cartAddonList.get(i).getAddonProduct().getAddon().getName(),
-                        cartAddonList.get(i).getQuantity(), product.getPrices().getCurrency() +
+                        list.get(position).getQuantity() * cartAddonList.get(i).getQuantity(), product.getPrices().getCurrency() +
                                 cartAddonList.get(i).getAddonProduct().getPrice());
                 double addOnAmount = cartAddonList.get(i).getAddonProduct().getPrice() *
-                        cartAddonList.get(i).getQuantity();
+                        list.get(position).getQuantity() * cartAddonList.get(i).getQuantity();
                 if (i == 0) {
                     holder.addons.setText(value);
                     holder.tvAddonPrice.setText(product.getPrices().getCurrency() + addOnAmount);
