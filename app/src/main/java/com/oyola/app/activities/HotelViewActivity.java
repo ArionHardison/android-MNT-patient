@@ -49,13 +49,12 @@ import com.oyola.app.models.Favorite;
 import com.oyola.app.models.Product;
 import com.oyola.app.models.Shop;
 import com.oyola.app.models.ShopDetail;
+import com.oyola.app.utils.CommonUtils;
 import com.oyola.app.utils.Utils;
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -183,13 +182,10 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
             } else {
                 offer.setVisibility(View.VISIBLE);
 //                offer.setText("Flat " + shops.getOfferPercent().toString() + "% offer on all Orders");
-                offer.setText("Get " + shops.getOfferPercent().toString() + "% off on Minimum Amount " +GlobalData.currencySymbol+shops.getOfferMinAmount());
+                offer.setText("Get " + shops.getOfferPercent().toString() + "% off on Minimum Amount " + GlobalData.currencySymbol + shops.getOfferMinAmount());
             }
-            if (shops.getRating() != null) {
-                Double ratingValue = new BigDecimal(shops.getRating()).setScale(1, RoundingMode.HALF_UP).doubleValue();
-                rating.setText("" + ratingValue);
-            } else
-                rating.setText("" + R.string.no_rating_txt);
+
+            rating.setText(CommonUtils.getRating(shops.getRating()));
 
             deliveryTime.setText(shops.getEstimatedDeliveryTime().toString() + "Mins");
 

@@ -3,9 +3,6 @@ package com.oyola.app.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,9 +21,8 @@ import com.oyola.app.R;
 import com.oyola.app.activities.HotelViewActivity;
 import com.oyola.app.helper.GlobalData;
 import com.oyola.app.models.Shop;
+import com.oyola.app.utils.CommonUtils;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -81,7 +77,7 @@ public class FavouriteCuisinesAdapter extends RecyclerView.Adapter<FavouriteCuis
         } else {
             holder.offer.setVisibility(View.VISIBLE);
 //            holder.offer.setText("Flat " + shops.getOfferPercent().toString() + "% offer on all Orders");
-            holder.offer.setText("Get " + shops.getOfferPercent().toString() + "% off on Minimum Amount " +GlobalData.currencySymbol+shops.getOfferMinAmount());
+            holder.offer.setText("Get " + shops.getOfferPercent().toString() + "% off on Minimum Amount " + GlobalData.currencySymbol + shops.getOfferMinAmount());
         }
         if (shops.getShopstatus() != null)
             holder.tvClosedShop.setVisibility(shops.getShopstatus().equalsIgnoreCase("CLOSED") ? View.VISIBLE : View.GONE);
@@ -92,15 +88,12 @@ public class FavouriteCuisinesAdapter extends RecyclerView.Adapter<FavouriteCuis
             }
         }*/
 
-        if (shops.getRating() != null) {
-            double rating = new BigDecimal(shops.getRating()).setScale(1, RoundingMode.HALF_UP).doubleValue();
-            holder.rating.setText("" + rating);
-        } else
-            holder.rating.setText("No Rating");
+        holder.rating.setText(CommonUtils.getRating(shops.getRating()));
+
         if (shops.getEstimatedDeliveryTime() != null)
             holder.distanceTime.setText(shops.getEstimatedDeliveryTime().toString() + " Mins");
-        if (shops.getHalal()!=null){
-            holder.halal.setVisibility(shops.getHalal()==1 ? View.VISIBLE:View.GONE);
+        if (shops.getHalal() != null) {
+            holder.halal.setVisibility(shops.getHalal() == 1 ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -114,7 +107,7 @@ public class FavouriteCuisinesAdapter extends RecyclerView.Adapter<FavouriteCuis
         private LinearLayout itemView;
         private ImageView dishImg;
         private TextView restaurantName, category, offer, rating, restaurantInfo, price, distanceTime,
-                tvClosedShop,halal;
+                tvClosedShop, halal;
 
 
         private MyViewHolder(View view) {

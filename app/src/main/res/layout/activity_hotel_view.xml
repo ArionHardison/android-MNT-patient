@@ -134,8 +134,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginEnd="@dimen/_15sdp"
             android:fitsSystemWindows="true"
             android:orientation="vertical">
@@ -170,17 +170,27 @@
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_12sdp" />
 
-                    <TextView
-                        android:id="@+id/rating"
-                        fontPath="fonts/Nunito-Bold.ttf"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/star"
-                        android:gravity="center_horizontal"
-                        android:padding="@dimen/_1sdp"
-                        android:drawableTint="@color/colorPrimaryText"
-                        android:textColor="@color/colorPrimaryText"
-                        android:textSize="@dimen/text_small" />
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/app_name"
+                            android:padding="@dimen/_4sdp"
+                            android:src="@drawable/ic_star_rating" />
+
+                        <TextView
+                            android:id="@+id/rating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="5"
+                            android:textColor="@color/dark_grey"
+                            android:textSize="@dimen/text_small" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -226,9 +236,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:layout_marginTop="10dp"
-                android:visibility="gone"
                 android:background="@drawable/horizantal_dotted_line"
-                android:layerType="software" />
+                android:layerType="software"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/offer"
@@ -253,9 +263,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
-                    android:padding="@dimen/_5sdp"
+                    android:orientation="horizontal"
                     android:overScrollMode="never"
-                    android:orientation="horizontal" />
+                    android:padding="@dimen/_5sdp" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/accompaniment_dishes_rv"

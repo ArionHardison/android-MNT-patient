@@ -14,7 +14,7 @@
     <color name="colorTextWhite">#FFF</color>
     <color name="colorTextBlack">#212121</color>
     <color name="background_color">#f5f5f5</color>
-    <color name="very_light_grey">#fafafa</color>
+    <color name="very_light_grey">#F6F5F5</color>
     <color name="checkbox_green">#1D931B</color>
 
     <color name="theme">#F04755</color>
