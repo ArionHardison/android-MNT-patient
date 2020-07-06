@@ -5,14 +5,11 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.support.multidex.MultiDex;
 
-import com.crashlytics.android.Crashlytics;
 import com.facebook.stetho.Stetho;
 import com.oyola.app.utils.LocaleUtils;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-
-import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by santhosh@appoets.com on 28-08-2017.
@@ -34,7 +31,6 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         MyApplication.context = getApplicationContext();
-        Fabric.with(this, new Crashlytics());
         Stetho.initializeWithDefaults(this);
     }
 
