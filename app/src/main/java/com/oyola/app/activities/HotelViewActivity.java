@@ -65,7 +65,6 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.oyola.app.adapter.HotelCatagoeryAdapter.bottomSheetDialogFragment;
 
@@ -538,11 +537,6 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
         mRvCategory.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         mRvCategory.setItemAnimator(new DefaultItemAnimator());
         mRvCategory.setAdapter(mAdapter);
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override

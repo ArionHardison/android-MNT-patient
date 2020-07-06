@@ -42,7 +42,6 @@ import io.fabric.sdk.android.Fabric;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.oyola.app.MyApplication.commonAccess;
 import static com.oyola.app.helper.GlobalData.addCart;
@@ -239,10 +238,5 @@ public class SplashActivity extends AppCompatActivity {
                 ee.printStackTrace();
             }
         }
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }

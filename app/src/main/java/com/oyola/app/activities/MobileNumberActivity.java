@@ -1,17 +1,12 @@
 package com.oyola.app.activities;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,25 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.google.android.gms.auth.GoogleAuthException;
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.auth.UserRecoverableAuthException;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.oyola.app.CountryPicker.Country;
 import com.oyola.app.CountryPicker.CountryPicker;
 import com.oyola.app.CountryPicker.CountryPickerListener;
@@ -47,17 +23,11 @@ import com.oyola.app.build.api.ApiClient;
 import com.oyola.app.build.api.ApiInterface;
 import com.oyola.app.helper.ConnectionHelper;
 import com.oyola.app.helper.CustomDialog;
-import com.oyola.app.helper.GlobalData;
-import com.oyola.app.helper.SharedHelper;
-import com.oyola.app.models.ForgotPassword;
 import com.oyola.app.models.Otp;
 import com.oyola.app.models.SocialModel;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -69,7 +39,6 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MobileNumberActivity extends AppCompatActivity {
 
@@ -162,11 +131,6 @@ public class MobileNumberActivity extends AppCompatActivity {
         mCountryPicker.setCountriesList(countryList);
         setListener();
 
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     public void getOtpVerification(HashMap<String, String> map) {

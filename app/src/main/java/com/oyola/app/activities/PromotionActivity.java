@@ -32,7 +32,6 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class PromotionActivity extends AppCompatActivity implements PromotionsAdapter.PromotionListener {
 
@@ -111,11 +110,6 @@ public class PromotionActivity extends AppCompatActivity implements PromotionsAd
                 customDialog.dismiss();
             }
         });
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override

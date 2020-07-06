@@ -31,7 +31,6 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ChangePasswordActivity extends AppCompatActivity {
 
@@ -142,11 +141,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
         super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.anim_nothing, R.anim.slide_out_right);
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @OnClick({R.id.old_password_eye_img, R.id.password_eye_img, R.id.confirm_password_eye_img, R.id.confirm})

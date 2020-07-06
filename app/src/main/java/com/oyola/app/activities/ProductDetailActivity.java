@@ -55,7 +55,6 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.oyola.app.MyApplication.currency;
 import static com.oyola.app.adapter.AddOnsAdapter.list;
@@ -395,11 +394,6 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         if (dots.length > 0)
             dots[currentPage].setTextColor(Color.parseColor("#FFFFFF"));
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override

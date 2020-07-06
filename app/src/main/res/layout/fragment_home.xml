@@ -44,7 +44,7 @@
                     android:padding="@dimen/_8sdp"
                     android:text="@string/offers"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/text_large"
+                    android:textSize="@dimen/text_normal"
                     android:textStyle="bold" />
 
                 <android.support.v7.widget.RecyclerView
@@ -72,7 +72,7 @@
                     android:padding="@dimen/_8sdp"
                     android:text="@string/recommended_for_you"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/text_large"
+                    android:textSize="@dimen/text_normal"
                     android:textStyle="bold" />
 
                 <android.support.v7.widget.RecyclerView
@@ -99,7 +99,7 @@
                     android:padding="@dimen/_8sdp"
                     android:text="@string/free_delivery"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/text_large"
+                    android:textSize="@dimen/text_normal"
                     android:textStyle="bold" />
 
                 <android.support.v7.widget.RecyclerView
@@ -132,7 +132,7 @@
                     android:padding="@dimen/_8sdp"
                     android:text="@string/kitchen_near_you"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/text_large"
+                    android:textSize="@dimen/text_normal"
                     android:textStyle="bold" />
 
                 <Spinner
@@ -234,7 +234,7 @@
                         android:maxLines="1"
                         android:text="@string/discover"
                         android:textColor="@color/colorPrimaryText"
-                        android:textSize="@dimen/text_large" />
+                        android:textSize="@dimen/text_normal" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/discover_rv"
@@ -269,7 +269,7 @@
                         android:maxLines="1"
                         android:text="@string/offers_near_you"
                         android:textColor="@color/colorPrimaryText"
-                        android:textSize="@dimen/text_large" />
+                        android:textSize="@dimen/text_normal" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/restaurants_offer_rv"

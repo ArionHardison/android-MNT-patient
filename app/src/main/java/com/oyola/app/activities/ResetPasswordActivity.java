@@ -41,7 +41,6 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ResetPasswordActivity extends AppCompatActivity {
 
@@ -83,11 +82,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
         passwordEyeImg.setTag(1);
         confirmPasswordEyeImg.setTag(1);
 
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override

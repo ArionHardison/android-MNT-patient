@@ -1,6 +1,5 @@
 package com.oyola.app.activities;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,7 +11,6 @@ import com.oyola.app.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
@@ -37,11 +35,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override

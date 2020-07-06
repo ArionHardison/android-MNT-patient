@@ -37,7 +37,6 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.oyola.app.CountryPicker.Country;
 import com.oyola.app.CountryPicker.CountryPicker;
 import com.oyola.app.CountryPicker.CountryPickerListener;
-import com.oyola.app.HomeActivity;
 import com.oyola.app.R;
 import com.oyola.app.build.api.ApiClient;
 import com.oyola.app.build.api.ApiInterface;
@@ -49,7 +48,6 @@ import com.oyola.app.helper.SharedHelper;
 import com.oyola.app.models.AddCart;
 import com.oyola.app.models.AddressList;
 import com.oyola.app.models.LoginModel;
-import com.oyola.app.models.Otp;
 import com.oyola.app.models.RegisterModel;
 import com.oyola.app.models.User;
 import com.oyola.app.utils.TextUtils;
@@ -63,15 +61,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.regex.Pattern;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -499,11 +494,6 @@ public class SignUpActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override

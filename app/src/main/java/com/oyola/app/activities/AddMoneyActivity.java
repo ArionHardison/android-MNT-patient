@@ -40,7 +40,6 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.oyola.app.helper.GlobalData.cardArrayList;
 import static com.oyola.app.helper.GlobalData.isCardChecked;
@@ -129,11 +128,6 @@ public class AddMoneyActivity extends AppCompatActivity {
         startActivity(new Intent(this, WalletActivity.class));
         overridePendingTransition(R.anim.anim_nothing, R.anim.slide_out_right);
         finish();
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @OnClick({R.id.back, R.id.promo_layout, R.id.pay_btn})

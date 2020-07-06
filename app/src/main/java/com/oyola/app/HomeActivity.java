@@ -62,7 +62,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.oyola.app.helper.GlobalData.notificationCount;
 import static com.oyola.app.helper.GlobalData.profileModel;
@@ -514,11 +513,6 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
             Toast.makeText(getBaseContext(), "Press once again to exit!", Toast.LENGTH_SHORT).show();
         }
         back_pressed = System.currentTimeMillis();
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     /**

@@ -83,11 +83,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
-//import com.google.android.gms.location.places.Place;
-//import com.google.android.gms.location.places.PlaceBuffer;
-//import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 
 public class SaveDeliveryLocationActivity extends FragmentActivity implements OnMapReadyCallback,
         LocationListener, GoogleMap.OnCameraMoveListener, GoogleMap.OnCameraIdleListener,
@@ -601,11 +596,6 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     private void saveAddress(String update) {

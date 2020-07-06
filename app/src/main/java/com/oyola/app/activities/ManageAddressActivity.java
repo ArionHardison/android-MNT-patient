@@ -1,6 +1,5 @@
 package com.oyola.app.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,7 +34,6 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ManageAddressActivity extends AppCompatActivity {
 
@@ -121,11 +119,6 @@ public class ManageAddressActivity extends AppCompatActivity {
                 Toast.makeText(ManageAddressActivity.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @OnClick(R.id.add_new_address)

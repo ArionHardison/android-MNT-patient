@@ -6,15 +6,13 @@ import android.content.res.Configuration;
 import android.support.multidex.MultiDex;
 
 import com.crashlytics.android.Crashlytics;
+import com.facebook.stetho.Stetho;
 import com.oyola.app.utils.LocaleUtils;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import io.fabric.sdk.android.Fabric;
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-
-import com.facebook.stetho.Stetho;
 
 /**
  * Created by santhosh@appoets.com on 28-08-2017.
@@ -27,6 +25,7 @@ public class MyApplication extends Application {
     public static String commonAccess = "";
     public static String promoCodeSelect = "";
     public static String currency = "";
+
     public static Object getContext() {
         return MyApplication.context;
     }
@@ -35,15 +34,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         MyApplication.context = getApplicationContext();
-
         Fabric.with(this, new Crashlytics());
         Stetho.initializeWithDefaults(this);
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/Nunito-Regular.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build()
-        );
-
     }
 
     // Called by the system when the device configuration changes while your component is running.
@@ -64,8 +56,6 @@ public class MyApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleUtils.onAttach(base));
-//        super.attachBaseContext(LocaleUtils.onAttach(base, "en"));
-
         MultiDex.install(this);
     }
 

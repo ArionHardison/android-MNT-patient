@@ -56,7 +56,6 @@ import me.philio.pinentry.PinEntryView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.oyola.app.SmsRetrive.MySMSBroadcastReceiver.INTENT_OTP;
 
@@ -222,11 +221,6 @@ public class OtpActivity extends AppCompatActivity {
             e.printStackTrace();
             Log.d(TAG, "Failed to complete device UDID");
         }
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     public void signup(HashMap<String, String> map) {

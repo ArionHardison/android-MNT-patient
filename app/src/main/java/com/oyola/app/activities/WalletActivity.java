@@ -43,8 +43,6 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
 import static com.oyola.app.helper.GlobalData.addCart;
 import static com.oyola.app.helper.GlobalData.currencySymbol;
 
@@ -231,11 +229,6 @@ public class WalletActivity extends AppCompatActivity {
     public void onViewClicked() {
         startActivity(new Intent(this, AddMoneyActivity.class));
         finish();
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @OnClick(R.id.back)

@@ -36,7 +36,6 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.oyola.app.helper.GlobalData.onGoingOrderList;
 import static com.oyola.app.helper.GlobalData.pastOrderList;
@@ -197,8 +196,4 @@ public class OrdersActivity extends AppCompatActivity {
         finish();
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 }
