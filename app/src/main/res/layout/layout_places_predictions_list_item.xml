@@ -29,16 +29,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_marginStart="@dimen/activity_vertical_margin"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/address_label"
-            fontPath="fonts/Nunito-Bold.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4sp"
+            android:fontFamily="@font/nunito_bold"
             android:maxLines="1"
             android:text="Home"
             android:textAllCaps="true"
@@ -49,6 +49,7 @@
             android:id="@+id/address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_regular"
             android:maxLines="1"
             android:text="thousand lights"
             android:textColor="@color/colorSecondaryText"

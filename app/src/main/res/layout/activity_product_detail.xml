@@ -10,8 +10,8 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
+        android:background="@color/colorWhite"
         android:fitsSystemWindows="true"
-       android:background="@color/colorWhite"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -63,17 +63,17 @@
 
     <RelativeLayout
         android:id="@+id/view_cart_layout"
+        style="@style/ButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_45sdp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:layout_margin="@dimen/_5sdp"
-        style="@style/ButtonStyle"
         android:gravity="center_vertical"
-        android:paddingBottom="@dimen/_5sdp"
         android:paddingLeft="@dimen/activity_vertical_margin"
-        android:paddingRight="@dimen/activity_vertical_margin"
         android:paddingTop="@dimen/_5sdp"
+        android:paddingRight="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/_5sdp"
         android:visibility="visible">
 
         <RelativeLayout
@@ -84,13 +84,13 @@
 
             <TextView
                 android:id="@+id/item_text"
-                fontPath="fonts/Nunito-Bold.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_bold"
                 android:gravity="center"
-                tools:text="Product Price"
                 android:textColor="@color/colorTextWhite"
-                android:textSize="@dimen/text_small_large" />
+                android:textSize="@dimen/text_small_large"
+                tools:text="Product Price" />
 
             <TextView
                 android:id="@+id/view_cart_shop_name"
@@ -98,6 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/item_text"
                 android:layout_marginTop="@dimen/_3sdp"
+                android:fontFamily="@font/nunito_regular"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="@dimen/text_tiny"
                 android:visibility="gone" />
@@ -106,13 +107,13 @@
 
         <TextView
             android:id="@+id/view_cart"
-            fontPath="fonts/Nunito-Bold.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:drawableEnd="@drawable/ic_cart_white"
             android:drawablePadding="@dimen/_5sdp"
+            android:fontFamily="@font/nunito_bold"
             android:gravity="center"
             android:text="@string/add_item"
             android:textAllCaps="true"

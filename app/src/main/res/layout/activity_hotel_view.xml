@@ -153,20 +153,20 @@
 
                     <TextView
                         android:id="@+id/resturantname_tv"
-                        fontPath="fonts/Nunito-Bold.ttf"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_bold"
                         android:textColor="@color/colorPink"
                         android:textSize="@dimen/_15sdp" />
 
                     <TextView
                         android:id="@+id/resturant_descb_tv"
-                        fontPath="fonts/Nunito-Regular.ttf"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/resturantname_tv"
                         android:layout_marginTop="@dimen/_2sdp"
                         android:layout_marginBottom="@dimen/_3sdp"
+                        android:fontFamily="@font/nunito_regular"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/_12sdp" />
 
@@ -187,6 +187,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
+                            android:fontFamily="@font/nunito_regular"
                             android:text="5"
                             android:textColor="@color/dark_grey"
                             android:textSize="@dimen/text_small" />
@@ -202,9 +203,9 @@
 
                     <TextView
                         android:id="@+id/delivery_time"
-                        fontPath="fonts/Nunito-Bold.ttf"
                         android:layout_width="match_parent"
                         android:layout_height="18dp"
+                        android:fontFamily="@font/nunito_bold"
                         android:gravity="center"
                         android:textAllCaps="true"
                         android:textColor="@color/colorPrimaryText"
@@ -213,6 +214,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="center"
                         android:maxLines="1"
                         android:text="Delivery Time"
@@ -223,9 +225,9 @@
 
             <TextView
                 android:id="@+id/halal"
-                fontPath="fonts/Nunito-SemiBold.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_semibold"
                 android:maxLines="1"
                 android:padding="@dimen/_5sdp"
                 android:text="@string/halal"
@@ -246,12 +248,14 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_offers"
                 android:drawablePadding="10dp"
+                android:fontFamily="@font/nunito_regular"
                 android:gravity="center_vertical"
                 android:padding="@dimen/_5sdp"
                 android:text="Flat 20% offer on all orders"
                 android:textColor="@color/colorRed"
                 android:textSize="@dimen/text_small"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -320,10 +324,10 @@
 
             <TextView
                 android:id="@+id/item_text"
-                fontPath="fonts/Nunito-Bold.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
+                android:fontFamily="@font/nunito_bold"
                 android:gravity="center"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="@dimen/text_small_large" />
@@ -334,6 +338,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/item_text"
                 android:layout_marginTop="@dimen/_3sdp"
+                android:fontFamily="@font/nunito_regular"
                 android:textColor="@color/colorTextWhite"
                 android:textSize="@dimen/text_tiny"
                 android:visibility="gone" />
@@ -341,13 +346,13 @@
 
         <TextView
             android:id="@+id/view_cart"
-            fontPath="fonts/Nunito-Bold.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:drawableEnd="@drawable/ic_cart_white"
             android:drawablePadding="@dimen/_5sdp"
+            android:fontFamily="@font/nunito_bold"
             android:gravity="center"
             android:text="@string/view_cart_txt"
             android:textAllCaps="true"

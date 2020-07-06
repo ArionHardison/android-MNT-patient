@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:paddingLeft="@dimen/activity_vertical_margin"
-    android:paddingRight="@dimen/activity_vertical_margin"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_vertical_margin">
 
     <!-- Order Placed Layout-->
 
@@ -16,20 +16,21 @@
             android:id="@+id/order_status_img"
             android:layout_width="@dimen/_7sdp"
             android:layout_height="@dimen/_7sdp"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/activity_vertical_margin_half"
-            android:layout_toRightOf="@+id/order_status_img"
+            android:layout_marginStart="@dimen/activity_vertical_margin_half"
+            android:layout_toEndOf="@+id/order_status_img"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/order_status_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_bold"
                 android:text="Order Placed"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/text_medium"
@@ -39,6 +40,7 @@
                 android:id="@+id/order_status_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_regular"
                 android:text="We have recieved your order"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/text_tiny" />
@@ -51,10 +53,9 @@
     <View
         android:id="@+id/view_line"
         android:layout_width="@dimen/_2sdp"
-        android:visibility="invisible"
         android:layout_height="@dimen/_40sdp"
         android:layout_marginStart="@dimen/_10sdp"
         android:background="@drawable/ic_line"
-        />
+        android:visibility="invisible" />
 
 </LinearLayout>

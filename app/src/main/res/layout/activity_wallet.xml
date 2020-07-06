@@ -24,6 +24,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_regular"
                 android:padding="16dp"
                 android:text="@string/walletHistory"
                 android:textAllCaps="true"
@@ -38,6 +39,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@drawable/button_corner_bg_theme"
+                android:fontFamily="@font/nunito_bold"
                 android:text="@string/add"
                 android:textAllCaps="true"
                 android:textColor="@color/colorTextWhite"
@@ -54,6 +56,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_semibold"
                 android:text="@string/wallet_amount"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/text_medium" />
@@ -64,6 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:fontFamily="@font/nunito_semibold"
                 android:textColor="@color/theme"
                 android:textSize="@dimen/text_medium" />
 
@@ -72,6 +76,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_regular"
             android:padding="16dp"
             android:text="@string/history"
             android:textAllCaps="true"
@@ -102,10 +107,10 @@
                     android:src="@drawable/ic_no_promocode" />
 
                 <TextView
-                    fontpath="fonts/Nunito-Bold.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:fontFamily="@font/nunito_bold"
                     android:text="@string/no_result"
                     android:textAllCaps="true"
                     android:textColor="@color/colorTextBlack"
@@ -115,6 +120,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_3sdp"
+                    android:fontFamily="@font/nunito_regular"
                     android:textColor="@color/colorSecondaryText"
                     android:textSize="@dimen/text_medium" />
 

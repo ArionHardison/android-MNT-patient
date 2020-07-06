@@ -9,14 +9,15 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
-        android:padding="10dp"/>
+        android:padding="10dp" />
 
     <TextView
         android:id="@+id/row_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:fontFamily="@font/nunito_semibold"
         android:gravity="center_vertical"
-        android:padding="10dp"/>
+        android:padding="10dp" />
 
 </LinearLayout>

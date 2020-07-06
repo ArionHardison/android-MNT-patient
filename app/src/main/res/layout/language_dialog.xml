@@ -18,6 +18,7 @@
             android:drawableEnd="@drawable/language_select_unselect"
             android:drawablePadding="30dp"
             android:ellipsize="end"
+            android:fontFamily="@font/nunito_semibold"
             android:padding="12dp"
             android:singleLine="true"
             android:text="@string/lang_english"
@@ -29,14 +30,15 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:button="@null"
-            android:visibility="gone"
             android:drawableRight="@drawable/language_select_unselect"
             android:drawablePadding="30dp"
             android:ellipsize="end"
+            android:fontFamily="@font/nunito_semibold"
             android:padding="12dp"
             android:singleLine="true"
             android:text="@string/lang_arabic"
             android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/text_medium" />
+            android:textSize="@dimen/text_medium"
+            android:visibility="gone" />
     </RadioGroup>
 </LinearLayout>

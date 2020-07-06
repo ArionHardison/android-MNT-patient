@@ -15,14 +15,15 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="1dp"
             android:background="@color/colorWhite"
+            android:elevation="1dp"
             android:minHeight="?attr/actionBarSize"
             app:theme="@style/ToolBarStyle">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_bold"
                 android:text="@string/manage_address"
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimaryText"
@@ -47,6 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#eee"
+                    android:fontFamily="@font/nunito_regular"
                     android:padding="16dp"
                     android:text="@string/saved_addresses"
                     android:textAllCaps="true"
@@ -68,7 +70,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#eee"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -83,10 +86,10 @@
                     android:src="@drawable/ic_door_icon" />
 
                 <TextView
-                    fontpath="fonts/Nunito-Bold.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:fontFamily="@font/nunito_bold"
                     android:text="@string/manage_address_error_title"
                     android:textAllCaps="true"
                     android:textColor="@color/colorTextBlack"
@@ -97,6 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_3sdp"
+                    android:fontFamily="@font/nunito_regular"
                     android:text="@string/manage_address_error_description"
                     android:textColor="@color/colorSecondaryText"
                     android:textSize="@dimen/text_medium" />

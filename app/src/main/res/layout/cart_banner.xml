@@ -1,32 +1,35 @@
-<LinearLayout android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cart_header"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
     android:orientation="horizontal"
     android:padding="16dp"
-    android:visibility="gone"
-    android:id="@+id/cart_header"
-    android:layout_alignParentBottom="true"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:visibility="gone">
+
     <TextView
         android:id="@+id/item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="1 item | $200"
+        android:layout_weight="1"
+        android:fontFamily="@font/nunito_regular"
         android:maxLines="1"
-        android:textSize="@dimen/text_medium"
+        android:text="1 item | $200"
         android:textColor="@color/colorWhite"
-        android:layout_weight="1"/>
+        android:textSize="@dimen/text_medium" />
 
     <TextView
         android:id="@+id/open_cart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableEnd="@drawable/ic_cart_white"
+        android:fontFamily="@font/nunito_regular"
+        android:gravity="end|center"
+        android:maxLines="1"
         android:text="view Cart"
         android:textAllCaps="true"
-        android:gravity="end|center"
-        android:drawableEnd="@drawable/ic_cart_white"
-        android:textSize="@dimen/text_medium"
         android:textColor="@color/colorWhite"
-        android:maxLines="1"
-        android:layout_weight="1"/>
+        android:textSize="@dimen/text_medium" />
 
 </LinearLayout>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -15,12 +15,12 @@
             android:id="@+id/order_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nunito_semibold"
-            android:textColor="@color/colorPink"
             android:layout_marginStart="@dimen/_15sdp"
-            android:textStyle="bold"
+            android:fontFamily="@font/nunito_semibold"
             android:maxLines="1"
-            android:textSize="@dimen/text_small" />
+            android:textColor="@color/colorPink"
+            android:textSize="@dimen/text_small"
+            android:textStyle="bold" />
 
         <View
             android:id="@+id/view_line"
@@ -38,8 +38,8 @@
             android:id="@+id/source_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_below="@+id/view_line">
+            android:layout_below="@+id/view_line"
+            android:layout_marginTop="@dimen/activity_vertical_margin">
 
             <ImageView
                 android:id="@+id/source_image"
@@ -60,15 +60,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:fontFamily="@font/nunito_semibold"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/text_medium" />
+                    android:textSize="@dimen/text_medium"
+                    tools:text="@string/app_name" />
 
                 <TextView
                     android:id="@+id/restaurant_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:fontFamily="@font/nunito_regular"
                     android:textColor="@color/colorSecondaryText"
                     android:textSize="@dimen/text_tiny" />
 
@@ -122,16 +125,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:fontFamily="@font/nunito_semibold"
                     android:textAllCaps="true"
                     android:textColor="@color/colorPrimaryText"
                     android:textSize="@dimen/text_medium" />
 
                 <TextView
-
                     android:id="@+id/user_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:fontFamily="@font/nunito_regular"
                     android:textColor="@color/colorSecondaryText"
                     android:textSize="@dimen/text_tiny" />
 
@@ -174,6 +178,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/order_succeess_image"
+                android:fontFamily="@font/nunito_semibold"
                 android:textColor="@color/colorGreen"
                 android:textSize="@dimen/text_tiny" />
 
@@ -186,13 +191,9 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:background="@color/colorSecondaryText"
             android:layerType="software" />
-
-
     </RelativeLayout>
 
-
     <!-- Order Detail Fragment-->
-
     <FrameLayout
         android:id="@+id/order_detail_fargment"
         android:layout_width="match_parent"
@@ -200,6 +201,4 @@
         android:layout_marginBottom="20dp">
 
     </FrameLayout>
-
-
 </LinearLayout>

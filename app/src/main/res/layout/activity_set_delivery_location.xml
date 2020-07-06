@@ -24,6 +24,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_semibold"
                 android:paddingTop="4dp"
                 android:text="@string/set_delivery_location"
                 android:textColor="@color/colorAccent"
@@ -32,6 +33,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_regular"
                 android:text="@string/search_place"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/text_small" />

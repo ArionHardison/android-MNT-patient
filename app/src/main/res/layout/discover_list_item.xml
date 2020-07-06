@@ -15,25 +15,27 @@
         app:srcCompat="@drawable/trending_now" />
 
     <TextView
-        android:typeface="sans"
-        android:layout_gravity="center"
-        android:textStyle="bold"
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
+        android:layout_gravity="center"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/nunito_bold"
         android:gravity="center_horizontal"
-        android:maxLines="2"
         android:maxWidth="200dp"
+        android:maxLines="2"
         android:text="Spicy Fish Tikka"
         android:textAllCaps="true"
         android:textColor="@color/colorPrimaryText"
-        android:textSize="@dimen/text_small" />
+        android:textSize="@dimen/text_small"
+        android:textStyle="bold"
+        android:typeface="sans" />
 
     <TextView
         android:id="@+id/option_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_semibold"
         android:gravity="center_horizontal"
         android:text="51 options"
         android:textAllCaps="true"

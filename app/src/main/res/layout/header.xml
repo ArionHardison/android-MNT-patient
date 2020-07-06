@@ -7,11 +7,11 @@
 
     <TextView
         android:id="@+id/header"
-        fontPath="fonts/Nunito-Bold.ttf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:background="@color/background_color"
+        android:fontFamily="@font/nunito_bold"
         android:maxLines="1"
         android:padding="16dp"
         android:textAllCaps="true"

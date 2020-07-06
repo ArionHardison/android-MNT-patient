@@ -40,9 +40,9 @@
                         android:orientation="vertical">
 
                         <TextView
-                            fontPath="fonts/Nunito-Bold.ttf"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_bold"
                             android:gravity="center_vertical"
                             android:maxLines="1"
                             android:paddingStart="8dp"
@@ -54,6 +54,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_regular"
                             android:maxLines="1"
                             android:paddingStart="8dp"
                             android:paddingEnd="4dp"
@@ -136,18 +137,18 @@
 
             <Button
                 android:id="@+id/logout"
-                fontPath="fonts/Nunito-Bold.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
-                android:tint="@color/colorAccent"
                 android:drawableStart="@drawable/ic_input_light"
                 android:drawablePadding="16dp"
+                android:fontFamily="@font/nunito_bold"
                 android:gravity="start|center"
                 android:padding="@dimen/activity_vertical_margin"
                 android:text="@string/logout"
-                android:textColor="@color/colorTextBlack" />
+                android:textColor="@color/colorTextBlack"
+                android:tint="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/app_version"
@@ -155,6 +156,7 @@
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginBottom="@dimen/_45sdp"
                 android:background="#eee"
+                android:fontFamily="@font/nunito_semibold"
                 android:gravity="center" />
         </LinearLayout>
 
@@ -166,8 +168,8 @@
         android:layout_height="match_parent"
         android:background="@color/colorWhite"
         android:clickable="true"
-        android:paddingBottom="60dp"
         android:focusable="true"
+        android:paddingBottom="60dp"
         android:visibility="gone">
 
         <LinearLayout
@@ -183,10 +185,10 @@
                 android:src="@drawable/no_cart_tem_bg" />
 
             <TextView
-                fontpath="fonts/Nunito-Bold.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:fontFamily="@font/nunito_bold"
                 android:text="@string/cart_error_title"
                 android:textAllCaps="true"
                 android:textColor="@color/colorTextBlack"
@@ -196,6 +198,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_3sdp"
+                android:fontFamily="@font/nunito_semibold"
                 android:text="@string/please_login_and_order_dishes"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/text_medium" />
@@ -211,9 +214,9 @@
             android:padding="@dimen/activity_vertical_margin">
 
             <TextView
-                fontPath="fonts/Nunito-Bold.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_bold"
                 android:text="@string/account"
                 android:textColor="@color/colorTextBlack"
                 android:textSize="@dimen/text_medium" />
@@ -222,6 +225,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:fontFamily="@font/nunito_semibold"
                 android:text="@string/login_or_sign_up_to_place_order"
                 android:textColor="@color/colorTextBlack"
                 android:textSize="@dimen/text_medium" />
@@ -232,6 +236,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:background="@drawable/button_curved"
+                android:fontFamily="@font/nunito_bold"
                 android:text="@string/login"
                 android:textColor="@color/colorTextWhite" />
 

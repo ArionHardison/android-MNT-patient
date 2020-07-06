@@ -1,9 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.oyola.app.fragments.OrderViewFragment">
 
     <RelativeLayout
@@ -17,9 +17,9 @@
             android:layout_width="@dimen/_200sdp"
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
-            app:tabIndicatorColor="@color/colorPrimary"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:tabIndicatorColor="@color/colorPrimary"
             app:tabSelectedTextColor="@color/colorTextBlack"
             app:tabTextColor="@color/colorSecondaryText" />
 

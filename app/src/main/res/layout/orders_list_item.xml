@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -23,6 +24,7 @@
                 android:id="@+id/restaurant_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_bold"
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="Funkies"
@@ -34,6 +36,7 @@
                 android:id="@+id/restaurant_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_regular"
                 android:maxLines="1"
                 android:text="Washington. DC"
                 android:textColor="@color/colorSecondaryText"
@@ -43,12 +46,11 @@
                 android:id="@+id/order_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Order Type : Delivery"
-                android:paddingTop="@dimen/_4sdp"
                 android:fontFamily="@font/nunito_semibold"
+                android:paddingTop="@dimen/_4sdp"
+                android:text="Order Type : Delivery"
                 android:textColor="@color/colorGreen"
                 android:textSize="@dimen/text_small_large" />
-
 
         </LinearLayout>
 
@@ -57,6 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableEnd="@drawable/ic_right_arrow"
+            android:fontFamily="@font/nunito_bold"
             android:gravity="center"
             android:maxLines="1"
             android:text="$250"
@@ -72,7 +75,6 @@
         android:background="@drawable/horizantal_dotted_line"
         android:layerType="software" />
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -84,8 +86,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_vertical_margin_half"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <ImageView
                 android:id="@+id/dispute_status_image"
@@ -97,25 +101,21 @@
                 android:id="@+id/dispute_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
                 android:layout_marginStart="@dimen/_4sdp"
+                android:fontFamily="@font/nunito_bold"
                 android:gravity="bottom"
                 android:maxLines="1"
-                android:paddingStart="@dimen/_5sdp"
-                android:paddingEnd="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_2sdp"
                 android:text="Dispute Created"
                 android:textAllCaps="true"
                 android:textSize="@dimen/text_small" />
 
         </LinearLayout>
 
-
         <TextView
-
             android:id="@+id/dish_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_semibold"
             android:gravity="center_vertical"
             android:maxLines="2"
             android:paddingStart="@dimen/_5sdp"
@@ -128,6 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:fontFamily="@font/nunito_regular"
             android:maxLines="1"
             android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/text_tiny" />
@@ -138,6 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
             android:background="@drawable/button"
+            android:fontFamily="@font/nunito_semibold"
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:padding="4dp"

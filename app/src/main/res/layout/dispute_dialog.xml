@@ -24,6 +24,7 @@
         android:layout_marginRight="@dimen/_16sdp"
         android:layout_marginBottom="@dimen/activity_vertical_margin_half"
         android:background="@drawable/edit_text_rounded_corner_bg"
+        android:fontFamily="@font/nunito_regular"
         android:gravity="start"
         android:hint="@string/enter_your_description"
         android:padding="@dimen/activity_vertical_margin_half"

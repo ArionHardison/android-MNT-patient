@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:text="Hello"
             android:textColor="#434343"
-
+            android:fontFamily="@font/nunito_semibold"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
     </me.himanshusoni.chatmessageview.ChatMessageView>
 

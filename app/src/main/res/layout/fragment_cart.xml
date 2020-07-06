@@ -50,6 +50,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="8dp"
                         android:layout_toEndOf="@+id/restaurant_image"
+                        android:fontFamily="@font/nunito_bold"
                         android:maxLines="1"
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/text_medium" />
@@ -63,6 +64,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="-5dp"
                         android:layout_toEndOf="@+id/restaurant_image"
+                        android:fontFamily="@font/nunito_regular"
                         android:maxLines="1"
                         android:textColor="@color/colorSecondaryText"
                         android:textSize="@dimen/text_small" />
@@ -95,6 +97,7 @@
                         android:layout_height="wrap_content"
                         android:drawableEnd="@drawable/ic_note"
                         android:drawablePadding="8dp"
+                        android:fontFamily="@font/nunito_regular"
                         android:gravity="center"
                         android:hint="@string/add_special_instructions"
                         android:padding="@dimen/activity_vertical_margin"
@@ -119,6 +122,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_bold"
                         android:text="@string/order_summary"
                         android:textColor="@color/colorBlack"
                         android:textStyle="bold" />
@@ -133,6 +137,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/nunito_regular"
                             android:text="@string/sub_total"
                             android:textColor="@color/colorSecondaryText" />
 
@@ -141,6 +146,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/nunito_semibold"
                             android:textAlignment="textEnd"
                             android:textColor="@color/colorSecondaryText"
                             tools:text="$220" />
@@ -157,6 +163,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/nunito_regular"
                             android:text="@string/delivery_fees"
                             android:textColor="@color/colorSecondaryText" />
 
@@ -165,6 +172,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/nunito_semibold"
                             android:textAlignment="textEnd"
                             android:textColor="@color/colorSecondaryText"
                             tools:text="$20" />
@@ -181,6 +189,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/nunito_regular"
                             android:text="@string/service_tax"
                             android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/text_small" />
@@ -190,6 +199,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/nunito_semibold"
                             android:textAlignment="textEnd"
                             android:textColor="@color/colorSecondaryText"
                             android:textSize="@dimen/text_small"
@@ -207,6 +217,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/nunito_regular"
                             android:text="@string/promo_code"
                             android:textColor="@color/theme" />
 
@@ -215,6 +226,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/nunito_semibold"
                             android:gravity="end"
                             android:text="@string/promo_apply"
                             android:textColor="@color/theme" />
@@ -232,6 +244,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/nunito_regular"
                             android:text="@string/promocode_amount"
                             android:textColor="@color/colorSecondaryText" />
 
@@ -240,6 +253,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/nunito_semibold"
                             android:gravity="end"
                             android:textColor="@color/colorSecondaryText"
                             tools:text="$0" />
@@ -255,6 +269,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/nunito_regular"
                             android:gravity="start"
                             android:text="@string/discount"
                             android:textColor="@color/colorGreen" />
@@ -264,32 +279,11 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:fontFamily="@font/nunito_semibold"
                             android:gravity="end"
                             android:textColor="@color/colorSecondaryText"
                             tools:text="- $30" />
                     </LinearLayout>
-                    <!--
-                                        <LinearLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="@dimen/activity_vertical_margin"
-                                            android:orientation="horizontal"
-                                            android:background="ba">
-
-                                            <TextView
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_weight="1"
-                                                android:text="Apply Coupon"
-                                                android:textSize="@dimen/_14sdp"
-                                                android:drawableLeft="@drawable/ic_coupon_voucher"
-                                                android:drawablePadding="@dimen/_8sdp"
-                                                android:textColor="@color/colorTextBlack" />
-
-
-                                        </LinearLayout>
-                    -->
-
 
                     <View
                         android:layout_width="match_parent"
@@ -321,6 +315,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="false"
+                            android:fontFamily="@font/nunito_semibold"
                             android:scaleX="0.80"
                             android:scaleY="0.80"
                             android:text="@string/use_wallet"
@@ -333,6 +328,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_5sdp"
+                            android:fontFamily="@font/nunito_regular"
                             android:textColor="@color/theme"
                             android:textSize="@dimen/text_medium"
                             android:textStyle="bold" />
@@ -345,6 +341,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
+                        android:fontFamily="@font/nunito_bold"
                         android:gravity="end"
                         android:text="@string/total"
                         android:textColor="@color/colorTextBlack" />
@@ -356,6 +353,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="40dp"
+                        android:fontFamily="@font/nunito_bold"
                         android:gravity="end"
                         android:text="$250"
                         android:textColor="@color/colorTextBlack" />
@@ -389,7 +387,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -420,6 +419,7 @@
                             android:id="@+id/address_header"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_semibold"
                             android:text="Delivery to Home"
                             android:textAllCaps="true"
                             android:textColor="@color/colorTextBlack"
@@ -429,6 +429,7 @@
                             android:id="@+id/address_detail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_regular"
                             android:singleLine="true"
                             android:text="Velachery,chennai"
                             android:textSize="@dimen/text_tiny" />
@@ -437,6 +438,7 @@
                             android:id="@+id/address_delivery_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_semibold"
                             android:text="50 mins"
                             android:textAllCaps="true"
                             android:textSize="@dimen/text_tiny"
@@ -448,6 +450,7 @@
                         android:id="@+id/add_address_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_semibold"
                         android:text="@string/change_address"
                         android:textAllCaps="true"
                         android:textColor="@color/theme"
@@ -460,6 +463,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_35sdp"
                     android:background="@color/colorButton"
+                    android:fontFamily="@font/nunito_bold"
                     android:text="@string/continue_txt"
                     android:textColor="@color/colorTextWhite" />
 
@@ -483,6 +487,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
+                    android:fontFamily="@font/nunito_semibold"
                     android:text="@string/delivery_content"
                     android:textColor="@color/colorBlack"
                     android:textSize="16sp"
@@ -503,6 +508,7 @@
                         android:layout_height="@dimen/_35sdp"
                         android:layout_margin="@dimen/_5sdp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/nunito_bold"
                         android:text="@string/pick_up"
                         android:textColor="@color/colorTextWhite" />
 
@@ -513,6 +519,7 @@
                         android:layout_height="@dimen/_35sdp"
                         android:layout_margin="@dimen/_5sdp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/nunito_bold"
                         android:text="@string/delivery"
                         android:textColor="@color/colorTextWhite"
                         android:visibility="visible" />
@@ -529,7 +536,8 @@
                 android:paddingTop="@dimen/_7sdp"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingBottom="@dimen/_7sdp"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <ImageView
                     android:id="@+id/map_marker_image"
@@ -542,6 +550,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/map_marker_image"
+                    android:fontFamily="@font/nunito_bold"
                     android:text="@string/you_seem_location"
                     android:textColor="@color/colorPrimaryText" />
 
@@ -551,6 +560,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/location_error_title"
                     android:layout_toEndOf="@id/map_marker_image"
+                    android:fontFamily="@font/nunito_semibold"
                     android:text="@string/you_seem_location"
                     android:textColor="@color/colorSecondaryText"
                     android:textSize="10sp" />
@@ -569,6 +579,7 @@
                         android:layout_height="@dimen/_35sdp"
                         android:layout_margin="@dimen/_5sdp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/nunito_bold"
                         android:text="@string/add_address"
                         android:textColor="@color/colorTextWhite"
                         android:visibility="visible" />
@@ -581,6 +592,7 @@
                         android:layout_height="@dimen/_35sdp"
                         android:layout_margin="@dimen/_5sdp"
                         android:layout_weight="1"
+                        android:fontFamily="@font/nunito_bold"
                         android:text="@string/select_address"
                         android:textColor="@color/colorTextWhite"
                         android:visibility="visible" />
@@ -607,7 +619,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background_color"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -622,10 +635,10 @@
                 android:src="@drawable/no_cart_tem_bg" />
 
             <TextView
-                fontpath="fonts/Nunito-Bold.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:fontFamily="@font/nunito_bold"
                 android:text="@string/cart_error_title"
                 android:textAllCaps="true"
                 android:textColor="@color/colorTextBlack"
@@ -636,6 +649,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_3sdp"
+                android:fontFamily="@font/nunito_regular"
                 android:text="@string/cart_error_description"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/text_medium" />

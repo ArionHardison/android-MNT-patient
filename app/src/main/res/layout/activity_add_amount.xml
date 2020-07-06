@@ -15,15 +15,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f2f2f2"
         android:layout_above="@+id/pay_btn"
         android:layout_below="@+id/toolbar"
+        android:background="#f2f2f2"
         android:orientation="vertical">
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_regular"
             android:padding="16dp"
             android:text="@string/payment_options"
             android:textAllCaps="true"
@@ -41,9 +42,9 @@
             android:id="@+id/promo_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:background="@android:color/white"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/promo_img"
@@ -59,10 +60,10 @@
                 android:layout_centerInParent="true"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:layout_toEndOf="@+id/promo_img"
+                android:fontFamily="@font/nunito_bold"
                 android:text="@string/promotion_details"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="@dimen/text_medium"
-                fontPath="fonts/Nunito-Bold.ttf" />
+                android:textSize="@dimen/text_medium" />
 
         </RelativeLayout>
 
@@ -78,12 +79,12 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="@dimen/_15sdp"
+                android:fontFamily="@font/nunito_bold"
                 android:gravity="center"
                 android:text="@string/enter_the_amount"
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="@dimen/text_medium"
-                fontPath="fonts/Nunito-Bold.ttf" />
+                android:textSize="@dimen/text_medium" />
 
             <EditText
                 android:id="@+id/amount_txt"
@@ -92,11 +93,12 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginLeft="@dimen/_20sdp"
                 android:layout_marginRight="@dimen/_20sdp"
-                android:imeOptions="actionDone"
-                android:padding="@dimen/_5sdp"
                 android:layout_toEndOf="@+id/enter_amount_lbl"
-                android:inputType="number"
                 android:background="@color/colorWhite"
+                android:fontFamily="@font/nunito_regular"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:padding="@dimen/_5sdp"
                 android:textColor="@color/colorAccent" />
 
         </RelativeLayout>
@@ -106,13 +108,14 @@
     <Button
         android:id="@+id/pay_btn"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/_15sdp"
-        android:text="@string/pay"
         android:background="@drawable/button_corner_bg_theme"
+        android:fontFamily="@font/nunito_bold"
+        android:text="@string/pay"
         android:textAllCaps="true"
-        android:textSize="@dimen/text_medium"
         android:textColor="@color/colorTextWhite"
-        android:layout_height="wrap_content" />
+        android:textSize="@dimen/text_medium" />
 
 </RelativeLayout>

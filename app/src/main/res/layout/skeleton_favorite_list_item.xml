@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_margin="@dimen/activity_vertical_margin">
+    android:layout_margin="@dimen/activity_vertical_margin"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="@dimen/_150sdp"
@@ -12,12 +12,11 @@
         android:background="@color/light_transparent" />
 
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:id="@+id/item_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <View
             android:id="@+id/shop_avatar"
@@ -29,8 +28,8 @@
             android:id="@+id/shop_name"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_20sdp"
-            android:layout_marginBottom="6dp"
             android:layout_marginStart="16dp"
+            android:layout_marginBottom="6dp"
             android:layout_toEndOf="@+id/shop_avatar"
             android:background="@color/light_transparent"
             android:maxLines="1" />
@@ -39,8 +38,8 @@
             android:id="@+id/shop_address"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_20sdp"
-            android:layout_alignParentEnd="true"
             android:layout_below="@+id/shop_name"
+            android:layout_alignParentEnd="true"
             android:layout_marginStart="16dp"
             android:layout_toEndOf="@+id/shop_avatar"
             android:background="@color/light_transparent"
@@ -49,11 +48,10 @@
     </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:orientation="horizontal">
 
         <View
             android:id="@+id/shop_avatar2"
@@ -65,8 +63,8 @@
             android:id="@+id/shop_name2"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_20sdp"
-            android:layout_marginBottom="6dp"
             android:layout_marginStart="16dp"
+            android:layout_marginBottom="6dp"
             android:layout_toEndOf="@+id/shop_avatar2"
             android:background="@color/light_transparent"
             android:maxLines="1" />
@@ -74,8 +72,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/_20sdp"
-            android:layout_alignParentEnd="true"
             android:layout_below="@+id/shop_name2"
+            android:layout_alignParentEnd="true"
             android:layout_marginStart="16dp"
             android:layout_toEndOf="@+id/shop_avatar2"
             android:background="@color/light_transparent"

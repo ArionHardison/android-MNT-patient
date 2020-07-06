@@ -12,12 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
-        app:elevation="4dp"
-        android:minHeight="?attr/actionBarSize">
+        android:minHeight="?attr/actionBarSize"
+        app:elevation="4dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_bold"
             android:text="@string/favorites"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimaryText"
@@ -52,10 +53,10 @@
                 android:src="@drawable/empty_fav" />
 
             <TextView
-                fontPath="fonts/Nunito-Bold.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/nunito_bold"
                 android:gravity="center"
                 android:maxLines="1"
                 android:text="@string/what_is_love"
@@ -68,12 +69,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8sp"
+                android:fontFamily="@font/nunito_regular"
                 android:gravity="center"
                 android:maxLines="3"
                 android:text="@string/fav_description"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="14sp"
-                tools:ignore="MissingPrefix" />
+                tools:ignore="MissingPrefix"
+                tools:text="@string/app_name" />
 
         </LinearLayout>
 

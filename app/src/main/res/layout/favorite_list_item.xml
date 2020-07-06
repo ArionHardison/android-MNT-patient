@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_layout"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="8dp">
@@ -11,33 +11,34 @@
         android:id="@+id/shop_avatar"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:scaleType="fitXY"
         android:contentDescription="@string/restaurant"
-       />
+        android:scaleType="fitXY" />
 
     <TextView
         android:id="@+id/shop_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
         android:layout_marginStart="16dp"
+        android:layout_marginBottom="6dp"
         android:layout_toEndOf="@+id/shop_avatar"
+        android:fontFamily="@font/nunito_semibold"
         android:maxLines="1"
-        tools:text="Bunny Burgs"
         android:textColor="@color/colorPrimaryText"
-        android:textSize="@dimen/text_medium" />
+        android:textSize="@dimen/text_medium"
+        tools:text="Bunny Burgs" />
 
     <TextView
         android:id="@+id/shop_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_below="@+id/shop_name"
+        android:layout_alignParentEnd="true"
         android:layout_marginStart="16dp"
         android:layout_toEndOf="@+id/shop_avatar"
+        android:fontFamily="@font/nunito_regular"
         android:maxLines="1"
-        tools:text="Burgers"
         android:textColor="@color/colorSecondaryText"
-        android:textSize="@dimen/text_small" />
+        android:textSize="@dimen/text_small"
+        tools:text="Burgers" />
 
 </RelativeLayout>

@@ -6,19 +6,19 @@
     android:orientation="vertical">
 
     <TextView
-        fontPath="fonts/Nunito-Bold.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:fontFamily="@font/nunito_bold"
         android:text="FEEDBACK"
         android:textSize="16sp"
         tools:ignore="MissingPrefix" />
 
     <TextView
-        fontPath="fonts/Nunito-Bold.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:fontFamily="@font/nunito_bold"
         android:text="How was the delivery?"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -40,6 +40,7 @@
             android:background="@drawable/radio_button"
             android:button="@null"
             android:drawableTop="@drawable/sad72"
+            android:fontFamily="@font/nunito_regular"
             android:gravity="center"
             android:padding="8dp"
             android:text="Terrible"
@@ -54,6 +55,7 @@
             android:background="@drawable/radio_button"
             android:button="@null"
             android:drawableTop="@drawable/emotion72"
+            android:fontFamily="@font/nunito_regular"
             android:gravity="center"
             android:padding="8dp"
             android:text="Bad"
@@ -68,6 +70,7 @@
             android:background="@drawable/radio_button"
             android:button="@null"
             android:drawableTop="@drawable/happyy72"
+            android:fontFamily="@font/nunito_regular"
             android:gravity="center"
             android:padding="8dp"
             android:text="Okay"
@@ -82,6 +85,7 @@
             android:background="@drawable/radio_button"
             android:button="@null"
             android:drawableTop="@drawable/happy72"
+            android:fontFamily="@font/nunito_regular"
             android:gravity="center"
             android:padding="8dp"
             android:text="Good"
@@ -96,6 +100,7 @@
             android:background="@drawable/radio_button"
             android:button="@null"
             android:drawableTop="@drawable/smille"
+            android:fontFamily="@font/nunito_regular"
             android:gravity="center"
             android:padding="8dp"
             android:text="Superb"
@@ -106,10 +111,10 @@
 
 
     <TextView
-        fontPath="fonts/Nunito-Bold.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:fontFamily="@font/nunito_bold"
         android:text="Give some feedback in words."
         android:textSize="14sp"
         android:textStyle="bold"
@@ -121,6 +126,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:background="@drawable/shadow_view"
+        android:fontFamily="@font/nunito_regular"
         android:inputType="textMultiLine"
         android:lines="3"
         android:padding="8dp" />
@@ -130,6 +136,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
+        android:fontFamily="@font/nunito_bold"
         android:text="Submit"
         android:textColor="@color/colorWhite" />
 

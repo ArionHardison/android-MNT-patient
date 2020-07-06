@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -19,6 +18,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_bold"
             android:text="@string/payment"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimaryText"
@@ -57,6 +57,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_regular"
                         android:padding="16dp"
                         android:text="@string/walletHistory"
                         android:textAllCaps="true"
@@ -73,6 +74,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_regular"
                             android:text="@string/wallet_amount"
                             android:textColor="@color/colorPrimaryText"
                             android:textSize="@dimen/text_medium" />
@@ -83,8 +85,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/nunito_regular"
                             android:textColor="@color/theme"
-                            android:textSize="@dimen/text_medium" />
+                            android:textSize="@dimen/text_medium"
+                            tools:text="@string/app_name" />
 
 
                     </RelativeLayout>
@@ -94,6 +98,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_regular"
                     android:padding="16dp"
                     android:text="@string/card"
                     android:textAllCaps="true"
@@ -107,7 +112,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
-                    android:visibility="visible" />
+                    android:visibility="visible"
+                    tools:visibility="gone" />
 
 
                 <RelativeLayout
@@ -134,8 +140,8 @@
                             android:layout_height="40dp"
                             android:layout_marginEnd="10dp"
                             android:contentDescription="@string/app_name"
-                            android:tint="@color/colorAccent"
-                            android:src="@drawable/ic_add_card" />
+                            android:src="@drawable/ic_add_card"
+                            android:tint="@color/colorAccent" />
 
                         <TextView
                             android:id="@+id/add_new_cart"
@@ -143,6 +149,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_toEndOf="@+id/add_card_img"
+                            android:fontFamily="@font/nunito_regular"
                             android:text="@string/add_new_card"
                             android:textAllCaps="true"
                             android:textColor="@color/colorAccent"
@@ -160,11 +167,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_regular"
                         android:padding="16dp"
                         android:text="@string/pay_on_delivery"
                         android:textAllCaps="true"
@@ -195,6 +204,7 @@
                             android:button="@null"
                             android:clickable="false"
                             android:drawableEnd="@drawable/check_selector"
+                            android:fontFamily="@font/nunito_regular"
                             android:text="@string/by_cash"
                             android:textColor="@color/colorPrimaryText"
                             android:textSize="@dimen/text_medium" />
@@ -211,9 +221,11 @@
                 android:layout_height="@dimen/_35sdp"
                 android:layout_alignParentBottom="true"
                 android:background="@color/colorButton"
+                android:fontFamily="@font/nunito_bold"
                 android:text="@string/proceed"
                 android:textColor="@color/colorTextWhite"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:visibility="visible" />
         </RelativeLayout>
     </ScrollView>
 

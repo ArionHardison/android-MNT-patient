@@ -6,10 +6,9 @@
     android:background="?android:attr/selectableItemBackground"
     android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -20,10 +19,10 @@
 
             <ImageView
                 android:id="@+id/icon"
-                android:paddingTop="8dp"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:contentDescription="@string/address"
+                android:paddingTop="8dp"
                 android:src="@drawable/ic_pin_locator_1" />
 
         </LinearLayout>
@@ -31,20 +30,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:layout_marginStart="8dp"
-            android:paddingTop="8dp"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingTop="8dp">
 
             <TextView
                 android:id="@+id/address_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_bold"
                 android:maxLines="1"
+                android:paddingBottom="8dp"
                 android:text="Home"
                 android:textAllCaps="true"
-                fontPath="fonts/Nunito-Bold.ttf"
-                android:paddingBottom="8dp"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="@dimen/text_small" />
 
@@ -52,6 +51,7 @@
                 android:id="@+id/address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_semibold"
                 android:maxLines="3"
                 android:text="Greems Road, Chennai"
                 android:textColor="@color/colorSecondaryText"
@@ -67,12 +67,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
+                    android:fontFamily="@font/nunito_bold"
                     android:gravity="start|center_vertical"
                     android:minHeight="0dp"
-                    android:paddingBottom="8dp"
                     android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:text="@string/edit"
-                    fontPath="fonts/Nunito-Bold.ttf"
                     android:textColor="@color/colorAccent" />
 
                 <Button
@@ -80,12 +80,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
+                    android:fontFamily="@font/nunito_bold"
                     android:gravity="start|center_vertical"
                     android:minHeight="0dp"
-                    android:paddingBottom="8dp"
                     android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:text="@string/delete"
-                    fontPath="fonts/Nunito-Bold.ttf"
                     android:textColor="@color/colorAccent" />
             </LinearLayout>
 

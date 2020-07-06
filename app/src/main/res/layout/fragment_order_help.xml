@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/colorWhite"
+    android:orientation="vertical"
     tools:context="com.oyola.app.fragments.OrderHelpFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -26,8 +26,9 @@
             android:id="@+id/reason_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_vertical_margin_half"
             android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin_half"
+            android:fontFamily="@font/nunito_regular"
             android:text="@string/are_you_facing_help"
             android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/text_small" />
@@ -45,9 +46,10 @@
                 android:layout_marginRight="@dimen/activity_vertical_margin_half"
                 android:layout_weight="1"
                 android:background="@drawable/button_border_theme_color"
+                android:fontFamily="@font/nunito_bold"
                 android:text="@string/dispute"
                 android:textColor="@color/theme"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/chat_us"
@@ -56,9 +58,10 @@
                 android:layout_marginLeft="@dimen/activity_vertical_margin"
                 android:layout_weight="1"
                 android:background="@drawable/button_border_theme_color"
+                android:fontFamily="@font/nunito_bold"
                 android:text="Chat us"
                 android:textColor="@color/theme"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/email_us"
@@ -67,6 +70,7 @@
                 android:layout_marginEnd="@dimen/activity_vertical_margin_half"
                 android:layout_weight="1"
                 android:background="@drawable/button_border_theme_color"
+                android:fontFamily="@font/nunito_bold"
                 android:text="@string/call_us"
                 android:textColor="@color/theme" />
 

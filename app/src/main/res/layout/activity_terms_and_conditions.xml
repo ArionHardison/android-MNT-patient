@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.oyola.deliveryboy.activities.TermsAndConditions">
+    android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
 
@@ -12,14 +10,16 @@
         android:id="@+id/terms_condtion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_regular"
+        android:text="@string/app_name"
         android:textSize="@dimen/_10sdp"
         android:visibility="gone" />
 
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
-        android:visibility="visible"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
     </WebView>
 

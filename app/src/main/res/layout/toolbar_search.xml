@@ -7,16 +7,17 @@
     android:orientation="horizontal">
 
     <EditText
-        android:focusableInTouchMode="true"
-        android:focusable="true"
         android:id="@+id/search_et"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:maxLines="1"
-        android:singleLine="true"
         android:layout_weight="1"
         android:background="@null"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:fontFamily="@font/nunito_regular"
         android:hint="Search"
+        android:maxLines="1"
+        android:singleLine="true"
         android:textSize="@dimen/text_large" />
 
     <RelativeLayout
@@ -24,23 +25,21 @@
         android:layout_height="@dimen/_35sdp">
 
         <ImageView
-            android:visibility="gone"
             android:id="@+id/search_close_img"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:layout_width="@dimen/_18sdp"
             android:layout_height="@dimen/_18sdp"
-            android:src="@drawable/ic_close" />
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_close"
+            android:visibility="gone" />
 
         <ProgressBar
-            android:padding="@dimen/_1sdp"
-            android:visibility="gone"
             android:id="@+id/progress_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:padding="@dimen/_1sdp"
+            android:visibility="gone" />
 
     </RelativeLayout>
-
-
 </LinearLayout>
 

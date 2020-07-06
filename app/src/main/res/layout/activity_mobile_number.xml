@@ -57,6 +57,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="@dimen/_6sdp"
                 android:layout_toEndOf="@+id/countryImage"
+                android:fontFamily="@font/nunito_regular"
                 android:gravity="center"
                 android:text="+61"
                 android:textSize="@dimen/text_normal" />
@@ -68,6 +69,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_toEndOf="@+id/countryNumber"
                 android:background="@null"
+                android:fontFamily="@font/nunito_regular"
                 android:hint="@string/mobile_number"
                 android:imeOptions="actionDone"
                 android:inputType="phone"

@@ -42,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_size"
         android:background="@drawable/button_bottom_round"
-        android:fontFamily="@font/nunito_semibold"
+        android:fontFamily="@font/nunito_bold"
         android:gravity="center"
         android:text="@string/done"
         android:textColor="@color/colorWhite"

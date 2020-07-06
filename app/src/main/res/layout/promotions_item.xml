@@ -29,6 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/nunito_semibold"
                 android:textColor="@color/theme"
                 android:textStyle="bold" />
 
@@ -36,6 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
+                android:fontFamily="@font/nunito_regular"
                 android:text="@string/promo_apply_text"
                 android:textColor="@color/colorSecondaryText" />
 
@@ -45,6 +47,7 @@
                 android:layout_height="@dimen/_17sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/button_corner_bg_theme"
+                android:fontFamily="@font/nunito_bold"
                 android:gravity="center"
                 android:text="@string/apply"
                 android:textAllCaps="true"

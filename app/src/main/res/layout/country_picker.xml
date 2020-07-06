@@ -11,10 +11,10 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:visibility="gone"
-            android:padding="@dimen/_6sdp"
             android:layout_width="@dimen/_25sdp"
             android:layout_height="match_parent"
+            android:padding="@dimen/_6sdp"
+            android:visibility="gone"
             app:srcCompat="@drawable/search" />
 
         <EditText
@@ -22,21 +22,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:fontFamily="@font/nunito_regular"
             android:hint="Country name"
             android:imeOptions="actionSearch"
             android:maxLines="1" />
 
-
     </LinearLayout>
-
 
     <ListView
         android:id="@+id/country_code_picker_listview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_weight="1">
 
     </ListView>

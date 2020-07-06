@@ -31,11 +31,11 @@
                 android:src="@drawable/ic_close" />
 
             <TextView
-                fontPath="fonts/Nunito-Bold.ttf"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/activity_vertical_margin_half"
                 android:layout_weight="1"
+                android:fontFamily="@font/nunito_bold"
                 android:gravity="center_vertical"
                 android:text="@string/filters"
                 android:textAllCaps="true"
@@ -44,7 +44,6 @@
 
             <TextView
                 android:id="@+id/reset_txt"
-                fontPath="fonts/Nunito-Bold.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/activity_vertical_margin"
@@ -52,6 +51,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:clickable="false"
                 android:enabled="false"
+                android:fontFamily="@font/nunito_bold"
                 android:gravity="center"
                 android:text="@string/reset"
                 android:textAllCaps="true"
@@ -91,6 +91,7 @@
         android:background="@color/colorAccent"
         android:clickable="false"
         android:enabled="false"
+        android:fontFamily="@font/nunito_bold"
         android:text="@string/view_results"
         android:textColor="@color/colorWhite" />
 </RelativeLayout>

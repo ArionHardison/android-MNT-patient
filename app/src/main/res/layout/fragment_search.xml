@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#eee"
+        android:fontFamily="@font/nunito_regular"
         android:padding="16dp"
         android:text="@string/search_favourite"
         android:textColor="@color/colorSecondaryText"
@@ -39,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#eee"
+            android:fontFamily="@font/nunito_regular"
             android:padding="16dp"
             android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/text_medium" />

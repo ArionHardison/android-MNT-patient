@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
@@ -33,11 +32,11 @@
 
         <TextView
             android:id="@+id/dish_name_text"
-            fontPath="fonts/Nunito-SemiBold.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/food_type_image"
             android:layout_toStartOf="@+id/relativeLayout"
+            android:layout_toEndOf="@+id/food_type_image"
+            android:fontFamily="@font/nunito_semibold"
             android:gravity="center_vertical"
             android:textColor="@color/colorPrimaryText"
             android:textSize="@dimen/text_small"
@@ -53,50 +52,33 @@
 
             <TextView
                 android:id="@+id/realPrice"
-                fontPath="fonts/Nunito-Light.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/nunito_light"
                 android:textColor="@color/colorTextBlack"
                 android:textSize="@dimen/_10sdp"
                 tools:text="Origin Price" />
 
             <TextView
                 android:id="@+id/price_text"
-                fontPath="fonts/Nunito-Bold.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_4sdp"
                 android:layout_marginTop="8dp"
+                android:fontFamily="@font/nunito_bold"
                 android:textColor="@color/colorTextBlack"
                 android:textSize="@dimen/text_small"
                 tools:text="Price" />
 
         </LinearLayout>
 
-
-        <!--<TextView-->
-        <!--android:id="@+id/category_text"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@+id/price_text"-->
-        <!--android:layout_marginStart="0dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:layout_toEndOf="@+id/food_type_image"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:maxLines="1"-->
-        <!--android:textColor="@color/colorSecondaryText"-->
-        <!--android:textSize="@dimen/text_small"-->
-        <!--android:visibility="gone"-->
-        <!--app:layout_constraintLeft_toLeftOf="@+id/price_text"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/price_text" />-->
-
         <RelativeLayout
             android:id="@+id/relativeLayout"
             android:layout_width="@dimen/_80sdp"
-            android:layout_centerVertical="true"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true">
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true">
 
             <include layout="@layout/add_card_button_layout" />
 

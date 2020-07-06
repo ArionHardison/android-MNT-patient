@@ -50,6 +50,7 @@
                         android:layout_height="match_parent"
                         android:alpha="0.7"
                         android:background="@android:color/black"
+                        android:fontFamily="@font/nunito_semibold"
                         android:gravity="center"
                         android:text="@string/closed"
                         android:textColor="@color/colorTextWhite"
@@ -71,9 +72,9 @@
 
                     <TextView
                         android:id="@+id/restaurant_name"
-                        fontPath="fonts/Nunito-SemiBold.ttf"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_semibold"
                         android:maxLines="1"
                         android:text="Funkies"
                         android:textColor="@color/colorPrimaryText"
@@ -83,8 +84,8 @@
                         android:id="@+id/halal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_semibold"
                         android:maxLines="1"
-                        fontPath="fonts/Nunito-SemiBold.ttf"
                         android:padding="@dimen/_1sdp"
                         android:text="@string/halal"
                         android:textColor="@color/colorGreen"
@@ -101,6 +102,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
+                            android:fontFamily="@font/nunito_semibold"
                             android:text="Close soon"
                             android:textColor="@color/colorRed"
                             android:visibility="gone"
@@ -113,6 +115,7 @@
                             android:id="@+id/category"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/nunito_regular"
                             android:maxLines="1"
                             android:text="Indian"
                             android:textColor="@color/colorSecondaryText"
@@ -133,8 +136,9 @@
                             android:id="@+id/offer"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:drawableLeft="@drawable/ic_offers"
+                            android:drawableStart="@drawable/ic_offers"
                             android:drawablePadding="@dimen/_10sdp"
+                            android:fontFamily="@font/nunito_semibold"
                             android:gravity="center_vertical"
                             android:text="Flat 20% offer on all orders"
                             android:textColor="@color/colorRed"
@@ -163,6 +167,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
+                                    android:fontFamily="@font/nunito_bold"
                                     android:text="5"
                                     android:textColor="@color/dark_grey"
                                     android:textSize="@dimen/text_small" />
@@ -173,6 +178,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:fontFamily="@font/nunito_semibold"
                                 android:gravity="end"
                                 android:maxLines="1"
                                 android:paddingStart="0dp"
@@ -188,6 +194,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:fontFamily="@font/nunito_bold"
                                 android:gravity="end"
                                 android:maxLines="1"
                                 android:paddingStart="0dp"
@@ -199,14 +206,9 @@
                                 android:visibility="gone" />
 
                         </LinearLayout>
-
-
                     </LinearLayout>
-
                 </LinearLayout>
-
             </RelativeLayout>
-
         </LinearLayout>
 
         <View

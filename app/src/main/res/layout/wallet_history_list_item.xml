@@ -2,9 +2,9 @@
     android:id="@+id/item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/_10sdp"
     android:background="@color/colorWhite"
     android:orientation="vertical"
-    android:layout_marginBottom="@dimen/_10sdp"
     android:padding="8dp">
 
     <TextView
@@ -12,8 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_10sdp"
-        android:textColor="@color/colorPrimaryText"
         android:layout_marginBottom="@dimen/_10sdp"
+        android:fontFamily="@font/nunito_semibold"
+        android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/text_medium" />
 
     <TextView
@@ -24,6 +25,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/_10sdp"
+        android:fontFamily="@font/nunito_bold"
         android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/text_medium"
         android:textStyle="bold" />
@@ -33,10 +35,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/time_txt"
-        android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:textSize="@dimen/text_small"
-        android:textColor="@color/theme" />
+        android:fontFamily="@font/nunito_regular"
+        android:textColor="@color/theme"
+        android:textSize="@dimen/text_small" />
 
 </RelativeLayout>
