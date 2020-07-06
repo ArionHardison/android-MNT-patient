@@ -289,6 +289,13 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
         }
     }
 
+    private void updateDeliveryDataToView(String currencyType, double deliveryAmount) {
+        if (deliveryAmount > 0) {
+            layoutDeliveryFees.setVisibility(View.VISIBLE);
+            deliveryCharges.setText(currencyType + deliveryAmount);
+        } else layoutDeliveryFees.setVisibility(View.GONE);
+    }
+
     private void getViewCart() {
         Call<AddCart> call = apiInterface.getViewCart();
         call.enqueue(new Callback<AddCart>() {
@@ -334,7 +341,11 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
                         promocode_amount.setText("- " + currency + "" + response.body().getPromocodeAmount());
                         serviceTax.setText(currency + response.body().getTax());
                         payAmount.setText(currency + "" + response.body().getPayable());
-                        deliveryCharges.setText(response.body().getProductList().get(0).getProduct().getPrices().getCurrency() + "" + response.body().getDeliveryCharges());
+
+                        /*Delivery Charges*/
+                        double deliveryAmount = (response.body() != null && response.body().getDeliveryCharges() != 0.0) ? response.body().getDeliveryCharges() : 0;
+                        String currencyType = response.body().getProductList().get(0).getProduct().getPrices().getCurrency();
+                        updateDeliveryDataToView(currencyType, deliveryAmount);
                         //Set Restaurant Details
                         restaurantName.setText(response.body().getProductList().get(0).getProduct().getShop().getName());
                         restaurantDescription.setText(response.body().getProductList().get(0).getProduct().getShop().getDescription());
@@ -483,8 +494,9 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
                         promocode_amount.setText("- " + currency + "" + response.body().getPromocodeAmount());
                         serviceTax.setText(currency + Double.parseDouble(response.body().getTax()));
                         payAmount.setText(currency + "" + response.body().getPayable());
-                        deliveryCharges.setText(response.body().getProductList().get(0).getProduct().getPrices().getCurrency()
-                                + "" + response.body().getDeliveryCharges());
+                        double deliveryAmount = (response.body() != null && response.body().getDeliveryCharges() != 0.0) ? response.body().getDeliveryCharges() : 0;
+                        String currencyType = response.body().getProductList().get(0).getProduct().getPrices().getCurrency();
+                        updateDeliveryDataToView(currencyType, deliveryAmount);
                         //Set Restaurant Details
                         restaurantName.setText(response.body().getProductList().get(0).getProduct().getShop().getName());
                         restaurantDescription.setText(response.body().getProductList().get(0).getProduct().getShop().getDescription());
@@ -897,8 +909,9 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
                         promocode_amount.setText("- " + currency + "" + addCart.getPromocodeAmount());
                         serviceTax.setText(currency + Double.parseDouble(addCart.getTax()));
                         payAmount.setText(currency + "" + addCart.getPayable());
-                        deliveryCharges.setText(addCart.getProductList().get(0).getProduct().getPrices().getCurrency()
-                                + "" + addCart.getDeliveryCharges());
+                        double deliveryAmount = (addCart != null && addCart.getDeliveryCharges() != 0.0) ? addCart.getDeliveryCharges() : 0;
+                        String currencyType = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
+                        updateDeliveryDataToView(currencyType, deliveryAmount);
                     }
                 } else {
                     String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
@@ -907,8 +920,9 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
                     promocode_amount.setText("- " + currency + "" + addCart.getPromocodeAmount());
                     serviceTax.setText(currency + Double.parseDouble(addCart.getTax()));
                     payAmount.setText(currency + "" + addCart.getPayable());
-                    deliveryCharges.setText(addCart.getProductList().get(0).getProduct().getPrices().getCurrency()
-                            + "" + addCart.getDeliveryCharges());
+                    double deliveryAmount = (addCart != null && addCart.getDeliveryCharges() != 0.0) ? addCart.getDeliveryCharges() : 0;
+                    String currencyType = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
+                    updateDeliveryDataToView(currencyType, deliveryAmount);
                 }
             }
         } else {
@@ -931,8 +945,9 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
             serviceTax.setText(currency + Double.parseDouble(addCart.getTax()));
             Double mPayAmount = addCart.getPayable() - addCart.getDeliveryCharges();
             payAmount.setText(currency + "" + new DecimalFormat("##.##").format(mPayAmount));
-            deliveryCharges.setText(addCart.getProductList().get(0).getProduct().getPrices().getCurrency()
-                    + "" + addCart.getDeliveryCharges());
+            double deliveryAmount = (addCart != null && addCart.getDeliveryCharges() != 0.0) ? addCart.getDeliveryCharges() : 0;
+            String currencyType = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
+            updateDeliveryDataToView(currencyType, deliveryAmount);
         }
 
     }
