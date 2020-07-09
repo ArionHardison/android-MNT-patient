@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context="com.oyola.app.activities.ViewCartActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
@@ -21,7 +21,7 @@
             android:textColor="@color/colorPrimaryText"
             android:textSize="18sp" />
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
         android:id="@+id/view_cart_container"

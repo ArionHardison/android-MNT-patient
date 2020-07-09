@@ -1,7 +1,7 @@
 package com.oyola.app.helper;
 
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 

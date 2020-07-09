@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="com.oyola.app.activities.ManageAddressActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,9 +25,9 @@
             android:textColor="@color/colorPrimaryText"
             android:textSize="18sp" />
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -79,5 +79,5 @@
                 android:text="@string/invite_friends"
                 android:textColor="@color/colorWhite" />
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

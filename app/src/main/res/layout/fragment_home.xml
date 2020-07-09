@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView"
@@ -47,7 +47,7 @@
                     android:textSize="@dimen/text_normal"
                     android:textStyle="bold" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/impressive_dishes_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                     android:textSize="@dimen/text_normal"
                     android:textStyle="bold" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/favourite_dishes_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
                     android:textSize="@dimen/text_normal"
                     android:textStyle="bold" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/freedelivery_dishes_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
                     android:visibility="invisible" />
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/restaurants_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -236,7 +236,7 @@
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/text_normal" />
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/discover_rv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -271,7 +271,7 @@
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/text_normal" />
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/restaurants_offer_rv"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
@@ -282,7 +282,7 @@
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
-</android.support.v4.widget.NestedScrollView><!--</com.amar.library.ui.StickyScrollView>-->
+</androidx.core.widget.NestedScrollView><!--</com.amar.library.ui.StickyScrollView>-->
 
 
 

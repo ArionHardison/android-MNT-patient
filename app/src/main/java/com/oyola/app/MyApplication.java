@@ -3,7 +3,7 @@ package com.oyola.app;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.support.multidex.MultiDex;
+import androidx.multidex.MultiDex;
 
 import com.facebook.stetho.Stetho;
 import com.oyola.app.utils.LocaleUtils;
