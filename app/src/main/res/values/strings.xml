@@ -20,6 +20,7 @@
     <string name="your_favourites">Your Favourites</string>
     <string name="recommended_for_you">Recommended for you</string>
     <string name="free_delivery">Free Delivery</string>
+    <string name="delivery_amount_free">Free</string>
     <string name="discover">"Discover"</string>
     <string name="otp">Otp</string>
     <string name="eta">ETA</string>

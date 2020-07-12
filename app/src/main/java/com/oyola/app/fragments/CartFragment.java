@@ -6,13 +6,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +20,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -291,9 +293,13 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
 
     private void updateDeliveryDataToView(String currencyType, double deliveryAmount) {
         if (deliveryAmount > 0) {
+            deliveryCharges.setTextColor(ContextCompat.getColor(getContext(), R.color.colorSecondaryText));
             layoutDeliveryFees.setVisibility(View.VISIBLE);
             deliveryCharges.setText(currencyType + deliveryAmount);
-        } else layoutDeliveryFees.setVisibility(View.GONE);
+        } else {
+            deliveryCharges.setText(getString(R.string.delivery_amount_free));
+            deliveryCharges.setTextColor(ContextCompat.getColor(getContext(), R.color.colorGreen));
+        }
     }
 
     private void getViewCart() {
