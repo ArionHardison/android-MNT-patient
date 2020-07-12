@@ -571,8 +571,6 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
                     ParserTask parserTask = new ParserTask();
                     // Invokes the thread for parsing the JSON data
                     parserTask.execute(result);
-                } else {
-                    Toast.makeText(context, "No Route", Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
