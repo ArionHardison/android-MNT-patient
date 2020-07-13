@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,7 +14,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.oyola.app.build.configure.BuildConfigure;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.google.android.gms.auth.api.phone.SmsRetriever;
 import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,6 +28,7 @@ import com.oyola.app.HomeActivity;
 import com.oyola.app.R;
 import com.oyola.app.build.api.ApiClient;
 import com.oyola.app.build.api.ApiInterface;
+import com.oyola.app.build.configure.BuildConfigure;
 import com.oyola.app.helper.CustomDialog;
 import com.oyola.app.helper.GlobalData;
 import com.oyola.app.helper.SharedHelper;
@@ -224,6 +225,7 @@ public class OtpActivity extends AppCompatActivity {
 
     public void signup(HashMap<String, String> map) {
         customDialog.show();
+        ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
         Call<RegisterModel> call = apiInterface.postRegister(map);
         call.enqueue(new Callback<RegisterModel>() {
             @Override
@@ -276,12 +278,13 @@ public class OtpActivity extends AppCompatActivity {
             call = apiInterface.postLogin(map);
         else
             call = apiInterface.postSocialLogin(map);*/
+        SharedHelper.putKey(context, "access_token", "");
         call = apiInterface.postLogin(map);
         call.enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(@NonNull Call<LoginModel> call, @NonNull Response<LoginModel> response) {
                 if (response.isSuccessful()) {
-                    SharedHelper.putKey(context, "access_token", response.body().getTokenType() + " " + response.body().getAccessToken());
+                    SharedHelper.putKey(context, "access_token", "" + response.body().getAccessToken());
                     getProfile();
                 }
             }

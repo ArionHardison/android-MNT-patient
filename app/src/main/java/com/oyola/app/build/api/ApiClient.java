@@ -6,6 +6,8 @@ import android.util.Log;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.oyola.app.MyApplication;
 import com.oyola.app.build.configure.BuildConfigure;
+import com.oyola.app.helper.SharedHelper;
+import com.oyola.app.utils.TextUtils;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -17,8 +19,8 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 //import com.facebook.stetho.okhttp3.StethoInterceptor;
-import com.oyola.app.helper.SharedHelper;
 
 
 /**
@@ -62,10 +64,11 @@ public class ApiClient {
         public Response intercept(Chain chain) throws IOException {
             Request.Builder builder = chain.request().newBuilder();
             builder.addHeader("X-Requested-With", "XMLHttpRequest");
-            builder.addHeader("Authorization", "" + SharedHelper.getKey((Context) MyApplication.getContext(),"access_token"));
-
-            Log.e("access_token", SharedHelper.getKey((Context) MyApplication.getContext(),"access_token"));
-
+            String accessToken = SharedHelper.getKey((Context) MyApplication.getContext(), "access_token");
+            if (!TextUtils.isEmpty(accessToken)) {
+                builder.addHeader("Authorization", "Bearer " + accessToken);
+            }
+            Log.e("access_token", accessToken);
             return chain.proceed(builder.build());
         }
     }

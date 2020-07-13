@@ -116,7 +116,7 @@ public interface ApiInterface {
     @POST("api/user/cart")
     Call<AddCart> postAddCart(@FieldMap HashMap<String, String> params);
 
-    @GET("api/user/apply/promocode")
+    @GET("api/user/cart")
     Call<AddCart> getViewCart();
 
     @GET("api/user/apply/promocode?")
