@@ -7,12 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.Geocoder;
 import android.os.Bundle;
-import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
-import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,8 +21,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
+
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
+import com.google.gson.Gson;
 import com.oyola.app.HomeActivity;
 import com.oyola.app.R;
 import com.oyola.app.activities.FilterActivity;
@@ -40,6 +42,7 @@ import com.oyola.app.adapter.OfferRestaurantAdapter;
 import com.oyola.app.adapter.RestaurantsAdapter;
 import com.oyola.app.build.api.ApiClient;
 import com.oyola.app.build.api.ApiInterface;
+import com.oyola.app.exception.ServerError;
 import com.oyola.app.helper.ConnectionHelper;
 import com.oyola.app.helper.GlobalData;
 import com.oyola.app.helper.SharedHelper;
@@ -50,6 +53,8 @@ import com.oyola.app.models.Discover;
 import com.oyola.app.models.Restaurant;
 import com.oyola.app.models.RestaurantsData;
 import com.oyola.app.models.Shop;
+import com.oyola.app.utils.CommonUtils;
+import com.oyola.app.utils.TextUtils;
 import com.oyola.app.utils.Utils;
 
 import org.json.JSONObject;
@@ -86,8 +91,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     Context context;
     @BindView(R.id.catagoery_spinner)
     Spinner catagoerySpinner;
-    @BindView(R.id.title)
-    LinearLayout title;
     @BindView(R.id.restaurant_count_txt)
     TextView restaurantCountTxt;
     @BindView(R.id.offer_title_header)
@@ -100,6 +103,12 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     LinearLayout errorLayout;
     @BindView(R.id.impressive_dishes_layout)
     LinearLayout impressiveDishesLayout;
+    @BindView(R.id.favourites_dishes_layout)
+    LinearLayout favouriteDishesLayout;
+    @BindView(R.id.free_delivery_layout)
+    LinearLayout freeDeliveryLayout;
+    @BindView(R.id.kitchen_for_you_layout)
+    LinearLayout kitchenForYouLayout;
     private SkeletonScreen skeletonScreen, skeletonScreen2, skeletonText1, skeletonText2,
             skeletonSpinner, skeletonFavourites, skeletonFavouriteTitle, skeletonFreeDelivery, skeletonFreeDeliveryTitle;
     private TextView addressLabel;
@@ -147,6 +156,14 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     Activity activity;
     boolean mIsFromSignUp = false;
     CuisineSelectFragment mFragment;
+
+    private void showOrHideView(boolean isVisible) {
+        impressiveDishesLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        favouriteDishesLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        freeDeliveryLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        kitchenForYouLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        errorLayout.setVisibility(!isVisible ? View.VISIBLE : View.GONE);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -427,20 +444,18 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 skeletonFreeDeliveryTitle.hide();
                 skeletonText2.hide();
                 skeletonSpinner.hide();
-                if (!response.isSuccessful() && response.errorBody() != null) {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-//                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                } else if (response.isSuccessful()) {
+                if (!response.isSuccessful()) {
+                    ServerError serverError = new Gson().fromJson(response.errorBody().charStream(), ServerError.class);
+                    String message = serverError != null ? serverError.getError() : null;
+                    Toast.makeText(context, !TextUtils.isEmpty(message) ? message : getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show();
+                    showOrHideView(false);
+                } else {
                     if (isAdded() && isVisible() && getUserVisibleHint()) {
                         //Check Restaurant list
                         if (response.body().getShops().isEmpty()) {
-                            title.setVisibility(View.GONE);
+                            kitchenForYouLayout.setVisibility(View.GONE);
                         } else {
-                            title.setVisibility(View.VISIBLE);
+                            kitchenForYouLayout.setVisibility(View.VISIBLE);
                         }
 
                         //Check Banner list
@@ -487,9 +502,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             }
 
             @Override
-            public void onFailure(Call<RestaurantsData> call, Throwable t) {
-                Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
-
+            public void onFailure(Call<RestaurantsData> call, Throwable throwable) {
+                String message = throwable != null && !TextUtils.isEmpty(throwable.getMessage()) ? throwable.getMessage() : getString(R.string.something_went_wrong);
+                CommonUtils.showToast(getContext(),message);
+                showOrHideView(false);
             }
         });
     }

@@ -36,7 +36,7 @@ public class ApiClient {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BuildConfigure.BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(MyApplication.getAppInstance().getGson()))
                     .client(client)
                     .build();
         }
@@ -64,7 +64,7 @@ public class ApiClient {
         public Response intercept(Chain chain) throws IOException {
             Request.Builder builder = chain.request().newBuilder();
             builder.addHeader("X-Requested-With", "XMLHttpRequest");
-            String accessToken = SharedHelper.getKey((Context) MyApplication.getContext(), "access_token");
+            String accessToken = SharedHelper.getKey(MyApplication.getAppInstance(), "access_token");
             if (!TextUtils.isEmpty(accessToken)) {
                 builder.addHeader("Authorization", "Bearer " + accessToken);
             }

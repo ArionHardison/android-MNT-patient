@@ -3,9 +3,12 @@ package com.oyola.app;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
+
 import androidx.multidex.MultiDex;
 
 import com.facebook.stetho.Stetho;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.oyola.app.utils.LocaleUtils;
 
 import java.text.DecimalFormat;
@@ -17,21 +20,27 @@ import java.text.NumberFormat;
 
 public class MyApplication extends Application {
 
-    private static Context context;
+    private static MyApplication appInstance;
 
     public static String commonAccess = "";
     public static String promoCodeSelect = "";
     public static String currency = "";
+    private Gson gson;
 
-    public static Object getContext() {
-        return MyApplication.context;
+    public static MyApplication getAppInstance(){
+        return appInstance;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        MyApplication.context = getApplicationContext();
+        appInstance = this;
         Stetho.initializeWithDefaults(this);
+        gson = new GsonBuilder().serializeNulls().setLenient().create();
+    }
+
+    public Gson getGson() {
+        return gson;
     }
 
     // Called by the system when the device configuration changes while your component is running.

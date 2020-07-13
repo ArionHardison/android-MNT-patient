@@ -1,5 +1,8 @@
 package com.oyola.app.utils;
 
+import android.content.Context;
+import android.widget.Toast;
+
 public class CommonUtils {
 
     private static boolean isRatingNotEmpty(Double rating) {
@@ -11,6 +14,10 @@ public class CommonUtils {
             return String.valueOf(ratingValue.intValue());
         }
         return "5";
+    }
+
+    public static void showToast(Context context, String input) {
+        Toast.makeText(context, input, Toast.LENGTH_SHORT).show();
     }
 
 }
