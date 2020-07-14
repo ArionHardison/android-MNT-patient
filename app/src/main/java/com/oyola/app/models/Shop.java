@@ -4,6 +4,9 @@ package com.oyola.app.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class Shop {
@@ -99,6 +102,18 @@ public class Shop {
     @SerializedName("free_delivery")
     @Expose
     private Integer freeDelivery ;
+
+    public Date getCreatedAtDate() {
+        //2020-07-10 15:18:15
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date createdAtDate = dateFormat.parse(createdAt);
+            return createdAtDate;
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public Integer getId() {
         return id;

@@ -54,6 +54,7 @@ import com.oyola.app.models.Restaurant;
 import com.oyola.app.models.RestaurantsData;
 import com.oyola.app.models.Shop;
 import com.oyola.app.utils.CommonUtils;
+import com.oyola.app.utils.JavaUtils;
 import com.oyola.app.utils.TextUtils;
 import com.oyola.app.utils.Utils;
 
@@ -63,6 +64,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -451,51 +453,62 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                     showOrHideView(false);
                 } else {
                     if (isAdded() && isVisible() && getUserVisibleHint()) {
-                        //Check Restaurant list
-                        if (response.body().getShops().isEmpty()) {
-                            kitchenForYouLayout.setVisibility(View.GONE);
+                        RestaurantsData data = response.body();
+                        if (JavaUtils.isNullOrEmpty(data.getBanners()) && JavaUtils.isNullOrEmpty(data.getShops()) &&
+                                JavaUtils.isNullOrEmpty(data.getFavouriteCuisines()) && JavaUtils.isNullOrEmpty(data.getFreeDeliveryShops())) {
+                            showOrHideView(false);
                         } else {
-                            kitchenForYouLayout.setVisibility(View.VISIBLE);
-                        }
+                            //Check Restaurant list
+                            if (response.body().getShops().isEmpty()) {
+                                kitchenForYouLayout.setVisibility(View.GONE);
+                            } else {
+                                kitchenForYouLayout.setVisibility(View.VISIBLE);
+                            }
 
-                        //Check Banner list
-                        if (response.body().getBanners().isEmpty() || isFilterApplied) {
-                            impressiveDishesLayout.setVisibility(View.GONE);
-                            if (isFilterApplied)
-                                errorLayout.setVisibility(View.VISIBLE);
-                            else
+                            //Check Banner list
+                            if (response.body().getBanners().isEmpty() || isFilterApplied) {
+                                impressiveDishesLayout.setVisibility(View.GONE);
+                                if (isFilterApplied)
+                                    errorLayout.setVisibility(View.VISIBLE);
+                                else
+                                    errorLayout.setVisibility(View.GONE);
+                            } else {
+                                impressiveDishesLayout.setVisibility(View.VISIBLE);
                                 errorLayout.setVisibility(View.GONE);
-                        } else {
-                            impressiveDishesLayout.setVisibility(View.VISIBLE);
-                            errorLayout.setVisibility(View.GONE);
-                        }
-                        GlobalData.shopList = response.body().getShops();
-                        restaurantList.clear();
-                        restaurantList.addAll(GlobalData.shopList);
-                        bannerList.clear();
-                        bannerList.addAll(response.body().getBanners());
-                        favouriteRestaurantList.clear();
-                        favouriteRestaurantList.addAll(response.body().getFavouriteCuisines());
-                        freeDeliveryRestaurantList.clear();
-                        freeDeliveryRestaurantList.addAll(response.body().getFreeDeliveryShops());
+                            }
+                            GlobalData.shopList = response.body().getShops();
+                            restaurantList.clear();
+                            restaurantList.addAll(GlobalData.shopList);
+                            bannerList.clear();
+                            bannerList.addAll(response.body().getBanners());
+                            favouriteRestaurantList.clear();
+                            favouriteRestaurantList.addAll(response.body().getFavouriteCuisines());
+                            freeDeliveryRestaurantList.clear();
+                            freeDeliveryRestaurantList.addAll(response.body().getFreeDeliveryShops());
                         /*if (restaurantList.size() > 1) {
                             restaurantCountTxt.setText("" + restaurantList.size() + " " + getString(R.string.kitchens));
                         } else {
                             restaurantCountTxt.setText("" + restaurantList.size() + " " + getString(R.string.kitchen));
                         }*/
-                        adapterRestaurant.notifyDataSetChanged();
-                        mFavouritesAdapter.notifyDataSetChanged();
-                        mFreeDeliveryAdapter.notifyDataSetChanged();
-                        bannerAdapter.notifyDataSetChanged();
-                        if (favouriteRestaurantList.size() > 0) {
-                            favouriteTitle.setVisibility(View.VISIBLE);
-                        } else {
-                            favouriteTitle.setVisibility(View.GONE);
-                        }
-                        if (freeDeliveryRestaurantList.size() > 0) {
-                            freeDeliveryTitle.setVisibility(View.VISIBLE);
-                        } else {
-                            freeDeliveryTitle.setVisibility(View.GONE);
+                            sortOrdersToDescending(restaurantList);
+                            sortBannersToDescending(bannerList);
+                            sortOrdersToDescending(favouriteRestaurantList);
+                            sortOrdersToDescending(freeDeliveryRestaurantList);
+
+                            adapterRestaurant.notifyDataSetChanged();
+                            mFavouritesAdapter.notifyDataSetChanged();
+                            mFreeDeliveryAdapter.notifyDataSetChanged();
+                            bannerAdapter.notifyDataSetChanged();
+                            if (favouriteRestaurantList.size() > 0) {
+                                favouriteTitle.setVisibility(View.VISIBLE);
+                            } else {
+                                favouriteTitle.setVisibility(View.GONE);
+                            }
+                            if (freeDeliveryRestaurantList.size() > 0) {
+                                freeDeliveryTitle.setVisibility(View.VISIBLE);
+                            } else {
+                                freeDeliveryTitle.setVisibility(View.GONE);
+                            }
                         }
                     }
                 }
@@ -504,9 +517,27 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             @Override
             public void onFailure(Call<RestaurantsData> call, Throwable throwable) {
                 String message = throwable != null && !TextUtils.isEmpty(throwable.getMessage()) ? throwable.getMessage() : getString(R.string.something_went_wrong);
-                CommonUtils.showToast(getContext(),message);
+                CommonUtils.showToast(getContext(), message);
                 showOrHideView(false);
             }
+        });
+    }
+
+    private void sortOrdersToDescending(List<Shop> orderList) {
+        Collections.sort(orderList, (lhs, rhs) -> {
+            if (rhs.getCreatedAtDate() == null || lhs.getCreatedAtDate() == null) {
+                return 0;
+            }
+            return rhs.getCreatedAtDate().compareTo(lhs.getCreatedAtDate());
+        });
+    }
+
+    private void sortBannersToDescending(List<Banner> bannerList) {
+        Collections.sort(bannerList, (lhs, rhs) -> {
+            if (rhs.getShop() == null || lhs.getShop() == null || rhs.getShop().getCreatedAtDate() == null || lhs.getShop().getCreatedAtDate() == null) {
+                return 0;
+            }
+            return rhs.getShop().getCreatedAtDate().compareTo(lhs.getShop().getCreatedAtDate());
         });
     }
 
