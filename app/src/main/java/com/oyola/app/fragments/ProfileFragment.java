@@ -450,9 +450,8 @@ public class ProfileFragment extends Fragment {
                             LoginManager.getInstance().logOut();
                         if (SharedHelper.getKey(context, "login_by").equals("google"))
                             signOut();
+                        SharedHelper.clearSharedPreferences(getContext());
                         SharedHelper.putKey(context, "logged", "false");
-                        SharedHelper.putKey(context, "access_token", "");
-                        SharedHelper.putKey(context, "referral_code", "");
                         startActivity(new Intent(context, WelcomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         GlobalData.profileModel = null;
                         GlobalData.addCart = null;
