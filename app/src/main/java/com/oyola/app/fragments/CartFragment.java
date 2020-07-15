@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +36,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.ViewSkeletonScreen;
+import com.google.gson.Gson;
 import com.oyola.app.HomeActivity;
 import com.oyola.app.R;
 import com.oyola.app.activities.PromotionActivity;
@@ -43,12 +45,15 @@ import com.oyola.app.activities.SetDeliveryLocationActivity;
 import com.oyola.app.adapter.ViewCartAdapter;
 import com.oyola.app.build.api.ApiClient;
 import com.oyola.app.build.api.ApiInterface;
+import com.oyola.app.exception.ServerError;
 import com.oyola.app.helper.ConnectionHelper;
 import com.oyola.app.helper.CustomDialog;
 import com.oyola.app.helper.GlobalData;
 import com.oyola.app.models.AddCart;
 import com.oyola.app.models.Cart;
 import com.oyola.app.models.DeliveryOption;
+import com.oyola.app.utils.CommonUtils;
+import com.oyola.app.utils.TextUtils;
 import com.oyola.app.utils.Utils;
 import com.robinhood.ticker.TickerUtils;
 
@@ -313,8 +318,19 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
                     errorLayout.setVisibility(View.VISIBLE);
                     dataLayout.setVisibility(View.GONE);
                     try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
+                        ServerError serverError = new Gson().fromJson(response.errorBody().charStream(), ServerError.class);
+                        String message = serverError != null ? serverError.getError() : null;
+                        CommonUtils.sessionExpiredAlert(getContext(), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).show();
                     } catch (Exception e) {
 //                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                     }

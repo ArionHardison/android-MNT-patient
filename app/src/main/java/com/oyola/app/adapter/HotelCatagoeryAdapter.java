@@ -380,8 +380,9 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
                         List<CartAddon> cartAddonList = product.getCart().get(0).getCartAddons();
                         for (int i = 0; i < cartAddonList.size(); i++) {
                             CartAddon cartAddon = cartAddonList.get(i);
-                            map.put("product_addons[" + "" + i + "]", cartAddon.getAddonProduct().getId().toString());
-                            map.put("addons_qty[" + "" + i + "]", cartAddon.getQuantity().toString());
+                            String id = String.valueOf(cartAddon.getAddonProduct().getId());
+                            map.put("product_addons[" + "" + i + "]", id);
+                            map.put("addons_qty[" + "" + id + "]", cartAddon.getQuantity().toString());
                         }
                         Log.e("AddCart_Minus", map.toString());
                         addCart(map);

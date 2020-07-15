@@ -52,6 +52,7 @@ import com.oyola.app.activities.WelcomeActivity;
 import com.oyola.app.adapter.ProfileSettingsAdapter;
 import com.oyola.app.helper.GlobalData;
 import com.oyola.app.helper.SharedHelper;
+import com.oyola.app.utils.CommonUtils;
 import com.oyola.app.utils.ListViewSizeHelper;
 import com.oyola.app.utils.LocaleUtils;
 

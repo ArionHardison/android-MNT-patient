@@ -235,8 +235,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                                 for (int i = 0; i < list.size(); i++) {
                                     Addon addon = list.get(i);
                                     if (addon.getAddon().getChecked()) {
-                                        map.put("product_addons[" + "" + i + "]", addon.getId().toString());
-                                        map.put("addons_qty[" + "" + i + "]", addon.getQuantity().toString());
+                                        String id = String.valueOf(addon.getId());
+                                        map.put("product_addons[" + "" + i + "]", id);
+                                        map.put("addons_qty[" + "" + id + "]", addon.getQuantity().toString());
                                     }
                                 }
                             }
@@ -251,8 +252,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                                 for (int i = 0; i < list.size(); i++) {
                                     Addon addon = list.get(i);
                                     if (addon.getAddon().getChecked()) {
-                                        map.put("product_addons[" + "" + i + "]", addon.getId().toString());
-                                        map.put("addons_qty[" + "" + i + "]", addon.getQuantity().toString());
+                                        String id = String.valueOf(addon.getId());
+                                        map.put("product_addons[" + "" + i + "]", id);
+                                        map.put("addons_qty[" + "" + id + "]", addon.getQuantity().toString());
                                     }
                                 }
                             }

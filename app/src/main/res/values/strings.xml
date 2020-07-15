@@ -440,4 +440,8 @@
     <string name="order_id">"?order_id="</string>
     <string name="addon_">%s(%d x %s)</string>
     <string name="product_">%s(%d x %s)</string>
+    <string name="session_expired_alert_title">Session Expired</string>
+    <string name="session_expired_alert_message">You are already logged in with some other device. Do you want to close the current session and login with this device?</string>
+    <string name="session_expired_button_yes">Yes</string>
+    <string name="session_expired_button_no">No</string>
 </resources>
