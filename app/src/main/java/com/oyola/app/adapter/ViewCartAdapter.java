@@ -291,8 +291,9 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     List<CartAddon> cartAddonList = list.get(position).getCartAddons();
                     for (int i = 0; i < cartAddonList.size(); i++) {
                         CartAddon cartAddon = cartAddonList.get(i);
-                        map.put("product_addons[" + "" + i + "]", cartAddon.getAddonProduct().getId().toString());
-                        map.put("addons_qty[" + "" + i + "]", cartAddon.getQuantity().toString());
+                        String id = String.valueOf(cartAddon.getAddonProduct().getId());
+                        map.put("product_addons[" + "" + i + "]", id);
+                        map.put("addons_qty[" + "" + id + "]", cartAddon.getQuantity().toString());
                     }
                     Log.e("AddCart_Minus", map.toString());
                     addCart(map, holder.itemView.getContext());
@@ -308,8 +309,9 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     List<CartAddon> cartAddonList = list.get(position).getCartAddons();
                     for (int i = 0; i < cartAddonList.size(); i++) {
                         CartAddon cartAddon = cartAddonList.get(i);
-                        map.put("product_addons[" + "" + i + "]", cartAddon.getAddonProduct().getId().toString());
-                        map.put("addons_qty[" + "" + i + "]", cartAddon.getQuantity().toString());
+                        String id = String.valueOf(cartAddon.getAddonProduct().getId());
+                        map.put("product_addons[" + "" + i + "]", id);
+                        map.put("addons_qty[" + "" + id + "]", cartAddon.getQuantity().toString());
                     }
                     Log.e("AddCart_Minus", map.toString());
                     addCart(map, holder.itemView.getContext());
