@@ -64,7 +64,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends BaseFragment {
 
     @BindView(R.id.text_line)
     TextView textLine;
@@ -447,19 +447,7 @@ public class ProfileFragment extends Fragment {
                 .setPositiveButton(getResources().getString(R.string.logout), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // continue with delete
-                        if (SharedHelper.getKey(context, "login_by").equals("facebook"))
-                            LoginManager.getInstance().logOut();
-                        if (SharedHelper.getKey(context, "login_by").equals("google"))
-                            signOut();
-                        SharedHelper.clearSharedPreferences(getContext());
-                        SharedHelper.putKey(context, "logged", "false");
-                        startActivity(new Intent(context, WelcomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                        GlobalData.profileModel = null;
-                        GlobalData.addCart = null;
-                        GlobalData.address = "";
-                        GlobalData.selectedAddress = null;
-                        GlobalData.notificationCount = 0;
-                        getActivity().finish();
+                        logout();
                     }
                 })
                 .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {

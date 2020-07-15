@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,7 +52,6 @@ import com.oyola.app.models.AddCart;
 import com.oyola.app.models.Cart;
 import com.oyola.app.models.DeliveryOption;
 import com.oyola.app.utils.CommonUtils;
-import com.oyola.app.utils.TextUtils;
 import com.oyola.app.utils.Utils;
 import com.robinhood.ticker.TickerUtils;
 
@@ -79,7 +77,7 @@ import static com.oyola.app.helper.GlobalData.selectedAddress;
 /**
  * Created by santhosh@appoets.com on 22-08-2017.
  */
-public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.BottomListener {
+public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragment.BottomListener {
 
     private static final String TAG = "CartFragment";
     private static final int PROMOCODE_APPLY = 201;
@@ -314,27 +312,24 @@ public class CartFragment extends Fragment implements OrderDeliveryTypeFragment.
             public void onResponse(Call<AddCart> call, Response<AddCart> response) {
                 Log.d(TAG, response.toString());
                 skeleton.hide();
-                if (response != null && !response.isSuccessful() && response.errorBody() != null) {
+                if (!response.isSuccessful() && response.errorBody() != null) {
                     errorLayout.setVisibility(View.VISIBLE);
                     dataLayout.setVisibility(View.GONE);
                     try {
                         ServerError serverError = new Gson().fromJson(response.errorBody().charStream(), ServerError.class);
                         String message = serverError != null ? serverError.getError() : null;
-                        CommonUtils.sessionExpiredAlert(getContext(), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
+                        if (message != null) {
+                            if (message.toLowerCase().contains("unauthenticated")) {
+                                CommonUtils.sessionExpiredAlert(getContext(), (dialog, which) -> logout()).show();
+                            } else {
+                                CommonUtils.showToast(getContext(), message);
                             }
-                        }, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        }).show();
+                        } else
+                            CommonUtils.showToast(getContext(), getString(R.string.something_went_wrong));
                     } catch (Exception e) {
 //                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                     }
-                } else if (response.isSuccessful()) {
+                } else {
                     customDialog.dismiss();
                     //get Item Count
                     itemCount = response.body().getProductList().size();

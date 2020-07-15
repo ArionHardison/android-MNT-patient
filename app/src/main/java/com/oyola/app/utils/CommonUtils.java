@@ -26,13 +26,12 @@ public class CommonUtils {
     }
 
     public static AlertDialog sessionExpiredAlert(Context context,
-                                                  DialogInterface.OnClickListener okClickListener,
-                                                  DialogInterface.OnClickListener cancelClickListener) {
+                                                  DialogInterface.OnClickListener okClickListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(R.string.session_expired_alert_title);
         builder.setMessage(R.string.session_expired_alert_message);
         builder.setPositiveButton(R.string.session_expired_button_yes, okClickListener);
-        builder.setNegativeButton(R.string.session_expired_button_no, cancelClickListener);
+        builder.setCancelable(false);
         return builder.create();
     }
 
