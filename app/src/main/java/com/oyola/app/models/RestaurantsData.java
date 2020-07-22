@@ -9,16 +9,16 @@ public class RestaurantsData {
 
     @SerializedName("shops")
     @Expose
-    private List<Shop> shops = null;
+    private List<Shop> shops;
     @SerializedName("banners")
     @Expose
-    private List<Banner> banners = null;
+    private List<Banner> banners;
     @SerializedName("favorite_cuisine_shop")
     @Expose
-    private List<Shop> favouriteCuisines = null;
+    private List<Shop> favouriteCuisines;
     @SerializedName("freedelivery_shops")
     @Expose
-    private List<Shop> freeDeliveryShops = null;
+    private List<Shop> freeDeliveryShops;
 
     public List<Shop> getShops() {
         return shops;

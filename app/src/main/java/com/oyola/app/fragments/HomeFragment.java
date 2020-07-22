@@ -159,14 +159,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     boolean mIsFromSignUp = false;
     CuisineSelectFragment mFragment;
 
-    private void showOrHideView(boolean isVisible) {
-        impressiveDishesLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
-        favouriteDishesLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
-        freeDeliveryLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
-        kitchenForYouLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
-        errorLayout.setVisibility(!isVisible ? View.VISIBLE : View.GONE);
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -454,61 +446,19 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 } else {
                     if (isAdded() && isVisible() && getUserVisibleHint()) {
                         RestaurantsData data = response.body();
-                        if (JavaUtils.isNullOrEmpty(data.getBanners()) && JavaUtils.isNullOrEmpty(data.getShops()) &&
-                                JavaUtils.isNullOrEmpty(data.getFavouriteCuisines()) && JavaUtils.isNullOrEmpty(data.getFreeDeliveryShops())) {
+                        List<Banner> bannerDataList = data.getBanners();
+                        List<Shop> shopList = data.getShops();
+                        List<Shop> favCuisineList = data.getFavouriteCuisines();
+                        List<Shop> freeDeliveryList = data.getFreeDeliveryShops();
+
+                        if (JavaUtils.isNullOrEmpty(bannerDataList) && JavaUtils.isNullOrEmpty(shopList) &&
+                                JavaUtils.isNullOrEmpty(favCuisineList) && JavaUtils.isNullOrEmpty(freeDeliveryList)) {
                             showOrHideView(false);
                         } else {
-                            //Check Restaurant list
-                            if (response.body().getShops().isEmpty()) {
-                                kitchenForYouLayout.setVisibility(View.GONE);
-                            } else {
-                                kitchenForYouLayout.setVisibility(View.VISIBLE);
-                            }
-
-                            //Check Banner list
-                            if (response.body().getBanners().isEmpty() || isFilterApplied) {
-                                impressiveDishesLayout.setVisibility(View.GONE);
-                                if (isFilterApplied)
-                                    errorLayout.setVisibility(View.VISIBLE);
-                                else
-                                    errorLayout.setVisibility(View.GONE);
-                            } else {
-                                impressiveDishesLayout.setVisibility(View.VISIBLE);
-                                errorLayout.setVisibility(View.GONE);
-                            }
-                            GlobalData.shopList = response.body().getShops();
-                            restaurantList.clear();
-                            restaurantList.addAll(GlobalData.shopList);
-                            bannerList.clear();
-                            bannerList.addAll(response.body().getBanners());
-                            favouriteRestaurantList.clear();
-                            favouriteRestaurantList.addAll(response.body().getFavouriteCuisines());
-                            freeDeliveryRestaurantList.clear();
-                            freeDeliveryRestaurantList.addAll(response.body().getFreeDeliveryShops());
-                        /*if (restaurantList.size() > 1) {
-                            restaurantCountTxt.setText("" + restaurantList.size() + " " + getString(R.string.kitchens));
-                        } else {
-                            restaurantCountTxt.setText("" + restaurantList.size() + " " + getString(R.string.kitchen));
-                        }*/
-                            sortOrdersToDescending(restaurantList);
-                            sortBannersToDescending(bannerList);
-                            sortOrdersToDescending(favouriteRestaurantList);
-                            sortOrdersToDescending(freeDeliveryRestaurantList);
-
-                            adapterRestaurant.notifyDataSetChanged();
-                            mFavouritesAdapter.notifyDataSetChanged();
-                            mFreeDeliveryAdapter.notifyDataSetChanged();
-                            bannerAdapter.notifyDataSetChanged();
-                            if (favouriteRestaurantList.size() > 0) {
-                                favouriteTitle.setVisibility(View.VISIBLE);
-                            } else {
-                                favouriteTitle.setVisibility(View.GONE);
-                            }
-                            if (freeDeliveryRestaurantList.size() > 0) {
-                                freeDeliveryTitle.setVisibility(View.VISIBLE);
-                            } else {
-                                freeDeliveryTitle.setVisibility(View.GONE);
-                            }
+                            showOrHideKitchenForYouView(shopList);
+                            showOrHideOffersView(bannerDataList);
+                            showOrHideFavouriteView(favCuisineList);
+                            showOrHideFreeDeliveryView(freeDeliveryList);
                         }
                     }
                 }
@@ -521,6 +471,68 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 showOrHideView(false);
             }
         });
+    }
+
+    private void showOrHideView(boolean isVisible) {
+        impressiveDishesLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        favouriteDishesLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        freeDeliveryLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        kitchenForYouLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        errorLayout.setVisibility(!isVisible ? View.VISIBLE : View.GONE);
+    }
+
+    private void showOrHideOffersView(List<Banner> bannerDataList) {
+        if (JavaUtils.isNullOrEmpty(bannerDataList) || isFilterApplied) {
+            impressiveDishesLayout.setVisibility(View.GONE);
+            if (isFilterApplied)
+                errorLayout.setVisibility(View.VISIBLE);
+            else
+                errorLayout.setVisibility(View.GONE);
+        } else {
+            impressiveDishesLayout.setVisibility(View.VISIBLE);
+            errorLayout.setVisibility(View.GONE);
+            bannerList.clear();
+            bannerList.addAll(bannerDataList);
+            sortBannersToDescending(bannerList);
+            bannerAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void showOrHideFavouriteView(List<Shop> favouriteList) {
+        if (JavaUtils.isNullOrEmpty(favouriteList)) {
+            favouriteDishesLayout.setVisibility(View.GONE);
+        } else {
+            favouriteDishesLayout.setVisibility(View.VISIBLE);
+            favouriteRestaurantList.clear();
+            favouriteRestaurantList.addAll(favouriteList);
+            sortOrdersToDescending(favouriteRestaurantList);
+            mFavouritesAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void showOrHideKitchenForYouView(List<Shop> restaurantDataList) {
+        if (JavaUtils.isNullOrEmpty(restaurantDataList)) {
+            kitchenForYouLayout.setVisibility(View.GONE);
+        } else {
+            kitchenForYouLayout.setVisibility(View.VISIBLE);
+            restaurantList.clear();
+            restaurantList.addAll(restaurantDataList);
+            sortOrdersToDescending(restaurantList);
+            GlobalData.shopList = restaurantList;
+            adapterRestaurant.notifyDataSetChanged();
+        }
+    }
+
+    private void showOrHideFreeDeliveryView(List<Shop> freeDeliveryList) {
+        if (JavaUtils.isNullOrEmpty(freeDeliveryList)) {
+            freeDeliveryLayout.setVisibility(View.GONE);
+        } else {
+            freeDeliveryLayout.setVisibility(View.VISIBLE);
+            freeDeliveryRestaurantList.clear();
+            freeDeliveryRestaurantList.addAll(freeDeliveryList);
+            sortOrdersToDescending(freeDeliveryRestaurantList);
+            mFreeDeliveryAdapter.notifyDataSetChanged();
+        }
     }
 
     private void sortOrdersToDescending(List<Shop> orderList) {
