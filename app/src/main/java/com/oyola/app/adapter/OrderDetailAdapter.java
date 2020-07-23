@@ -1,17 +1,21 @@
 package com.oyola.app.adapter;
 
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.oyola.app.R;
+import com.oyola.app.models.Addon;
+import com.oyola.app.models.Addon_;
 import com.oyola.app.models.CartAddon;
 import com.oyola.app.models.Item;
+import com.oyola.app.models.Prices;
 
 import java.util.List;
 
@@ -83,15 +87,21 @@ public class OrderDetailAdapter extends SectionedRecyclerViewAdapter<OrderDetail
     @Override
     public void onBindViewHolder(ViewHolder holder, int section, int relativePosition, int absolutePosition) {
         if (!list.get(section).getCartAddons().isEmpty()) {
-            CartAddon object = list.get(section).getCartAddons().get(relativePosition);
+            CartAddon cartAddon = list.get(section).getCartAddons().get(relativePosition);
+            Addon addon = cartAddon.getAddonProduct();
+            Addon_ addons = (cartAddon.getAddonProduct() != null && cartAddon.getAddonProduct().getAddon() != null) ?
+                    cartAddon.getAddonProduct().getAddon() : null;
+            Prices prices = (list.get(section).getProduct() != null && list.get(section).getProduct().getPrices() != null) ?
+                    list.get(section).getProduct().getPrices() : null;
             holder.itemLayout.setVisibility(View.VISIBLE);
+
+            double price = (addon != null && addon.getPrice() != null) ? addon.getPrice() : 0;
             String value = context.getString(R.string.addon_,
-                    object.getAddonProduct().getAddon().getName(), list.get(section).getQuantity() * object.getQuantity(),
-                    list.get(section).getProduct().getPrices().getCurrency() +
-                            object.getAddonProduct().getPrice());
+                    addons != null ? addons.getName() : "", list.get(section).getQuantity() * cartAddon.getQuantity(),
+                    prices != null ? prices.getCurrency() : "" + price);
             holder.addonDetail.setText(value);
-            Double totalAmount = object.getAddonProduct().getPrice() * list.get(section).getQuantity() * object.getQuantity();
-            holder.addonPrice.setText(list.get(section).getProduct().getPrices().getCurrency() + totalAmount);
+            Double totalAmount = price * list.get(section).getQuantity() * cartAddon.getQuantity();
+            holder.addonPrice.setText(prices != null ? prices.getCurrency() : "" + totalAmount);
         } else {
             holder.itemLayout.setVisibility(View.GONE);
         }

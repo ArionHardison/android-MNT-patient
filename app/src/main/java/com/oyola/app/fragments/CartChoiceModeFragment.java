@@ -158,6 +158,7 @@ public class CartChoiceModeFragment extends BottomSheetDialogFragment {
                 repeatCartMap.put("product_id", product.getId().toString());
                 repeatCartMap.put("quantity", String.valueOf(lastCart.getQuantity() + 1));
                 repeatCartMap.put("cart_id", String.valueOf(lastCart.getId()));
+                repeatCartMap.put("adddon", "repeat");
                 for (int i = 0; i < cartAddonList.size(); i++) {
                     CartAddon cartAddon = cartAddonList.get(i);
                     String id = String.valueOf(cartAddon.getAddonProduct().getId());

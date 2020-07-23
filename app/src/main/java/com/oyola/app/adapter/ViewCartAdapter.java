@@ -288,6 +288,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     map.put("product_id", product.getId().toString());
                     map.put("quantity", String.valueOf(countMinusValue));
                     map.put("cart_id", String.valueOf(list.get(position).getId()));
+                    map.put("adddon", "repeat");
                     List<CartAddon> cartAddonList = list.get(position).getCartAddons();
                     for (int i = 0; i < cartAddonList.size(); i++) {
                         CartAddon cartAddon = cartAddonList.get(i);
@@ -306,6 +307,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     map.put("product_id", product.getId().toString());
                     map.put("quantity", String.valueOf(countMinusValue));
                     map.put("cart_id", String.valueOf(list.get(position).getId()));
+                    map.put("adddon", "repeat");
                     List<CartAddon> cartAddonList = list.get(position).getCartAddons();
                     for (int i = 0; i < cartAddonList.size(); i++) {
                         CartAddon cartAddon = cartAddonList.get(i);
