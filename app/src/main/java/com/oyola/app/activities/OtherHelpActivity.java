@@ -110,7 +110,8 @@ public class OtherHelpActivity extends AppCompatActivity {
 
     private void showDialog() {
 
-        final String[] disputeArrayList = {"COMPLAINED", "CANCELLED", "REFUND"};
+//        final String[] disputeArrayList = {"COMPLAINED", "CANCELLED", "REFUND"};
+        final String[] disputeArrayList = {"COMPLAINED"};
         disputeType = "COMPLAINED";
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
