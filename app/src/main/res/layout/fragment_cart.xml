@@ -219,7 +219,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/nunito_regular"
                             android:text="@string/promo_code"
-                            android:textColor="@color/theme" />
+                            android:textColor="@color/colorGreen" />
 
                         <TextView
                             android:id="@+id/promo_code_apply"
@@ -246,7 +246,7 @@
                             android:layout_weight="1"
                             android:fontFamily="@font/nunito_regular"
                             android:text="@string/promocode_amount"
-                            android:textColor="@color/colorSecondaryText" />
+                            android:textColor="@color/colorGreen" />
 
                         <TextView
                             android:id="@+id/promocode_amount"

@@ -870,6 +870,7 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
         } else if (requestCode == PROMOCODE_APPLY) {
             if (data != null) {
                 promoCodeApply.setText(R.string.promo_applied);
+                promoCodeApply.setTextColor(ContextCompat.getColor(getContext(), R.color.colorGreen));
                 promoCodeApply.setEnabled(false);
                 promo_code = data.getExtras().getString("promotion");
                 getViewCartWithPromocode(promo_code);
