@@ -8,9 +8,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +19,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.oyola.app.R;
 import com.oyola.app.adapter.AccountPaymentAdapter;
 import com.oyola.app.build.api.ApiClient;
@@ -32,7 +33,10 @@ import com.oyola.app.helper.GlobalData;
 import com.oyola.app.models.Card;
 import com.oyola.app.models.Message;
 import com.oyola.app.models.Order;
+import com.oyola.app.utils.CommonUtils;
+import com.oyola.app.utils.TextUtils;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.NumberFormat;
@@ -246,17 +250,32 @@ public class AccountPaymentActivity extends AppCompatActivity {
                         if (mIsImmediate) {
                             showPickUpSuccessDialog();
                         } else {
-                            startActivity(new Intent(context, CurrentOrderDetailActivity.class).putExtra("is_order_page",true).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                            startActivity(new Intent(context, CurrentOrderDetailActivity.class).putExtra("is_order_page", true).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                             finish();
                         }
                     } else {
-                        startActivity(new Intent(context, CurrentOrderDetailActivity.class).putExtra("is_order_page",true).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        startActivity(new Intent(context, CurrentOrderDetailActivity.class).putExtra("is_order_page", true).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         finish();
                     }
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
+                        String message = jObjError.optString("message");
+                        if (TextUtils.isEmpty(message)) {
+                            JSONArray jsonDateErrorArray = jObjError.optJSONArray("delivery_date");
+                            JSONArray jsonTimeErrorArray = jObjError.optJSONArray("delivery_time");
+                            if (jsonDateErrorArray != null && jsonDateErrorArray.length() > 0) {
+                                String jsonErrorMessage = jsonDateErrorArray.get(0).toString();
+                                if (!TextUtils.isEmpty(jsonErrorMessage))
+                                    CommonUtils.showToast(AccountPaymentActivity.this, jsonErrorMessage);
+                            } else if (jsonTimeErrorArray != null && jsonTimeErrorArray.length() > 0) {
+                                String jsonErrorMessage = jsonTimeErrorArray.get(0).toString();
+                                if (!TextUtils.isEmpty(jsonErrorMessage))
+                                    CommonUtils.showToast(AccountPaymentActivity.this, jsonErrorMessage);
+                            }
+                        } else {
+                            CommonUtils.showToast(AccountPaymentActivity.this, message);
+                        }
                     } catch (Exception e) {
                         Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
                     }
