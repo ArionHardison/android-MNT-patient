@@ -173,7 +173,7 @@ public class AddMoneyActivity extends AppCompatActivity {
         builder.setMessage(message)
                 .setPositiveButton(getResources().getString(R.string.okay), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(context, AccountPaymentActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        startActivity(new Intent(context, AccountPaymentActivity.class).putExtra("without_cache", true).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                         finish();
 

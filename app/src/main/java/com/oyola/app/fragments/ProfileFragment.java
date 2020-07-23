@@ -142,7 +142,8 @@ public class ProfileFragment extends BaseFragment {
                 startActivity(new Intent(context, FavouritesActivity.class));
                 break;
             case 2:
-                startActivity(new Intent(context, AccountPaymentActivity.class).putExtra("is_show_wallet", true).putExtra("is_show_cash", false));
+                startActivity(new Intent(context, AccountPaymentActivity.class).putExtra("is_show_wallet", true)
+                        .putExtra("is_show_cash", false).putExtra("without_cache", true));
                 break;
             case 3:
                 startActivity(new Intent(context, OrdersActivity.class));

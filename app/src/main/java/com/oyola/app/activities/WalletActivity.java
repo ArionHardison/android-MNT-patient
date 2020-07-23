@@ -3,12 +3,6 @@ package com.oyola.app.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +11,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.oyola.app.R;
 import com.oyola.app.adapter.WalletHistoryAdapter;
 import com.oyola.app.build.api.ApiClient;
@@ -28,7 +30,6 @@ import com.oyola.app.models.AddCart;
 import com.oyola.app.models.AddressList;
 import com.oyola.app.models.User;
 import com.oyola.app.models.WalletHistory;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
 
@@ -43,6 +44,7 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 import static com.oyola.app.helper.GlobalData.addCart;
 import static com.oyola.app.helper.GlobalData.currencySymbol;
 
@@ -220,7 +222,8 @@ public class WalletActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(this, AccountPaymentActivity.class).putExtra("is_show_wallet", true).putExtra("is_show_cash", false));
+        startActivity(new Intent(this, AccountPaymentActivity.class)
+                .putExtra("is_show_wallet", true).putExtra("is_show_cash", false).putExtra("without_cache", true));
         finish();
         overridePendingTransition(R.anim.anim_nothing, R.anim.slide_out_right);
     }

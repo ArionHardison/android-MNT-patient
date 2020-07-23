@@ -138,7 +138,7 @@ public class AccountPaymentActivity extends AppCompatActivity {
     Integer mEstimatedDeliveryTime = 0;
     String mRestaurantType = "";
     boolean mIsImmediate = false;
-
+    private boolean isWithoutCache = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -303,7 +303,8 @@ public class AccountPaymentActivity extends AppCompatActivity {
                     if (cardArrayList.size() == 1) {
                         cardArrayList.get(0).setChecked(true);
                         GlobalData.isCardChecked = true;
-                        proceedToPayBtn.performClick();
+                        if (!isWithoutCache)
+                            proceedToPayBtn.performClick();
                     }
                 } else {
                     try {
@@ -438,6 +439,7 @@ public class AccountPaymentActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        isWithoutCache = getIntent().getBooleanExtra("without_cache", false);
         if (checkoutMap == null || !checkoutMap.containsKey("wallet") ||
                 !checkoutMap.get("wallet").equals("1")
                 || !(addCart.getPayable() < Double.parseDouble(GlobalData.profileModel.getWalletBalance()))) {
