@@ -206,7 +206,7 @@
     <string name="updated_successfully">Updated successfully.</string>
     <string name="network_error_toast">Something went wrong</string>
     <string name="add_ons">AddOns</string>
-    <string name="custom_notes">Custom Notes</string>
+    <string name="custom_notes">Special Instructions</string>
     <string name="write_something">Write Something</string>
     <string name="product">Product</string>
     <string name="customize">Customize</string>
