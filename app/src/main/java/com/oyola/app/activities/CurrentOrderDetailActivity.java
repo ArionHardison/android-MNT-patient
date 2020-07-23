@@ -108,7 +108,7 @@ import retrofit2.Response;
 import static com.oyola.app.helper.GlobalData.ORDER_STATUS;
 import static com.oyola.app.helper.GlobalData.isSelectedOrder;
 
-public class CurrentOrderDetailActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener,
+public class CurrentOrderDetailActivity extends BaseActivity implements OnMapReadyCallback, LocationListener,
         GoogleMap.OnMarkerDragListener, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnCameraMoveListener {
 
@@ -799,6 +799,7 @@ public class CurrentOrderDetailActivity extends AppCompatActivity implements OnM
             @Override
             public void onResponse(@NonNull Call<Order> call, @NonNull Response<Order> response) {
                 if (response.isSuccessful()) {
+                    clearNotification();
                     onBackPressed();
                 } else {
                     customDialog.dismiss();
