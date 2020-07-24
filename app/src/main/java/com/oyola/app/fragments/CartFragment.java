@@ -154,7 +154,8 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
     //Animation number
     private static final char[] NUMBER_LIST = TickerUtils.getDefaultNumberList();
 
-    public static TextView itemTotalAmount, deliveryCharges, discountAmount, serviceTax, payAmount, promocode_amount;
+    public static TextView itemTotalAmount, discountAmount, serviceTax, payAmount;
+    private TextView deliveryCharges, promocode_amount;
     LinearLayout lnrPromocodeAmount;
     String promo_code = "";
     Fragment orderFullViewFragment;
