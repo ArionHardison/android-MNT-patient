@@ -91,9 +91,9 @@ public class CartAddOnsAdapter extends RecyclerView.Adapter<CartAddOnsAdapter.My
         if (GlobalData.cartAddons != null) {
             List<CartAddon> cartAddons = GlobalData.cartAddons;
             for (CartAddon cartAddon : cartAddons) {
-                System.out.println("addon " + addon.getAddon().getId() + " ==" + cartAddon.getAddonProduct().getAddon().getId());
-                if (addon.getAddon().getId().equals(cartAddon.getAddonProduct().getAddon().getId())) {
-                    System.out.println(addon.getAddon().getId() + " = " + cartAddon.getAddonProduct().getAddon().getId());
+                Addon addonProduct = cartAddon.getAddonProduct();
+                if (addon !=null && addon.getAddon() !=null && addonProduct !=null && addonProduct.getAddon() != null &&
+                        addon.getAddon().getId().equals(addonProduct.getAddon().getId())) {
                     holder.addonName.setChecked(true);
                     addon.setQuantity(cartAddon.getQuantity());
                     addon.getAddon().setChecked(true);

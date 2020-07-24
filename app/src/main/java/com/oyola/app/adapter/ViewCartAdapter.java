@@ -2,11 +2,6 @@ package com.oyola.app.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +12,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
+
 import com.google.gson.Gson;
 import com.oyola.app.R;
 import com.oyola.app.build.api.ApiClient;
@@ -26,6 +27,8 @@ import com.oyola.app.fragments.CartChoiceModeFragment;
 import com.oyola.app.fragments.CartFragment;
 import com.oyola.app.helper.GlobalData;
 import com.oyola.app.models.AddCart;
+import com.oyola.app.models.Addon;
+import com.oyola.app.models.Addon_;
 import com.oyola.app.models.Cart;
 import com.oyola.app.models.CartAddon;
 import com.oyola.app.models.Product;
@@ -159,16 +162,17 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        Cart cart = list.get(position);
         holder.cardAddTextLayout.setVisibility(View.GONE);
         holder.cardAddDetailLayout.setVisibility(View.VISIBLE);
-        product = list.get(position).getProduct();
+        product = cart.getProduct();
         holder.cardTextValueTicker.setCharacterList(NUMBER_LIST);
         holder.dishNameTxt.setText(product.getName());
-        holder.cardTextValue.setText(list.get(position).getQuantity().toString());
-        holder.cardTextValueTicker.setText(list.get(position).getQuantity().toString());
+        holder.cardTextValue.setText(cart.getQuantity().toString());
+        holder.cardTextValueTicker.setText(cart.getQuantity().toString());
         //  priceAmount = product.getCalculated_price();
-        List<CartAddon> cartAddonList = list.get(position).getCartAddons();
-        double totalAmount = list.get(position).getQuantity() * product.getPrices().getOrignalPrice();
+        List<CartAddon> cartAddonList = cart.getCartAddons();
+        double totalAmount = cart.getQuantity() * product.getPrices().getOrignalPrice();
         holder.priceTxt.setText(product.getPrices().getCurrency() + totalAmount);
         if (cartAddonList.isEmpty()) {
             holder.addons.setText(context.getString(R.string.no_addons));
@@ -176,12 +180,15 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
         } else {
             holder.tvAddonPrice.setVisibility(View.VISIBLE);
             for (int i = 0; i < cartAddonList.size(); i++) {
+                Addon addonProduct = cartAddonList.get(i).getAddonProduct();
+                Addon_ addon = addonProduct != null ? addonProduct.getAddon() : null;
+                double price = addonProduct != null ? addonProduct.getPrice() : 0;
+                String name = addon != null ? addon.getName() : "";
+
                 String value = context.getString(R.string.addon_,
-                        cartAddonList.get(i).getAddonProduct().getAddon().getName(),
-                        list.get(position).getQuantity() * cartAddonList.get(i).getQuantity(), product.getPrices().getCurrency() +
-                                cartAddonList.get(i).getAddonProduct().getPrice());
-                double addOnAmount = cartAddonList.get(i).getAddonProduct().getPrice() *
-                        list.get(position).getQuantity() * cartAddonList.get(i).getQuantity();
+                        name,
+                        cart.getQuantity() * cartAddonList.get(i).getQuantity(), product.getPrices().getCurrency() + price);
+                double addOnAmount = price * cart.getQuantity() * cartAddonList.get(i).getQuantity();
                 if (i == 0) {
                     holder.addons.setText(value);
                     holder.tvAddonPrice.setText(product.getPrices().getCurrency() + addOnAmount);
@@ -199,9 +206,9 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
             holder.foodImageType.setVisibility(View.VISIBLE);
         }
         selectedShop = product.getShop();
-        if (list.get(position).getNote() != null) {
+        if (cart.getNote() != null) {
             holder.tvNotes.setVisibility(View.VISIBLE);
-            holder.tvNotes.setText(list.get(position).getNote());
+            holder.tvNotes.setText(cart.getNote());
         } else {
             holder.tvNotes.setVisibility(View.GONE);
         }
@@ -232,12 +239,12 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                 };
                 holder.animationLineCartAdd.postDelayed(action, 3000);
                 /* Press Add Card Add button */
-                product = list.get(position).getProduct();
+                product = cart.getProduct();
                 if (product.getAddons() != null && !product.getAddons().isEmpty()) {
                     GlobalData.isSelectedProduct = product;
-                    Log.d(TAG, list.get(position).toString());
-                    CartChoiceModeFragment.lastCart = list.get(position);
-                    Log.d(TAG, new Gson().toJson(list.get(position)));
+                    Log.d(TAG, cart.toString());
+                    CartChoiceModeFragment.lastCart = cart;
+                    Log.d(TAG, new Gson().toJson(cart));
                     commonAccess = "Chooice";
                     bottomSheetDialogFragment = new CartChoiceModeFragment();
                     bottomSheetDialogFragment.show(((AppCompatActivity) context)
@@ -251,7 +258,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     HashMap<String, String> map = new HashMap<>();
                     map.put("product_id", product.getId().toString());
                     map.put("quantity", holder.cardTextValue.getText().toString());
-                    map.put("cart_id", String.valueOf(list.get(position).getId()));
+                    map.put("cart_id", String.valueOf(cart.getId()));
                     Log.e("AddCart_add", map.toString());
                     addCart(map, holder.itemView.getContext());
                 }
@@ -278,23 +285,26 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                 holder.animationLineCartAdd.postDelayed(action, 3000);
                 int countMinusValue;
                 /* Press Add Card Minus button */
-                product = list.get(position).getProduct();
+                product = cart.getProduct();
                 if (holder.cardTextValue.getText().toString().equalsIgnoreCase("1")) {
                     countMinusValue = Integer.parseInt(holder.cardTextValue.getText().toString()) - 1;
                     holder.cardTextValue.setText("" + countMinusValue);
                     holder.cardTextValueTicker.setText("" + countMinusValue);
-                    productList = list.get(position);
+                    productList = cart;
                     HashMap<String, String> map = new HashMap<>();
                     map.put("product_id", product.getId().toString());
                     map.put("quantity", String.valueOf(countMinusValue));
-                    map.put("cart_id", String.valueOf(list.get(position).getId()));
+                    map.put("cart_id", String.valueOf(cart.getId()));
                     map.put("adddon", "repeat");
-                    List<CartAddon> cartAddonList = list.get(position).getCartAddons();
+                    List<CartAddon> cartAddonList = cart.getCartAddons();
                     for (int i = 0; i < cartAddonList.size(); i++) {
                         CartAddon cartAddon = cartAddonList.get(i);
-                        String id = String.valueOf(cartAddon.getAddonProduct().getId());
-                        map.put("product_addons[" + "" + i + "]", id);
-                        map.put("addons_qty[" + "" + id + "]", cartAddon.getQuantity().toString());
+                        Addon addonProduct = cartAddon.getAddonProduct();
+                        if (addonProduct != null) {
+                            String id = String.valueOf(addonProduct.getId());
+                            map.put("product_addons[" + "" + i + "]", id);
+                            map.put("addons_qty[" + "" + id + "]", cartAddon.getQuantity().toString());
+                        }
                     }
                     Log.e("AddCart_Minus", map.toString());
                     addCart(map, holder.itemView.getContext());
@@ -306,14 +316,17 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     HashMap<String, String> map = new HashMap<>();
                     map.put("product_id", product.getId().toString());
                     map.put("quantity", String.valueOf(countMinusValue));
-                    map.put("cart_id", String.valueOf(list.get(position).getId()));
+                    map.put("cart_id", String.valueOf(cart.getId()));
                     map.put("adddon", "repeat");
-                    List<CartAddon> cartAddonList = list.get(position).getCartAddons();
+                    List<CartAddon> cartAddonList = cart.getCartAddons();
                     for (int i = 0; i < cartAddonList.size(); i++) {
                         CartAddon cartAddon = cartAddonList.get(i);
-                        String id = String.valueOf(cartAddon.getAddonProduct().getId());
-                        map.put("product_addons[" + "" + i + "]", id);
-                        map.put("addons_qty[" + "" + id + "]", cartAddon.getQuantity().toString());
+                        Addon addonProduct = cartAddon.getAddonProduct();
+                        if (addonProduct != null) {
+                            String id = String.valueOf(addonProduct.getId());
+                            map.put("product_addons[" + "" + i + "]", id);
+                            map.put("addons_qty[" + "" + id + "]", cartAddon.getQuantity().toString());
+                        }
                     }
                     Log.e("AddCart_Minus", map.toString());
                     addCart(map, holder.itemView.getContext());
@@ -339,14 +352,14 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     }
                 };
                 holder.animationLineCartAdd.postDelayed(action, 3000);
-                productList = list.get(position);
+                productList = cart;
                 GlobalData.isSelectedProduct = product;
                 GlobalData.isSelctedCart = productList;
                 GlobalData.cartAddons = productList.getCartAddons();
                 AddonBottomSheetFragment bottomSheetDialogFragment = new AddonBottomSheetFragment();
                 bottomSheetDialogFragment.show(((AppCompatActivity) context)
                         .getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
-                AddonBottomSheetFragment.selectedCart = list.get(position);
+                AddonBottomSheetFragment.selectedCart = cart;
                 // Right here!
             }
         });

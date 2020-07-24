@@ -7,18 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.palette.graphics.Palette;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -29,11 +17,24 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
+import androidx.palette.graphics.Palette;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.ViewSkeletonScreen;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.oyola.app.HeaderView;
 import com.oyola.app.R;
 import com.oyola.app.adapter.CategoryAdapter;
@@ -43,13 +44,18 @@ import com.oyola.app.build.api.ApiInterface;
 import com.oyola.app.helper.ConnectionHelper;
 import com.oyola.app.helper.GlobalData;
 import com.oyola.app.models.AddCart;
+import com.oyola.app.models.Addon;
+import com.oyola.app.models.Cart;
+import com.oyola.app.models.CartAddon;
 import com.oyola.app.models.Category;
 import com.oyola.app.models.CategoryModel;
 import com.oyola.app.models.Favorite;
+import com.oyola.app.models.Prices;
 import com.oyola.app.models.Product;
 import com.oyola.app.models.Shop;
 import com.oyola.app.models.ShopDetail;
 import com.oyola.app.utils.CommonUtils;
+import com.oyola.app.utils.JavaUtils;
 import com.oyola.app.utils.Utils;
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.squareup.picasso.Picasso;
@@ -119,7 +125,6 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
     int restaurantPosition = 0;
     boolean isShopIsChanged = true;
     double priceAmount = 0;
-    int itemCount = 0;
     int itemQuantity = 0;
     Animation slide_down, slide_up;
 
@@ -341,38 +346,47 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
             @Override
             public void onResponse(Call<AddCart> call, Response<AddCart> response) {
                 skeleton.hide();
-                if (response != null && !response.isSuccessful() && response.errorBody() != null) {
+                if (!response.isSuccessful() && response.errorBody() != null) {
                     GlobalData.addCart = null;
-                } else if (response.isSuccessful()) {
+                } else {
+                    AddCart addCart = response.body();
                     //get Item Count
-                    itemCount = response.body().getProductList().size();
-                    GlobalData.notificationCount = response.body().getProductList().size();
-                    if (itemCount == 0) {
-                        GlobalData.addCart = response.body();
+                    List<Cart> cartList = addCart != null && !JavaUtils.isNullOrEmpty(addCart.getProductList()) ?
+                            addCart.getProductList() : null;
+                    GlobalData.notificationCount = !JavaUtils.isNullOrEmpty(addCart.getProductList()) ? addCart.getProductList().size() : 0;
+                    if (JavaUtils.isNullOrEmpty(cartList)) {
+                        GlobalData.addCart = addCart;
                     } else {
-                        AddCart addCart = response.body();
-                        GlobalData.addCart = response.body();
-                        for (int i = 0; i < itemCount; i++) {
-                            //Get Total item Quantity
-                            itemQuantity = itemQuantity + response.body().getProductList().get(i).getQuantity();
-                            //Get product price
-                            if (response.body().getProductList().get(i).getProduct().getPrices().getOrignalPrice() != 0)
-                                priceAmount = priceAmount + (response.body().getProductList().get(i).getQuantity() * response.body().getProductList().get(i).getProduct().getPrices().getOrignalPrice());
+                        GlobalData.addCart = addCart;
+                        for (int i = 0, size = cartList.size(); i < size; i++) {
+                            int quantity = cartList.get(i).getQuantity() != null ? cartList.get(i).getQuantity() : 0;
+                            Product product = cartList.get(i).getProduct();
+                            Prices prices = product != null ? product.getPrices() : null;
+                            double origionalPrice = prices != null ? prices.getOrignalPrice() : 0;
+                            List<CartAddon> cartAddonList = cartList.get(i).getCartAddons();
 
-                            if (addCart.getProductList().get(i).getCartAddons() != null && !addCart.getProductList().get(i).getCartAddons().isEmpty()) {
-                                for (int j = 0; j < addCart.getProductList().get(i).getCartAddons().size(); j++) {
-                                    priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * (addCart.getProductList().get(i).getCartAddons().get(j).getQuantity() *
-                                            addCart.getProductList().get(i).getCartAddons().get(j).getAddonProduct().getPrice()));
+                            //Get Total item Quantity
+                            itemQuantity = itemQuantity + cartList.get(i).getQuantity();
+                            //Get product price
+                            if (origionalPrice != 0)
+                                priceAmount = priceAmount + (quantity * origionalPrice);
+
+                            if (!JavaUtils.isNullOrEmpty(cartAddonList)) {
+                                for (int j = 0, cartAddonSize = cartAddonList.size(); j < cartAddonSize; j++) {
+                                    int cartAddonQuantity = cartAddonList.get(j).getQuantity() != null ? cartAddonList.get(j).getQuantity() : 0;
+                                    Addon addon = cartAddonList.get(j).getAddonProduct();
+                                    double price = addon != null ? addon.getPrice() : 0;
+                                    priceAmount = priceAmount + (quantity * (cartAddonQuantity * price));
                                 }
                             }
                         }
                         GlobalData.notificationCount = itemQuantity;
-                        GlobalData.addCartShopId = response.body().getProductList().get(0).getProduct().getShopId();
+                        GlobalData.addCartShopId = cartList.get(0).getProduct().getShopId();
                         //Set Payment details
-                        String currency = response.body().getProductList().get(0).getProduct().getPrices().getCurrency();
-                        if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() != 0) {
-                            if (response.body().getProductList().get(0).getProduct().getShop().getOfferMinAmount() < priceAmount) {
-                                int offerPercentage = response.body().getProductList().get(0).getProduct().getShop().getOfferPercent();
+                        String currency = cartList.get(0).getProduct().getPrices().getCurrency();
+                        if (cartList.get(0).getProduct().getShop().getOfferMinAmount() != 0) {
+                            if (cartList.get(0).getProduct().getShop().getOfferMinAmount() < priceAmount) {
+                                int offerPercentage = cartList.get(0).getProduct().getShop().getOfferPercent();
                             }
                         }
                     }
@@ -421,19 +435,27 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
     private void setViewcartBottomLayout(AddCart addCart) {
         priceAmount = 0;
         itemQuantity = 0;
-        itemCount = 0;
         //get Item Count
-        itemCount = addCart.getProductList().size();
-        for (int i = 0; i < itemCount; i++) {
+        List<Cart> cartList = addCart != null && !JavaUtils.isNullOrEmpty(addCart.getProductList()) ? addCart.getProductList() : null;
+        for (int i = 0, size = cartList.size(); i < size; i++) {
+            int quantity = cartList.get(i).getQuantity() != null ? cartList.get(i).getQuantity() : 0;
+            Product product = cartList.get(i).getProduct();
+            Prices prices = product != null ? product.getPrices() : null;
+            double price = prices != null ? prices.getPrice() : 0;
+            double origionalPrice = prices != null ? prices.getOrignalPrice() : 0;
+            List<CartAddon> cartAddonList = cartList.get(i).getCartAddons();
+
             //Get Total item Quantity
-            itemQuantity = itemQuantity + addCart.getProductList().get(i).getQuantity();
+            itemQuantity = itemQuantity + quantity;
             //Get product price
-            if (addCart.getProductList().get(i).getProduct().getPrices().getPrice() > 0)
-                priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * addCart.getProductList().get(i).getProduct().getPrices().getOrignalPrice());
-            if (addCart.getProductList().get(i).getCartAddons() != null && !addCart.getProductList().get(i).getCartAddons().isEmpty()) {
-                for (int j = 0; j < addCart.getProductList().get(i).getCartAddons().size(); j++) {
-                    priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * (addCart.getProductList().get(i).getCartAddons().get(j).getQuantity() *
-                            addCart.getProductList().get(i).getCartAddons().get(j).getAddonProduct().getPrice()));
+            if (price > 0)
+                priceAmount = priceAmount + (quantity * origionalPrice);
+            if (!JavaUtils.isNullOrEmpty(cartAddonList)) {
+                for (int j = 0, cartAddonSize = cartAddonList.size(); j < cartAddonSize; j++) {
+                    int cartAddonQuantity = cartAddonList.get(j).getQuantity() != null ? cartAddonList.get(j).getQuantity() : 0;
+                    Addon addon = cartAddonList.get(j).getAddonProduct();
+                    double addonPrice = addon != null ? addon.getPrice() : 0;
+                    priceAmount = priceAmount + (quantity * (cartAddonQuantity * addonPrice));
                 }
             }
         }

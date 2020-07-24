@@ -5,8 +5,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.oyola.app.R;
 import com.oyola.app.activities.HotelViewActivity;
 import com.oyola.app.activities.ProductDetailActivity;
@@ -25,6 +26,7 @@ import com.oyola.app.build.api.ApiInterface;
 import com.oyola.app.helper.CustomDialog;
 import com.oyola.app.helper.GlobalData;
 import com.oyola.app.models.AddCart;
+import com.oyola.app.models.Addon;
 import com.oyola.app.models.Cart;
 import com.oyola.app.models.CartAddon;
 import com.oyola.app.models.Product;
@@ -126,10 +128,12 @@ public class CartChoiceModeFragment extends BottomSheetDialogFragment {
 //            addOnsQty.setText("" + cartAddonList.size() + " Add on");
             addOnsQty.setText(context.getResources().getQuantityString(R.plurals.add_ons, cartAddonList.size(), cartAddonList.size()));
             for (int i = 0; i < cartAddonList.size(); i++) {
+                Addon addonProduct = cartAddonList.get(i).getAddonProduct();
+                String name = (addonProduct != null && addonProduct.getAddon() != null) ? addonProduct.getAddon().getName() : "";
                 if (i == 0)
-                    addOnsItemsTxt.setText(cartAddonList.get(i).getAddonProduct().getAddon().getName());
+                    addOnsItemsTxt.setText(name);
                 else
-                    addOnsItemsTxt.append(", " + cartAddonList.get(i).getAddonProduct().getAddon().getName());
+                    addOnsItemsTxt.append(", " + name);
             }
 
 

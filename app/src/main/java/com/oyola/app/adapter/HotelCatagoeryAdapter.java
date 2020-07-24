@@ -8,11 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
-import androidx.annotation.NonNull;
-import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -32,6 +27,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
+
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -46,12 +47,15 @@ import com.oyola.app.build.api.ApiInterface;
 import com.oyola.app.fragments.CartChoiceModeFragment;
 import com.oyola.app.helper.GlobalData;
 import com.oyola.app.models.AddCart;
+import com.oyola.app.models.Addon;
 import com.oyola.app.models.Cart;
 import com.oyola.app.models.CartAddon;
 import com.oyola.app.models.Category;
 import com.oyola.app.models.ClearCart;
+import com.oyola.app.models.Prices;
 import com.oyola.app.models.Product;
 import com.oyola.app.models.ShopDetail;
+import com.oyola.app.utils.JavaUtils;
 import com.oyola.app.utils.Utils;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
@@ -83,7 +87,6 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
     Activity activity;
     int lastPosition = -1;
     public static double priceAmount = 0;
-    public static int itemCount = 0;
     public static int itemQuantity = 0;
     public static Product product;
     List<Product> productList;
@@ -175,7 +178,7 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
         if (product.getCalories() != null) {
             wordTwo = new SpannableString(" " + product.getCalories() + " " + context.getString(R.string.calories_symbol));
         } else {
-            wordTwo = new SpannableString(" 0 "  + context.getString(R.string.calories_symbol));
+            wordTwo = new SpannableString(" 0 " + context.getString(R.string.calories_symbol));
         }
         wordTwo.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.checkbox_green)), 0, wordTwo.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         holder.dishNameTxt.append(wordTwo);
@@ -380,9 +383,12 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
                         List<CartAddon> cartAddonList = product.getCart().get(0).getCartAddons();
                         for (int i = 0; i < cartAddonList.size(); i++) {
                             CartAddon cartAddon = cartAddonList.get(i);
-                            String id = String.valueOf(cartAddon.getAddonProduct().getId());
-                            map.put("product_addons[" + "" + i + "]", id);
-                            map.put("addons_qty[" + "" + id + "]", cartAddon.getQuantity().toString());
+                            Addon addonProduct = cartAddon.getAddonProduct();
+                            if (addonProduct != null) {
+                                String id = String.valueOf(addonProduct.getId());
+                                map.put("product_addons[" + "" + i + "]", id);
+                                map.put("addons_qty[" + "" + id + "]", cartAddon.getQuantity().toString());
+                            }
                         }
                         Log.e("AddCart_Minus", map.toString());
                         addCart(map);
@@ -643,19 +649,26 @@ public class HotelCatagoeryAdapter extends SectionedRecyclerViewAdapter<HotelCat
     private static void setViewcartBottomLayout(AddCart addCart) {
         priceAmount = 0;
         itemQuantity = 0;
-        itemCount = 0;
-        //get Item Count
-        itemCount = addCart.getProductList().size();
-        for (int i = 0; i < itemCount; i++) {
+        List<Cart> cartList = addCart != null && !JavaUtils.isNullOrEmpty(addCart.getProductList()) ? addCart.getProductList() : null;
+        for (int i = 0, size = cartList.size(); i < size; i++) {
+            int quantity = cartList.get(i).getQuantity() != null ? cartList.get(i).getQuantity() : 0;
+            Product product = cartList.get(i).getProduct();
+            Prices prices = product != null ? product.getPrices() : null;
+            double price = prices != null ? prices.getPrice() : 0;
+            double origionalPrice = prices != null ? prices.getOrignalPrice() : 0;
+            List<CartAddon> cartAddonList = cartList.get(i).getCartAddons();
+
             //Get Total item Quantity
-            itemQuantity = itemQuantity + addCart.getProductList().get(i).getQuantity();
+            itemQuantity = itemQuantity + quantity;
             //Get addon price
-            if (addCart.getProductList().get(i).getProduct().getPrices().getOrignalPrice() > 0)
-                priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * addCart.getProductList().get(i).getProduct().getPrices().getOrignalPrice());
-            if (addCart.getProductList().get(i).getCartAddons() != null && !addCart.getProductList().get(i).getCartAddons().isEmpty()) {
-                for (int j = 0; j < addCart.getProductList().get(i).getCartAddons().size(); j++) {
-                    priceAmount = priceAmount + (addCart.getProductList().get(i).getQuantity() * (addCart.getProductList().get(i).getCartAddons().get(j).getQuantity() *
-                            addCart.getProductList().get(i).getCartAddons().get(j).getAddonProduct().getPrice()));
+            if (origionalPrice > 0)
+                priceAmount = priceAmount + (quantity * origionalPrice);
+            if (!JavaUtils.isNullOrEmpty(cartAddonList)) {
+                for (int j = 0, cartAddonSize = cartAddonList.size(); j < cartAddonSize; j++) {
+                    int cartAddonQuantity = cartAddonList.get(j).getQuantity() != null ? cartAddonList.get(j).getQuantity() : 0;
+                    Addon addon = cartAddonList.get(j).getAddonProduct();
+                    double addonPrice = addon != null ? addon.getPrice() : 0;
+                    priceAmount = priceAmount + (quantity * (cartAddonQuantity * addonPrice));
                 }
             }
         }
