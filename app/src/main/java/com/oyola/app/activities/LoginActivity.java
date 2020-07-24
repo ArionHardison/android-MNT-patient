@@ -6,12 +6,13 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -165,6 +166,9 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void registerFacebookLoginCallback() {
+        if (callbackManager != null) {
+            callbackManager = CallbackManager.Factory.create();
+        }
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email"));
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
@@ -211,7 +215,7 @@ public class LoginActivity extends BaseActivity {
                 mSocialModel.setmName(account.getDisplayName());
                 mSocialModel.setmEmail(account.getEmail());
                 mSocialModel.setmImageUrl(account.getPhotoUrl().toString());
-            new RetrieveTokenTask().execute(account.getEmail());
+                new RetrieveTokenTask().execute(account.getEmail());
             }
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
@@ -365,9 +369,9 @@ public class LoginActivity extends BaseActivity {
                     GlobalData.addressList = new AddressList();
                     GlobalData.addressList.setAddresses(response.body().getAddresses());
 //                    Toast.makeText(context, getResources().getString(R.string.regsiter_success), Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(context, HomeActivity.class);
+                    Intent intent = new Intent(context, HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.putExtra("isFromSignUp",true);
+                    intent.putExtra("isFromSignUp", true);
                     startActivity(intent);
                     finish();
                 } else {

@@ -151,7 +151,9 @@ public class CartChoiceModeFragment extends BottomSheetDialogFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.i_will_choose_btn:
-                locationInfoLayout.setVisibility(View.GONE);
+                if (locationInfoLayout != null) {
+                    locationInfoLayout.setVisibility(View.GONE);
+                }
                 Intent intent = new Intent(context, ProductDetailActivity.class);
                 intent.putExtra("isNewSelection", true);
                 context.startActivity(intent);

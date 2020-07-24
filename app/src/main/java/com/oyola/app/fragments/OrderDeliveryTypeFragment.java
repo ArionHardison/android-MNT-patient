@@ -159,7 +159,9 @@ public class OrderDeliveryTypeFragment extends BottomSheetDialogFragment {
                 break;
             case R.id.asap_btn:
                 dismiss();
-                locationInfoLayout.setVisibility(View.GONE);
+                if (locationInfoLayout != null) {
+                    locationInfoLayout.setVisibility(View.GONE);
+                }
                 if (mRestaurantType.equalsIgnoreCase("PICKUP")) {
                     checkoutMap.put("pickup_from_restaurants", "1");
                     callPaymentActivity(true);
@@ -191,7 +193,9 @@ public class OrderDeliveryTypeFragment extends BottomSheetDialogFragment {
                 break;
             case R.id.btn_done:
                 dismiss();
-                locationInfoLayout.setVisibility(View.GONE);
+                if (locationInfoLayout != null) {
+                    locationInfoLayout.setVisibility(View.GONE);
+                }
                 String mSelectedDate = mSimpleDateFormat.format(myCalendar.getTime());
                 String mSelectedTime = mSimpleTimeFormat.format(myCalendar.getTime());
                 if (mRestaurantType.equalsIgnoreCase("PICKUP")) {

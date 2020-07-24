@@ -56,6 +56,7 @@ import com.oyola.app.models.Shop;
 import com.oyola.app.models.ShopDetail;
 import com.oyola.app.utils.CommonUtils;
 import com.oyola.app.utils.JavaUtils;
+import com.oyola.app.utils.TextUtils;
 import com.oyola.app.utils.Utils;
 import com.sackcentury.shinebuttonlib.ShineButton;
 import com.squareup.picasso.Picasso;
@@ -186,7 +187,10 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
             } else {
                 offer.setVisibility(View.VISIBLE);
 //                offer.setText("Flat " + shops.getOfferPercent().toString() + "% offer on all Orders");
-                offer.setText("Get " + shops.getOfferPercent().toString() + "% off on Minimum Amount " + GlobalData.currencySymbol + shops.getOfferMinAmount());
+                String offerPercent = (shops != null && shops.getOfferPercent() != null) ? String.valueOf(shops.getOfferPercent()) : "0";
+                String currencySymbol = !TextUtils.isEmpty(GlobalData.currencySymbol) ? GlobalData.currencySymbol : "";
+                String offerMinAmount = (shops != null && shops.getOfferMinAmount() != null) ? String.valueOf(shops.getOfferMinAmount()) : "0";
+                offer.setText("Get " + offerPercent + "% off on Minimum Amount " + currencySymbol + offerMinAmount);
             }
 
             rating.setText(CommonUtils.getRating(shops.getRating()));
