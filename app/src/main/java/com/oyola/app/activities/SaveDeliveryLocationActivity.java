@@ -13,15 +13,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
-import androidx.fragment.app.FragmentActivity;
-import androidx.core.content.ContextCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.cardview.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -35,6 +26,15 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -56,6 +56,8 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.gson.Gson;
 import com.oyola.app.HomeActivity;
 import com.oyola.app.R;
 import com.oyola.app.build.api.APIError;
@@ -64,6 +66,8 @@ import com.oyola.app.build.api.ApiInterface;
 import com.oyola.app.build.api.ErrorUtils;
 import com.oyola.app.helper.CustomDialog;
 import com.oyola.app.helper.GlobalData;
+import com.oyola.app.utils.CommonUtils;
+import com.oyola.app.utils.JavaUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -622,16 +626,15 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                             finish();
                         }
                     } else {
-                        APIError error = ErrorUtils.parseError(response);
-//                        Toast.makeText(SaveDeliveryLocationActivity.this, error.getType().get(0), Toast.LENGTH_SHORT).show();
-                        if (error != null) {
-                            if (error.getType() != null) {
+                        if (response.code() == 500) {
+                            CommonUtils.showToast(SaveDeliveryLocationActivity.this, getString(R.string.something_went_wrong));
+                        } else {
+                            APIError error = new Gson().fromJson(response.errorBody().charStream(), APIError.class);
+                            if (error != null && !JavaUtils.isNullOrEmpty(error.getType())) {
                                 if (error.getType().get(0).equalsIgnoreCase("replace"))
                                     showUpdateAddressAlert();
                             }
                         }
-
-
                     }
                 }
 

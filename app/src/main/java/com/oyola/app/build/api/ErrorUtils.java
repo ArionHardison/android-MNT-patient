@@ -22,7 +22,7 @@ public class ErrorUtils {
 
         try {
             error = converter.convert(response.errorBody());
-        } catch (IOException e) {
+        } catch (Exception e) {
             return new APIError();
         }
 
