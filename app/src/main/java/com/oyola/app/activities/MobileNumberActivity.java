@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.oyola.app.CountryPicker.Country;
 import com.oyola.app.CountryPicker.CountryPicker;
 import com.oyola.app.CountryPicker.CountryPickerListener;
+import com.oyola.app.MyApplication;
 import com.oyola.app.R;
 import com.oyola.app.build.api.ApiClient;
 import com.oyola.app.build.api.ApiInterface;
@@ -87,6 +88,7 @@ public class MobileNumberActivity extends AppCompatActivity {
         helper = new ConnectionHelper(context);
         isInternet = helper.isConnectingToInternet();
 
+        MyApplication.getAppInstance().fetchDeviceToken();
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {

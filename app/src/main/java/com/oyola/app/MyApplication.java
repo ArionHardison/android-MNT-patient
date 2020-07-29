@@ -3,12 +3,17 @@ package com.oyola.app;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.multidex.MultiDex;
 
 import com.facebook.stetho.Stetho;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.oyola.app.helper.SharedHelper;
 import com.oyola.app.utils.LocaleUtils;
 
 import java.text.DecimalFormat;
@@ -41,6 +46,19 @@ public class MyApplication extends Application {
 
     public Gson getGson() {
         return gson;
+    }
+
+    public void fetchDeviceToken() {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(
+                instanceIdResult -> {
+                    String newToken = instanceIdResult.getToken();
+                    SharedHelper.putKey(getApplicationContext(), "device_token", "" + newToken);
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("FireBaseToken", "onFailure : " + e.toString());
+            }
+        });
     }
 
     // Called by the system when the device configuration changes while your component is running.
