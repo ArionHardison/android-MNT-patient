@@ -341,7 +341,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                 orderFlowList.add(new OrderFlow(getString(R.string.order_confirmed_new), getString(R.string.description_2_new), R.drawable.ic_order_confirmed, ORDER_STATUS.get(1)));
                 orderFlowList.add(new OrderFlow(getString(R.string.order_processed_new), getString(R.string.description_3_new), R.drawable.ic_order_processed, ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4) + ORDER_STATUS.get(7) + ORDER_STATUS.get(8) + ORDER_STATUS.get(9)));
                 orderFlowList.add(new OrderFlow(getString(R.string.order_pickedup), getString(R.string.description_4_new), R.drawable.ic_order_picked_up, ORDER_STATUS.get(5) + ORDER_STATUS.get(6)));
-                orderFlowList.add(new OrderFlow(getString(R.string.order_delivered_new), getString(R.string.description_5_new), R.drawable.ic_order_delivered, ORDER_STATUS.get(7) + ORDER_STATUS.get(10)));
+//                orderFlowList.add(new OrderFlow(getString(R.string.order_delivered_new), getString(R.string.description_5_new), R.drawable.ic_order_delivered, ORDER_STATUS.get(7) + ORDER_STATUS.get(10)));
             } else {
                 orderFlowList.add(new OrderFlow(getString(R.string.order_placed_new), getString(R.string.description_1_new), R.drawable.ic_order_placed, ORDER_STATUS.get(0)));
                 orderFlowList.add(new OrderFlow(getString(R.string.order_confirmed_new), getString(R.string.description_2_new), R.drawable.ic_order_confirmed, ORDER_STATUS.get(1)));
