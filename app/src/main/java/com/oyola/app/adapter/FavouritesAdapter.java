@@ -2,8 +2,6 @@ package com.oyola.app.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +10,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.bumptech.glide.Glide;
 import com.oyola.app.R;
@@ -19,6 +20,7 @@ import com.oyola.app.activities.HotelViewActivity;
 import com.oyola.app.helper.GlobalData;
 import com.oyola.app.models.Available;
 import com.oyola.app.models.FavListModel;
+import com.oyola.app.models.Shop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +31,9 @@ import java.util.List;
 
 public class FavouritesAdapter extends SectionedRecyclerViewAdapter<FavouritesAdapter.ViewHolder> {
 
+    Context context;
     private List<FavListModel> list = new ArrayList<>();
     private LayoutInflater inflater;
-    Context context;
 
     public FavouritesAdapter(Context context, List<FavListModel> list) {
         this.context = context;
@@ -73,21 +75,27 @@ public class FavouritesAdapter extends SectionedRecyclerViewAdapter<FavouritesAd
 
     @Override
     public void onBindViewHolder(FavouritesAdapter.ViewHolder holder, final int section, int relativePosition, int absolutePosition) {
-        final Available object = list.get(section).getFav().get(relativePosition);
-        holder.shopName.setText(object.getShop().getName());
-        holder.shopAddress.setText(object.getShop().getAddress());
-        System.out.println(object.getShop().getAvatar());
-        Glide.with(context).load(object.getShop().getAvatar()).into(holder.shopAvatar);
+        final Available availableItem = list.get(section).getFav().get(relativePosition);
+        Shop shop = availableItem.getShop();
+        holder.shopName.setText(shop.getName());
+        holder.shopAddress.setText(shop.getAddress());
+        System.out.println(shop.getAvatar());
+        Glide.with(context).load(shop.getAvatar()).into(holder.shopAvatar);
+        holder.shopStatus.setText(shop.getShopstatus() != null ? shop.getShopstatus() : "NA");
 
-        holder.itemLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (list.get(section).getHeader().equals("available")) {
-                    GlobalData.selectedShop = object.getShop();
-                    context.startActivity(new Intent(context, HotelViewActivity.class).putExtra("is_fav", true));
+        holder.itemLayout.setOnClickListener(v -> {
+            if (list.get(section).getHeader().equals("available")) {
+                GlobalData.selectedShop = shop;
+                if (shop.getShopstatus() != null) {
+                    if (!shop.getShopstatus().equalsIgnoreCase("CLOSED"))
+                        context.startActivity(new Intent(context, HotelViewActivity.class).putExtra("is_fav", true));
+                    else
+                        Toast.makeText(context, context.getResources().getString(R.string.the_shop_is_closed), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(context, context.getString(R.string.un_available), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getResources().getString(R.string.the_shop_is_closed_not_available_now), Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                Toast.makeText(context, context.getString(R.string.un_available), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -96,6 +104,7 @@ public class FavouritesAdapter extends SectionedRecyclerViewAdapter<FavouritesAd
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView header;
         TextView shopAddress;
+        TextView shopStatus;
         TextView shopName;
         ImageView shopAvatar;
         RelativeLayout itemLayout;
@@ -108,6 +117,7 @@ public class FavouritesAdapter extends SectionedRecyclerViewAdapter<FavouritesAd
                 itemLayout = itemView.findViewById(R.id.item_layout);
                 shopName = itemView.findViewById(R.id.shop_name);
                 shopAddress = itemView.findViewById(R.id.shop_address);
+                shopStatus = itemView.findViewById(R.id.tv_status);
                 shopAvatar = itemView.findViewById(R.id.shop_avatar);
             }
 

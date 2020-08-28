@@ -41,7 +41,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.oyola.app.MyApplication.commonAccess;
+import static com.oyola.app.OyolaApplication.commonAccess;
 import static com.oyola.app.helper.GlobalData.addCart;
 import static com.oyola.app.helper.GlobalData.profileModel;
 

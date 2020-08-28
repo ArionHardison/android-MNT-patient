@@ -32,6 +32,7 @@ import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
 import com.google.gson.Gson;
 import com.oyola.app.HomeActivity;
+import com.oyola.app.OyolaApplication;
 import com.oyola.app.R;
 import com.oyola.app.activities.FilterActivity;
 import com.oyola.app.activities.SetDeliveryLocationActivity;
@@ -75,7 +76,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.oyola.app.MyApplication.commonAccess;
+import static com.oyola.app.OyolaApplication.commonAccess;
 import static com.oyola.app.helper.GlobalData.addressList;
 import static com.oyola.app.helper.GlobalData.cuisineIdArrayList;
 import static com.oyola.app.helper.GlobalData.cuisineList;
@@ -90,7 +91,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
     @BindView(R.id.animation_line_image)
     ImageView animationLineImage;
-    Context context;
     @BindView(R.id.catagoery_spinner)
     Spinner catagoerySpinner;
     @BindView(R.id.restaurant_count_txt)
@@ -155,15 +155,12 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     BannerAdapter bannerAdapter;
     List<Banner> bannerList;
     ConnectionHelper connectionHelper;
-    Activity activity;
     boolean mIsFromSignUp = false;
     CuisineSelectFragment mFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.context = getContext();
-        activity = getActivity();
         mFragment = new CuisineSelectFragment();
         mFragment.setListener(this);
     }
@@ -230,10 +227,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         super.onActivityCreated(savedInstanceState);
         System.out.println("HomeFragment");
         commonAccess = "";
-        connectionHelper = new ConnectionHelper(context);
+        connectionHelper = new ConnectionHelper(OyolaApplication.getAppInstance());
         toolbar = getActivity().findViewById(R.id.toolbar);
         toolbar.setVisibility(View.VISIBLE);
-        toolbarLayout = LayoutInflater.from(context).inflate(R.layout.toolbar_home, toolbar, false);
+        toolbarLayout = LayoutInflater.from(getActivity()).inflate(R.layout.toolbar_home, toolbar, false);
         addressLabel = toolbarLayout.findViewById(R.id.address_label);
         addressTxt = toolbarLayout.findViewById(R.id.address);
         locationAddressLayout = toolbarLayout.findViewById(R.id.location_ll);
@@ -241,12 +238,12 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         locationAddressLayout.setVisibility(View.INVISIBLE);
         errorLoadingLayout.setVisibility(View.VISIBLE);
         bannerList = new ArrayList<>();
-        bannerAdapter = new BannerAdapter(bannerList, context, getActivity());
+        bannerAdapter = new BannerAdapter(bannerList, getActivity(), getActivity());
         bannerRv.setHasFixedSize(true);
         bannerRv.setItemViewCacheSize(20);
         bannerRv.setDrawingCacheEnabled(true);
         bannerRv.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-        bannerRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        bannerRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         bannerRv.setItemAnimator(new DefaultItemAnimator());
         skeletonScreen2 = Skeleton.bind(bannerRv)
                 .adapter(bannerAdapter)
@@ -268,32 +265,32 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         skeletonSpinner = Skeleton.bind(catagoerySpinner)
                 .load(R.layout.skeleton_label)
                 .show();
-        HomeActivity.updateNotificationCount(context, GlobalData.notificationCount);
+        HomeActivity.updateNotificationCount(getActivity(), GlobalData.notificationCount);
 
         //Spinner
         //Creating the ArrayAdapter instance having the country shopList
-        ArrayAdapter<String> aa = new ArrayAdapter<>(context, R.layout.spinner_layout, catagoery);
+        ArrayAdapter<String> aa = new ArrayAdapter<>(getActivity(), R.layout.spinner_layout, catagoery);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
         catagoerySpinner.setAdapter(aa);
         catagoerySpinner.setOnItemSelectedListener(this);
 
         //Restaurant Adapter
-        restaurantsRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        restaurantsRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         restaurantsRv.setItemAnimator(new DefaultItemAnimator());
         restaurantsRv.setHasFixedSize(true);
-        favouritesRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        favouritesRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         favouritesRv.setItemAnimator(new DefaultItemAnimator());
         favouritesRv.setHasFixedSize(true);
-        freeDeliveryRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        freeDeliveryRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         freeDeliveryRv.setItemAnimator(new DefaultItemAnimator());
         freeDeliveryRv.setHasFixedSize(true);
         restaurantList = new ArrayList<>();
         favouriteRestaurantList = new ArrayList<>();
         freeDeliveryRestaurantList = new ArrayList<>();
-        adapterRestaurant = new RestaurantsAdapter(restaurantList, context, getActivity());
-        mFavouritesAdapter = new FavouriteCuisinesAdapter(favouriteRestaurantList, context, getActivity());
-        mFreeDeliveryAdapter = new FavouriteCuisinesAdapter(freeDeliveryRestaurantList, context, getActivity());
+        adapterRestaurant = new RestaurantsAdapter(restaurantList, getActivity(), getActivity());
+        mFavouritesAdapter = new FavouriteCuisinesAdapter(favouriteRestaurantList, getActivity(), getActivity());
+        mFreeDeliveryAdapter = new FavouriteCuisinesAdapter(freeDeliveryRestaurantList, getActivity(), getActivity());
         skeletonScreen = Skeleton.bind(restaurantsRv)
                 .adapter(adapterRestaurant)
                 .load(R.layout.skeleton_restaurant_list_item)
@@ -320,10 +317,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         offerRestaurantList.add(new Restaurant("Chai Kings", "Cafe, Bakery", "", "3.3", "36 Mins", "$5", ""));
         offerRestaurantList.add(new Restaurant("sea sell", "Fish, Chicken, mutton", "Flat 30% offer on all orders", "4.3", "20 Mins", "$5", "Close soon"));
         //Offer Restaurant Adapter
-        restaurantsOfferRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        restaurantsOfferRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         restaurantsOfferRv.setItemAnimator(new DefaultItemAnimator());
         restaurantsOfferRv.setHasFixedSize(true);
-        OfferRestaurantAdapter offerAdapter = new OfferRestaurantAdapter(offerRestaurantList, context);
+        OfferRestaurantAdapter offerAdapter = new OfferRestaurantAdapter(offerRestaurantList, getActivity());
         restaurantsOfferRv.setAdapter(offerAdapter);
 
 
@@ -334,8 +331,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         discoverList.add(new Discover("Whats special", "7 options", "1"));
         discoverList.add(new Discover("Pocket Friendly", "44 options", "1"));
 
-        DiscoverAdapter adapterDiscover = new DiscoverAdapter(discoverList, context);
-        discoverRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        DiscoverAdapter adapterDiscover = new DiscoverAdapter(discoverList, getActivity());
+        discoverRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         discoverRv.setItemAnimator(new DefaultItemAnimator());
         discoverRv.setAdapter(adapterDiscover);
         adapterDiscover.setOnItemClickListener(new DiscoverAdapter.ClickListener() {
@@ -352,7 +349,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                     startActivityForResult(new Intent(getActivity(), SetDeliveryLocationActivity.class).putExtra("get_address", true).putExtra("home_page", true), ADDRESS_SELECTION);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                 } else {
-                    Toast.makeText(context, "Please login", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please login", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -360,7 +357,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         filterSelectionImage = toolbarLayout.findViewById(R.id.filter_selection_image);
         favouriteSelectionImage = toolbarLayout.findViewById(R.id.favourite_selection_image);
 
-        if (SharedHelper.getKey(context, "logged") != null && SharedHelper.getKey(context, "logged").equalsIgnoreCase("true")) {
+        if (SharedHelper.getKey(getActivity(), "logged") != null && SharedHelper.getKey(getActivity(), "logged").equalsIgnoreCase("true")) {
             favouriteSelectionImage.setVisibility(View.VISIBLE);
         } else {
             favouriteSelectionImage.setVisibility(View.GONE);
@@ -368,7 +365,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         filterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(context, FilterActivity.class), FILTER_APPLIED_CHECK);
+                startActivityForResult(new Intent(getActivity(), FilterActivity.class), FILTER_APPLIED_CHECK);
                 getActivity().overridePendingTransition(R.anim.slide_up, R.anim.anim_nothing);
             }
         });
@@ -386,7 +383,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         if (connectionHelper.isConnectingToInternet()) {
             getCuisines();
         } else {
-            Utils.displayMessage(activity, context, getString(R.string.oops_connect_your_internet));
+            Utils.displayMessage(getActivity(), getActivity(), getString(R.string.oops_connect_your_internet));
         }
     }
 
@@ -420,7 +417,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         if (connectionHelper.isConnectingToInternet()) {
             getRestaurant(map);
         } else {
-            Utils.displayMessage(activity, context, getString(R.string.oops_connect_your_internet));
+            Utils.displayMessage(getActivity(), getActivity(), getString(R.string.oops_connect_your_internet));
         }
     }
 
@@ -441,7 +438,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 if (!response.isSuccessful()) {
                     ServerError serverError = new Gson().fromJson(response.errorBody().charStream(), ServerError.class);
                     String message = serverError != null ? serverError.getError() : null;
-                    Toast.makeText(context, !TextUtils.isEmpty(message) ? message : getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), !TextUtils.isEmpty(message) ? message : getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show();
                     showOrHideView(false);
                 } else {
                     if (isAdded() && isVisible() && getUserVisibleHint()) {
@@ -467,8 +464,8 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             @Override
             public void onFailure(Call<RestaurantsData> call, Throwable throwable) {
                 String message = throwable != null && !TextUtils.isEmpty(throwable.getMessage()) ? throwable.getMessage() : getString(R.string.something_went_wrong);
-                CommonUtils.showToast(getContext(), message);
                 showOrHideView(false);
+//                CommonUtils.showToast(getActivity(), message);
             }
         });
     }
@@ -561,9 +558,9 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
                 if (!response.isSuccessful() && response.errorBody() != null) {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), jObjError.optString("message"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), R.string.something_went_wrong, Toast.LENGTH_LONG).show();
                     }
                 } else if (response.isSuccessful()) {
                     cuisineList = new ArrayList<>();
@@ -592,7 +589,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     };
 
     private void initializeAvd() {
-        avdProgress = AnimatedVectorDrawableCompat.create(context, R.drawable.avd_line);
+        avdProgress = AnimatedVectorDrawableCompat.create(getActivity(), R.drawable.avd_line);
         animationLineImage.setBackground(avdProgress);
         repeatAnimation();
     }
@@ -607,7 +604,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     public void onResume() {
         super.onResume();
         errorLayout.setVisibility(View.GONE);
-        HomeActivity.updateNotificationCount(context, GlobalData.notificationCount);
+        HomeActivity.updateNotificationCount(getActivity(), GlobalData.notificationCount);
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
                 new IntentFilter("location"));
         if (!GlobalData.addressHeader.equalsIgnoreCase("")) {
@@ -648,7 +645,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             } else {
                 String address = getAddress(latitude, longitude);
                 if (address != null) {
-                    addressLabel.setText(context.getString(R.string.home));
+                    addressLabel.setText(getActivity().getString(R.string.home));
                     addressTxt.setText(address);
                 } else {
                     addressLabel.setText(GlobalData.addressHeader);
@@ -660,7 +657,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     }
 
     public String getAddress(double lat, double lng) {
-        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
         try {
             List<android.location.Address> addresses = geocoder.getFromLocation(lat, lng, 1);
             if (addresses != null && addresses.size() > 0) {
@@ -688,13 +685,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 //            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         return null;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.context = context;
-        activity = getActivity();
     }
 
     @Override
@@ -752,7 +742,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//        Toast.makeText(context, catagoery[position], Toast.LENGTH_LONG).show();
+//        Toast.makeText(getActivity(), catagoery[position], Toast.LENGTH_LONG).show();
     }
 
     @Override

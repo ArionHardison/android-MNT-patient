@@ -86,7 +86,7 @@ public class FavouritesActivity extends AppCompatActivity {
 
         skeletonScreen = Skeleton.bind(rootView)
                 .load(R.layout.skeleton_favorite_list_item)
-                .color(R.color.shimmer_color)
+                .color(R.color.grey)
                 .angle(0)
                 .show();
 

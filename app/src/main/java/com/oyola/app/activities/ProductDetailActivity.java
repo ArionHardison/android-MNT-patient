@@ -56,7 +56,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.oyola.app.MyApplication.currency;
+import static com.oyola.app.OyolaApplication.currency;
 import static com.oyola.app.adapter.AddOnsAdapter.list;
 import static com.oyola.app.helper.GlobalData.selectedShop;
 

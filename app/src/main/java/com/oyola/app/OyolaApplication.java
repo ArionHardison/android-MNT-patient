@@ -23,16 +23,16 @@ import java.text.NumberFormat;
  * Created by santhosh@appoets.com on 28-08-2017.
  */
 
-public class MyApplication extends Application {
+public class OyolaApplication extends Application {
 
-    private static MyApplication appInstance;
+    private static OyolaApplication appInstance;
 
     public static String commonAccess = "";
     public static String promoCodeSelect = "";
     public static String currency = "";
     private Gson gson;
 
-    public static MyApplication getAppInstance(){
+    public static OyolaApplication getAppInstance(){
         return appInstance;
     }
 

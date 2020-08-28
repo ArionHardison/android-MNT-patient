@@ -45,7 +45,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.oyola.app.MyApplication.commonAccess;
+import static com.oyola.app.OyolaApplication.commonAccess;
 
 public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyViewHolder> {
 

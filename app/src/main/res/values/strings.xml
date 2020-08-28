@@ -351,6 +351,7 @@
     <string name="password_updates">Password Updated</string>
     <string name="enter_your_reason">Enter Your Reason</string>
     <string name="the_shop_is_closed">The Shop is closed</string>
+    <string name="the_shop_is_closed_not_available_now">The Shop is closed or not available now</string>
     <string name="favorites">Favorites</string>
     <string name="image_view">Image View</string>
     <string name="bottom_nav_cart">Cart</string>

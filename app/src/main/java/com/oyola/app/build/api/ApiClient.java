@@ -1,10 +1,9 @@
 package com.oyola.app.build.api;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
-import com.oyola.app.MyApplication;
+import com.oyola.app.OyolaApplication;
 import com.oyola.app.build.configure.BuildConfigure;
 import com.oyola.app.helper.SharedHelper;
 import com.oyola.app.utils.TextUtils;
@@ -36,7 +35,7 @@ public class ApiClient {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BuildConfigure.BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create(MyApplication.getAppInstance().getGson()))
+                    .addConverterFactory(GsonConverterFactory.create(OyolaApplication.getAppInstance().getGson()))
                     .client(client)
                     .build();
         }
@@ -64,7 +63,7 @@ public class ApiClient {
         public Response intercept(Chain chain) throws IOException {
             Request.Builder builder = chain.request().newBuilder();
             builder.addHeader("X-Requested-With", "XMLHttpRequest");
-            String accessToken = SharedHelper.getKey(MyApplication.getAppInstance(), "access_token");
+            String accessToken = SharedHelper.getKey(OyolaApplication.getAppInstance(), "access_token");
             if (!TextUtils.isEmpty(accessToken)) {
                 builder.addHeader("Authorization", "Bearer " + accessToken);
             }

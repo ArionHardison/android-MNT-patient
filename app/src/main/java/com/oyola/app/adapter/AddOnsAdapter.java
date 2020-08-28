@@ -25,7 +25,7 @@ import com.robinhood.ticker.TickerView;
 
 import java.util.List;
 
-import static com.oyola.app.MyApplication.currency;
+import static com.oyola.app.OyolaApplication.currency;
 import static com.oyola.app.helper.GlobalData.isSelectedProduct;
 
 /**
