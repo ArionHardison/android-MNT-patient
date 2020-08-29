@@ -80,6 +80,7 @@ import com.oyola.app.models.Message;
 import com.oyola.app.models.NotificationData;
 import com.oyola.app.models.Order;
 import com.oyola.app.models.OrderFlow;
+import com.oyola.app.utils.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1129,7 +1130,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                         map.put("order_id", String.valueOf(GlobalData.isSelectedOrder.getId()));
                         map.put("rating", String.valueOf(rating));
                         map.put("comment", comment.getText().toString());
-                        map.put("type", "transporter");
+                        map.put("type", Constants.SHOP_RATING);
                         rateTransporter(map);
                         alertDialog.dismiss();
                     }

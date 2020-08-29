@@ -17,4 +17,5 @@ public class Constants {
     public static final String LONGITUDE = PACKAGE_NAME + ".LONGITUDE";
     public static final String ADDRESS = PACKAGE_NAME + ".ADDRESS";
     public static final String ENABLE_PLACES_AUTOCOMPLETE = PACKAGE_NAME + ".ENABLE_PLACES_AUTOCOMPLETE";
+    public static final String SHOP_RATING = "shop";
 }

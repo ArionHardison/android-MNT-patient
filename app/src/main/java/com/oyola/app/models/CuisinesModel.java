@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class CuisinesModel {
 
-    @SerializedName("cuisines")
+    @SerializedName("favourite")
     List<Integer> integerList;
 
     public List<Integer> getIntegerList() {
