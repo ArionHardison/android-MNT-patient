@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -52,6 +54,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -64,8 +67,6 @@ public class LoginActivity extends BaseActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private static final int RC_GOOGLE_SIGN_IN = 100;
     private static final int REQ_SIGN_IN_REQUIRED = 101;
-    private GoogleSignInClient mGoogleSignInClient;
-    private CallbackManager callbackManager;
     Context context;
     CustomDialog customDialog;
     ConnectionHelper helper;
@@ -74,11 +75,26 @@ public class LoginActivity extends BaseActivity {
     SocialModel mSocialModel;
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
     String device_token, device_UDID;
+    private GoogleSignInClient mGoogleSignInClient;
+    private CallbackManager callbackManager;
+
+    private void addLink(TextView textView, String patternToMatch,
+                         final String link) {
+        Linkify.TransformFilter filter = (match, url) -> link;
+        Linkify.addLinks(textView, Pattern.compile(patternToMatch), null, null,
+                filter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        TextView tvTermsAndPolicy = findViewById(R.id.tv_terms_policy);
+        tvTermsAndPolicy.setText(getString(R.string.login_terms_privacy_policy));
+        addLink(tvTermsAndPolicy, getString(R.string.login_terms_and_conditions_label), getString(R.string.login_terms_and_conditions_url));
+        addLink(tvTermsAndPolicy, getString(R.string.login_privacy_policy_label), getString(R.string.login_privacy_policy_url));
+
         context = LoginActivity.this;
         customDialog = new CustomDialog(context);
         helper = new ConnectionHelper(context);
@@ -280,35 +296,6 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    private class RetrieveTokenTask extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            String accountName = params[0];
-            String scopes = "oauth2:profile email";
-            String token = null;
-            try {
-                token = GoogleAuthUtil.getToken(getApplicationContext(), accountName, scopes);
-            } catch (IOException e) {
-                Log.e(TAG, e.getMessage());
-            } catch (UserRecoverableAuthException e) {
-                startActivityForResult(e.getIntent(), REQ_SIGN_IN_REQUIRED);
-            } catch (GoogleAuthException e) {
-                Log.e(TAG, e.getMessage());
-            }
-            return token;
-        }
-
-        @Override
-        protected void onPostExecute(String GoogleaccessToken) {
-            super.onPostExecute(GoogleaccessToken);
-            Log.e("Token", GoogleaccessToken);
-            mSocialModel.setmAccessToken(GoogleaccessToken);
-            mSocialModel.setmLoginBy("google");
-            socialLogin(mSocialModel);
-        }
-    }
-
     private void socialLogin(SocialModel model) {
         HashMap<String, String> map = new HashMap<>();
         map.put("login_by", model.getmLoginBy());
@@ -397,6 +384,35 @@ public class LoginActivity extends BaseActivity {
                 customDialog.dismiss();
             }
         });
+    }
+
+    private class RetrieveTokenTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String accountName = params[0];
+            String scopes = "oauth2:profile email";
+            String token = null;
+            try {
+                token = GoogleAuthUtil.getToken(getApplicationContext(), accountName, scopes);
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+            } catch (UserRecoverableAuthException e) {
+                startActivityForResult(e.getIntent(), REQ_SIGN_IN_REQUIRED);
+            } catch (GoogleAuthException e) {
+                Log.e(TAG, e.getMessage());
+            }
+            return token;
+        }
+
+        @Override
+        protected void onPostExecute(String GoogleaccessToken) {
+            super.onPostExecute(GoogleaccessToken);
+            Log.e("Token", GoogleaccessToken);
+            mSocialModel.setmAccessToken(GoogleaccessToken);
+            mSocialModel.setmLoginBy("google");
+            socialLogin(mSocialModel);
+        }
     }
 
 }
