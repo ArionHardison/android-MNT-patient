@@ -21,6 +21,7 @@ import com.oyola.app.helper.GlobalData;
 import com.oyola.app.models.Available;
 import com.oyola.app.models.FavListModel;
 import com.oyola.app.models.Shop;
+import com.oyola.app.utils.JavaUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,18 +82,15 @@ public class FavouritesAdapter extends SectionedRecyclerViewAdapter<FavouritesAd
         holder.shopAddress.setText(shop.getAddress());
         System.out.println(shop.getAvatar());
         Glide.with(context).load(shop.getAvatar()).into(holder.shopAvatar);
-        holder.shopStatus.setText(shop.getShopstatus() != null ? shop.getShopstatus() : "NA");
+        holder.shopStatus.setText(JavaUtils.isNullOrEmpty(shop.getTimings()) ? "CLOSED" : "OPEN");
 
         holder.itemLayout.setOnClickListener(v -> {
             if (list.get(section).getHeader().equals("available")) {
                 GlobalData.selectedShop = shop;
-                if (shop.getShopstatus() != null) {
-                    if (!shop.getShopstatus().equalsIgnoreCase("CLOSED"))
-                        context.startActivity(new Intent(context, HotelViewActivity.class).putExtra("is_fav", true));
-                    else
-                        Toast.makeText(context, context.getResources().getString(R.string.the_shop_is_closed), Toast.LENGTH_SHORT).show();
+                if (!JavaUtils.isNullOrEmpty(shop.getTimings())){
+                    context.startActivity(new Intent(context, HotelViewActivity.class).putExtra("is_fav", true));
                 } else {
-                    Toast.makeText(context, context.getResources().getString(R.string.the_shop_is_closed_not_available_now), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, context.getResources().getString(R.string.the_shop_is_closed), Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Toast.makeText(context, context.getString(R.string.un_available), Toast.LENGTH_SHORT).show();
