@@ -410,8 +410,9 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
 
                         } else if (mIsDeliveryAvailable) {
                             layoutOrderType.setVisibility(View.GONE);
-                            locationErrorLayout.setVisibility(View.VISIBLE);
                             layoutDeliveryFees.setVisibility(View.VISIBLE);
+                            locationErrorLayout.setVisibility(GlobalData.selectedAddress == null ? View.VISIBLE : View.GONE);
+                            locationInfoLayout.setVisibility(GlobalData.selectedAddress != null ? View.VISIBLE : View.GONE);
                             initializeAddressDetails();
                             if (response.body().getProductList().get(0).getProduct().getShop().getFreeDelivery() != null) {
                                 if (response.body().getProductList().get(0).getProduct().getShop().getFreeDelivery() == 1) {
@@ -547,8 +548,9 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
                             layoutDeliveryFees.setVisibility(View.GONE);
                         } else if (mIsDeliveryAvailable) {
                             layoutOrderType.setVisibility(View.GONE);
-                            locationErrorLayout.setVisibility(View.VISIBLE);
                             layoutDeliveryFees.setVisibility(View.VISIBLE);
+                            locationErrorLayout.setVisibility(GlobalData.selectedAddress == null ? View.VISIBLE : View.GONE);
+                            locationInfoLayout.setVisibility(GlobalData.selectedAddress != null ? View.VISIBLE : View.GONE);
                             initializeAddressDetails();
                             if (response.body().getProductList().get(0).getProduct().getShop().getFreeDelivery() != null) {
                                 if (response.body().getProductList().get(0).getProduct().getShop().getFreeDelivery() == 1) {

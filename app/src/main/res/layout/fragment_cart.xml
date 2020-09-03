@@ -536,8 +536,7 @@
                 android:paddingTop="@dimen/_7sdp"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingBottom="@dimen/_7sdp"
-                android:visibility="gone"
-                tools:visibility="visible">
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/map_marker_image"
@@ -581,8 +580,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/nunito_bold"
                         android:text="@string/add_address"
-                        android:textColor="@color/colorTextWhite"
-                        android:visibility="visible" />
+                        android:textColor="@color/colorTextWhite" />
 
 
                     <Button
@@ -594,8 +592,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/nunito_bold"
                         android:text="@string/select_address"
-                        android:textColor="@color/colorTextWhite"
-                        android:visibility="visible" />
+                        android:textColor="@color/colorTextWhite" />
 
                 </LinearLayout>
 
