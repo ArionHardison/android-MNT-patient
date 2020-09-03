@@ -18,6 +18,8 @@ import com.oyola.app.activities.WelcomeActivity;
 import com.oyola.app.helper.GlobalData;
 import com.oyola.app.helper.SharedHelper;
 
+import static com.oyola.app.fragments.HomeFragment.isFilterApplied;
+
 public class BaseFragment extends Fragment {
 
     @Override
@@ -32,6 +34,7 @@ public class BaseFragment extends Fragment {
             signOutFromGoogle();
         SharedHelper.clearSharedPreferences(getContext());
         SharedHelper.putKey(getContext(), "logged", "false");
+        isFilterApplied = false;
         startActivity(new Intent(getContext(), WelcomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         GlobalData.profileModel = null;
         GlobalData.addCart = null;

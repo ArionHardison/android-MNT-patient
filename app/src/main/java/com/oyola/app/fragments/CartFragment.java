@@ -51,7 +51,11 @@ import com.oyola.app.helper.GlobalData;
 import com.oyola.app.models.AddCart;
 import com.oyola.app.models.Cart;
 import com.oyola.app.models.DeliveryOption;
+import com.oyola.app.models.Prices;
+import com.oyola.app.models.Product;
+import com.oyola.app.models.Shop;
 import com.oyola.app.utils.CommonUtils;
+import com.oyola.app.utils.JavaUtils;
 import com.oyola.app.utils.Utils;
 import com.robinhood.ticker.TickerUtils;
 
@@ -81,11 +85,22 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
 
     private static final String TAG = "CartFragment";
     private static final int PROMOCODE_APPLY = 201;
+    //Animation number
+    private static final char[] NUMBER_LIST = TickerUtils.getDefaultNumberList();
+    public static RelativeLayout dataLayout;
+    public static RelativeLayout errorLayout;
+    public static LinearLayout locationInfoLayout;
+    public static TextView itemTotalAmount, discountAmount, serviceTax, payAmount;
+    //Orderitem List
+    public static List<Cart> viewCartItemList;
+    public static int deliveryChargeValue = 0;
+    public static int tax = 0;
+    public static ViewCartAdapter viewCartAdapter;
+    public static HashMap<String, String> checkoutMap;
     @BindView(R.id.re)
     RelativeLayout re;
     @BindView(R.id.order_item_rv)
     RecyclerView orderItemRv;
-
     @BindView(R.id.map_marker_image)
     ImageView mapMarkerImage;
     @BindView(R.id.location_error_title)
@@ -114,9 +129,6 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
     LinearLayout bottomLayout;
     @BindView(R.id.layout_order_type)
     LinearLayout layoutOrderType;
-    public static RelativeLayout dataLayout;
-    public static RelativeLayout errorLayout;
-    public static LinearLayout locationInfoLayout;
     @BindView(R.id.location_error_layout)
     RelativeLayout locationErrorLayout;
     @BindView(R.id.restaurant_image)
@@ -147,32 +159,17 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
     TextView mTxtDeliveryContent;
     @BindView(R.id.lay_delivery_fees)
     LinearLayout layoutDeliveryFees;
-    private Context context;
-    private ViewGroup toolbar;
-    private View toolbarLayout;
     AnimatedVectorDrawableCompat avdProgress;
-    //Animation number
-    private static final char[] NUMBER_LIST = TickerUtils.getDefaultNumberList();
-
-    public static TextView itemTotalAmount, discountAmount, serviceTax, payAmount;
-    private TextView deliveryCharges, promocode_amount;
     LinearLayout lnrPromocodeAmount;
     String promo_code = "";
     Fragment orderFullViewFragment;
     FragmentManager fragmentManager;
-    //Orderitem List
-    public static List<Cart> viewCartItemList;
-
     int priceAmount = 0;
     int discount = 0;
-    public static int deliveryChargeValue = 0;
-    public static int tax = 0;
     int itemCount = 0;
     int itemQuantity = 0;
     int ADDRESS_SELECTION = 1;
-
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
-    public static ViewCartAdapter viewCartAdapter;
     CustomDialog customDialog;
     ViewSkeletonScreen skeleton;
     ConnectionHelper connectionHelper;
@@ -183,10 +180,12 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
     boolean mIsPickUpSelected = false;
     boolean mIsDeliverySelected = false;
     boolean isActivityResultCalled = false;
-
-    public static HashMap<String, String> checkoutMap;
     OrderDeliveryTypeFragment bottomSheetTypeDialogFragment;
     Integer mEstimatedDeliveryTime = 0;
+    private Context context;
+    private ViewGroup toolbar;
+    private View toolbarLayout;
+    private TextView deliveryCharges, promocode_amount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -292,17 +291,6 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
             locationErrorLayout.setVisibility(View.VISIBLE);
             selectedAddressBtn.setVisibility(View.GONE);
             locationInfoLayout.setVisibility(View.GONE);
-        }
-    }
-
-    private void updateDeliveryDataToView(String currencyType, double deliveryAmount) {
-        if (deliveryAmount > 0) {
-            deliveryCharges.setTextColor(ContextCompat.getColor(getContext(), R.color.colorSecondaryText));
-            layoutDeliveryFees.setVisibility(View.VISIBLE);
-            deliveryCharges.setText(currencyType + deliveryAmount);
-        } else {
-            deliveryCharges.setText(getString(R.string.delivery_amount_free));
-            deliveryCharges.setTextColor(ContextCompat.getColor(getContext(), R.color.colorGreen));
         }
     }
 
@@ -419,7 +407,6 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
                             deliveryBtn.setVisibility(View.GONE);
                             mTxtDeliveryContent.setVisibility(View.VISIBLE);
                             layoutDeliveryFees.setVisibility(View.GONE);
-                            deliveryFareCalculation();
 
                         } else if (mIsDeliveryAvailable) {
                             layoutOrderType.setVisibility(View.GONE);
@@ -558,7 +545,6 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
                             deliveryBtn.setVisibility(View.GONE);
                             mTxtDeliveryContent.setVisibility(View.VISIBLE);
                             layoutDeliveryFees.setVisibility(View.GONE);
-                            deliveryFareCalculation();
                         } else if (mIsDeliveryAvailable) {
                             layoutOrderType.setVisibility(View.GONE);
                             locationErrorLayout.setVisibility(View.VISIBLE);
@@ -954,9 +940,18 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
         }
     }
 
+    private void updateDeliveryDataToView(String currencyType, double deliveryAmount) {
+        if (deliveryAmount > 0) {
+            deliveryCharges.setTextColor(ContextCompat.getColor(getContext(), R.color.colorSecondaryText));
+            deliveryCharges.setText(currencyType + deliveryAmount);
+        } else {
+            deliveryCharges.setText(getString(R.string.delivery_amount_free));
+            deliveryCharges.setTextColor(ContextCompat.getColor(getContext(), R.color.colorGreen));
+        }
+    }
+
     private void deliveryFareCalculation() {
         if (addCart != null) {
-            layoutDeliveryFees.setVisibility(View.GONE);
             String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
             itemTotalAmount.setText(currency + "" + addCart.getTotalPrice());
             discountAmount.setText("- " + currency + "" + addCart.getShopDiscount());
@@ -964,11 +959,16 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
             serviceTax.setText(currency + Double.parseDouble(addCart.getTax()));
             Double mPayAmount = addCart.getPayable() - addCart.getDeliveryCharges();
             payAmount.setText(currency + "" + new DecimalFormat("##.##").format(mPayAmount));
-            double deliveryAmount = (addCart != null && addCart.getDeliveryCharges() != 0.0) ? addCart.getDeliveryCharges() : 0;
-            String currencyType = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
-            updateDeliveryDataToView(currencyType, deliveryAmount);
-        }
 
+            Product product = !JavaUtils.isNullOrEmpty(addCart.getProductList()) ? addCart.getProductList().get(0).getProduct() : null;
+            Shop shop = product != null ? product.getShop() : null;
+            Prices prices = product != null ? product.getPrices() : null;
+            String currencyType = prices != null ? prices.getCurrency() : "";
+            double deliveryAmount = (addCart != null && addCart.getDeliveryCharges() != null) ? addCart.getDeliveryCharges() : 0;
+            int freeDelivery = (shop != null && shop.getFreeDelivery() != null) ? shop.getFreeDelivery() : 0;
+            double offerMinAmount = (shop != null && shop.getOfferMinAmount() != null) ? shop.getOfferMinAmount() : 0;
+            updateDeliveryDataToView(currencyType, freeDelivery == 1 ? offerMinAmount : deliveryAmount);
+        }
     }
 
 }
