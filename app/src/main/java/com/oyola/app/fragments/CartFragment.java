@@ -954,8 +954,9 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
 
     private void deliveryFareCalculation() {
         if (addCart != null) {
+            double totalPrice = addCart.getTotalPrice();
             String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
-            itemTotalAmount.setText(currency + "" + addCart.getTotalPrice());
+            itemTotalAmount.setText(currency + "" + totalPrice);
             discountAmount.setText("- " + currency + "" + addCart.getShopDiscount());
             promocode_amount.setText("- " + currency + "" + addCart.getPromocodeAmount());
             serviceTax.setText(currency + Double.parseDouble(addCart.getTax()));
@@ -966,10 +967,18 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
             Shop shop = product != null ? product.getShop() : null;
             Prices prices = product != null ? product.getPrices() : null;
             String currencyType = prices != null ? prices.getCurrency() : "";
+            double calculatedDeliveryAmount;
             double deliveryAmount = (addCart != null && addCart.getDeliveryCharges() != null) ? addCart.getDeliveryCharges() : 0;
             int freeDelivery = (shop != null && shop.getFreeDelivery() != null) ? shop.getFreeDelivery() : 0;
             double offerMinAmount = (shop != null && shop.getOfferMinAmount() != null) ? shop.getOfferMinAmount() : 0;
-            updateDeliveryDataToView(currencyType, freeDelivery == 1 ? offerMinAmount : deliveryAmount);
+            if (freeDelivery == 0) {
+                calculatedDeliveryAmount = deliveryAmount;
+            } else {
+                if (totalPrice >= offerMinAmount)
+                    calculatedDeliveryAmount = 0;
+                else calculatedDeliveryAmount = deliveryAmount;
+            }
+            updateDeliveryDataToView(currencyType, calculatedDeliveryAmount);
         }
     }
 

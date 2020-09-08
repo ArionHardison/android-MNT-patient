@@ -272,8 +272,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.sign_up, R.id.back_img, R.id.password_eye_img, R.id.confirm_password_eye_img,
-    R.id.txtAgreePolicy})
+    @OnClick({R.id.sign_up, R.id.back_img, R.id.password_eye_img, R.id.confirm_password_eye_img})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.sign_up:
@@ -303,9 +302,6 @@ public class SignUpActivity extends AppCompatActivity {
                     confirmPassword.setTransformationMethod(new PasswordTransformationMethod());
                     confirmPasswordEyeImg.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_eye_open));
                 }
-                break;
-            case R.id.txtAgreePolicy:
-                startActivity(new Intent(getApplicationContext(), TermsAndConditions.class));
                 break;
         }
     }
