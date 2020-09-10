@@ -38,6 +38,7 @@ import com.robinhood.ticker.TickerView;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,7 +51,8 @@ import static com.oyola.app.OyolaApplication.commonAccess;
 public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyViewHolder> {
 
     private static final String TAG = "ViewCartAdapter";
-    private List<Cart> list;
+    //Animation number
+    private static final char[] NUMBER_LIST = TickerUtils.getDefaultNumberList();
     public static Context context;
     public static int priceAmount = 0;
     public static int discount = 0;
@@ -66,32 +68,86 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
     public static Runnable action;
     public static Shop selectedShop = GlobalData.selectedShop;
     public static CartChoiceModeFragment bottomSheetDialogFragment;
-    //Animation number
-    private static final char[] NUMBER_LIST = TickerUtils.getDefaultNumberList();
+    private List<Cart> list;
+    private CartClickListener cartClickListener;
 
-    public ViewCartAdapter(List<Cart> list, Context con) {
-        this.list = list;
+    public ViewCartAdapter( Context con, CartClickListener cartClickListener) {
+        this.cartClickListener = cartClickListener;
         context = con;
+        list = new ArrayList<>();
     }
 
-    @NonNull
-    @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.single_product_item, parent, false);
-        return new MyViewHolder(itemView);
-    }
-
-    public void add(Cart item, int position) {
-        list.add(position, item);
-        notifyItemInserted(position);
-    }
-
-    public void remove(Cart item) {
-        int position = list.indexOf(item);
-        list.remove(position);
-        notifyItemRemoved(position);
+    public void setCartItemList(List<Cart> itemList) {
+        if (itemList == null) {
+            return;
+        }
+        list.clear();
+        list.addAll(itemList);
         notifyDataSetChanged();
+    }
+
+    private void addOrRemoveCart(HashMap<String, String> map, final Context context) {
+        Log.d(TAG, context.toString());
+        dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.empty_dialog);
+        dialog.setCancelable(false);
+        dataResponse = false;
+        dialog.show();
+        Call<AddCart> call = apiInterface.postAddCart(map);
+        Log.e(" Call<AddCart>==>", "" + map);
+        call.enqueue(new Callback<AddCart>() {
+            @Override
+            public void onResponse(@NonNull Call<AddCart> call, @NonNull Response<AddCart> response) {
+                avdProgress.stop();
+                dialog.dismiss();
+                dataResponse = true;
+                if (!response.isSuccessful() && response.errorBody() != null) {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+//                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                } else if (response.isSuccessful()) {
+                    Log.d(TAG, response.body().toString());
+                    addCart = response.body();
+                    GlobalData.addCart = new AddCart();
+                    GlobalData.addCart = response.body();
+                    CartFragment.viewCartItemList.clear();
+                    CartFragment.viewCartItemList.addAll(response.body().getProductList());
+                    CartFragment.viewCartAdapter.notifyDataSetChanged();
+                    priceAmount = 0;
+                    discount = 0;
+                    itemQuantity = 0;
+                    itemCount = 0;
+                    //get Item Count
+                    itemCount = addCart.getProductList().size();
+                    if (itemCount != 0) {
+                        GlobalData.notificationCount = itemQuantity;
+                        //Set Payment details
+                        String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
+                        CartFragment.itemTotalAmount.setText(currency + "" + response.body().getTotalPrice());
+                        CartFragment.discountAmount.setText("- " + currency + "" + response.body().getShopDiscount());
+                        CartFragment.serviceTax.setText(currency + "" + response.body().getTax());
+                        CartFragment.payAmount.setText(currency + "" + response.body().getPayable());
+                        if (cartClickListener != null) {
+                            cartClickListener.onAddOrRemove();
+                        }
+                    } else {
+                        GlobalData.notificationCount = itemQuantity;
+                        CartFragment.errorLayout.setVisibility(View.VISIBLE);
+                        CartFragment.dataLayout.setVisibility(View.GONE);
+                        Toast.makeText(context, "Cart is empty", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<AddCart> call, @NonNull Throwable t) {
+
+            }
+        });
     }
 
     public static void addCart(HashMap<String, String> map, final Context context) {
@@ -153,6 +209,26 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
 
             }
         });
+    }
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.single_product_item, parent, false);
+        return new MyViewHolder(itemView);
+    }
+
+    public void add(Cart item, int position) {
+        list.add(position, item);
+        notifyItemInserted(position);
+    }
+
+    public void remove(Cart item) {
+        int position = list.indexOf(item);
+        list.remove(position);
+        notifyItemRemoved(position);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -260,7 +336,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     map.put("quantity", holder.cardTextValue.getText().toString());
                     map.put("cart_id", String.valueOf(cart.getId()));
                     Log.e("AddCart_add", map.toString());
-                    addCart(map, holder.itemView.getContext());
+                    addOrRemoveCart(map, holder.itemView.getContext());
                 }
             }
         });
@@ -307,7 +383,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                         }
                     }
                     Log.e("AddCart_Minus", map.toString());
-                    addCart(map, holder.itemView.getContext());
+                    addOrRemoveCart(map, holder.itemView.getContext());
                     remove(productList);
                 } else {
                     countMinusValue = Integer.parseInt(holder.cardTextValue.getText().toString()) - 1;
@@ -329,7 +405,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                         }
                     }
                     Log.e("AddCart_Minus", map.toString());
-                    addCart(map, holder.itemView.getContext());
+                    addOrRemoveCart(map, holder.itemView.getContext());
                 }
             }
         });
@@ -363,6 +439,10 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                 // Right here!
             }
         });
+    }
+
+    public interface CartClickListener {
+        void onAddOrRemove();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

@@ -81,7 +81,7 @@ import static com.oyola.app.helper.GlobalData.selectedAddress;
 /**
  * Created by santhosh@appoets.com on 22-08-2017.
  */
-public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragment.BottomListener {
+public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragment.BottomListener, ViewCartAdapter.CartClickListener {
 
     private static final String TAG = "CartFragment";
     private static final int PROMOCODE_APPLY = 201;
@@ -228,7 +228,8 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
         orderItemRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         orderItemRv.setItemAnimator(new DefaultItemAnimator());
         orderItemRv.setHasFixedSize(false);
-
+        viewCartAdapter = new ViewCartAdapter(context, this);
+        orderItemRv.setAdapter(viewCartAdapter);
 
         //Intialize address Value
        /* if (GlobalData.selectedAddress != null && GlobalData.selectedAddress.getLandmark() != null) {
@@ -331,8 +332,7 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
                         addCart = response.body();
                         viewCartItemList.clear();
                         viewCartItemList = addCart.getProductList();
-                        viewCartAdapter = new ViewCartAdapter(viewCartItemList, context);
-                        orderItemRv.setAdapter(viewCartAdapter);
+                        viewCartAdapter.setCartItemList(viewCartItemList);
                         viewCartAdapter.notifyDataSetChanged();
                         errorLayout.setVisibility(View.GONE);
                         dataLayout.setVisibility(View.VISIBLE);
@@ -474,10 +474,8 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
 
                         viewCartItemList.clear();
                         viewCartItemList = addCart.getProductList();
-                        viewCartAdapter = new ViewCartAdapter(viewCartItemList, context);
-                        orderItemRv.setAdapter(viewCartAdapter);
+                        viewCartAdapter.setCartItemList(viewCartItemList);
                         viewCartAdapter.notifyDataSetChanged();
-
                         errorLayout.setVisibility(View.GONE);
                         dataLayout.setVisibility(View.VISIBLE);
                         GlobalData.notificationCount = itemQuantity;
@@ -982,4 +980,8 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
         }
     }
 
+    @Override
+    public void onAddOrRemove() {
+        getViewCart();
+    }
 }
