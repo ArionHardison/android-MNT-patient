@@ -9,10 +9,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Bundle;
 import android.provider.Settings;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Base64;
 import android.util.Log;
@@ -25,6 +21,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
@@ -61,6 +62,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -70,6 +72,7 @@ import retrofit2.Response;
 
 public class SignUpActivity extends AppCompatActivity {
 
+    private static final int REQUEST_LOCATION = 1450;
     @BindView(R.id.email)
     EditText emailEdit;
     @BindView(R.id.name)
@@ -81,7 +84,6 @@ public class SignUpActivity extends AppCompatActivity {
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
     @BindView(R.id.app_logo)
     ImageView appLogo;
-
     String name, email, password, strConfirmPassword;
     String GRANT_TYPE = "password";
     Context context;
@@ -96,7 +98,6 @@ public class SignUpActivity extends AppCompatActivity {
     ImageView confirmPasswordEyeImg;
     ConnectionHelper connectionHelper;
     Activity activity;
-
     String device_token, device_UDID;
     Utils utils = new Utils();
     String TAG = "Login";
@@ -116,14 +117,12 @@ public class SignUpActivity extends AppCompatActivity {
     RelativeLayout passwordLayout;
     @BindView(R.id.confirm_password_layout)
     RelativeLayout confirmPasswordLayout;
-    private CountryPicker mCountryPicker;
     String country_code = "+61";
-    private static final int REQUEST_LOCATION = 1450;
     GoogleApiClient mGoogleApiClient;
-    private String hashcode = "";
     String mMobile = "";
     String mReferralCode = "";
-
+    private CountryPicker mCountryPicker;
+    private String hashcode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -308,6 +307,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void signup(HashMap<String, String> map) {
         customDialog.show();
+        SharedHelper.putKey(context, "access_token", "");
         Call<RegisterModel> call = apiInterface.postRegister(map);
         call.enqueue(new Callback<RegisterModel>() {
             @Override
@@ -386,17 +386,15 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void login(HashMap<String, String> map) {
+        SharedHelper.putKey(context, "access_token", "");
         Call<LoginModel> call = apiInterface.postLogin(map);
         call.enqueue(new Callback<LoginModel>() {
             @Override
             public void onResponse(@NonNull Call<LoginModel> call, @NonNull Response<LoginModel> response) {
-                if (response.body() != null) {
-                    SharedHelper.putKey(context, "access_token",
-                            response.body().getTokenType() + "" +
-                                    " " + response.body().getAccessToken());
+                if (response.isSuccessful()) {
+                    SharedHelper.putKey(context, "access_token", "" + response.body().getAccessToken());
                     getProfile();
                 }
-
             }
 
             @Override
@@ -449,6 +447,7 @@ public class SignUpActivity extends AppCompatActivity {
         map.put("device_type", "android");
         map.put("device_id", device_UDID);
         map.put("device_token", device_token);
+        ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
         Call<User> getprofile = apiInterface.getProfile(map);
         getprofile.enqueue(new Callback<User>() {
             @Override
@@ -462,9 +461,9 @@ public class SignUpActivity extends AppCompatActivity {
                     GlobalData.addressList = new AddressList();
                     GlobalData.addressList.setAddresses(response.body().getAddresses());
 //                    Intent intent=new Intent(context, HomeActivity.class);
-                    Intent intent=new Intent(context, MainActivity.class);
+                    Intent intent = new Intent(context, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.putExtra("isFromSignUp",true);
+                    intent.putExtra("isFromSignUp", true);
                     startActivity(intent);
                     finish();
                 } else {
