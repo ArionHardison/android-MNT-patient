@@ -121,11 +121,35 @@
     <string name="order_delivered_new">Arrived</string>
     <string name="order_cancelled_new">Order Cancelled</string>
 
+    <string name="pickup_order_received">Order Received</string>
+    <string name="pickup_order_accepted">Order Accepted</string>
+    <string name="pickup_order_processed_new">Being Prepared</string>
+    <string name="pickup_order_pickedup_new">Ready for Pickup</string>
+    <string name="pickup_order_completed">Completed</string>
+
+    <string name="pickup_description_1">Your order has been received</string>
+    <string name="pickup_description_2">Your order has been confirmed by kitchen.</string>
+    <string name="pickup_description_3">Your order is being prepared by kitchen.</string>
+    <string name="pickup_description_4">Your order is ready for pickup by delivery boy.</string>
+    <string name="pickup_description_5">Your order has been successfully completed</string>
+
+    <string name="delivery_order_received">Order Received</string>
+    <string name="delivery_order_accepted">Order Accepted</string>
+    <string name="delivery_order_processed_new">Being Prepared</string>
+    <string name="delivery_order_pickedup_new">Ready for Pickup</string>
+    <string name="delivery_order_arrived">Arrived</string>
+
+    <string name="delivery_description_1">Your order has been received</string>
+    <string name="delivery_description_2">Your order has been confirmed by kitchen</string>
+    <string name="delivery_description_3">Your order is being prepared by kitchen</string>
+    <string name="delivery_description_4">Your order is ready for pickup by delivery boy</string>
+    <string name="delivery_description_5">Your order has arrived successfully</string>
+
     <!--Order Flow Description-->
-    <string name="description_1">Your order has been received.</string>
+    <string name="description_1">Your order has been received</string>
     <string name="description_2">Your order has been confirmed by kitchen.</string>
-    <string name="description_3">Your order is being prepared by kitchen.</string>
-    <string name="description_4">Your order is ready for pickup by delivery boy.</string>
+    <string name="description_3">Your order is being prepared by kitchen</string>
+    <string name="description_4">Your order is ready for pickup</string>
     <string name="description_5">Your order has arrived successfully.</string>
 
     <string name="description_1_new">Your order has been received.</string>
