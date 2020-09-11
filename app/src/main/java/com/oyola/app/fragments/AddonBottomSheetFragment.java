@@ -74,6 +74,11 @@ public class AddonBottomSheetFragment extends BottomSheetDialogFragment {
     BottomSheetBehavior mBottomSheetBehavior;
 
     public static Cart selectedCart;
+    private ViewCartAdapter viewCartAdapter;
+
+    public void setViewCartAdapter(ViewCartAdapter viewCartAdapter) {
+        this.viewCartAdapter = viewCartAdapter;
+    }
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -156,7 +161,7 @@ public class AddonBottomSheetFragment extends BottomSheetDialogFragment {
                     }
                 }
                 Log.e("AddCart_add", map.toString());
-                ViewCartAdapter.addCart(map, Objects.requireNonNull(getActivity()));
+                viewCartAdapter.addCart(map, Objects.requireNonNull(getActivity()));
                 dismiss();
             }
         });

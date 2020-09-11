@@ -56,6 +56,7 @@ import com.oyola.app.models.Product;
 import com.oyola.app.models.Shop;
 import com.oyola.app.utils.CommonUtils;
 import com.oyola.app.utils.JavaUtils;
+import com.oyola.app.utils.TextUtils;
 import com.oyola.app.utils.Utils;
 import com.robinhood.ticker.TickerUtils;
 
@@ -81,7 +82,7 @@ import static com.oyola.app.helper.GlobalData.selectedAddress;
 /**
  * Created by santhosh@appoets.com on 22-08-2017.
  */
-public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragment.BottomListener, ViewCartAdapter.CartClickListener {
+public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragment.BottomListener, ViewCartAdapter.ViewCartListener {
 
     private static final String TAG = "CartFragment";
     private static final int PROMOCODE_APPLY = 201;
@@ -159,6 +160,9 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
     TextView mTxtDeliveryContent;
     @BindView(R.id.lay_delivery_fees)
     LinearLayout layoutDeliveryFees;
+    @BindView(R.id.layout_discount)
+    LinearLayout layoutDiscount;
+
     AnimatedVectorDrawableCompat avdProgress;
     LinearLayout lnrPromocodeAmount;
     String promo_code = "";
@@ -228,7 +232,7 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
         orderItemRv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
         orderItemRv.setItemAnimator(new DefaultItemAnimator());
         orderItemRv.setHasFixedSize(false);
-        viewCartAdapter = new ViewCartAdapter(context, this);
+        viewCartAdapter = new ViewCartAdapter(context , this);
         orderItemRv.setAdapter(viewCartAdapter);
 
         //Intialize address Value
@@ -343,7 +347,7 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
                         GlobalData.notificationCount = itemQuantity;
                         String currency = response.body().getProductList().get(0).getProduct().getPrices().getCurrency();
                         itemTotalAmount.setText(currency + "" + response.body().getTotalPrice());
-                        discountAmount.setText("- " + currency + "" + response.body().getShopDiscount());
+                        updateDiscount(currency, !TextUtils.isEmpty(response.body().getShopDiscount()) ? response.body().getShopDiscount() : "0");
                         promocode_amount.setText("- " + currency + "" + response.body().getPromocodeAmount());
                         serviceTax.setText(currency + response.body().getTax());
                         payAmount.setText(currency + "" + response.body().getPayable());
@@ -494,7 +498,7 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
                         }
 
                         itemTotalAmount.setText(currency + "" + response.body().getTotalPrice());
-                        discountAmount.setText("- " + currency + "" + response.body().getShopDiscount());
+                        updateDiscount(currency, !TextUtils.isEmpty(response.body().getShopDiscount()) ? response.body().getShopDiscount() : "0");
                         promocode_amount.setText("- " + currency + "" + response.body().getPromocodeAmount());
                         serviceTax.setText(currency + Double.parseDouble(response.body().getTax()));
                         payAmount.setText(currency + "" + response.body().getPayable());
@@ -910,7 +914,7 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
                     } else {
                         String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
                         itemTotalAmount.setText(currency + "" + addCart.getTotalPrice());
-                        discountAmount.setText("- " + currency + "" + addCart.getShopDiscount());
+                        updateDiscount(currency, !TextUtils.isEmpty(addCart.getShopDiscount()) ? addCart.getShopDiscount() : "0");
                         promocode_amount.setText("- " + currency + "" + addCart.getPromocodeAmount());
                         serviceTax.setText(currency + Double.parseDouble(addCart.getTax()));
                         payAmount.setText(currency + "" + addCart.getPayable());
@@ -921,7 +925,7 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
                 } else {
                     String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
                     itemTotalAmount.setText(currency + "" + addCart.getTotalPrice());
-                    discountAmount.setText("- " + currency + "" + addCart.getShopDiscount());
+                    updateDiscount(currency, !TextUtils.isEmpty(addCart.getShopDiscount()) ? addCart.getShopDiscount() : "0");
                     promocode_amount.setText("- " + currency + "" + addCart.getPromocodeAmount());
                     serviceTax.setText(currency + Double.parseDouble(addCart.getTax()));
                     payAmount.setText(currency + "" + addCart.getPayable());
@@ -950,12 +954,22 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
         }
     }
 
+    private void updateDiscount(String currencyType, String discountAmountData) {
+        double discount = Double.parseDouble(discountAmountData);
+        if (discount > 0) {
+            layoutDiscount.setVisibility(View.VISIBLE);
+            discountAmount.setText("- " + currencyType + "" + discount);
+        } else {
+            layoutDiscount.setVisibility(View.GONE);
+        }
+    }
+
     private void deliveryFareCalculation() {
         if (addCart != null) {
             double totalPrice = addCart.getTotalPrice();
             String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
             itemTotalAmount.setText(currency + "" + totalPrice);
-            discountAmount.setText("- " + currency + "" + addCart.getShopDiscount());
+            updateDiscount(currency, !TextUtils.isEmpty(addCart.getShopDiscount()) ? addCart.getShopDiscount() : "0");
             promocode_amount.setText("- " + currency + "" + addCart.getPromocodeAmount());
             serviceTax.setText(currency + Double.parseDouble(addCart.getTax()));
             Double mPayAmount = addCart.getPayable() - addCart.getDeliveryCharges();

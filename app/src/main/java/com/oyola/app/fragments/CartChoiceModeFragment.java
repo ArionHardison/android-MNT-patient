@@ -80,6 +80,11 @@ public class CartChoiceModeFragment extends BottomSheetDialogFragment {
     HashMap<String, String> repeatCartMap;
     public static boolean isViewcart = false;
     public static boolean isSearch = false;
+    private ViewCartAdapter viewCartAdapter;
+
+    public void setViewCartAdapter(ViewCartAdapter viewCartAdapter) {
+        this.viewCartAdapter = viewCartAdapter;
+    }
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -173,7 +178,7 @@ public class CartChoiceModeFragment extends BottomSheetDialogFragment {
                 }
                 Log.e("Repeat_cart", repeatCartMap.toString());
                 if (isViewcart) {
-                    ViewCartAdapter.addCart(repeatCartMap, Objects.requireNonNull(getActivity()));
+                    viewCartAdapter.addCart(repeatCartMap, Objects.requireNonNull(getActivity()));
                 } else if (isSearch) {
                     ProductsAdapter.addCart(repeatCartMap);
                     if (GlobalData.searchProductList != null) {

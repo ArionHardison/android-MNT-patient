@@ -169,6 +169,7 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
         address = new com.oyola.app.models.Address();
         customDialog = new CustomDialog(context);
         address.setType("other");
+        address.setUserId(GlobalData.profileModel.getId());
         //Intialize Animation line
         initializeAvd();
 

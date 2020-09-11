@@ -69,11 +69,11 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
     public static Shop selectedShop = GlobalData.selectedShop;
     public static CartChoiceModeFragment bottomSheetDialogFragment;
     private List<Cart> list;
-    private CartClickListener cartClickListener;
+    private ViewCartListener viewCartListener;
 
-    public ViewCartAdapter( Context con, CartClickListener cartClickListener) {
-        this.cartClickListener = cartClickListener;
+    public ViewCartAdapter(Context con, ViewCartListener viewCartListener) {
         context = con;
+        this.viewCartListener = viewCartListener;
         list = new ArrayList<>();
     }
 
@@ -86,7 +86,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
         notifyDataSetChanged();
     }
 
-    private void addOrRemoveCart(HashMap<String, String> map, final Context context) {
+    public void addCart(HashMap<String, String> map, final Context context) {
         Log.d(TAG, context.toString());
         dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -131,70 +131,9 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                         CartFragment.discountAmount.setText("- " + currency + "" + response.body().getShopDiscount());
                         CartFragment.serviceTax.setText(currency + "" + response.body().getTax());
                         CartFragment.payAmount.setText(currency + "" + response.body().getPayable());
-                        if (cartClickListener != null) {
-                            cartClickListener.onAddOrRemove();
+                        if (viewCartListener != null) {
+                            viewCartListener.onAddOrRemove();
                         }
-                    } else {
-                        GlobalData.notificationCount = itemQuantity;
-                        CartFragment.errorLayout.setVisibility(View.VISIBLE);
-                        CartFragment.dataLayout.setVisibility(View.GONE);
-                        Toast.makeText(context, "Cart is empty", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<AddCart> call, @NonNull Throwable t) {
-
-            }
-        });
-    }
-
-    public static void addCart(HashMap<String, String> map, final Context context) {
-        Log.d(TAG, context.toString());
-        dialog = new Dialog(context);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.empty_dialog);
-        dialog.setCancelable(false);
-        dataResponse = false;
-        dialog.show();
-        Call<AddCart> call = apiInterface.postAddCart(map);
-        Log.e(" Call<AddCart>==>", "" + map);
-        call.enqueue(new Callback<AddCart>() {
-            @Override
-            public void onResponse(@NonNull Call<AddCart> call, @NonNull Response<AddCart> response) {
-                avdProgress.stop();
-                dialog.dismiss();
-                dataResponse = true;
-                if (!response.isSuccessful() && response.errorBody() != null) {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-//                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                } else if (response.isSuccessful()) {
-                    Log.d(TAG, response.body().toString());
-                    addCart = response.body();
-                    GlobalData.addCart = new AddCart();
-                    GlobalData.addCart = response.body();
-                    CartFragment.viewCartItemList.clear();
-                    CartFragment.viewCartItemList.addAll(response.body().getProductList());
-                    CartFragment.viewCartAdapter.notifyDataSetChanged();
-                    priceAmount = 0;
-                    discount = 0;
-                    itemQuantity = 0;
-                    itemCount = 0;
-                    //get Item Count
-                    itemCount = addCart.getProductList().size();
-                    if (itemCount != 0) {
-                        GlobalData.notificationCount = itemQuantity;
-                        //Set Payment details
-                        String currency = addCart.getProductList().get(0).getProduct().getPrices().getCurrency();
-                        CartFragment.itemTotalAmount.setText(currency + "" + response.body().getTotalPrice());
-                        CartFragment.discountAmount.setText("- " + currency + "" + response.body().getShopDiscount());
-                        CartFragment.serviceTax.setText(currency + "" + response.body().getTax());
-                        CartFragment.payAmount.setText(currency + "" + response.body().getPayable());
                     } else {
                         GlobalData.notificationCount = itemQuantity;
                         CartFragment.errorLayout.setVisibility(View.VISIBLE);
@@ -325,6 +264,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     bottomSheetDialogFragment = new CartChoiceModeFragment();
                     bottomSheetDialogFragment.show(((AppCompatActivity) context)
                             .getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+                    bottomSheetDialogFragment.setViewCartAdapter(ViewCartAdapter.this);
                     CartChoiceModeFragment.isViewcart = true;
                     CartChoiceModeFragment.isSearch = false;
                 } else {
@@ -336,7 +276,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                     map.put("quantity", holder.cardTextValue.getText().toString());
                     map.put("cart_id", String.valueOf(cart.getId()));
                     Log.e("AddCart_add", map.toString());
-                    addOrRemoveCart(map, holder.itemView.getContext());
+                    addCart(map, holder.itemView.getContext());
                 }
             }
         });
@@ -383,8 +323,9 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                         }
                     }
                     Log.e("AddCart_Minus", map.toString());
-                    addOrRemoveCart(map, holder.itemView.getContext());
+                    addCart(map, holder.itemView.getContext());
                     remove(productList);
+                    Log.e("AddCart_Minus", map.toString());
                 } else {
                     countMinusValue = Integer.parseInt(holder.cardTextValue.getText().toString()) - 1;
                     holder.cardTextValue.setText("" + countMinusValue);
@@ -405,7 +346,8 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                         }
                     }
                     Log.e("AddCart_Minus", map.toString());
-                    addOrRemoveCart(map, holder.itemView.getContext());
+                    addCart(map, holder.itemView.getContext());
+                    Log.e("AddCart_Minus", map.toString());
                 }
             }
         });
@@ -435,13 +377,14 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.MyView
                 AddonBottomSheetFragment bottomSheetDialogFragment = new AddonBottomSheetFragment();
                 bottomSheetDialogFragment.show(((AppCompatActivity) context)
                         .getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
+                bottomSheetDialogFragment.setViewCartAdapter(ViewCartAdapter.this);
                 AddonBottomSheetFragment.selectedCart = cart;
                 // Right here!
             }
         });
     }
 
-    public interface CartClickListener {
+    public interface ViewCartListener {
         void onAddOrRemove();
     }
 
