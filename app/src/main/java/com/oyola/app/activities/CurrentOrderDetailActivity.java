@@ -340,8 +340,8 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
             } else {
                 orderFlowList.add(new OrderFlow(getString(R.string.pickup_order_received), getString(R.string.pickup_description_1), R.drawable.ic_order_placed, ORDER_STATUS.get(0)));
                 orderFlowList.add(new OrderFlow(getString(R.string.pickup_order_accepted), getString(R.string.pickup_description_2), R.drawable.ic_order_confirmed, ORDER_STATUS.get(1)));
-                orderFlowList.add(new OrderFlow(getString(R.string.pickup_order_processed_new), getString(R.string.pickup_description_3), R.drawable.ic_order_processed, ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4) + ORDER_STATUS.get(7) + ORDER_STATUS.get(8) + ORDER_STATUS.get(9)));
-                orderFlowList.add(new OrderFlow(getString(R.string.pickup_order_pickedup_new), getString(R.string.pickup_description_4), R.drawable.ic_order_picked_up, ORDER_STATUS.get(5) + ORDER_STATUS.get(6)));
+                orderFlowList.add(new OrderFlow(getString(R.string.pickup_order_processed_new), getString(R.string.pickup_description_3), R.drawable.ic_order_processed, ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4) + ORDER_STATUS.get(7) + ORDER_STATUS.get(8)));
+                orderFlowList.add(new OrderFlow(getString(R.string.pickup_order_pickedup_new), getString(R.string.pickup_description_4), R.drawable.ic_order_picked_up, ORDER_STATUS.get(5) + ORDER_STATUS.get(6) + ORDER_STATUS.get(9)));
                 orderFlowList.add(new OrderFlow(getString(R.string.pickup_order_completed), getString(R.string.pickup_description_5), R.drawable.ic_order_delivered, ORDER_STATUS.get(7) + ORDER_STATUS.get(10)));
             }
         }
