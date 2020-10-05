@@ -6,7 +6,7 @@
     android:layout_height="fill_parent"
     android:background="#FFFFFF"
     android:fillViewport="true"
-    tools:context="com.oyola.app.activities.SignUpActivity">
+    tools:context="com.dietmanager.app.activities.SignUpActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:contentDescription="@string/login"
-                android:src="@drawable/oyola"
+                android:src="@drawable/logo_app"
                 android:tint="@color/colorPrimary" />
 
             <EditText

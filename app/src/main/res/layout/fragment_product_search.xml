@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eee"
-    tools:context="com.oyola.app.fragments.ProductSearchFragment">
+    tools:context="com.dietmanager.app.fragments.ProductSearchFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginBottom="@dimen/_45sdp"

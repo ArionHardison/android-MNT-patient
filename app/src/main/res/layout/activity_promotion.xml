@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
-    tools:context="com.oyola.app.activities.PromotionActivity">
+    tools:context="com.dietmanager.app.activities.PromotionActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

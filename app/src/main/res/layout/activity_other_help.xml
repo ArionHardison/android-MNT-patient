@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.oyola.app.activities.OtherHelpActivity">
+    tools:context="com.dietmanager.app.activities.OtherHelpActivity">
 
 
     <androidx.appcompat.widget.Toolbar

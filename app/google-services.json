@@ -1,141 +1,42 @@
 {
   "project_info": {
-    "project_number": "1062254733354",
-    "firebase_url": "https://oyola-245705.firebaseio.com",
-    "project_id": "oyola-245705",
-    "storage_bucket": "oyola-245705.appspot.com"
+    "project_number": "236334629405",
+    "firebase_url": "https://diet-manager-bd75d.firebaseio.com",
+    "project_id": "diet-manager-bd75d",
+    "storage_bucket": "diet-manager-bd75d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1062254733354:android:9a91ca1b7a80d603",
+        "mobilesdk_app_id": "1:236334629405:android:a7f133d2ab8e7537033cf4",
         "android_client_info": {
-          "package_name": "com.oyola.app"
+          "package_name": "com.dietmanager.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1062254733354-5qakaeiamlhglepuvc9r5j1h5kicv7qk.apps.googleusercontent.com",
+          "client_id": "236334629405-tod0oe6oohuqreotpmj51t41a1rbv521.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.oyola.app",
-            "certificate_hash": "d40279dd1d10c3f80340f3cf84d3e19980090728"
+            "package_name": "com.dietmanager.app",
+            "certificate_hash": "01c2b12398a6522a9f1d90392ce0560c7a1b5e03"
           }
-        },
-        {
-          "client_id": "1062254733354-nj2m2cf7344e5t8ncfg4afo2loaqc0r0.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.oyola.app",
-            "certificate_hash": "21f915f6f2499b05689b1c0042d6dfc631bca4dc"
-          }
-        },
-        {
-          "client_id": "1062254733354-5ejog3aheni6140r0ptrau9hk9rpc817.apps.googleusercontent.com",
-          "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBJqS_Nyg8oI4i9gbCzjaPk2OWAi9uQ1ug"
+          "current_key": "AIzaSyC7gDBc4pVms7XB6YhkqzZmhKtFRHl-vaQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1062254733354-5ejog3aheni6140r0ptrau9hk9rpc817.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1062254733354:android:8b3d6e70aa25bbf4",
-        "android_client_info": {
-          "package_name": "com.oyola.deliveryboy"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1062254733354-ikm365v49v29i4d7q43kk9ubdhovab0t.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.oyola.deliveryboy",
-            "certificate_hash": "d40279dd1d10c3f80340f3cf84d3e19980090728"
-          }
-        },
-        {
-          "client_id": "1062254733354-5qah6fao867omam9kim5rb8tsc9d6nvd.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.oyola.deliveryboy",
-            "certificate_hash": "21f915f6f2499b05689b1c0042d6dfc631bca4dc"
-          }
-        },
-        {
-          "client_id": "1062254733354-5ejog3aheni6140r0ptrau9hk9rpc817.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBJqS_Nyg8oI4i9gbCzjaPk2OWAi9uQ1ug"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1062254733354-5ejog3aheni6140r0ptrau9hk9rpc817.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1062254733354:android:5e3531687154e4f1",
-        "android_client_info": {
-          "package_name": "com.oyola.restaurant"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1062254733354-7pk1a0886ehvgeveq7r3m3qblcdqtl4t.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.oyola.restaurant",
-            "certificate_hash": "d40279dd1d10c3f80340f3cf84d3e19980090728"
-          }
-        },
-        {
-          "client_id": "1062254733354-8j4vl7qgtofegokdsgshr7jqhu700iq9.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.oyola.restaurant",
-            "certificate_hash": "21f915f6f2499b05689b1c0042d6dfc631bca4dc"
-          }
-        },
-        {
-          "client_id": "1062254733354-5ejog3aheni6140r0ptrau9hk9rpc817.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBJqS_Nyg8oI4i9gbCzjaPk2OWAi9uQ1ug"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1062254733354-5ejog3aheni6140r0ptrau9hk9rpc817.apps.googleusercontent.com",
-              "client_type": 3
+              "client_id": "236334629405-u1nlav4fnf0l15jg9sidkvg0ldam5odl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dietmanager"
+              }
             }
           ]
         }

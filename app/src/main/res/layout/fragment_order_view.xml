@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
-    tools:context="com.oyola.app.fragments.OrderViewFragment">
+    tools:context="com.dietmanager.app.fragments.OrderViewFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

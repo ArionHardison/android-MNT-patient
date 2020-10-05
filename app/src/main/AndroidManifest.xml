@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.oyola.app">
+    package="com.dietmanager.app">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -18,7 +18,7 @@
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
-        android:name=".OyolaApplication"
+        android:name="com.dietmanager.app.OyolaApplication"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
@@ -30,7 +30,7 @@
         android:usesCleartextTraffic="true">
 
         <service
-            android:name=".service.FetchAddressIntentService"
+            android:name="com.dietmanager.app.service.FetchAddressIntentService"
             android:exported="false" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -45,33 +45,33 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".activities.LoginActivity"
+            android:name="com.dietmanager.app.activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.dietmanager.app.activities.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.LocationPickActivity"
+            android:name="com.dietmanager.app.activities.LocationPickActivity"
             android:label=""
-            android:parentActivityName=".activities.MainActivity"
+            android:parentActivityName="com.dietmanager.app.activities.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.oyola.app.activities.MainActivity" />
+                android:value="com.dietmanager.app.activities.MainActivity" />
         </activity>
         <activity
-            android:name=".activities.PlacePredictionsActivity"
+            android:name="com.dietmanager.app.activities.PlacePredictionsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
 
         <receiver
-            android:name=".SmsRetrive.MySMSBroadcastReceiver"
+            android:name="com.dietmanager.app.SmsRetrive.MySMSBroadcastReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
@@ -131,12 +131,12 @@
             android:value="true" />
 
         <activity
-            android:name=".activities.WelcomeActivity"
+            android:name="com.dietmanager.app.activities.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name=".activities.SplashActivity"
+            android:name="com.dietmanager.app.activities.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -145,128 +145,128 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- Firebase Notifications -->
-        <service android:name=".fcm.MyFirebaseMessagingService">
+        <service android:name="com.dietmanager.app.fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".fcm.MyFirebaseInstanceIDService">
+        <service android:name="com.dietmanager.app.fcm.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
         <activity
-            android:name=".HomeActivity"
+            android:name="com.dietmanager.app.HomeActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".activities.AddCardActivity"
+            android:name="com.dietmanager.app.activities.AddCardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.OtpActivity"
+            android:name="com.dietmanager.app.activities.OtpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.MobileNumberActivity"
+            android:name="com.dietmanager.app.activities.MobileNumberActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.SignUpActivity"
+            android:name="com.dietmanager.app.activities.SignUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.ForgotPasswordActivity"
+            android:name="com.dietmanager.app.activities.ForgotPasswordActivity"
             android:label="@string/forgot_password"
-            android:parentActivityName=".activities.LoginActivity"
+            android:parentActivityName="com.dietmanager.app.activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.oyola.app.activities.TermsAndConditions"
+            android:name="com.dietmanager.app.activities.TermsAndConditions"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.HotelViewActivity"
+            android:name="com.dietmanager.app.activities.HotelViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.ChangePasswordActivity"
+            android:name="com.dietmanager.app.activities.ChangePasswordActivity"
             android:label="Change Password"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.FavouritesActivity"
+            android:name="com.dietmanager.app.activities.FavouritesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.RecommendedListActivity"
+            android:name="com.dietmanager.app.activities.RecommendedListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.EditAccountActivity"
+            android:name="com.dietmanager.app.activities.EditAccountActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.SetDeliveryLocationActivity"
+            android:name="com.dietmanager.app.activities.SetDeliveryLocationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.SaveDeliveryLocationActivity"
+            android:name="com.dietmanager.app.activities.SaveDeliveryLocationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.ManageAddressActivity"
+            android:name="com.dietmanager.app.activities.ManageAddressActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.AccountPaymentActivity"
+            android:name="com.dietmanager.app.activities.AccountPaymentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.OrdersActivity"
+            android:name="com.dietmanager.app.activities.OrdersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.FilterActivity"
+            android:name="com.dietmanager.app.activities.FilterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.ViewCartActivity"
+            android:name="com.dietmanager.app.activities.ViewCartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.PastOrderDetailActivity"
+            android:name="com.dietmanager.app.activities.PastOrderDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.OtherHelpActivity"
+            android:name="com.dietmanager.app.activities.OtherHelpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.NotificationActivity"
+            android:name="com.dietmanager.app.activities.NotificationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.PromotionActivity"
+            android:name="com.dietmanager.app.activities.PromotionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.ReferralActivity"
+            android:name="com.dietmanager.app.activities.ReferralActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.CurrentOrderDetailActivity"
+            android:name="com.dietmanager.app.activities.CurrentOrderDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activities.AddMoneyActivity"
+            android:name="com.dietmanager.app.activities.AddMoneyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustNothing" />
         <activity
-            android:name=".activities.WalletActivity"
+            android:name="com.dietmanager.app.activities.WalletActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
@@ -275,10 +275,10 @@
             android:value="995d4db952b022cae648a19c5cf55d68cc7ad58a" />
 
         <activity
-            android:name=".activities.ResetPasswordActivity"
+            android:name="com.dietmanager.app.activities.ResetPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.SecretKeyActivity"
+            android:name="com.dietmanager.app.activities.SecretKeyActivity"
             android:screenOrientation="portrait" /> <!-- <provider -->
         <!-- android:name="android.support.v4.content.FileProvider" -->
         <!-- android:authorities="${applicationId}.fileprovider" -->
@@ -289,8 +289,8 @@
         <!-- android:resource="@xml/file_paths" /> -->
         <!-- </provider> -->
         <activity
-            android:name=".activities.ProductDetailActivity"
-            android:parentActivityName=".activities.HotelViewActivity"
+            android:name="com.dietmanager.app.activities.ProductDetailActivity"
+            android:parentActivityName="com.dietmanager.app.activities.HotelViewActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
     </application>

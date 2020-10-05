@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.oyola.app.activities.ViewCartActivity">
+    tools:context="com.dietmanager.app.activities.ViewCartActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
