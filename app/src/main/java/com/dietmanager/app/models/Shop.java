@@ -1,4 +1,3 @@
-
 package com.dietmanager.app.models;
 
 import com.google.gson.annotations.Expose;
@@ -93,22 +92,25 @@ public class Shop {
 
     @SerializedName("deliveryoption")
     @Expose
-    private List<DeliveryOption> deliveryOptionList=null;
+    private List<DeliveryOption> deliveryOptionList = null;
 
     @SerializedName("halal")
     @Expose
-    private Integer halal ;
+    private Integer halal;
 
     @SerializedName("free_delivery")
     @Expose
-    private Integer freeDelivery ;
+    private Integer freeDelivery;
 
     public Date getCreatedAtDate() {
         //2020-07-10 15:18:15
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date createdAtDate = dateFormat.parse(createdAt);
-            return createdAtDate;
+            if (createdAt != null) {
+                Date createdAtDate = dateFormat.parse(createdAt);
+                return createdAtDate;
+            } else
+                return null;
         } catch (ParseException e) {
             e.printStackTrace();
             return null;
