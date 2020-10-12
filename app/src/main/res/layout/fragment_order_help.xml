@@ -61,7 +61,7 @@
                 android:fontFamily="@font/nunito_bold"
                 android:text="Chat us"
                 android:textColor="@color/theme"
-                android:visibility="gone" />
+                 />
 
             <Button
                 android:id="@+id/email_us"

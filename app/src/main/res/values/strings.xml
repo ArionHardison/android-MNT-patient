@@ -166,11 +166,11 @@
     <string name="setting">Setting</string>
 
     <!--PAYMENT SCREEN-->
-    <string name="wallet_amount">Oyola Credit Amount</string>
+    <string name="wallet_amount">DietManager Credit Amount</string>
     <string name="card">CARD</string>
     <string name="pay_on_delivery">PAY ON DELIVERY</string>
     <string name="by_cash">By cash</string>
-    <string name="walletHistory">Oyola Credit</string>
+    <string name="walletHistory">DietManager Credit</string>
     <string name="history">History</string>
     <string name="add">Add</string>
     <string name="payment_options">Payment options</string>
@@ -182,7 +182,7 @@
     <string name="apply">Apply</string>
     <string name="promocode">Promo Code</string>
     <string name="promo_expires_on">Expires on : </string>
-    <string name="use_wallet">Oyola Credit</string>
+    <string name="use_wallet">DietManager Credit</string>
     <string name="google_login_failed">Google login failed</string>
     <string name="dispute">Dispute</string>
     <string name="email_us">Email Us</string>
@@ -321,7 +321,7 @@
     <string name="second_comission">Second Commission</string>
     <string name="delivery_charges">Delivery Charges</string>
     <string name="promocode_amount">Promo Code amount</string>
-    <string name="wallet_detection">Oyola Credit applied</string>
+    <string name="wallet_detection">DietManager Credit applied</string>
     <string name="order_details">DETAILS</string>
     <string name="order_help">HELP</string>
     <string name="connect_with_social">Connect with social</string>
@@ -424,8 +424,8 @@
     <string name="login_terms_privacy_policy">By continuing, you agree to the \n Terms of Service and Privacy Policy</string>
     <string name="login_terms_and_conditions_label">Terms of Service</string>
     <string name="login_privacy_policy_label">Privacy Policy</string>
-    <string name="login_terms_and_conditions_url">https://www.oyola.com.au/terms-of-use</string>
-    <string name="login_privacy_policy_url">https://www.oyola.com.au/privacy-policy</string>
+    <string name="login_terms_and_conditions_url">https://www.DietManager.com.au/terms-of-use</string>
+    <string name="login_privacy_policy_url">https://www.DietManager.com.au/privacy-policy</string>
 
     <string name="welcome_user">Hi,</string>
     <string name="set_location1">Experience a wide range of healthy meals prepared fresh for you.</string>
@@ -441,7 +441,7 @@
     <string name="no_address_found">No address found</string>
     <string name="no_geocoder_available">No geocoder available</string>
     <string name="search_here">Search here</string>
-    <string name="agree_policies">By signing up you agree to Oyola\'s <u>Terms of Service</u>, <u>Privacy Policy</u> and <u>Content Policies</u></string>
+    <string name="agree_policies">By signing up you agree to DietManager\'s <u>Terms of Service</u>, <u>Privacy Policy</u> and <u>Content Policies</u></string>
     <string name="favourite_food">Your favourites?</string>
     <string name="done">Done</string>
     <string name="oops_no_internet">Oops! No internet connection</string>
@@ -469,7 +469,7 @@
     <string name="cuisines">Cuisines</string>
     <string name="show_kitchens_with">Show Kitchens With</string>
     <string name="add_address_error">Please add address before checkout</string>
-    <string name="referrral_content">Hey Checkout this app, %1$s \nUser - https://play.google.com/store/apps/details?id=com.oyola.app\nInstall this app with referral code %2$s</string>
+    <string name="referrral_content">Hey Checkout this app, %1$s \nUser - https://play.google.com/store/apps/details?id=com.DietManager.app\nInstall this app with referral code %2$s</string>
 
     <string name="order_id">"?order_id="</string>
     <string name="addon_">%s(%d x %s)</string>
