@@ -22,7 +22,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_50sdp"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_app_name"
+        android:src="@drawable/logo_app"
         android:tint="@color/colorPrimary" />
 
     <!--   Mobile Number Layout-->

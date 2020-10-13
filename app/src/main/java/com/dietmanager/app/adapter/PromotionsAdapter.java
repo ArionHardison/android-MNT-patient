@@ -11,7 +11,11 @@ import com.dietmanager.app.R;
 import com.dietmanager.app.models.Promotions;
 import com.dietmanager.app.models.Restaurant;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by santhosh@appoets.com on 22-08-2017.
@@ -53,6 +57,7 @@ public class PromotionsAdapter extends RecyclerView.Adapter<PromotionsAdapter.My
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Promotions promotionsModel = list.get(position);
         holder.promoNameTxt.setText(promotionsModel.getPromoCode());
+        holder.expireTxt.setText(convertDateFormat(promotionsModel.getExpiration()));
         holder.statusBtnTxt.setTag(promotionsModel);
     }
 
@@ -65,11 +70,13 @@ public class PromotionsAdapter extends RecyclerView.Adapter<PromotionsAdapter.My
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView promoNameTxt;
+        TextView expireTxt;
         Button statusBtnTxt;
 
         private MyViewHolder(View view) {
             super(view);
             promoNameTxt= (TextView) view.findViewById(R.id.promo_name_txt);
+            expireTxt= (TextView) view.findViewById(R.id.expire_date_txt);
             statusBtnTxt= (Button) view.findViewById(R.id.status_btn);
 
             statusBtnTxt.setOnClickListener(this);
@@ -79,5 +86,21 @@ public class PromotionsAdapter extends RecyclerView.Adapter<PromotionsAdapter.My
             Promotions promotions= (Promotions) v.getTag();
             promotionListener.onApplyBtnClick(promotions);
         }
+    }
+
+    private String convertDateFormat(String date) {
+        if(date != null) {
+            String newDateString = null;
+            SimpleDateFormat spf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
+            try {
+                Date newDate = spf.parse(date);
+                newDateString =
+                        new SimpleDateFormat("dd-MMM-yyyy hh:mm a", Locale.getDefault()).format(newDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return newDateString;
+        }else
+            return "-";
     }
 }
