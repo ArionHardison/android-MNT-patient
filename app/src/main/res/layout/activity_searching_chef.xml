@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fafafa"
+    tools:context=".activities.SearchingChefActivity">
+
+        <LinearLayout
+            android:id="@+id/search_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#fafafa"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
+
+            <LinearLayout
+                android:id="@+id/item_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:background="#fafafa"
+                android:gravity="center"
+                android:focusable="true"
+                android:orientation="vertical">
+<ImageView
+    android:layout_width="@dimen/_90sdp"
+    android:layout_height="@dimen/_90sdp"
+    android:layout_gravity="center"
+    android:src="@drawable/ic_search_custom"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_16sdp"
+        android:layout_gravity="bottom"
+        android:background="@color/colorWhite"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/schedule_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/searching_for_chef"
+            android:textAllCaps="false"
+            android:padding="@dimen/_12sdp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/_4sdp"
+            android:textColor="@color/green"
+            android:textSize="@dimen/_12sdp" />
+        <Button
+            android:id="@+id/cancel_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_corner_bg_theme"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/cancel"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/_4sdp"
+            android:textAllCaps="false"
+            android:textColor="@color/colorTextWhite"
+            android:textSize="@dimen/_12sdp" />
+    </LinearLayout>
+
+</LinearLayout>

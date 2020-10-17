@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="1dp"
+    android:background="@color/colorWhite"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/_8sdp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/light_grey"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="0dp">
+
+                <FrameLayout
+                    android:layout_width="@dimen/_75sdp"
+                    android:layout_height="@dimen/_65sdp">
+
+                    <ImageView
+                        android:id="@+id/dish_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/restaurant"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/logo_app" />
+
+                </FrameLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/restaurant_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_semibold"
+                        android:maxLines="1"
+                        android:text="Funkies"
+                        android:textColor="@color/colorPrimaryText"
+                        android:textSize="@dimen/text_small" />
+
+                    <TextView
+                        android:id="@+id/halal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_semibold"
+                        android:maxLines="1"
+                        android:padding="@dimen/_1sdp"
+                        android:text="@string/halal"
+                        android:textColor="@color/dark_grey"
+                        android:textSize="@dimen/text_small" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginTop="10dp"
+                        android:gravity="bottom"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/offer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_offers"
+                            android:drawablePadding="@dimen/_10sdp"
+                            android:fontFamily="@font/nunito_semibold"
+                            android:gravity="center_vertical"
+                            android:text="Flat 20% offer on all orders"
+                            android:textColor="@color/colorRed"
+                            android:textSize="@dimen/text_tiny"
+                            android:visibility="gone" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/app_name"
+                                    android:padding="@dimen/_4sdp"
+                                    android:src="@drawable/ic_star_rating" />
+
+                                <TextView
+                                    android:id="@+id/rating"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:fontFamily="@font/nunito_bold"
+                                    android:text="5"
+                                    android:textColor="@color/dark_grey"
+                                    android:textSize="@dimen/text_small" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/distance_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:gravity="end"
+                                android:maxLines="1"
+                                android:paddingStart="0dp"
+                                android:paddingEnd="8dp"
+                                android:text="32 mins"
+                                android:textAllCaps="true"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textSize="@dimen/text_tiny"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/price"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/nunito_bold"
+                                android:gravity="end"
+                                android:maxLines="1"
+                                android:paddingStart="0dp"
+                                android:paddingEnd="0dp"
+                                android:text="$200 for two"
+                                android:textAllCaps="true"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textSize="@dimen/text_small"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/follow"
+                android:padding="@dimen/_8sdp"
+                android:textSize="@dimen/_13sdp"
+                android:textColor="@color/colorWhite"
+                android:background="@color/checkbox_green"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_grey" />
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

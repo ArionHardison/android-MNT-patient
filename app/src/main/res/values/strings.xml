@@ -478,4 +478,26 @@
     <string name="session_expired_alert_message">You are already logged in with some other device. Do you want to close the current session and login with this device?</string>
     <string name="session_expired_button_yes">Yes</string>
     <string name="session_expired_button_no">No</string>
+    <string name="lets_impress_you_with_our_dishes">Lets impress you with our dishes</string>
+    <string name="dietitian">Dietitian</string>
+    <string name="no_dietitian_found">No dietitian found</string>
+    <string name="no_dietitian_found_in_your_location">No dietitian found in your location</string>
+    <string name="follow">Follow</string>
+    <string name="subscribe_now">Subscribe Now</string>
+    <string name="healthy_foods">Healthy Foods</string>
+    <string name="planned_diet">Planned Diet</string>
+    <string name="subscribe_for">Subscribe for</string>
+    <string name="subscribe">Subscribe</string>
+    <string name="_3_months_plan">3 months plan</string>
+    <string name="yearly_plan">Yearly Plan</string>
+    <string name="menu">Menu</string>
+    <string name="order">Order</string>
+    <string name="choose_your_ingredients">Choose your ingredients</string>
+    <string name="how_you_like_to_order">How you like to order</string>
+    <string name="home_chef">Home Chef</string>
+    <string name="chef_to_home">Chef to Home</string>
+    <string name="requesting">Requesting</string>
+    <string name="searching_for_chef">Searching for Chef</string>
+    <string name="select_chef">Select Chef</string>
+    <string name="accept">Accept</string>
 </resources>

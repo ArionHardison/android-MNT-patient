@@ -16,6 +16,7 @@
     <color name="background_color">#f5f5f5</color>
     <color name="very_light_grey">#F6F5F5</color>
     <color name="checkbox_green">#1D931B</color>
+    <color name="green">#007b04</color>
 
     <color name="theme">#F57620</color>
     <color name="grey">#a4a4a4</color>

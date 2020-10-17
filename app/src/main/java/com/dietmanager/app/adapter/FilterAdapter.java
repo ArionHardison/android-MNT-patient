@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.dietmanager.app.activities.FilterActivity.isReset;
-import static com.dietmanager.app.fragments.HomeFragment.isFilterApplied;
+import static com.dietmanager.app.fragments.HomeDietitianFragment.isFilterApplied;
 
 public class FilterAdapter extends SectionedRecyclerViewAdapter<FilterAdapter.ViewHolder> {
 

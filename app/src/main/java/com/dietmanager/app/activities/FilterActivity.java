@@ -25,7 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.dietmanager.app.fragments.HomeFragment.isFilterApplied;
+import static com.dietmanager.app.fragments.HomeDietitianFragment.isFilterApplied;
 import static com.dietmanager.app.helper.GlobalData.cuisineIdArrayList;
 import static com.dietmanager.app.helper.GlobalData.isOfferApplied;
 import static com.dietmanager.app.helper.GlobalData.isPureVegApplied;

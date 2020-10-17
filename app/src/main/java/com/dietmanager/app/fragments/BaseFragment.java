@@ -18,7 +18,7 @@ import com.dietmanager.app.activities.WelcomeActivity;
 import com.dietmanager.app.helper.GlobalData;
 import com.dietmanager.app.helper.SharedHelper;
 
-import static com.dietmanager.app.fragments.HomeFragment.isFilterApplied;
+import static com.dietmanager.app.fragments.HomeDietitianFragment.isFilterApplied;
 
 public class BaseFragment extends Fragment {
 

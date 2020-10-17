@@ -156,7 +156,7 @@ public class LoginActivity extends BaseActivity {
 
             case R.id.cl_mobile:
                 Intent intent = new Intent(getApplicationContext(), MobileNumberActivity.class);
-                intent.putExtra("mIsFromSocial", false);
+                intent.putExtra("mIsFromSo cial", false);
                 startActivity(intent);
                 break;
 
