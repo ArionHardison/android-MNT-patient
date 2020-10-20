@@ -104,6 +104,7 @@ dependencies {
 //        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
 //        exclude group: 'io.card'
 //    }
+    implementation 'com.airbnb.android:lottie:2.7.0'
 
     implementation 'com.google.android.libraries.places:places:1.1.0' // Google Places SDK
     // implementation 'com.facebook.android:account-kit-sdk:5.4.0' // Facebook Account Kit

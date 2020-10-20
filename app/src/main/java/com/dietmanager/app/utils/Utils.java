@@ -17,6 +17,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -135,6 +138,12 @@ public class Utils {
             else return converted;
         } else return text;
     }
+    public static String getDayAndTimeFormat(Date dateObj) {
+        String time = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(dateObj);
+        SimpleDateFormat fmtOutFull =
+                new SimpleDateFormat("d MMM yyyy, EEE", Locale.getDefault());
+        return String.format("%s %s", fmtOutFull.format(dateObj.getTime()), time);
 
+    }
 
 }
