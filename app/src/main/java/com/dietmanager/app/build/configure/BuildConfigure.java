@@ -10,7 +10,7 @@ public class BuildConfigure {
     /*   Dev Mode*/
     public static String BASE_URL = "http://34.203.193.141/";
 
-    public static String CLIENT_SECRET = "ykbeeuPyUzfrelPQgrbShq5el+Wh3/yrC3SUnaxU";
+    public static String CLIENT_SECRET = "uMbGeYx0kUMDLa4IxredP0KlZKPRMtNOIgAQGT5b";
     public static String CLIENT_ID = "2";
 
     //Pubnub for Chat
