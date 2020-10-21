@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F57620</color>
+    <color name="colorPrimary">#007b04</color>
     <color name="colorPrimaryToolbar">#FFFFFF</color>
-    <color name="colorPrimaryDark">#F57620</color>
-    <color name="colorAccent">#F57620</color>
+    <color name="colorPrimaryDark">#007b04</color>
+    <color name="colorAccent">#007b04</color>
     <color name="colorTransparent">#00ff6d00</color>
 
     <color name="colorPrimaryText">@color/colorBlack</color>
@@ -18,7 +18,7 @@
     <color name="checkbox_green">#1D931B</color>
     <color name="green">#007b04</color>
 
-    <color name="theme">#F57620</color>
+    <color name="theme">#007b04</color>
     <color name="grey">#a4a4a4</color>
     <color name="dark_grey">#636363</color>
     <color name="light_grey">#dcdcdc</color>

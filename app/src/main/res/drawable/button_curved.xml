@@ -5,5 +5,5 @@
     <size
         android:width="100px"
         android:height="100px" />
-    <solid android:color="@color/colorButton" />
+    <solid android:color="@color/colorAccent" />
 </shape>

@@ -101,8 +101,8 @@ public class HomeDietitianFragment extends Fragment implements AdapterView.OnIte
     LinearLayout impressiveDishesLayout;
     @BindView(R.id.dietitian_for_you_layout)
     LinearLayout dietitianForYouLayout;
-    private SkeletonScreen skeletonScreen, skeletonScreen2, skeletonText1, skeletonText2,
-            skeletonSpinner, skeletonFavourites, skeletonFavouriteTitle, skeletonFreeDelivery, skeletonFreeDeliveryTitle;
+    private SkeletonScreen skeletonScreen, skeletonScreen2, skeletonText2,
+            skeletonSpinner;
     private TextView addressLabel;
     private TextView addressTxt;
     private LinearLayout locationAddressLayout;
@@ -369,12 +369,7 @@ public class HomeDietitianFragment extends Fragment implements AdapterView.OnIte
             @Override
             public void onResponse(Call<RestaurantsData> call, Response<RestaurantsData> response) {
                 skeletonScreen.hide();
-                skeletonFavourites.hide();
-                skeletonFreeDelivery.hide();
                 skeletonScreen2.hide();
-                skeletonText1.hide();
-                skeletonFavouriteTitle.hide();
-                skeletonFreeDeliveryTitle.hide();
                 skeletonText2.hide();
                 skeletonSpinner.hide();
                 if (!response.isSuccessful()) {
@@ -626,12 +621,7 @@ public class HomeDietitianFragment extends Fragment implements AdapterView.OnIte
                 latitude = selectedAddress.getLatitude();
                 longitude = selectedAddress.getLongitude();
                 skeletonScreen.show();
-                skeletonFavourites.show();
-                skeletonFreeDelivery.show();
                 skeletonScreen2.show();
-                skeletonText1.show();
-                skeletonFavouriteTitle.show();
-                skeletonFreeDeliveryTitle.show();
                 skeletonText2.show();
                 skeletonSpinner.show();
                 findRestaurant();
@@ -642,12 +632,7 @@ public class HomeDietitianFragment extends Fragment implements AdapterView.OnIte
         if (requestCode == FILTER_APPLIED_CHECK && resultCode == Activity.RESULT_OK) {
             System.out.print("HomeFragment : Filter Success");
             skeletonScreen.show();
-            skeletonFavourites.show();
-            skeletonFreeDelivery.show();
             skeletonScreen2.show();
-            skeletonText1.show();
-            skeletonFavouriteTitle.show();
-            skeletonFreeDeliveryTitle.show();
             skeletonText2.show();
             skeletonSpinner.show();
             findRestaurant();
@@ -669,12 +654,7 @@ public class HomeDietitianFragment extends Fragment implements AdapterView.OnIte
     @Override
     public void refreshHome() {
         skeletonScreen.show();
-        skeletonFavourites.show();
-        skeletonFreeDelivery.show();
         skeletonScreen2.show();
-        skeletonText1.show();
-        skeletonFavouriteTitle.show();
-        skeletonFreeDeliveryTitle.show();
         skeletonText2.show();
         skeletonSpinner.show();
         findRestaurant();
