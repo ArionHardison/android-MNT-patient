@@ -225,6 +225,8 @@
     <string name="please_enter_valid_email">Please enter valid email</string>
     <string name="please_enter_your_mobile_number">Please enter your mobile number</string>
     <string name="please_enter_password">Please enter your password</string>
+    <string name="please_enter_minimum_length_password">Please enter atleast 6 characters in password</string>
+
     <string name="please_enter_your_confirm_password">Please enter your confirm password</string>
     <string name="password_and_confirm_password_doesnot_match">Password and confirm password doesn\'t match</string>
     <string name="profile_updated_successfully">Profile updated successfully.</string>
@@ -501,5 +503,6 @@
     <string name="select_chef">Select Chef</string>
     <string name="accept">Accept</string>
     <string name="invalid_date_time">You cannot select past time</string>
+    <string name="login_using">Login using</string>
 
 </resources>
