@@ -11,7 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 
-import com.dietmanager.app.fragments.HomeDietitianFragment;
+import com.dietmanager.app.fragments.HomeDietFragment;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -213,7 +213,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
             transaction.add(R.id.main_container, fragment).commit();
             bottomNavigation.setCurrentItem(3);
         } else {
-            fragment = new HomeDietitianFragment();
+            fragment = new HomeDietFragment();
             Bundle mBundle = new Bundle();
             mBundle.putBoolean("isFromSignUp", mIsFromSignup);
             fragment.setArguments(mBundle);
@@ -228,7 +228,7 @@ public class HomeActivity extends AppCompatActivity implements LocationListener,
                 // Do something cool here...
                 switch (position) {
                     case 0:
-                        fragment = new HomeDietitianFragment();
+                        fragment = new HomeDietFragment();
                         Bundle mBundle = new Bundle();
                         mBundle.putBoolean("isFromSignUp", mIsFromSignup);
                         fragment.setArguments(mBundle);

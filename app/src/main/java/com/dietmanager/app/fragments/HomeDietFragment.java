@@ -84,7 +84,7 @@ import static com.dietmanager.app.helper.GlobalData.longitude;
 import static com.dietmanager.app.helper.GlobalData.selectedAddress;
 
 
-public class HomeDietitianFragment extends Fragment implements AdapterView.OnItemSelectedListener,
+public class HomeDietFragment extends Fragment implements AdapterView.OnItemSelectedListener,
         CuisineSelectFragment.OnSuccessListener {
 
     @BindView(R.id.animation_line_image)
@@ -191,7 +191,7 @@ public class HomeDietitianFragment extends Fragment implements AdapterView.OnIte
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home_dietitian, container, false);
+        View view = inflater.inflate(R.layout.fragment_home_diet, container, false);
         ButterKnife.bind(this, view);
         mIsFromSignUp = getArguments().getBoolean("isFromSignUp");
         if (mIsFromSignUp) {
@@ -375,7 +375,7 @@ public class HomeDietitianFragment extends Fragment implements AdapterView.OnIte
                 if (!response.isSuccessful()) {
                     ServerError serverError = new Gson().fromJson(response.errorBody().charStream(), ServerError.class);
                     String message = serverError != null ? serverError.getError() : null;
-                    Toast.makeText(getActivity(), !TextUtils.isEmpty(message) ? message : getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getActivity(), !TextUtils.isEmpty(message) ? message : getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show();
                     showOrHideView(false);
                 } else {
                     if (isAdded() && isVisible() && getUserVisibleHint()) {
