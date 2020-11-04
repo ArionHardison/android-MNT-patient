@@ -68,6 +68,9 @@ public class User {
     @SerializedName("referral_code")
     @Expose
     private String referralCode;
+    @SerializedName("subscription")
+    @Expose
+    private String subscription;
     @SerializedName("addresses")
     @Expose
     private List<Address> addresses = null;
@@ -234,6 +237,14 @@ public class User {
 
     public void setCart(List<Cart> cart) {
         this.cart = cart;
+    }
+
+    public String getSubscription() {
+        return subscription;
+    }
+
+    public void setSubscription(String subscription) {
+        this.subscription = subscription;
     }
 
     public String getReferralCode() {

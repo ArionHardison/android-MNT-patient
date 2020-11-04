@@ -29,102 +29,60 @@
             <!--    Imprssive Dish-->
 
             <LinearLayout
-                android:id="@+id/impressive_dishes_layout"
+                android:id="@+id/days_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fillViewport="true"
                 android:orientation="vertical"
-                android:visibility="gone"
+                android:visibility="visible"
                 tools:visibility="visible">
 
                 <TextView
-                    android:id="@+id/offer_title_header"
+                    android:id="@+id/dummy_navigate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_bold"
                     android:maxLines="1"
                     android:padding="@dimen/_8sdp"
-                    android:text="@string/lets_impress_you_with_our_dishes"
+                    android:text="@string/meals_plan"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/_11sdp" />
+                    android:textSize="@dimen/_15sdp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/impressive_dishes_rv"
+                    android:id="@+id/days_rv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:orientation="horizontal" />
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
 
 
             <!--Dietitian Layout-->
-            <TextView
-                android:id="@+id/dummy_navigate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:fontFamily="@font/nunito_bold"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:padding="@dimen/_8sdp"
-                android:text="Dummy view. navigate to next screen"
-                android:textSize="@dimen/_11sdp"/>
-
             <LinearLayout
-                android:id="@+id/dietitian_for_you_layout"
+                android:id="@+id/catagoery_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone"
+                android:visibility="visible"
                 tools:visibility="visible">
 
-                <LinearLayout
-                    android:id="@+id/title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/white"
-                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/dietitian_count_txt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/nunito_bold"
-                        android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:padding="@dimen/_8sdp"
-                        android:text="@string/dietitian"
-                        android:textColor="@color/colorPrimaryText"
-                        android:textSize="@dimen/_11sdp"/>
-
-                    <Spinner
-                        android:id="@+id/catagoery_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="3"
-                        android:background="@drawable/bg_spinner"
-                        android:gravity="end|center_vertical"
-                        android:maxLines="1"
-                        android:textAllCaps="true"
-                        android:textColor="@color/colorPrimaryText"
-                        android:textSize="@dimen/text_tiny"
-                        android:visibility="invisible" />
-                </LinearLayout>
 
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/dietitians_rv"
+                    android:id="@+id/time_category_rv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_60sdp"
-                    android:nestedScrollingEnabled="false"
-                    tools:listitem="@layout/dietitian_list_item"
-                    android:orientation="vertical" />
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_height="wrap_content" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/food_rv"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -158,13 +116,14 @@
                     tools:ignore="MissingPrefix" />
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8sp"
                     android:fontFamily="@font/nunito_semibold"
                     android:gravity="center"
                     android:maxLines="3"
-                    android:text="@string/no_dietitian_found_in_your_location"
+                    android:text="No Data Found"
                     android:textColor="@color/colorSecondaryText"
                     android:textSize="14sp"
                     tools:ignore="MissingPrefix" />

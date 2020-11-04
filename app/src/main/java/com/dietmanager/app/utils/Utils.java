@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import okhttp3.ResponseBody;
@@ -67,7 +68,9 @@ public class Utils {
         return false;
 
     }
-
+    public static boolean isNullOrEmpty(List list) {
+        return list == null || list.isEmpty();
+    }
     public String getAddress(final Context context, final double latitude, final double longitude) {
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://maps.googleapis.com/maps/api/geocode/")

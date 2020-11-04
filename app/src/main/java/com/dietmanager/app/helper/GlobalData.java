@@ -15,6 +15,7 @@ import com.dietmanager.app.models.Order;
 import com.dietmanager.app.models.Otp;
 import com.dietmanager.app.models.Product;
 import com.dietmanager.app.models.Shop;
+import com.dietmanager.app.models.SubscriptionList;
 import com.dietmanager.app.models.User;
 
 import java.text.NumberFormat;
@@ -76,6 +77,8 @@ public class GlobalData {
     public static String currencySymbol = "";
     public static String currency = "";
     public static String privacy = "";
+    public static String subscription = "";
+    public static List<SubscriptionList> subscriptionList;
     public static String terms = "";
     public static int notificationCount = 0;
 

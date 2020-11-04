@@ -262,6 +262,11 @@
                     android:text="$34"/>
             </LinearLayout>
         </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_subscribtion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar" />
     </LinearLayout>
     <Button
         android:id="@+id/subscribe_btn"

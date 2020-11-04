@@ -51,4 +51,5 @@
     <color name="colorWhite">#FFF</color>
     <color name="yellow">#EEB829</color>
     <color name="colorButton">@color/colorPink</color>
+    <color name="biscay">#2F3752</color>
 </resources>

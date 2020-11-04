@@ -170,6 +170,7 @@ public class SplashActivity extends AppCompatActivity {
                     GlobalData.currency = profileModel.getCurrency_code();
                     GlobalData.terms = profileModel.getTerms();
                     GlobalData.privacy = profileModel.getPrivacy();
+                    GlobalData.subscription = profileModel.getSubscription();
                     addCart = new AddCart();
                     addCart.setProductList(response.body().getCart());
                     GlobalData.addressList = new AddressList();

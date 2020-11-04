@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -32,10 +33,14 @@ import com.dietmanager.app.HomeActivity;
 import com.dietmanager.app.OyolaApplication;
 import com.dietmanager.app.R;
 import com.dietmanager.app.activities.FilterActivity;
+import com.dietmanager.app.activities.LoginActivity;
 import com.dietmanager.app.activities.SetDeliveryLocationActivity;
 import com.dietmanager.app.activities.SubscribePlanActivity;
-import com.dietmanager.app.adapter.BannerAdapter;
+import com.dietmanager.app.adapter.DaysAdapter;
+import com.dietmanager.app.adapter.DaysAdapter;
+import com.dietmanager.app.adapter.FoodAdapter;
 import com.dietmanager.app.adapter.RestaurantsAdapter;
+import com.dietmanager.app.adapter.TimeCategoryAdapter;
 import com.dietmanager.app.build.api.ApiClient;
 import com.dietmanager.app.build.api.ApiInterface;
 import com.dietmanager.app.exception.ServerError;
@@ -49,12 +54,16 @@ import com.dietmanager.app.models.Discover;
 import com.dietmanager.app.models.Restaurant;
 import com.dietmanager.app.models.RestaurantsData;
 import com.dietmanager.app.models.Shop;
+import com.dietmanager.app.models.food.FoodItem;
+import com.dietmanager.app.models.food.FoodResponse;
+import com.dietmanager.app.models.timecategory.TimeCategoryItem;
 import com.dietmanager.app.utils.JavaUtils;
 import com.dietmanager.app.utils.TextUtils;
 import com.dietmanager.app.utils.Utils;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONObject;
 
@@ -85,24 +94,22 @@ import static com.dietmanager.app.helper.GlobalData.selectedAddress;
 
 
 public class HomeDietFragment extends Fragment implements AdapterView.OnItemSelectedListener,
-        CuisineSelectFragment.OnSuccessListener {
+        CuisineSelectFragment.OnSuccessListener, DaysAdapter.IDayListener,TimeCategoryAdapter.ITimeCategoryListener {
 
     @BindView(R.id.animation_line_image)
     ImageView animationLineImage;
-    @BindView(R.id.catagoery_spinner)
-    Spinner catagoerySpinner;
-    @BindView(R.id.dietitian_count_txt)
-    TextView dietitianCountTxt;
+
+
     @BindView(R.id.error_layout)
     LinearLayout errorLayout;
     @BindView(R.id.dummy_navigate)
     TextView dummy_navigate;
-    @BindView(R.id.impressive_dishes_layout)
-    LinearLayout impressiveDishesLayout;
-    @BindView(R.id.dietitian_for_you_layout)
-    LinearLayout dietitianForYouLayout;
-    private SkeletonScreen skeletonScreen, skeletonScreen2, skeletonText2,
-            skeletonSpinner;
+    @BindView(R.id.days_layout)
+    LinearLayout daysLayout;
+    @BindView(R.id.catagoery_layout)
+    LinearLayout catagoeryLayout;
+    private SkeletonScreen skeletonScreen, skeletonText1,
+            skeletonText2;
     private TextView addressLabel;
     private TextView addressTxt;
     private LinearLayout locationAddressLayout;
@@ -110,10 +117,12 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
 
     private Button filterBtn;
 
-    @BindView(R.id.impressive_dishes_rv)
-    RecyclerView bannerRv;
-    @BindView(R.id.dietitians_rv)
-    RecyclerView dietitiansRv;
+    @BindView(R.id.days_rv)
+    RecyclerView daysRv;
+    @BindView(R.id.time_category_rv)
+    RecyclerView timeCategoryRv;
+    @BindView(R.id.food_rv)
+    RecyclerView foodRv;
 
     int ADDRESS_SELECTION = 1;
     int FILTER_APPLIED_CHECK = 2;
@@ -128,11 +137,19 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
     String[] catagoery = {"Relevance", "Cost for Two", "Delivery Time", "Rating"};
 
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
-    List<Shop> restaurantList;
-    RestaurantsAdapter adapterRestaurant;
+
     public static boolean isFilterApplied = false;
-    BannerAdapter bannerAdapter;
-    List<Banner> bannerList;
+    DaysAdapter daysAdapter;
+    private TimeCategoryAdapter timeCategoryAdapter;
+    private FoodAdapter foodAdapter;
+
+    private int selectedDay = 1;
+    private int selectedTimeCategory=-1;
+    private String selectedTimeCategoryName = "breakfast";
+
+    List<Integer> daysList;
+    private List<TimeCategoryItem> timeCategoryList = new ArrayList<>();
+    private List<FoodItem> foodItems = new ArrayList<>();
     ConnectionHelper connectionHelper;
     boolean mIsFromSignUp = false;
     CuisineSelectFragment mFragment;
@@ -185,7 +202,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
                 addressLabel.setText(GlobalData.addressHeader);
                 addressTxt.setText(GlobalData.address);
             }
-            findRestaurant();
+
         }
     };
 
@@ -216,26 +233,23 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         errorLoadingLayout = toolbarLayout.findViewById(R.id.error_loading_layout);
         locationAddressLayout.setVisibility(View.INVISIBLE);
         errorLoadingLayout.setVisibility(View.VISIBLE);
-        bannerList = new ArrayList<>();
-        bannerAdapter = new BannerAdapter(bannerList, getActivity(), getActivity());
-        bannerRv.setHasFixedSize(true);
-        bannerRv.setItemViewCacheSize(20);
-        bannerRv.setDrawingCacheEnabled(true);
-        bannerRv.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-        bannerRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        bannerRv.setItemAnimator(new DefaultItemAnimator());
-        skeletonScreen2 = Skeleton.bind(bannerRv)
-                .adapter(bannerAdapter)
-                .load(R.layout.skeleton_impressive_list_item)
-                .count(3)
+        daysList = new ArrayList<>();
+
+        daysAdapter = new DaysAdapter(getActivity(), 0, this);
+        daysRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        daysRv.setHasFixedSize(true);
+        daysRv.setAdapter(daysAdapter);
+        for (int i = 1; i <= 30; i++)
+            daysList.add(i);
+        daysAdapter.setList(daysList);
+
+        skeletonText1 = Skeleton.bind(daysRv)
+                .adapter(foodAdapter)
+                .load(R.layout.skeleton_label)
+                .count(2)
                 .show();
 
-        skeletonText2 = Skeleton.bind(dietitianCountTxt)
-                .load(R.layout.skeleton_label)
-                .show();
-        skeletonSpinner = Skeleton.bind(catagoerySpinner)
-                .load(R.layout.skeleton_label)
-                .show();
+
         HomeActivity.updateNotificationCount(getActivity(), GlobalData.notificationCount);
 
         //Spinner
@@ -243,42 +257,36 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         ArrayAdapter<String> aa = new ArrayAdapter<>(getActivity(), R.layout.spinner_layout, catagoery);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
-        catagoerySpinner.setAdapter(aa);
-        catagoerySpinner.setOnItemSelectedListener(this);
 
-        //Restaurant Adapter
-        dietitiansRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        dietitiansRv.setItemAnimator(new DefaultItemAnimator());
-        dietitiansRv.setHasFixedSize(true);
 
-        restaurantList = new ArrayList<>();
-        adapterRestaurant = new RestaurantsAdapter(restaurantList, getActivity(), getActivity());
-    skeletonScreen = Skeleton.bind(dietitiansRv)
-                .adapter(adapterRestaurant)
-                .load(R.layout.skeleton_restaurant_list_item)
+
+
+
+        timeCategoryAdapter = new TimeCategoryAdapter(getActivity(), 0, this);
+        timeCategoryRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        timeCategoryRv.setHasFixedSize(true);
+        timeCategoryRv.setAdapter(timeCategoryAdapter);
+        skeletonText2 = Skeleton.bind(timeCategoryRv)
+                .adapter(timeCategoryAdapter)
+                .load(R.layout.skeleton_label)
                 .count(2)
                 .show();
 
-
-        final ArrayList<Restaurant> offerRestaurantList = new ArrayList<>();
-        offerRestaurantList.add(new Restaurant("Madras Coffee House", "Cafe, South Indian", "", "3.8", "51 Mins", "$20", ""));
-        offerRestaurantList.add(new Restaurant("Behrouz Biryani", "Biriyani", "", "3.7", "52 Mins", "$50", ""));
-        offerRestaurantList.add(new Restaurant("SubWay", "American fast food", "Flat 20% offer on all orders", "4.3", "30 Mins", "$5", "Close soon"));
-        offerRestaurantList.add(new Restaurant("Dominoz Pizza", "Pizza shop", "", "4.5", "25 Mins", "$5", ""));
-        offerRestaurantList.add(new Restaurant("Pizza hut", "Cafe, Bakery", "", "4.1", "45 Mins", "$5", "Close soon"));
-        offerRestaurantList.add(new Restaurant("McDonlad's", "Pizza Food, burger", "Flat 20% offer on all orders", "4.6", "20 Mins", "$5", ""));
-        offerRestaurantList.add(new Restaurant("Chai Kings", "Cafe, Bakery", "", "3.3", "36 Mins", "$5", ""));
-        offerRestaurantList.add(new Restaurant("sea sell", "Fish, Chicken, mutton", "Flat 30% offer on all orders", "4.3", "20 Mins", "$5", "Close soon"));
-
-        // Discover
-        final List<Discover> discoverList = new ArrayList<>();
-        discoverList.add(new Discover("Trending now ", "22 options", "1"));
-        discoverList.add(new Discover("Offers near you", "51 options", "1"));
-        discoverList.add(new Discover("Whats special", "7 options", "1"));
-        discoverList.add(new Discover("Pocket Friendly", "44 options", "1"));
+        //food Adapter
+        foodAdapter = new FoodAdapter(getActivity());
+        foodRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        foodRv.setHasFixedSize(true);
+        foodRv.setAdapter(foodAdapter);
+       /* skeletonScreen = Skeleton.bind(foodRv)
+                .adapter(foodAdapter)
+                .load(R.layout.skeleton_impressive_list_item)
+                .count(2)
+                .show();*/
 
 
-        locationAddressLayout.setOnClickListener(new View.OnClickListener() {
+
+
+             locationAddressLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (GlobalData.profileModel != null) {
@@ -323,168 +331,132 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         initializeAvd();
         //Get cuisine values
         if (connectionHelper.isConnectingToInternet()) {
-            getCuisines();
+            getTimeCategory();
+            getFood();
         } else {
             Utils.displayMessage(getActivity(), getActivity(), getString(R.string.oops_connect_your_internet));
         }
     }
 
-    private void showFavouritesDialog() {
 
-    }
 
-    private void findRestaurant() {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("latitude", String.valueOf(latitude));
-        map.put("longitude", String.valueOf(longitude));
-        //get User Profile Data
-        if (GlobalData.profileModel != null) {
-            map.put("user_id", String.valueOf(GlobalData.profileModel.getId()));
-        }
-        if (isFilterApplied) {
-            filterSelectionImage.setVisibility(View.VISIBLE);
-            map.put("filter", "normal");
-            if (isOfferApplied)
-                map.put("offer", "1");
-            if (isPureVegApplied)
-                map.put("pure_veg", "1");
-            if (cuisineIdArrayList != null && cuisineIdArrayList.size() != 0) {
-                for (int i = 0; i < cuisineIdArrayList.size(); i++) {
-                    map.put("cuisine[" + "" + i + "]", cuisineIdArrayList.get(i).toString());
-                }
-            }
-        } else {
-            filterSelectionImage.setVisibility(View.GONE);
-        }
-        if (connectionHelper.isConnectingToInternet()) {
-            getRestaurant(map);
-        } else {
-            Utils.displayMessage(getActivity(), getActivity(), getString(R.string.oops_connect_your_internet));
-        }
-    }
+    private void getTimeCategory() {
 
-    private void getRestaurant(HashMap<String, String> map) {
-        Call<RestaurantsData> call = apiInterface.getshops(map);
-        call.enqueue(new Callback<RestaurantsData>() {
+        Call<List<TimeCategoryItem>> call = apiInterface.getTimeCategory();
+        call.enqueue(new Callback<List<TimeCategoryItem>>() {
             @Override
-            public void onResponse(Call<RestaurantsData> call, Response<RestaurantsData> response) {
-                skeletonScreen.hide();
-                skeletonScreen2.hide();
-                skeletonText2.hide();
-                skeletonSpinner.hide();
-                if (!response.isSuccessful()) {
-                    ServerError serverError = new Gson().fromJson(response.errorBody().charStream(), ServerError.class);
-                    String message = serverError != null ? serverError.getError() : null;
-                    //Toast.makeText(getActivity(), !TextUtils.isEmpty(message) ? message : getString(R.string.something_went_wrong), Toast.LENGTH_LONG).show();
-                    showOrHideView(false);
+            public void onResponse(@NonNull Call<List<TimeCategoryItem>> call, @NonNull Response<List<TimeCategoryItem>> response) {
+                if (response.isSuccessful()) {
+                    timeCategoryList.clear();
+                    List<TimeCategoryItem> timeCategoryItemList = response.body();
+                    if (timeCategoryItemList != null && !Utils.isNullOrEmpty(timeCategoryItemList)) {
+                        selectedTimeCategory=timeCategoryItemList.get(0).getId();
+                        selectedTimeCategoryName=timeCategoryItemList.get(0).getName();
+                        timeCategoryList.addAll(timeCategoryItemList);
+                        timeCategoryAdapter.setList(timeCategoryList);
+                        skeletonText1.hide();
+                        skeletonText2.hide();
+                       // showOrHideView(false);
+                    }
                 } else {
-                    if (isAdded() && isVisible() && getUserVisibleHint()) {
-                        RestaurantsData data = response.body();
-                        List<Banner> bannerDataList = data.getBanners();
-                        List<Shop> shopList = data.getShops();
-                        List<Shop> favCuisineList = data.getFavouriteCuisines();
-                        List<Shop> freeDeliveryList = data.getFreeDeliveryShops();
-
-                        if (JavaUtils.isNullOrEmpty(bannerDataList) && JavaUtils.isNullOrEmpty(shopList) &&
-                                JavaUtils.isNullOrEmpty(favCuisineList) && JavaUtils.isNullOrEmpty(freeDeliveryList)) {
-                            showOrHideView(false);
-                        } else {
-                            showOrHideKitchenForYouView(shopList);
-                            showOrHideOffersView(bannerDataList);
+                    Gson gson = new Gson();
+                    try {
+                      //  showOrHideView(false);
+                        ServerError serverError = gson.fromJson(response.errorBody().charStream(), ServerError.class);
+                        Utils.displayMessage(getActivity(), getActivity(), serverError.getError());
+                        if (response.code() == 401) {
+                            startActivity(new Intent(getActivity(), LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                            getActivity().finish();
                         }
+                    } catch (JsonSyntaxException e) {
+                        Utils.displayMessage(getActivity(), getActivity(), getString(R.string.something_went_wrong));
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<RestaurantsData> call, Throwable throwable) {
-                String message = throwable != null && !TextUtils.isEmpty(throwable.getMessage()) ? throwable.getMessage() : getString(R.string.something_went_wrong);
-                showOrHideView(false);
-//                CommonUtils.showToast(getActivity(), message);
+            public void onFailure(Call<List<TimeCategoryItem>> call, Throwable t) {
+                Utils.displayMessage(getActivity(), getActivity(), getString(R.string.something_went_wrong));
             }
         });
     }
 
+    private void getFood() {
+
+        Call<FoodResponse> call = apiInterface.getFood(selectedDay,selectedTimeCategory);
+        call.enqueue(new Callback<FoodResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<FoodResponse> call, @NonNull Response<FoodResponse> response) {
+                if (response.isSuccessful()) {
+                    foodItems.clear();
+                    FoodResponse timeCategoryItemList = response.body();
+                    if (timeCategoryItemList != null) {
+                        switch (selectedTimeCategoryName) {
+                            case "breakfast":
+                                if (!Utils.isNullOrEmpty(timeCategoryItemList.getBreakfast())) {
+                                    foodItems.addAll(timeCategoryItemList.getBreakfast());
+                                }
+                                break;
+                            case "lunch":
+                                if (!Utils.isNullOrEmpty(timeCategoryItemList.getLunch())) {
+                                    foodItems.addAll(timeCategoryItemList.getLunch());
+                                }
+                                break;
+                            case "snacks":
+                                if (!Utils.isNullOrEmpty(timeCategoryItemList.geSnacks())) {
+                                    foodItems.addAll(timeCategoryItemList.geSnacks());
+                                }
+                                break;
+                            case "dinner":
+                                if (!Utils.isNullOrEmpty(timeCategoryItemList.getDinner())) {
+                                    foodItems.addAll(timeCategoryItemList.getDinner());
+                                }
+                                break;
+                        }
+                        foodAdapter.setList(foodItems);
+                    }
+                } else {
+                    Gson gson = new Gson();
+                    try {
+                        ServerError serverError = gson.fromJson(response.errorBody().charStream(), ServerError.class);
+                        Utils.displayMessage(getActivity(), getActivity(), serverError.getError());
+                    //    showOrHideView(false);
+                        if (response.code() == 401) {
+                            startActivity(new Intent(getActivity(), LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                            getActivity().finish();
+                        }
+                    } catch (JsonSyntaxException e) {
+                        Utils.displayMessage(getActivity(), getActivity(), getString(R.string.something_went_wrong));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FoodResponse> call, Throwable t) {
+                Utils.displayMessage(getActivity(), getActivity(), getString(R.string.something_went_wrong));
+            }
+        });
+    }
+
+
+
     private void showOrHideView(boolean isVisible) {
-        impressiveDishesLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
-        dietitianForYouLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        daysLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        catagoeryLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
         errorLayout.setVisibility(!isVisible ? View.VISIBLE : View.GONE);
     }
 
-    private void showOrHideOffersView(List<Banner> bannerDataList) {
-        if (JavaUtils.isNullOrEmpty(bannerDataList) || isFilterApplied) {
-            impressiveDishesLayout.setVisibility(View.GONE);
-            if (isFilterApplied)
-                errorLayout.setVisibility(View.VISIBLE);
-            else
-                errorLayout.setVisibility(View.GONE);
-        } else {
-            impressiveDishesLayout.setVisibility(View.VISIBLE);
-            errorLayout.setVisibility(View.GONE);
-            bannerList.clear();
-            bannerList.addAll(bannerDataList);
-            sortBannersToDescending(bannerList);
-            bannerAdapter.notifyDataSetChanged();
-        }
-    }
 
 
-    private void showOrHideKitchenForYouView(List<Shop> restaurantDataList) {
-        if (JavaUtils.isNullOrEmpty(restaurantDataList)) {
-            dietitianForYouLayout.setVisibility(View.GONE);
-        } else {
-            dietitianForYouLayout.setVisibility(View.VISIBLE);
-            restaurantList.clear();
-            restaurantList.addAll(restaurantDataList);
-            sortOrdersToDescending(restaurantList);
-            GlobalData.shopList = restaurantList;
-            adapterRestaurant.notifyDataSetChanged();
-        }
-    }
 
 
-    private void sortOrdersToDescending(List<Shop> orderList) {
-        Collections.sort(orderList, (lhs, rhs) -> {
-            if (rhs.getCreatedAtDate() == null || lhs.getCreatedAtDate() == null) {
-                return 0;
-            }
-            return rhs.getCreatedAtDate().compareTo(lhs.getCreatedAtDate());
-        });
-    }
 
-    private void sortBannersToDescending(List<Banner> bannerList) {
-        Collections.sort(bannerList, (lhs, rhs) -> {
-            if (rhs.getShop() == null || lhs.getShop() == null || rhs.getShop().getCreatedAtDate() == null || lhs.getShop().getCreatedAtDate() == null) {
-                return 0;
-            }
-            return rhs.getShop().getCreatedAtDate().compareTo(lhs.getShop().getCreatedAtDate());
-        });
-    }
 
-    public void getCuisines() {
-        Call<List<Cuisine>> call = apiInterface.getcuCuisineCall();
-        call.enqueue(new Callback<List<Cuisine>>() {
-            @Override
-            public void onResponse(Call<List<Cuisine>> call, Response<List<Cuisine>> response) {
-                if (!response.isSuccessful() && response.errorBody() != null) {
-                    try {
-                        JSONObject jObjError = new JSONObject(response.errorBody().string());
-                        Toast.makeText(getActivity(), jObjError.optString("message"), Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-                        Toast.makeText(getActivity(), R.string.something_went_wrong, Toast.LENGTH_LONG).show();
-                    }
-                } else if (response.isSuccessful()) {
-                    cuisineList = new ArrayList<>();
-                    cuisineList.addAll(response.body());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<Cuisine>> call, Throwable t) {
 
-            }
-        });
-    }
+
+
+
 
     public double getDoubleThreeDigits(Double value) {
         return new BigDecimal(value.toString()).setScale(3, RoundingMode.HALF_UP).doubleValue();
@@ -563,7 +535,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
                     addressTxt.setText(GlobalData.address);
                 }
             }
-            findRestaurant();
+
         }
     }
 
@@ -621,10 +593,9 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
                 latitude = selectedAddress.getLatitude();
                 longitude = selectedAddress.getLongitude();
                 skeletonScreen.show();
-                skeletonScreen2.show();
+                skeletonText1.show();
                 skeletonText2.show();
-                skeletonSpinner.show();
-                findRestaurant();
+
             }
         } else if (requestCode == ADDRESS_SELECTION && resultCode == Activity.RESULT_CANCELED) {
             System.out.print("HomeFragment : Failure");
@@ -632,10 +603,10 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         if (requestCode == FILTER_APPLIED_CHECK && resultCode == Activity.RESULT_OK) {
             System.out.print("HomeFragment : Filter Success");
             skeletonScreen.show();
-            skeletonScreen2.show();
+            skeletonText1.show();
             skeletonText2.show();
-            skeletonSpinner.show();
-            findRestaurant();
+
+
         } else if (requestCode == ADDRESS_SELECTION && resultCode == Activity.RESULT_CANCELED) {
             System.out.print("HomeFragment : Filter Failure");
         }
@@ -654,9 +625,20 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void refreshHome() {
         skeletonScreen.show();
-        skeletonScreen2.show();
+        skeletonText1.show();
         skeletonText2.show();
-        skeletonSpinner.show();
-        findRestaurant();
+
+    }
+
+    @Override
+    public void onDayClicked(int day) {
+        selectedDay = day;
+    }
+
+    @Override
+    public void onCategoryClicked(int category, String categoryName) {
+        selectedTimeCategory = category;
+        selectedTimeCategoryName = categoryName;
+        getFood();
     }
 }

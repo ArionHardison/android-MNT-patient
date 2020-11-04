@@ -27,8 +27,11 @@ import com.dietmanager.app.models.ResetPassword;
 import com.dietmanager.app.models.RestaurantsData;
 import com.dietmanager.app.models.Search;
 import com.dietmanager.app.models.ShopDetail;
+import com.dietmanager.app.models.SubscriptionList;
 import com.dietmanager.app.models.User;
 import com.dietmanager.app.models.WalletHistory;
+import com.dietmanager.app.models.food.FoodResponse;
+import com.dietmanager.app.models.timecategory.TimeCategoryItem;
 
 import java.util.HashMap;
 import java.util.List;
@@ -60,6 +63,8 @@ public interface ApiInterface {
 
     @GET("api/user/profile")
     Call<User> getProfile(@QueryMap HashMap<String, String> params);
+
+
 
     @Multipart
     @POST("api/user/profile")
@@ -239,5 +244,17 @@ public interface ApiInterface {
     @POST("api/user/profile")
 //    Call<Object> updateCuisines(@FieldMap() Map<String, Integer> mMap);
     Call<Object> updateCuisines(@Body() CuisinesModel mMap);
+
+   /* subscription*/
+
+    @GET("api/user/subscription")
+    Call<List<SubscriptionList>> getsubscription();
+
+   /* home*/
+   @GET("api/user/time/category")
+   Call<List<TimeCategoryItem>> getTimeCategory();
+
+    @GET("api/user/diet/meal")
+    Call<FoodResponse> getFood(@Query("day") Integer param1, @Query("category_id") Integer param2);
 
 }

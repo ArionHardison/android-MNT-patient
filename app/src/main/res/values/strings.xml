@@ -504,5 +504,6 @@
     <string name="accept">Accept</string>
     <string name="invalid_date_time">You cannot select past time</string>
     <string name="login_using">Login using</string>
+    <string name="meals_plan">Meals Plan</string>
 
 </resources>
