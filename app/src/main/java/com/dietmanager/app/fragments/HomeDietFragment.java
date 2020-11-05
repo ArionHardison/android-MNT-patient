@@ -106,8 +106,8 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
     TextView dummy_navigate;
     @BindView(R.id.days_layout)
     LinearLayout daysLayout;
-    @BindView(R.id.catagoery_layout)
-    LinearLayout catagoeryLayout;
+    @BindView(R.id.food_layout)
+    LinearLayout foodLayout;
     private SkeletonScreen skeletonScreen, skeletonText1,
             skeletonText2;
     private TextView addressLabel;
@@ -144,7 +144,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
     private FoodAdapter foodAdapter;
 
     private int selectedDay = 1;
-    private int selectedTimeCategory=-1;
+    private int selectedTimeCategory= 1;
     private String selectedTimeCategoryName = "breakfast";
 
     List<Integer> daysList;
@@ -225,7 +225,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         commonAccess = "";
         connectionHelper = new ConnectionHelper(OyolaApplication.getAppInstance());
         toolbar = getActivity().findViewById(R.id.toolbar);
-        toolbar.setVisibility(View.VISIBLE);
+        toolbar.setVisibility(View.GONE);
         toolbarLayout = LayoutInflater.from(getActivity()).inflate(R.layout.toolbar_home, toolbar, false);
         addressLabel = toolbarLayout.findViewById(R.id.address_label);
         addressTxt = toolbarLayout.findViewById(R.id.address);
@@ -233,8 +233,9 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         errorLoadingLayout = toolbarLayout.findViewById(R.id.error_loading_layout);
         locationAddressLayout.setVisibility(View.INVISIBLE);
         errorLoadingLayout.setVisibility(View.VISIBLE);
-        daysList = new ArrayList<>();
+        toolbarLayout.setVisibility(View.GONE);
 
+        daysList = new ArrayList<>();
         daysAdapter = new DaysAdapter(getActivity(), 0, this);
         daysRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         daysRv.setHasFixedSize(true);
@@ -242,9 +243,8 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         for (int i = 1; i <= 30; i++)
             daysList.add(i);
         daysAdapter.setList(daysList);
-
         skeletonText1 = Skeleton.bind(daysRv)
-                .adapter(foodAdapter)
+                .adapter(daysAdapter)
                 .load(R.layout.skeleton_label)
                 .count(2)
                 .show();
@@ -261,7 +261,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
 
 
 
-
+        // timeCategory Adapter
         timeCategoryAdapter = new TimeCategoryAdapter(getActivity(), 0, this);
         timeCategoryRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         timeCategoryRv.setHasFixedSize(true);
@@ -272,16 +272,17 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
                 .count(2)
                 .show();
 
+
         //food Adapter
         foodAdapter = new FoodAdapter(getActivity());
         foodRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         foodRv.setHasFixedSize(true);
         foodRv.setAdapter(foodAdapter);
-       /* skeletonScreen = Skeleton.bind(foodRv)
+        skeletonScreen = Skeleton.bind(foodRv)
                 .adapter(foodAdapter)
                 .load(R.layout.skeleton_impressive_list_item)
                 .count(2)
-                .show();*/
+                .show();
 
 
 
@@ -354,9 +355,10 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
                         selectedTimeCategoryName=timeCategoryItemList.get(0).getName();
                         timeCategoryList.addAll(timeCategoryItemList);
                         timeCategoryAdapter.setList(timeCategoryList);
+                        daysAdapter.setList(daysList);
                         skeletonText1.hide();
                         skeletonText2.hide();
-                       // showOrHideView(false);
+                        showOrHideView(false);
                     }
                 } else {
                     Gson gson = new Gson();
@@ -382,45 +384,28 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
     }
 
     private void getFood() {
-
-        Call<FoodResponse> call = apiInterface.getFood(selectedDay,selectedTimeCategory);
-        call.enqueue(new Callback<FoodResponse>() {
+        Call<List<FoodItem>> call =apiInterface.getFood(selectedDay,selectedTimeCategory);
+        call.enqueue(new Callback<List<FoodItem>>() {
             @Override
-            public void onResponse(@NonNull Call<FoodResponse> call, @NonNull Response<FoodResponse> response) {
+            public void onResponse(@NonNull Call<List<FoodItem>> call, @NonNull Response<List<FoodItem>> response) {
                 if (response.isSuccessful()) {
                     foodItems.clear();
-                    FoodResponse timeCategoryItemList = response.body();
-                    if (timeCategoryItemList != null) {
-                        switch (selectedTimeCategoryName) {
-                            case "breakfast":
-                                if (!Utils.isNullOrEmpty(timeCategoryItemList.getBreakfast())) {
-                                    foodItems.addAll(timeCategoryItemList.getBreakfast());
-                                }
-                                break;
-                            case "lunch":
-                                if (!Utils.isNullOrEmpty(timeCategoryItemList.getLunch())) {
-                                    foodItems.addAll(timeCategoryItemList.getLunch());
-                                }
-                                break;
-                            case "snacks":
-                                if (!Utils.isNullOrEmpty(timeCategoryItemList.geSnacks())) {
-                                    foodItems.addAll(timeCategoryItemList.geSnacks());
-                                }
-                                break;
-                            case "dinner":
-                                if (!Utils.isNullOrEmpty(timeCategoryItemList.getDinner())) {
-                                    foodItems.addAll(timeCategoryItemList.getDinner());
-                                }
-                                break;
-                        }
+                    List<FoodItem> ItemList = response.body();
+                    if (ItemList != null && !Utils.isNullOrEmpty(ItemList)) {
+                        foodItems.addAll(ItemList);
                         foodAdapter.setList(foodItems);
+                        skeletonScreen.hide();
+                        showOrHideView(true);
+                    }else {
+                        skeletonScreen.hide();
+                        showOrHideView(false);
                     }
                 } else {
                     Gson gson = new Gson();
                     try {
                         ServerError serverError = gson.fromJson(response.errorBody().charStream(), ServerError.class);
                         Utils.displayMessage(getActivity(), getActivity(), serverError.getError());
-                    //    showOrHideView(false);
+                        //    showOrHideView(false);
                         if (response.code() == 401) {
                             startActivity(new Intent(getActivity(), LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                             getActivity().finish();
@@ -432,17 +417,17 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
             }
 
             @Override
-            public void onFailure(Call<FoodResponse> call, Throwable t) {
+            public void onFailure(Call<List<FoodItem>> call, Throwable t) {
                 Utils.displayMessage(getActivity(), getActivity(), getString(R.string.something_went_wrong));
             }
         });
+
     }
 
 
 
     private void showOrHideView(boolean isVisible) {
-        daysLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
-        catagoeryLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        foodLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
         errorLayout.setVisibility(!isVisible ? View.VISIBLE : View.GONE);
     }
 

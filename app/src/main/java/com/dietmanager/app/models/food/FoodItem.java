@@ -1,6 +1,9 @@
 package com.dietmanager.app.models.food;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class FoodItem {
 
@@ -36,6 +39,10 @@ public class FoodItem {
 
 	@SerializedName("who")
 	private String who;
+
+	@SerializedName("food_ingredients")
+	@Expose
+	private List<FoodIngredient> foodIngredients = null;
 
 	public Object getDietitianId(){
 		return dietitianId;
@@ -79,5 +86,13 @@ public class FoodItem {
 
 	public String getWho(){
 		return who;
+	}
+
+	public List<FoodIngredient> getFoodIngredients() {
+		return foodIngredients;
+	}
+
+	public void setFoodIngredients(List<FoodIngredient> foodIngredients) {
+		this.foodIngredients = foodIngredients;
 	}
 }

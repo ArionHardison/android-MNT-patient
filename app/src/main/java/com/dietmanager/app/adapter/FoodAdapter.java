@@ -1,6 +1,7 @@
 package com.dietmanager.app.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.dietmanager.app.R;
+import com.dietmanager.app.activities.ProductDetailActivity;
+import com.dietmanager.app.activities.SubMenuDetailedActivity;
+import com.dietmanager.app.helper.GlobalData;
 import com.dietmanager.app.models.food.FoodItem;
 
 import java.util.ArrayList;
@@ -42,7 +46,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
     public FoodAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item_food, parent, false);
-
         return new FoodAdapter.MyViewHolder(itemView);
     }
 
@@ -50,12 +53,19 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull FoodAdapter.MyViewHolder holder, final int position) {
         FoodItem foodItem = foodItems.get(position);
         holder.tvFoodTitle.setText(String.valueOf(foodItem.getName()));
-        holder.tvFoodDescription.setText(String.valueOf(foodItem.getDescription()));
-        holder.tvFoodPrice.setText(String.valueOf(foodItem.getPrice()));
+       /* holder.tvFoodDescription.setText(String.valueOf(foodItem.getDescription()));
+        holder.tvFoodPrice.setText(String.valueOf(foodItem.getPrice()));*/
         if (foodItem.getAvatar()!=null)
             Glide.with(context).load(foodItem.getAvatar())
                 .apply(new RequestOptions().centerCrop().placeholder(R.drawable.shimmer_bg).error(R.drawable.shimmer_bg).dontAnimate()).into(holder.imgFood);
+holder.cardItem.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        GlobalData.selectedfood = foodItem;
+        context.startActivity(new Intent(context, SubMenuDetailedActivity.class));
 
+    }
+});
     }
 
     @Override
@@ -65,7 +75,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvFoodTitle,tvFoodDescription,tvFoodPrice;
+        TextView tvFoodTitle,tv_proteins,tv_fat,tv_carb;
         CardView cardItem;
         ImageView imgFood;
 
@@ -73,8 +83,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
             super(view);
             imgFood = view.findViewById(R.id.img_food);
             tvFoodTitle = view.findViewById(R.id.tv_food_title);
-            tvFoodPrice = view.findViewById(R.id.tv_food_price);
-            tvFoodDescription = view.findViewById(R.id.tv_food_description);
+            tv_proteins = view.findViewById(R.id.tv_proteins);
+            tv_fat = view.findViewById(R.id.tv_fat);
+            tv_carb = view.findViewById(R.id.tv_carb);
             cardItem = view.findViewById(R.id.card_item);
         }
     }

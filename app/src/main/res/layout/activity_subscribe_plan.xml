@@ -7,17 +7,15 @@
     android:orientation="vertical"
     tools:context=".activities.SubscribePlanActivity">
 
-
+    <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
     <LinearLayout
         android:id="@+id/subscribe_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
-
+        android:orientation="vertical"
+        android:layout_below="@+id/toolbar">
         <LinearLayout
             android:id="@+id/item_view"
             android:layout_width="match_parent"
@@ -59,7 +57,7 @@
                             android:layout_height="@dimen/_65sdp">
 
                             <ImageView
-                                android:id="@+id/dish_img"
+                                android:id="@+id/diet_img"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:contentDescription="@string/restaurant"
@@ -81,23 +79,23 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/restaurant_name"
+                                android:id="@+id/tv_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/nunito_semibold"
                                 android:maxLines="1"
-                                android:text="Funkies"
+                                tools:text="Funkies"
                                 android:textColor="@color/colorPrimaryText"
                                 android:textSize="@dimen/text_small" />
 
                             <TextView
-                                android:id="@+id/halal"
+                                android:id="@+id/tv_city"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/nunito_semibold"
                                 android:maxLines="1"
                                 android:padding="@dimen/_1sdp"
-                                android:text="@string/halal"
+                                tools:text="@string/halal"
                                 android:textColor="@color/colorGray"
                                 android:textSize="@dimen/text_small" />
 
@@ -118,6 +116,7 @@
                                     android:orientation="horizontal">
 
                                     <LinearLayout
+                                        android:visibility="gone"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:gravity="center_vertical">
@@ -196,12 +195,12 @@
             android:padding="@dimen/_2sdp"
             android:textColor="@color/colorBlack"
             android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginBottom="@dimen/_12sdp"
             android:layout_marginEnd="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_16sdp"
             android:text="@string/subscribe_for"/>
 
-        <LinearLayout
+      <!--  <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -261,12 +260,14 @@
                     android:textSize="@dimen/text_medium"
                     android:text="$34"/>
             </LinearLayout>
-        </LinearLayout>
+        </LinearLayout>-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_subscribtion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar" />
+            android:padding="@dimen/_4sdp"
+            android:orientation="vertical"
+            tools:listitem="@layout/list_item_subscribe"/>
     </LinearLayout>
     <Button
         android:id="@+id/subscribe_btn"

@@ -30,6 +30,7 @@ import com.dietmanager.app.models.ShopDetail;
 import com.dietmanager.app.models.SubscriptionList;
 import com.dietmanager.app.models.User;
 import com.dietmanager.app.models.WalletHistory;
+import com.dietmanager.app.models.food.FoodItem;
 import com.dietmanager.app.models.food.FoodResponse;
 import com.dietmanager.app.models.timecategory.TimeCategoryItem;
 
@@ -255,6 +256,10 @@ public interface ApiInterface {
    Call<List<TimeCategoryItem>> getTimeCategory();
 
     @GET("api/user/diet/meal")
-    Call<FoodResponse> getFood(@Query("day") Integer param1, @Query("category_id") Integer param2);
+    Call<List<FoodItem>> getFood(@Query("day") Integer param1, @Query("category_id") Integer param2);
+
+    @FormUrlEncoded
+    @POST("api/user/subscription")
+    Call<Otp> postsubscribe(@FieldMap HashMap<String, String> params);
 
 }

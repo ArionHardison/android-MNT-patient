@@ -62,6 +62,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.dietmanager.app.helper.GlobalData.profileModel;
+
 public class LoginActivity extends BaseActivity {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
@@ -355,12 +357,18 @@ public class LoginActivity extends BaseActivity {
                     GlobalData.addCart.setProductList(response.body().getCart());
                     GlobalData.addressList = new AddressList();
                     GlobalData.addressList.setAddresses(response.body().getAddresses());
+                    GlobalData.subscription = profileModel.getSubscription();
 //                    Toast.makeText(context, getResources().getString(R.string.regsiter_success), Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(context, HomeActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.putExtra("isFromSignUp", true);
-                    startActivity(intent);
-                    finish();
+                    if (   GlobalData.subscription !=null&& GlobalData.subscription!="") {
+                        Intent intent = new Intent(context, HomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.putExtra("isFromSignUp", true);
+                        startActivity(intent);
+                        finish();
+                    }else {
+                        startActivity(new Intent(context, SubscribePlanActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    }
                 } else {
                     if (response.code() == 401) {
                         Toast.makeText(context, "UnAuthenticated", Toast.LENGTH_LONG).show();

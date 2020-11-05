@@ -5,13 +5,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.dietmanager.app.R;
+import com.dietmanager.app.helper.GlobalData;
+import com.dietmanager.app.models.food.FoodItem;
 import com.dietmanager.app.utils.Utils;
 
 import java.text.Format;
@@ -19,19 +25,51 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SubMenuDetailedActivity extends AppCompatActivity {
+
+    @BindView(R.id.tv_name)
+    TextView tv_name;
+    @BindView(R.id.tv_description)
+    TextView tv_description;
+    @BindView(R.id.img_food)
+    ImageView img_food;
+    public String schedule_time = "";
+    public String schedule_date = "";
+    Calendar myCalendar = Calendar.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_menu_detailed);
         ButterKnife.bind(this);
-        ((TextView)findViewById(R.id.toolbar).findViewById(R.id.title)).setText("Lunch");
+        if (GlobalData.selectedfood!=null){
+            FoodItem foodItem = GlobalData.selectedfood;
+            ((TextView)findViewById(R.id.toolbar).findViewById(R.id.title)).setText(foodItem.getTimeCategoryId());
+            tv_name.setText(foodItem.getName());
+            tv_description.setText(foodItem.getDescription());
+            if (foodItem.getAvatar()!=null)
+                Glide.with(this)
+                        .load(foodItem.getAvatar())
+                        .apply(new RequestOptions()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .placeholder(R.drawable.ic_banner_1)
+                                .error(R.drawable.ic_banner_1))
+                        .into(img_food);
+        }
+
         findViewById(R.id.order_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SubMenuDetailedActivity.this, IngredientsActivity.class));
+                if (schedule_date.equalsIgnoreCase("")){
+                    Utils.displayMessage(SubMenuDetailedActivity.this, SubMenuDetailedActivity.this, getString(R.string.please_select_date_));
+                }else   if (schedule_time.equalsIgnoreCase("")){
+                    Utils.displayMessage(SubMenuDetailedActivity.this, SubMenuDetailedActivity.this, getString(R.string.please_select_time));
+                }else {
+                    startActivity(new Intent(SubMenuDetailedActivity.this, IngredientsActivity.class));
+                }
             }
         });findViewById(R.id.schedule_btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,9 +85,7 @@ public class SubMenuDetailedActivity extends AppCompatActivity {
         });
     }
 
-    public String schedule_time = "";
-    public String schedule_date = "";
-    Calendar myCalendar = Calendar.getInstance();
+
 
     private void showDialog() {
         AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();

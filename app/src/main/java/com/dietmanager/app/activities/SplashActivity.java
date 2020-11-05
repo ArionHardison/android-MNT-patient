@@ -204,25 +204,30 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void checkActivity() {
-        if (getIntent().getSerializableExtra("customdata") != null &&
-                getIntent().getStringExtra("order_staus").equalsIgnoreCase("ongoing")) {
-            startActivity(new Intent(SplashActivity.this, CurrentOrderDetailActivity.class)
-                    .putExtra("customdata", getIntent().getSerializableExtra("customdata")));
-            finish();
-        } else if (getIntent().getStringExtra("order_staus") != null &&
-                getIntent().getStringExtra("order_staus").equalsIgnoreCase("dispute")) {
-            startActivity(new Intent(SplashActivity.this, OrdersActivity.class)
-                    .putExtra("customdata", getIntent().getSerializableExtra("customdata")));
-            finish();
-        } else {
-            if (orderId > 0) {
+        if (   GlobalData.subscription !=null&& GlobalData.subscription!="") {
+            if (getIntent().getSerializableExtra("customdata") != null &&
+                    getIntent().getStringExtra("order_staus").equalsIgnoreCase("ongoing")) {
                 startActivity(new Intent(SplashActivity.this, CurrentOrderDetailActivity.class)
-                        .putExtra("orderId", orderId));
+                        .putExtra("customdata", getIntent().getSerializableExtra("customdata")));
+                finish();
+            } else if (getIntent().getStringExtra("order_staus") != null &&
+                    getIntent().getStringExtra("order_staus").equalsIgnoreCase("dispute")) {
+                startActivity(new Intent(SplashActivity.this, OrdersActivity.class)
+                        .putExtra("customdata", getIntent().getSerializableExtra("customdata")));
+                finish();
             } else {
-                startActivity(new Intent(context, HomeActivity.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                if (orderId > 0) {
+                    startActivity(new Intent(SplashActivity.this, CurrentOrderDetailActivity.class)
+                            .putExtra("orderId", orderId));
+                } else {
+                    startActivity(new Intent(context, HomeActivity.class)
+                            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                }
+                finish();
             }
-            finish();
+        }else {
+            startActivity(new Intent(context, SubscribePlanActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         }
     }
 

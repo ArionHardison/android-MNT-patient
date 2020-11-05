@@ -482,7 +482,7 @@
     <string name="session_expired_button_no">No</string>
     <string name="lets_impress_you_with_our_dishes">Lets impress you with our dishes</string>
     <string name="dietitian">Dietitian</string>
-    <string name="no_dietitian_found">No dietitian found</string>
+    <string name="no_FoodItem_found">No Food Item found</string>
     <string name="no_dietitian_found_in_your_location">No dietitian found in your location</string>
     <string name="follow">Follow</string>
     <string name="subscribe_now">Subscribe Now</string>
@@ -503,7 +503,13 @@
     <string name="select_chef">Select Chef</string>
     <string name="accept">Accept</string>
     <string name="invalid_date_time">You cannot select past time</string>
+    <string name="please_select_date_">Please select date</string>
+    <string name="please_select_time">Please select time</string>
     <string name="login_using">Login using</string>
+  <!--  Home-->
     <string name="meals_plan">Meals Plan</string>
+    <string name="proteins">Proteins</string>
+    <string name="fat">Fat</string>
+    <string name="carb">Carb</string>
 
 </resources>

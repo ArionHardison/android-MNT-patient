@@ -7,9 +7,9 @@ import java.util.List;
 public class IngredientsResponse{
 
 	@SerializedName("ingredients")
-	private List<IngredientsItem> ingredients;
+	private List<Ingredient> ingredients;
 
-	public List<IngredientsItem> getIngredients(){
+	public List<Ingredient> getIngredients(){
 		return ingredients;
 	}
 }

@@ -28,7 +28,7 @@ public class Dietitian {
     private Object countryCode;
     @SerializedName("mobile")
     @Expose
-    private Integer mobile;
+    private String mobile;
     @SerializedName("address")
     @Expose
     private Object address;
@@ -116,11 +116,11 @@ public class Dietitian {
         this.countryCode = countryCode;
     }
 
-    public Integer getMobile() {
+    public String getMobile() {
         return mobile;
     }
 
-    public void setMobile(Integer mobile) {
+    public void setMobile(String mobile) {
         this.mobile = mobile;
     }
 

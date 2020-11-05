@@ -17,6 +17,7 @@ import com.dietmanager.app.models.Product;
 import com.dietmanager.app.models.Shop;
 import com.dietmanager.app.models.SubscriptionList;
 import com.dietmanager.app.models.User;
+import com.dietmanager.app.models.food.FoodItem;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class GlobalData {
     public static Cart isSelctedCart = null;
     public static List<CartAddon> cartAddons = null;
     public static AddCart addCart = null;
+    public static FoodItem selectedfood = null;
 
     public static List<Shop> shopList;
     public static List<Cuisine> cuisineList;
@@ -78,7 +80,6 @@ public class GlobalData {
     public static String currency = "";
     public static String privacy = "";
     public static String subscription = "";
-    public static List<SubscriptionList> subscriptionList;
     public static String terms = "";
     public static int notificationCount = 0;
 
