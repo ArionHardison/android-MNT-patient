@@ -1,5 +1,6 @@
 package com.dietmanager.app.models.food;
 
+import com.dietmanager.app.models.Dietitian;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -18,6 +19,9 @@ public class FoodItem {
 
 	@SerializedName("name")
 	private String name;
+
+	@SerializedName("dietitian")
+	private Dietitian dietitian;
 
 	@SerializedName("description")
 	private String description;
@@ -46,6 +50,10 @@ public class FoodItem {
 
 	public int getDietitianId(){
 		return dietitianId;
+	}
+
+	public Dietitian getDietitian() {
+		return dietitian;
 	}
 
 	public String getPrice(){

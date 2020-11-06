@@ -46,7 +46,7 @@ public class SubscribtionListAdapter extends RecyclerView.Adapter<SubscribtionLi
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         foodIngredient = list.get(position);
-        holder.rd_text.setText(foodIngredient.getDescription());
+        holder.rd_text.setText(foodIngredient.getTitle());
         holder.tv_price.setText(foodIngredient.getPrice());
         if (checkedPosition == -1) {
             holder.rd_text.setChecked(false);

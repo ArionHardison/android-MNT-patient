@@ -96,7 +96,7 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
                     map.put("food_id",  String.valueOf(GlobalData.selectedfood.getId()));
                     map.put("schedule_date", GlobalData.schedule_date);
                     map.put("schedule_time", GlobalData.schedule_time);
-                    map.put("dietitian_id",  String.valueOf(GlobalData.selectedfood.getDietitianId()));
+                    map.put("dietitian_id",  String.valueOf(GlobalData.selectedfood.getDietitian().getId()));
                     map.put("payable", String.valueOf(ingredienttotal));
                     placeorder(map);
                 } else {
