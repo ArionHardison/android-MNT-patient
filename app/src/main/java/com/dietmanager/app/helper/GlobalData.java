@@ -16,6 +16,7 @@ import com.dietmanager.app.models.Otp;
 import com.dietmanager.app.models.Product;
 import com.dietmanager.app.models.Shop;
 import com.dietmanager.app.models.SubscriptionList;
+import com.dietmanager.app.models.SubscriptionPlan;
 import com.dietmanager.app.models.User;
 import com.dietmanager.app.models.food.FoodItem;
 
@@ -83,7 +84,7 @@ public class GlobalData {
     public static String currencySymbol = "";
     public static String currency = "";
     public static String privacy = "";
-    public static String subscription = "";
+    public static SubscriptionPlan subscription = null;
     public static String terms = "";
     public static int notificationCount = 0;
 

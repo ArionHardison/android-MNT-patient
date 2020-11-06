@@ -63,11 +63,11 @@ public class SubMenuDetailedActivity extends AppCompatActivity {
         findViewById(R.id.order_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (schedule_date.equalsIgnoreCase("")){
+              /*  if (schedule_date.equalsIgnoreCase("")){
                     Utils.displayMessage(SubMenuDetailedActivity.this, SubMenuDetailedActivity.this, getString(R.string.please_select_date_));
                 }else   if (schedule_time.equalsIgnoreCase("")){
                     Utils.displayMessage(SubMenuDetailedActivity.this, SubMenuDetailedActivity.this, getString(R.string.please_select_time));
-                }else {
+                }else*/ {
                     GlobalData.schedule_date = schedule_date;
                     GlobalData.schedule_time = schedule_time;
                     startActivity(new Intent(SubMenuDetailedActivity.this, IngredientsActivity.class));

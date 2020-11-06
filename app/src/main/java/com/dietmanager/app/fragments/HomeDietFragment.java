@@ -317,7 +317,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         dummy_navigate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), SubscribePlanActivity.class));
+             //   startActivity(new Intent(getActivity(), SubscribePlanActivity.class));
             }
         });
 

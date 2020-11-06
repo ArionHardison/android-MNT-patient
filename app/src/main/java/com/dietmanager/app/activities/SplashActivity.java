@@ -170,7 +170,7 @@ public class SplashActivity extends AppCompatActivity {
                     GlobalData.currency = profileModel.getCurrency_code();
                     GlobalData.terms = profileModel.getTerms();
                     GlobalData.privacy = profileModel.getPrivacy();
-                    GlobalData.subscription = profileModel.getSubscription();
+                    GlobalData.subscription = profileModel.getSubscriptionPlan();
                     addCart = new AddCart();
                     addCart.setProductList(response.body().getCart());
                     GlobalData.addressList = new AddressList();
@@ -204,7 +204,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void checkActivity() {
-        if (   GlobalData.subscription !=null&& GlobalData.subscription!="") {
+        if (   GlobalData.subscription !=null) {
             if (getIntent().getSerializableExtra("customdata") != null &&
                     getIntent().getStringExtra("order_staus").equalsIgnoreCase("ongoing")) {
                 startActivity(new Intent(SplashActivity.this, CurrentOrderDetailActivity.class)

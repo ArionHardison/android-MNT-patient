@@ -71,6 +71,13 @@ public class User {
     @SerializedName("subscription")
     @Expose
     private String subscription;
+
+    @SerializedName("subscription_plan")
+    @Expose
+    private SubscriptionPlan subscriptionPlan;
+    @SerializedName("dietitian")
+    @Expose
+    private Dietitian_ dietitian;
     @SerializedName("addresses")
     @Expose
     private List<Address> addresses = null;
@@ -253,5 +260,21 @@ public class User {
 
     public void setReferralCode(String referralCode) {
         this.referralCode = referralCode;
+    }
+
+    public SubscriptionPlan getSubscriptionPlan() {
+        return subscriptionPlan;
+    }
+
+    public void setSubscriptionPlan(SubscriptionPlan subscriptionPlan) {
+        this.subscriptionPlan = subscriptionPlan;
+    }
+
+    public Dietitian_ getDietitian() {
+        return dietitian;
+    }
+
+    public void setDietitian(Dietitian_ dietitian) {
+        this.dietitian = dietitian;
     }
 }

@@ -56,6 +56,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.dietmanager.app.helper.GlobalData.profileModel;
+
 public class MobileNumberActivity extends AppCompatActivity {
 
     @BindView(R.id.app_logo)
@@ -234,14 +236,20 @@ public class MobileNumberActivity extends AppCompatActivity {
                     GlobalData.addCart.setProductList(response.body().getCart());
                     GlobalData.addressList = new AddressList();
                     GlobalData.addressList.setAddresses(response.body().getAddresses());
+                    GlobalData.subscription = profileModel.getSubscriptionPlan();
 //                    Toast.makeText(context, getResources().getString(R.string.regsiter_success), Toast.LENGTH_SHORT).show();
-                    if (mIsFromSocial) {
-                        Intent intent = new Intent(context, HomeActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        intent.putExtra("isFromSignUp", true);
-                        startActivity(intent);
-                    } else {
-                        startActivity(new Intent(context, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    if (   GlobalData.subscription !=null) {
+                        if (mIsFromSocial) {
+                            Intent intent = new Intent(context, HomeActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            intent.putExtra("isFromSignUp", true);
+                            startActivity(intent);
+                        } else {
+                            startActivity(new Intent(context, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        }
+                    }else {
+                        startActivity(new Intent(context, SubscribePlanActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     }
                     finish();
                 } else {
