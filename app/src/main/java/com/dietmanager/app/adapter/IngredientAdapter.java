@@ -42,12 +42,13 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
     public static List<FoodIngredient> list;
     private Context context;
     //FoodIngredient foodIngredient;
+    private ICheckclickListener listener;
 
 
-
-    public IngredientAdapter(List<FoodIngredient> list, Context con) {
+    public IngredientAdapter(List<FoodIngredient> list, Context con, ICheckclickListener listener) {
         this.list = list;
         this.context = con;
+        this.listener = listener;
     }
 
     @Override
@@ -89,6 +90,9 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
 
                 }
                 foodIngredient.setChecked(!foodIngredient.isChecked());
+                if (listener!=null)
+                    listener.onClicked(position);
+
 
             }
         });
@@ -112,7 +116,9 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
     public int getItemCount() {
         return list.size();
     }
-
+    public interface ICheckclickListener{
+        public void onClicked(int day);
+    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView img_item;

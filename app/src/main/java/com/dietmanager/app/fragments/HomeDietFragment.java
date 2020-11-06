@@ -334,6 +334,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         if (connectionHelper.isConnectingToInternet()) {
             getTimeCategory();
             getFood();
+            skeletonScreen.show();
         } else {
             Utils.displayMessage(getActivity(), getActivity(), getString(R.string.oops_connect_your_internet));
         }
@@ -475,7 +476,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         HomeActivity.updateNotificationCount(getActivity(), GlobalData.notificationCount);
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
                 new IntentFilter("location"));
-        if (!GlobalData.addressHeader.equalsIgnoreCase("")) {
+       /* if (!GlobalData.addressHeader.equalsIgnoreCase("")) {
             errorLoadingLayout.setVisibility(View.GONE);
             locationAddressLayout.setVisibility(View.VISIBLE);
             if (selectedAddress != null && GlobalData.profileModel != null) {
@@ -521,7 +522,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
                 }
             }
 
-        }
+        }*/
     }
 
     public String getAddress(double lat, double lng) {
@@ -625,5 +626,6 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         selectedTimeCategory = category;
         selectedTimeCategoryName = categoryName;
         getFood();
+        skeletonScreen.show();
     }
 }

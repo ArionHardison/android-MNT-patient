@@ -190,6 +190,7 @@ public class MobileNumberActivity extends AppCompatActivity {
             call = apiInterface.postLogin(map);
         else
             call = apiInterface.postSocialLogin(map);*/
+     customDialog.show();
         SharedHelper.putKey(context, "access_token", "");
         call = apiInterface.postLogin(map);
         call.enqueue(new Callback<LoginModel>() {

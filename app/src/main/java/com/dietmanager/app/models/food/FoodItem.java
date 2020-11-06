@@ -8,7 +8,7 @@ import java.util.List;
 public class FoodItem {
 
 	@SerializedName("dietitian_id")
-	private Object dietitianId;
+	private int dietitianId;
 
 	@SerializedName("price")
 	private String price;
@@ -44,7 +44,7 @@ public class FoodItem {
 	@Expose
 	private List<FoodIngredient> foodIngredients = null;
 
-	public Object getDietitianId(){
+	public int getDietitianId(){
 		return dietitianId;
 	}
 

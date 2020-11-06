@@ -33,6 +33,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_itemnamme"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/_6sdp"
@@ -40,7 +41,7 @@
                     android:textSize="@dimen/_13sdp"
                     android:layout_marginStart="@dimen/_12sdp"
                     android:textColor="@color/colorBlack"
-                    android:text="Rice + Veggies"/>
+                    tools:text="Rice + Veggies"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/food_rv"

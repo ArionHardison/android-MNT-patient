@@ -68,6 +68,8 @@ public class SubMenuDetailedActivity extends AppCompatActivity {
                 }else   if (schedule_time.equalsIgnoreCase("")){
                     Utils.displayMessage(SubMenuDetailedActivity.this, SubMenuDetailedActivity.this, getString(R.string.please_select_time));
                 }else {
+                    GlobalData.schedule_date = schedule_date;
+                    GlobalData.schedule_time = schedule_time;
                     startActivity(new Intent(SubMenuDetailedActivity.this, IngredientsActivity.class));
                 }
             }
@@ -120,6 +122,8 @@ public class SubMenuDetailedActivity extends AppCompatActivity {
                 schedule_date = sdf.format(myCalendar.getTime());
                 //setText(Utils.getDayAndTimeFormat(myCalendar.getTime()));
                 dialogBuilder.cancel();
+                GlobalData.schedule_date = schedule_date;
+                GlobalData.schedule_time = schedule_time;
                 startActivity(new Intent(SubMenuDetailedActivity.this, IngredientsActivity.class));
 
             }

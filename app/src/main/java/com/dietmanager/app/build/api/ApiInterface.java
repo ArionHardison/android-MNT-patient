@@ -262,4 +262,8 @@ public interface ApiInterface {
     @POST("api/user/subscription")
     Call<Otp> postsubscribe(@FieldMap HashMap<String, String> params);
 
+    @FormUrlEncoded
+    @POST("api/user/place/order")
+    Call<ChangePassword> placeorder(@FieldMap HashMap<String, String> params);
+
 }

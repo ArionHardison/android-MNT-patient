@@ -80,6 +80,7 @@ public class LoginActivity extends BaseActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private CallbackManager callbackManager;
 
+
     private void addLink(TextView textView, String patternToMatch,
                          final String link) {
         Linkify.TransformFilter filter = (match, url) -> link;

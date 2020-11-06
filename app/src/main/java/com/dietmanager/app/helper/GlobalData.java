@@ -60,6 +60,10 @@ public class GlobalData {
     public static List<CartAddon> cartAddons = null;
     public static AddCart addCart = null;
     public static FoodItem selectedfood = null;
+    public static String schedule_date = "";
+    public static String schedule_time = "";
+
+
 
     public static List<Shop> shopList;
     public static List<Cuisine> cuisineList;
