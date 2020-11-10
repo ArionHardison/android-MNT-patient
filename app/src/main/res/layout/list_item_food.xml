@@ -88,7 +88,6 @@
                 android:layout_weight="1"
                 android:paddingStart="@dimen/_6sdp"
                 android:paddingEnd="@dimen/_6sdp"
-                android:paddingTop="@dimen/_6sdp"
                 android:paddingBottom="@dimen/_6sdp">
 
                 <TextView
@@ -124,7 +123,6 @@
                     android:layout_weight="1"
                     android:paddingStart="@dimen/_6sdp"
                     android:paddingEnd="@dimen/_6sdp"
-                    android:paddingTop="@dimen/_6sdp"
                     android:paddingBottom="@dimen/_6sdp">
 
                     <TextView
@@ -160,7 +158,6 @@
                     android:layout_weight="1"
                     android:paddingStart="@dimen/_6sdp"
                     android:paddingEnd="@dimen/_6sdp"
-                    android:paddingTop="@dimen/_6sdp"
                     android:paddingBottom="@dimen/_6sdp">
 
                     <TextView

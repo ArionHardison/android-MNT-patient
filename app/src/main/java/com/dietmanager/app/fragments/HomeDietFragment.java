@@ -727,6 +727,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
     {
         ArrayList<Date> dates = new ArrayList<Date>();
         SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        if (dateString2==null)
 dateString2 = "2020-12-06 19:11:33";
         Date date1 = null;
         Date date2 = null;
