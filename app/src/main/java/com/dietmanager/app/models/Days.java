@@ -20,6 +20,7 @@ public class Days {
 
 	@SerializedName("day")
 	private String day;
+
 	public String getName(){
 		return name;
 	}

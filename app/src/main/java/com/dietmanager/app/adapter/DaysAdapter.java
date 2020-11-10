@@ -54,8 +54,9 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull DaysAdapter.MyViewHolder holder, final int position) {
 
         Days day = dayList.get(position);
-        holder.tvDay.setText(String.valueOf(day.getId()));
+       // holder.tvDay.setText(String.valueOf(day.getId()));
         holder.tvDayDummy.setText(day.getDay());
+        holder.tvDay.setText(day.getName());
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

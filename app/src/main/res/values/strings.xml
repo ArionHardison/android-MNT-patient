@@ -515,5 +515,6 @@
     <string name="change_food">Change Foods</string>
     <string name="current_food">Current food</string>
     <string name="suitable_food">Suitable food</string>
+    <string name="payable">Payable</string>
 
 </resources>

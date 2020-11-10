@@ -9,7 +9,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_item"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/_250sdp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_4sdp"
         android:layout_marginStart="@dimen/_4sdp"
@@ -38,7 +38,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
+            <CheckBox
+                android:id="@+id/check_food"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:button="@null"
+                android:clickable="false"
+                android:checked="true"
+                android:layout_margin="@dimen/_5sdp"
+                android:drawableEnd="@drawable/checkbox_selector"
+                android:textColor="@color/colorPrimaryText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+               />
             <TextView
                 android:id="@+id/tv_food_title"
                 android:layout_width="0dp"

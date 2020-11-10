@@ -65,6 +65,7 @@ holder.cardItem.setOnClickListener(new View.OnClickListener() {
 
     }
 });
+        holder.check_food.setChecked(true);
         holder.check_food.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {

@@ -46,6 +46,8 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
     @BindView(R.id.tv_itemnamme)
     TextView tv_itemnamme;
+    @BindView(R.id.tv_total)
+    TextView tv_total;
     @BindView(R.id.next_btn)
     Button next_btn;
     @BindView(R.id.food_rv)
@@ -75,6 +77,7 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
 
         }
         tv_itemnamme.setText( GlobalData.selectedfood.getName());
+        tv_total.setText(GlobalData.currency  +" "+  Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue());
 
         findViewById(R.id.next_btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,12 +85,12 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
                 if (ingredientAdapter.getSelected().size() > 0) {
                     StringBuilder stringBuilder = new StringBuilder();
                     HashMap<String, String> map = new HashMap<>();
-                    double ingredienttotal= 0;
+                    double ingredienttotal=  Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue();
                     for (int i = 0; i < ingredientAdapter.getSelected().size(); i++) {
                         stringBuilder.append(ingredientAdapter.getSelected().get(i).getIngredient().getName());
                         stringBuilder.append("\n");
                         map.put("ingredient["+i+"]", ingredientAdapter.getSelected().get(i).getId().toString());
-                        ingredienttotal= ingredienttotal + Double.valueOf(ingredientAdapter.getSelected().get(i).getPrice()).doubleValue();
+                        ingredienttotal= ingredienttotal + Double.valueOf(ingredientAdapter.getSelected().get(i).getIngredient().getPrice()).doubleValue();
                     }
 
                     //Toast.makeText(context, stringBuilder.toString().trim(), Toast.LENGTH_LONG).show();
@@ -168,9 +171,9 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
                 ingredienttotal= ingredienttotal + Double.valueOf(ingredientAdapter.getSelected().get(i).getIngredient().getPrice()).doubleValue();
             }
             tv_itemnamme.setText(stringBuilder.toString().trim());
-            next_btn.setText(getString(R.string.total)+"-"+ingredienttotal);
+            tv_total.setText(GlobalData.currency +" "+ingredienttotal);
         } else {
-            next_btn.setText(getString(R.string.next));
+            tv_total.setText(GlobalData.currency +" "+Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue());
             tv_itemnamme.setText(GlobalData.selectedfood.getName());
         }
     }

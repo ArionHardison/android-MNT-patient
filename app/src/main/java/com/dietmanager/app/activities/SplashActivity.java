@@ -171,6 +171,7 @@ public class SplashActivity extends AppCompatActivity {
                     GlobalData.terms = profileModel.getTerms();
                     GlobalData.privacy = profileModel.getPrivacy();
                     GlobalData.subscription = profileModel.getSubscriptionPlan();
+                    GlobalData.currency =profileModel.getCurrency();
                     addCart = new AddCart();
                     addCart.setProductList(response.body().getCart());
                     GlobalData.addressList = new AddressList();
@@ -182,7 +183,7 @@ public class SplashActivity extends AppCompatActivity {
                     if (response.code() == 401) {
                         Toast.makeText(context, "UnAuthenticated", Toast.LENGTH_LONG).show();
                         SharedHelper.putKey(context, "logged", "false");
-                        startActivity(new Intent(context, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        startActivity(new Intent(context, MobileNumberActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                         finish();
                     }
                     try {

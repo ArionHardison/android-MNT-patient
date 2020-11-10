@@ -6,6 +6,8 @@
     <color name="colorAccent">#007b04</color>
     <color name="colorTransparent">#00ff6d00</color>
 
+    <color name="screen_bg">#f2f2f2</color>
+
     <color name="colorPrimaryText">@color/colorBlack</color>
     <color name="colorSecondaryText">@color/colorGray</color>
     <color name="colorGreen">#00a551</color>

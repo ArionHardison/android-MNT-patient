@@ -59,7 +59,9 @@ public class ChangeFoodActivity extends AppCompatActivity {
             rv_suifoods.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             rv_suifoods.setHasFixedSize(true);
             rv_suifoods.setAdapter(suitableAdapter);
-            suitableAdapter.setList(GlobalData.foodItemList);
+            currentItems = GlobalData.foodItemList;
+            currentItems.remove(0);
+            suitableAdapter.setList(currentItems);
 
 
         }
