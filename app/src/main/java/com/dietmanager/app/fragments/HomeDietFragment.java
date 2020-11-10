@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,9 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.dietmanager.app.HomeActivity;
@@ -50,10 +53,12 @@ import com.dietmanager.app.helper.SharedHelper;
 import com.dietmanager.app.models.Address;
 import com.dietmanager.app.models.Banner;
 import com.dietmanager.app.models.Cuisine;
+import com.dietmanager.app.models.Days;
 import com.dietmanager.app.models.Discover;
 import com.dietmanager.app.models.Restaurant;
 import com.dietmanager.app.models.RestaurantsData;
 import com.dietmanager.app.models.Shop;
+import com.dietmanager.app.models.SubscriptionPlan;
 import com.dietmanager.app.models.food.FoodItem;
 import com.dietmanager.app.models.food.FoodResponse;
 import com.dietmanager.app.models.timecategory.TimeCategoryItem;
@@ -70,8 +75,12 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -108,6 +117,8 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
     LinearLayout daysLayout;
     @BindView(R.id.food_layout)
     LinearLayout foodLayout;
+    @BindView(R.id.tv_dates)
+    TextView tv_dates;
     private SkeletonScreen skeletonScreen, skeletonText1,
             skeletonText2;
     private TextView addressLabel;
@@ -147,7 +158,8 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
     private int selectedTimeCategory= 1;
     private String selectedTimeCategoryName = "breakfast";
 
-    List<Integer> daysList;
+
+    private List<Days> daysList = new ArrayList<>();
     private List<TimeCategoryItem> timeCategoryList = new ArrayList<>();
     private List<FoodItem> foodItems = new ArrayList<>();
     ConnectionHelper connectionHelper;
@@ -240,8 +252,20 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         daysRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         daysRv.setHasFixedSize(true);
         daysRv.setAdapter(daysAdapter);
-        for (int i = 1; i <= 30; i++)
-            daysList.add(i);
+
+        if (GlobalData.subscription!=null){
+            SubscriptionPlan subscriptionPlan = GlobalData.subscription;
+            List<Date> dates =  getDates(subscriptionPlan.getCreatedAt(),subscriptionPlan.getExpiryDate());
+            for (int i = 0; i < dates.size(); i++){
+                Days days = new Days();
+                days.setDate(dates.get(i));
+                days.setDay(getDay(dates.get(i)));
+                days.setId(i+1);
+                daysList.add(days);
+            }
+
+        }
+
         daysAdapter.setList(daysList);
         skeletonText1 = Skeleton.bind(daysRv)
                 .adapter(daysAdapter)
@@ -278,6 +302,8 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         foodRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         foodRv.setHasFixedSize(true);
         foodRv.setAdapter(foodAdapter);
+        SnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(foodRv);
         skeletonScreen = Skeleton.bind(foodRv)
                 .adapter(foodAdapter)
                 .load(R.layout.skeleton_impressive_list_item)
@@ -354,6 +380,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
                     if (timeCategoryItemList != null && !Utils.isNullOrEmpty(timeCategoryItemList)) {
                         selectedTimeCategory=timeCategoryItemList.get(0).getId();
                         selectedTimeCategoryName=timeCategoryItemList.get(0).getName();
+                        GlobalData.selectedTimeCategoryName = timeCategoryItemList.get(0).getName();
                         timeCategoryList.addAll(timeCategoryItemList);
                         timeCategoryAdapter.setList(timeCategoryList);
                         daysAdapter.setList(daysList);
@@ -393,6 +420,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
                     foodItems.clear();
                     List<FoodItem> ItemList = response.body();
                     if (ItemList != null && !Utils.isNullOrEmpty(ItemList)) {
+                        GlobalData.foodItemList = response.body();
                         foodItems.addAll(ItemList);
                         foodAdapter.setList(foodItems);
                         skeletonScreen.hide();
@@ -472,7 +500,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onResume() {
         super.onResume();
-        errorLayout.setVisibility(View.GONE);
+        //errorLayout.setVisibility(View.GONE);
         HomeActivity.updateNotificationCount(getActivity(), GlobalData.notificationCount);
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
                 new IntentFilter("location"));
@@ -619,13 +647,72 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onDayClicked(int day) {
         selectedDay = day;
+        getFood();
+        skeletonScreen.show();
     }
 
     @Override
     public void onCategoryClicked(int category, String categoryName) {
         selectedTimeCategory = category;
         selectedTimeCategoryName = categoryName;
+        GlobalData.selectedTimeCategoryName = categoryName;
         getFood();
         skeletonScreen.show();
+    }
+
+    private  List<Date> getDates(String dateString1, String dateString2)
+    {
+        ArrayList<Date> dates = new ArrayList<Date>();
+        SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+
+        Date date1 = null;
+        Date date2 = null;
+        String strday       ="";
+        String strmonth       ="";
+        String endday       ="";
+        String endmonth       ="";
+
+        try {
+            date1 = df1 .parse(dateString1);
+            date2 = df1 .parse(dateString2);
+            strday     = (String) DateFormat.format("dd",   date1); // 20
+            strmonth  = (String) DateFormat.format("MMM",  date1); // Jun
+            endday     = (String) DateFormat.format("dd",   date2); // 20
+            endmonth  = (String) DateFormat.format("MMM",  date2); // Jun
+            tv_dates.setText(strmonth+" "+strday+" - "+endmonth+" "+endday);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+
+
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+
+        while(!cal1.after(cal2))
+        {
+            dates.add(cal1.getTime());
+            cal1.add(Calendar.DATE, 1);
+        }
+        return dates;
+    }
+    private  String getDay(Date date)
+    {
+
+        SimpleDateFormat dayFormat = new SimpleDateFormat("E",Locale.getDefault());
+       String weekDay ="";
+
+
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date);
+        try {
+            weekDay = dayFormat.format(cal1.getTime());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return weekDay;
     }
 }

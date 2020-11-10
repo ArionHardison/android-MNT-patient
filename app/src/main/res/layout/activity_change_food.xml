@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.SelectChefActivity">
+
+
+    <LinearLayout
+        android:id="@+id/select_chef_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+
+        <LinearLayout
+            android:id="@+id/item_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:background="#fafafa"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_bold"
+                android:maxLines="1"
+                android:padding="@dimen/_8sdp"
+                android:text="@string/current_food"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/_14sdp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_curfoods"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_90sdp"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                tools:listitem="@layout/changefood_list_item"
+                android:orientation="vertical" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_bold"
+                android:maxLines="1"
+                android:padding="@dimen/_8sdp"
+                android:text="@string/suitable_food"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/_14sdp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_suifoods"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:nestedScrollingEnabled="false"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/_8sdp"
+                tools:listitem="@layout/changefood_list_item" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

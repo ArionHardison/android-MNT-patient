@@ -63,7 +63,8 @@ public class GlobalData {
     public static FoodItem selectedfood = null;
     public static String schedule_date = "";
     public static String schedule_time = "";
-
+    public static String selectedTimeCategoryName = "";
+    public static List<FoodItem> foodItemList = null;
 
 
     public static List<Shop> shopList;

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:background="@color/colorWhite"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="4dp"
+    android:id="@+id/item_layout"
+    android:padding="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+    <!--<ImageView
+        android:id="@+id/food_avatar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:contentDescription="@string/restaurant"
+        android:scaleType="fitXY" />-->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/food_avatar"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:padding="4dp" />
+
+    <TextView
+        android:id="@+id/food_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_toEndOf="@+id/food_avatar"
+        android:fontFamily="@font/nunito_semibold"
+        android:maxLines="1"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/_14sdp"
+        android:textStyle="bold"
+        tools:text="Bunny Burgs" />
+
+        <CheckBox
+            android:id="@+id/check_food"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:button="@null"
+            android:clickable="true"
+            android:layout_margin="@dimen/_5sdp"
+            android:drawableEnd="@drawable/checkbox_selector"
+            android:fontFamily="@font/nunito_regular"
+         android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/text_medium" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/food_name"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_toEndOf="@+id/food_avatar"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:paddingStart="@dimen/_6sdp"
+            android:paddingEnd="@dimen/_6sdp"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingBottom="@dimen/_6sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textAllCaps="false"
+                android:textColor="@color/biscay"
+                android:textSize="@dimen/_10sdp"
+                android:drawableStart="@drawable/ic_fill_circle"
+                android:drawableTint="@color/biscay"
+                android:drawablePadding="@dimen/_4sdp"
+                android:text="@string/proteins"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/tv_proteins"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="34"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_12sdp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:paddingStart="@dimen/_6sdp"
+            android:paddingEnd="@dimen/_6sdp"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingBottom="@dimen/_6sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textAllCaps="false"
+                android:textColor="@color/biscay"
+                android:textSize="@dimen/_10sdp"
+                android:drawableStart="@drawable/ic_fill_circle"
+                android:drawableTint="@color/colorGoogleLogin"
+                android:drawablePadding="@dimen/_4sdp"
+                android:text="@string/fat"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/tv_fat"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="134"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_12sdp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:paddingStart="@dimen/_6sdp"
+            android:paddingEnd="@dimen/_6sdp"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingBottom="@dimen/_6sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textAllCaps="false"
+                android:textColor="@color/biscay"
+                android:textSize="@dimen/_12sdp"
+                android:drawableStart="@drawable/ic_fill_circle"
+                android:drawableTint="@color/colorPinkLight"
+                android:drawablePadding="@dimen/_4sdp"
+                android:text="@string/carb"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/tv_carb"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="34"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/_12sdp"/>
+        </LinearLayout>
+    </LinearLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

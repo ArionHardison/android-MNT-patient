@@ -333,6 +333,10 @@
             android:parentActivityName="com.dietmanager.app.activities.HotelViewActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name="com.dietmanager.app.activities.ChangeFoodActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

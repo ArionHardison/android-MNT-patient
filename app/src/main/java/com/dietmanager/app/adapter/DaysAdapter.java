@@ -13,12 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.dietmanager.app.R;
+import com.dietmanager.app.models.Days;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.MyViewHolder> {
-    private List<Integer> dayList;
+    private List<Days> dayList;
     private int selectedIndex=0;
     private Context context;
     private IDayListener listener;
@@ -30,7 +32,7 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.MyViewHolder> 
         this.selectedIndex=selectedIndex;
     }
 
-    public void setList(List<Integer> itemList) {
+    public void setList(List<Days> itemList) {
         if (itemList == null) {
             return;
         }
@@ -50,13 +52,14 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull DaysAdapter.MyViewHolder holder, final int position) {
-        Integer day = dayList.get(position);
-        holder.tvDay.setText(String.valueOf(day));
 
+        Days day = dayList.get(position);
+        holder.tvDay.setText(String.valueOf(day.getId()));
+        holder.tvDayDummy.setText(day.getDay());
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onDayClicked(day);
+                listener.onDayClicked(day.getId());
                 selectedIndex=position;
                 notifyDataSetChanged();
             }

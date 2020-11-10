@@ -512,4 +512,8 @@
     <string name="fat">Fat</string>
     <string name="carb">Carb</string>
 
+    <string name="change_food">Change Foods</string>
+    <string name="current_food">Current food</string>
+    <string name="suitable_food">Suitable food</string>
+
 </resources>

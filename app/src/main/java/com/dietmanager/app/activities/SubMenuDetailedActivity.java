@@ -47,7 +47,7 @@ public class SubMenuDetailedActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         if (GlobalData.selectedfood!=null){
             FoodItem foodItem = GlobalData.selectedfood;
-            ((TextView)findViewById(R.id.toolbar).findViewById(R.id.title)).setText(foodItem.getTimeCategoryId());
+            ((TextView)findViewById(R.id.toolbar).findViewById(R.id.title)).setText(GlobalData.selectedTimeCategoryName);
             tv_name.setText(foodItem.getName());
             tv_description.setText(foodItem.getDescription());
             if (foodItem.getAvatar()!=null)

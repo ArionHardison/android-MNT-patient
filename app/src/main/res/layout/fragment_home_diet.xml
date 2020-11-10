@@ -45,8 +45,22 @@
                     android:maxLines="1"
                     android:padding="@dimen/_8sdp"
                     android:text="@string/meals_plan"
+                    android:layout_marginStart="@dimen/_4sdp"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/_15sdp" />
+                    android:textSize="@dimen/_16sdp" />
+
+                <TextView
+                    android:id="@+id/tv_dates"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:paddingStart="@dimen/_4sdp"
+                    android:text="@string/meals_plan"
+                    android:gravity="center"
+                    android:drawableEnd="@drawable/ic_right_arrow"
+                    android:drawableStart="@drawable/ic_left_arrow"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/_12sdp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/days_rv"
