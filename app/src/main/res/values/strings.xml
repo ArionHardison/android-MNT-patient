@@ -388,23 +388,29 @@
     <string name="un_available">Un Available</string>
 
     <string name="welcome">Welcome</string>
-    <array name="walk_through_banner">
+  <!--  <array name="walk_through_banner">
         <item>@drawable/ic_banner_1</item>
         <item>@drawable/ic_banner_2</item>
         <item>@drawable/ic_banner_3</item>
         <item>@drawable/ic_banner_4</item>
+    </array>-->
+    <array name="walk_through_banner">
+        <item>@drawable/ic_fresh</item>
+        <item>@drawable/ic_location_marker</item>
+        <item>@drawable/ic_bookmark</item>
+      <!--  <item>@drawable/ic_banner_4</item>-->
     </array>
     <string-array name="walk_through_title">
         <item>@string/welcome_title_1</item>
         <item>@string/welcome_title_2</item>
         <item>@string/welcome_title_3</item>
-        <item>@string/welcome_title_4</item>
+      <!--  <item>@string/welcome_title_4</item>-->
     </string-array>
     <string-array name="walk_through_description">
         <item>@string/welcome_description_1</item>
         <item>@string/welcome_description_2</item>
         <item>@string/welcome_description_3</item>
-        <item>@string/welcome_description_4</item>
+       <!-- <item>@string/welcome_description_4</item>-->
     </string-array>
     <string name="welcome_title_1">Find local kitchens</string>
     <string name="welcome_title_2">Order now or Order ahead</string>

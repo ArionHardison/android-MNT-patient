@@ -101,17 +101,20 @@ public class WelcomeActivity extends BaseActivity implements
     @OnClick({R.id.btn_continue})
     public void onClick(View v) {
         if (v.getId() == R.id.btn_continue) {
-            setPageSelection();
+            //setPageSelection();
+            startActivity(new Intent(getApplicationContext(), MobileNumberActivity.class));
+            overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
+            finish();
         }
     }
 
-    @OnPageChange(R.id.vp_welcome)
+   /* @OnPageChange(R.id.vp_welcome)
     public void onPageSelected(int i) {
         if (i == WelcomePagerAdapter.PAGE_COUNT - 1)
             continueButton.setText(getString(R.string.get_started));
         else
             continueButton.setText(getString(R.string.continue_txt));
-    }
+    }*/
 
     private void initializeViewReferences() {
         ButterKnife.bind(this);
@@ -124,7 +127,7 @@ public class WelcomeActivity extends BaseActivity implements
         WelcomePagerAdapter adapter = new WelcomePagerAdapter(getBaseContext());
         welcomePager.setAdapter(adapter);
         welcomePager.setCurrentItem(0, true);
-        continueButton.setText(getString(R.string.continue_txt));
+        continueButton.setText(getString(R.string.signin));
     }
 
     private void setPageSelection() {

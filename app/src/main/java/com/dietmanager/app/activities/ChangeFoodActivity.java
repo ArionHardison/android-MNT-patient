@@ -46,7 +46,7 @@ public class ChangeFoodActivity extends AppCompatActivity {
             }
         });
 
-        if (GlobalData.foodItemList!=null){
+        if (GlobalData.foodItemList!=null&& GlobalData.foodItemList.size()>0){
             //currentfood Adapter
             currentAdapter = new CurrentFoodAdapter(this);
             rv_curfoods.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

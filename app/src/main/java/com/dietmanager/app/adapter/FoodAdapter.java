@@ -24,6 +24,8 @@ import com.dietmanager.app.models.food.FoodItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.dietmanager.app.build.configure.BuildConfigure.BASE_URL;
+
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> {
     private List<FoodItem> foodItems;
     private Context context;
@@ -57,7 +59,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
        /* holder.tvFoodDescription.setText(String.valueOf(foodItem.getDescription()));
         holder.tvFoodPrice.setText(String.valueOf(foodItem.getPrice()));*/
         if (foodItem.getAvatar()!=null)
-            Glide.with(context).load(foodItem.getAvatar())
+            Glide.with(context).load(BASE_URL +foodItem.getAvatar())
                 .apply(new RequestOptions().centerCrop().placeholder(R.drawable.shimmer_bg).error(R.drawable.shimmer_bg).dontAnimate()).into(holder.imgFood);
 holder.cardItem.setOnClickListener(new View.OnClickListener() {
     @Override

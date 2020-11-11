@@ -171,7 +171,7 @@ public class SubscribePlanActivity extends AppCompatActivity implements Subscrib
             public void onResponse(@NonNull Call<Otp> call, @NonNull Response<Otp> response) {
                 if (response.isSuccessful()) {
                     Otp data=response.body();
-                    Toast.makeText(context, data.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, data.getMessagenew(), Toast.LENGTH_LONG).show();
                     startActivity(new Intent(SubscribePlanActivity.this, SplashActivity.class));
                 } else {
                     if (response.code() == 401) {

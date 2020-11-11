@@ -28,6 +28,8 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.dietmanager.app.build.configure.BuildConfigure.BASE_URL;
+
 public class SubMenuDetailedActivity extends AppCompatActivity {
 
     @BindView(R.id.tv_name)
@@ -52,7 +54,7 @@ public class SubMenuDetailedActivity extends AppCompatActivity {
             tv_description.setText(foodItem.getDescription());
             if (foodItem.getAvatar()!=null)
                 Glide.with(this)
-                        .load(foodItem.getAvatar())
+                        .load(BASE_URL +foodItem.getAvatar())
                         .apply(new RequestOptions()
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .placeholder(R.drawable.ic_banner_1)

@@ -48,5 +48,5 @@
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
         android:textSize="14sp"
-        tools:text="@string/continue_txt" />
+        tools:text="@string/sign_in" />
 </RelativeLayout>
