@@ -23,6 +23,7 @@
                 android:id="@+id/myaccount_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="false"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -52,6 +53,7 @@
                             android:textSize="@dimen/text_medium" />
 
                         <TextView
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/nunito_regular"
@@ -73,6 +75,7 @@
                         android:layout_marginTop="3dp"
                         android:layout_marginEnd="5dp"
                         android:padding="3dp"
+                        android:visibility="invisible"
                         android:src="@drawable/ic_navigate_up_arrow" />
 
 
@@ -82,6 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:visibility="gone"
                     android:paddingRight="@dimen/activity_horizontal_margin">
 
                     <TextView
@@ -109,7 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_2sdp"
                 android:orientation="vertical">
 
                 <ListView
@@ -119,20 +123,13 @@
                     android:divider="@null"
                     android:scrollbars="none" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@id/profile_setting_lv"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:background="#eee" />
+
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_20sdp"
-                android:layout_marginTop="30dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
                 android:background="#eee" />
 
             <Button
@@ -141,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
-                android:drawableStart="@drawable/ic_input_light"
+                android:drawableEnd="@drawable/ic_input_light"
                 android:drawablePadding="16dp"
                 android:fontFamily="@font/nunito_bold"
                 android:gravity="start|center"
@@ -149,13 +146,17 @@
                 android:text="@string/logout"
                 android:textColor="@color/colorTextBlack"
                 android:tint="@color/colorAccent" />
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#eee" />
             <TextView
                 android:id="@+id/app_version"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
                 android:layout_marginBottom="@dimen/_45sdp"
-                android:background="#eee"
+                android:background="@color/colorWhite"
                 android:fontFamily="@font/nunito_semibold"
                 android:gravity="center" />
         </LinearLayout>

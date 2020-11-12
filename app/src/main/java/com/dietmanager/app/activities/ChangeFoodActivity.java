@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,7 +48,7 @@ public class ChangeFoodActivity extends AppCompatActivity {
             }
         });
 
-        if (GlobalData.foodItemList!=null){
+        if (GlobalData.foodItemList!=null&& GlobalData.foodItemList.size()>0){
             //currentfood Adapter
             currentAdapter = new CurrentFoodAdapter(this);
             rv_curfoods.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -59,7 +61,10 @@ public class ChangeFoodActivity extends AppCompatActivity {
             rv_suifoods.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             rv_suifoods.setHasFixedSize(true);
             rv_suifoods.setAdapter(suitableAdapter);
-            suitableAdapter.setList(GlobalData.foodItemList);
+            rv_suifoods.setItemAnimator(new DefaultItemAnimator());
+            currentItems = GlobalData.foodItemList;
+            currentItems.remove(0);
+            suitableAdapter.setList(currentItems);
 
 
         }

@@ -24,6 +24,8 @@ import com.dietmanager.app.models.food.FoodItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.dietmanager.app.build.configure.BuildConfigure.BASE_URL;
+
 public class CurrentFoodAdapter extends RecyclerView.Adapter<CurrentFoodAdapter.MyViewHolder> {
     private List<FoodItem> foodItems;
     private Context context;
@@ -55,7 +57,7 @@ public class CurrentFoodAdapter extends RecyclerView.Adapter<CurrentFoodAdapter.
         FoodItem foodItem = foodItems.get(position);
         holder.tvFoodTitle.setText(String.valueOf(foodItem.getName()));
         if (foodItem.getAvatar()!=null)
-            Glide.with(context).load(foodItem.getAvatar())
+            Glide.with(context).load(BASE_URL +foodItem.getAvatar())
                 .apply(new RequestOptions().centerCrop().placeholder(R.drawable.shimmer_bg).error(R.drawable.shimmer_bg).dontAnimate()).into(holder.imgFood);
 holder.cardItem.setOnClickListener(new View.OnClickListener() {
     @Override
@@ -65,6 +67,7 @@ holder.cardItem.setOnClickListener(new View.OnClickListener() {
 
     }
 });
+        holder.check_food.setChecked(true);
         holder.check_food.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {

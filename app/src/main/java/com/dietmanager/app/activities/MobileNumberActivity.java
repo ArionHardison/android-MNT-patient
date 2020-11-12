@@ -82,7 +82,7 @@ public class MobileNumberActivity extends AppCompatActivity {
     @BindView(R.id.already_have_aacount_txt)
     TextView alreadyHaveAacountTxt;*/
     private CountryPicker mCountryPicker;
-    String country_code = "+61";
+    String country_code = "+91";
     Context context;
     CustomDialog customDialog;
     JSONObject json;
@@ -256,7 +256,7 @@ public class MobileNumberActivity extends AppCompatActivity {
                     if (response.code() == 401) {
                         Toast.makeText(context, "UnAuthenticated", Toast.LENGTH_LONG).show();
                         SharedHelper.putKey(context, "logged", "false");
-                        startActivity(new Intent(context, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        startActivity(new Intent(context, MobileNumberActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                         finish();
                     }
 
@@ -386,9 +386,9 @@ public class MobileNumberActivity extends AppCompatActivity {
             mCountryDialCodeTextView.setText(country.getDialCode());
             country_code = country.getDialCode();
         } else {
-            mCountryFlagImageView.setImageResource(R.drawable.flag_au);
-            mCountryDialCodeTextView.setText("+61");
-            country_code = "+61";
+            mCountryFlagImageView.setImageResource(R.drawable.flag_in);
+            mCountryDialCodeTextView.setText("+91");
+            country_code = "+91";
         }
     }
 

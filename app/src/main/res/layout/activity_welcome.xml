@@ -28,6 +28,7 @@
         android:layout_below="@id/tv_welcome" />
 
     <com.google.android.material.tabs.TabLayout
+        android:visibility="gone"
         android:id="@+id/tl_page_indicator"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
@@ -48,5 +49,5 @@
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
         android:textSize="14sp"
-        tools:text="@string/continue_txt" />
+        tools:text="@string/sign_in" />
 </RelativeLayout>

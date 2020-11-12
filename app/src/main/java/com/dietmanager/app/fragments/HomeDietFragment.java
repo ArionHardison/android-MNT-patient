@@ -37,6 +37,7 @@ import com.dietmanager.app.OyolaApplication;
 import com.dietmanager.app.R;
 import com.dietmanager.app.activities.FilterActivity;
 import com.dietmanager.app.activities.LoginActivity;
+import com.dietmanager.app.activities.MobileNumberActivity;
 import com.dietmanager.app.activities.SetDeliveryLocationActivity;
 import com.dietmanager.app.activities.SubscribePlanActivity;
 import com.dietmanager.app.adapter.DaysAdapter;
@@ -103,11 +104,14 @@ import static com.dietmanager.app.helper.GlobalData.selectedAddress;
 
 
 public class HomeDietFragment extends Fragment implements AdapterView.OnItemSelectedListener,
-        CuisineSelectFragment.OnSuccessListener, DaysAdapter.IDayListener,TimeCategoryAdapter.ITimeCategoryListener {
+        CuisineSelectFragment.OnSuccessListener, DaysAdapter.IDayListener,TimeCategoryAdapter.ITimeCategoryListener,FoodAdapter.IClickListener {
 
     @BindView(R.id.animation_line_image)
     ImageView animationLineImage;
-
+    @BindView(R.id.img_reverse)
+    ImageView img_reverse;
+    @BindView(R.id.img_forward)
+    ImageView img_forward;
 
     @BindView(R.id.error_layout)
     LinearLayout errorLayout;
@@ -160,6 +164,9 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
 
 
     private List<Days> daysList = new ArrayList<>();
+    private List<Days> totaldaysList = new ArrayList<>();
+    private int lastposition = 7;
+    private int startposition = 0;
     private List<TimeCategoryItem> timeCategoryList = new ArrayList<>();
     private List<FoodItem> foodItems = new ArrayList<>();
     ConnectionHelper connectionHelper;
@@ -247,7 +254,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         errorLoadingLayout.setVisibility(View.VISIBLE);
         toolbarLayout.setVisibility(View.GONE);
 
-        daysList = new ArrayList<>();
+    
         daysAdapter = new DaysAdapter(getActivity(), 0, this);
         daysRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         daysRv.setHasFixedSize(true);
@@ -255,18 +262,20 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
 
         if (GlobalData.subscription!=null){
             SubscriptionPlan subscriptionPlan = GlobalData.subscription;
-            List<Date> dates =  getDates(subscriptionPlan.getCreatedAt(),subscriptionPlan.getExpiryDate());
-            for (int i = 0; i < dates.size(); i++){
+            List<Date> totalDateList = new ArrayList<>();
+            totalDateList =  getDates(subscriptionPlan.getCreatedAt(),subscriptionPlan.getExpiryDate());
+            for (int i = 0; i <totalDateList.size(); i++){
                 Days days = new Days();
-                days.setDate(dates.get(i));
-                days.setDay(getDay(dates.get(i)));
+                days.setDate(totalDateList.get(i));
+                days.setDay(getDay(totalDateList.get(i)));
                 days.setId(i+1);
-                daysList.add(days);
+                days.setName(getDate(totalDateList.get(i)));
+                totaldaysList.add(days);
             }
-
+            loadmore();
         }
 
-        daysAdapter.setList(daysList);
+
         skeletonText1 = Skeleton.bind(daysRv)
                 .adapter(daysAdapter)
                 .load(R.layout.skeleton_label)
@@ -298,7 +307,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
 
 
         //food Adapter
-        foodAdapter = new FoodAdapter(getActivity());
+        foodAdapter = new FoodAdapter(getActivity(),this);
         foodRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         foodRv.setHasFixedSize(true);
         foodRv.setAdapter(foodAdapter);
@@ -346,7 +355,46 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
              //   startActivity(new Intent(getActivity(), SubscribePlanActivity.class));
             }
         });
+        img_reverse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int newfirstposition  =0;
+                if (startposition!=0){
+                    lastposition = startposition;
+                     newfirstposition  =  startposition-7;
+                }else {
+                    Toast.makeText(getActivity(), "No Data Present", Toast.LENGTH_LONG).show();
+                }
 
+                if (newfirstposition>=0){
+                        startposition = newfirstposition;
+                    }else {
+                        startposition = 0;
+
+                    }
+
+                loadmore();
+            }
+        });
+        img_forward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (lastposition<totaldaysList.size()){
+                  int newlastposition =  lastposition+7;
+                    if (newlastposition<=totaldaysList.size()-1){
+                        startposition = lastposition;
+                        lastposition =newlastposition;
+                    }else {
+                        startposition = lastposition;
+                        int module = totaldaysList.size()%7;
+                        lastposition = lastposition+module;
+                    }
+                }else {
+                    Toast.makeText(getActivity(), "No Data Present", Toast.LENGTH_LONG).show();
+                }
+                loadmore();
+            }
+        });
         favouriteSelectionImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -366,6 +414,21 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         }
     }
 
+    private void loadmore() {
+        daysList.clear();
+        setDates(totaldaysList.get(startposition).getDate(),totaldaysList.get(lastposition-1).getDate());
+        selectedDay = totaldaysList.get(startposition).getId();
+        getFood();
+        for (int i = startposition; i <lastposition; i++){
+            Days days = new Days();
+            days.setDate(totaldaysList.get(i).getDate());
+            days.setDay(getDay(totaldaysList.get(i).getDate()));
+            days.setName(getDate(totaldaysList.get(i).getDate()));
+            days.setId(totaldaysList.get(i).getId());
+            daysList.add(days);
+        }
+        daysAdapter.setList(daysList);
+    }
 
 
     private void getTimeCategory() {
@@ -395,7 +458,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
                         ServerError serverError = gson.fromJson(response.errorBody().charStream(), ServerError.class);
                         Utils.displayMessage(getActivity(), getActivity(), serverError.getError());
                         if (response.code() == 401) {
-                            startActivity(new Intent(getActivity(), LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                            startActivity(new Intent(getActivity(), MobileNumberActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                             getActivity().finish();
                         }
                     } catch (JsonSyntaxException e) {
@@ -436,7 +499,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
                         Utils.displayMessage(getActivity(), getActivity(), serverError.getError());
                         //    showOrHideView(false);
                         if (response.code() == 401) {
-                            startActivity(new Intent(getActivity(), LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                            startActivity(new Intent(getActivity(), MobileNumberActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                             getActivity().finish();
                         }
                     } catch (JsonSyntaxException e) {
@@ -659,12 +722,17 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         getFood();
         skeletonScreen.show();
     }
-
+    @Override
+    public void onRefreshClicked(int day) {
+        getFood();
+        skeletonScreen.show();
+    }
     private  List<Date> getDates(String dateString1, String dateString2)
     {
         ArrayList<Date> dates = new ArrayList<Date>();
         SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-
+        if (dateString2==null)
+dateString2 = "2020-12-06 19:11:33";
         Date date1 = null;
         Date date2 = null;
         String strday       ="";
@@ -698,6 +766,30 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         }
         return dates;
     }
+    private void setDates(Date date1, Date date2)
+    {
+        ArrayList<Date> dates = new ArrayList<Date>();
+        SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+
+        String strday       ="";
+        String strmonth       ="";
+        String endday       ="";
+        String endmonth       ="";
+
+        try {
+
+            strday     = (String) DateFormat.format("dd",   date1); // 20
+            strmonth  = (String) DateFormat.format("MMM",  date1); // Jun
+            endday     = (String) DateFormat.format("dd",   date2); // 20
+            endmonth  = (String) DateFormat.format("MMM",  date2); // Jun
+            tv_dates.setText(strmonth+" "+strday+" - "+endmonth+" "+endday);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
     private  String getDay(Date date)
     {
 
@@ -715,4 +807,23 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
 
         return weekDay;
     }
+    private  String getDate(Date date)
+    {
+
+        SimpleDateFormat dayFormat = new SimpleDateFormat("dd",Locale.getDefault());
+        String weekDay ="";
+
+
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date);
+        try {
+            weekDay = dayFormat.format(cal1.getTime());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return weekDay;
+    }
+
+
 }

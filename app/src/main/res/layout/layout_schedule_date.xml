@@ -33,16 +33,31 @@
                     android:id="@+id/card_"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/green"
-                    android:gravity="center"
-                    android:padding="10dp"
+                    android:background="@color/colorWhite"
+                    android:gravity="start"
+                    android:layout_margin="10dp"
                     android:text="@string/schedule"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/colorBlack"
                     android:textSize="@dimen/_14sdp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:gravity="start"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/schedule"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintTop_toBottomOf="@+id/card_"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/close_img"
@@ -69,7 +84,7 @@
                     android:id="@+id/add_instruction_"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:gravity="center"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -77,15 +92,17 @@
 
                     <DatePicker
                         android:id="@+id/datePicker"
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/_120sdp"
                         android:layout_height="wrap_content"
                         android:datePickerMode="spinner"
+                        android:layout_marginStart="10dp"
                         android:calendarViewShown="false"/>
                     <TimePicker
                         android:id="@+id/timePicker"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:timePickerMode="spinner"
+                        android:layout_marginStart="-20dp"
                         android:calendarViewShown="false"/>
                 </LinearLayout>
 

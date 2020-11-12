@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="@dimen/_270sdp"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -38,7 +38,30 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
+            <CheckBox
+                android:id="@+id/check_food"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:button="@null"
+                android:clickable="false"
+                android:checked="true"
+                android:layout_margin="@dimen/_5sdp"
+                android:drawableEnd="@drawable/checkbox_selector"
+                android:textColor="@color/colorPrimaryText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+               />
+            <ImageView
+                android:id="@+id/img_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/_5sdp"
+                android:src="@drawable/ic_refresh"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
             <TextView
                 android:id="@+id/tv_food_title"
                 android:layout_width="0dp"
@@ -75,7 +98,6 @@
                 android:layout_weight="1"
                 android:paddingStart="@dimen/_6sdp"
                 android:paddingEnd="@dimen/_6sdp"
-                android:paddingTop="@dimen/_6sdp"
                 android:paddingBottom="@dimen/_6sdp">
 
                 <TextView
@@ -111,7 +133,6 @@
                     android:layout_weight="1"
                     android:paddingStart="@dimen/_6sdp"
                     android:paddingEnd="@dimen/_6sdp"
-                    android:paddingTop="@dimen/_6sdp"
                     android:paddingBottom="@dimen/_6sdp">
 
                     <TextView
@@ -147,7 +168,6 @@
                     android:layout_weight="1"
                     android:paddingStart="@dimen/_6sdp"
                     android:paddingEnd="@dimen/_6sdp"
-                    android:paddingTop="@dimen/_6sdp"
                     android:paddingBottom="@dimen/_6sdp">
 
                     <TextView

@@ -163,7 +163,7 @@ public class SubscribePlanActivity extends AppCompatActivity implements Subscrib
     }
     private void postsubscribe() {
         HashMap<String, String> map = new HashMap<>();
-        map.put("plan_id", String.valueOf(SubscribtionListAdapter.checkedPosition));
+        map.put("plan_id", String.valueOf(SubscribtionListAdapter.selectedposition));
         map.put("dietitian_id", String.valueOf(dietitian.getId()));
         Call<Otp> postsubscribe = apiInterface.postsubscribe(map);
         postsubscribe.enqueue(new Callback<Otp>() {
@@ -171,13 +171,13 @@ public class SubscribePlanActivity extends AppCompatActivity implements Subscrib
             public void onResponse(@NonNull Call<Otp> call, @NonNull Response<Otp> response) {
                 if (response.isSuccessful()) {
                     Otp data=response.body();
-                    Toast.makeText(context, data.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, data.getMessagenew(), Toast.LENGTH_LONG).show();
                     startActivity(new Intent(SubscribePlanActivity.this, SplashActivity.class));
                 } else {
                     if (response.code() == 401) {
                         Toast.makeText(context, "UnAuthenticated", Toast.LENGTH_LONG).show();
                         SharedHelper.putKey(context, "logged", "false");
-                        startActivity(new Intent(context, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        startActivity(new Intent(context, MobileNumberActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                         finish();
                     }
 

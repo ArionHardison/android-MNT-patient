@@ -180,8 +180,9 @@ public class ProfileFragment extends BaseFragment {
             userName = toolbarLayout.findViewById(R.id.user_name);
             userPhone = toolbarLayout.findViewById(R.id.user_phone);
             userEmail = toolbarLayout.findViewById(R.id.user_mail);
+            userImage.setVisibility(View.GONE);
             initView();
-            ImageView editBtn = toolbarLayout.findViewById(R.id.edit);
+            Button editBtn = toolbarLayout.findViewById(R.id.edit);
             userImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -206,8 +207,8 @@ public class ProfileFragment extends BaseFragment {
             listIcons.add(R.drawable.ic_favorite_light);
             listIcons.add(R.drawable.payment);
             listIcons.add(R.drawable.ic_orders_light);
-            listIcons.add(R.drawable.ic_promotion_details);
-            listIcons.add(R.drawable.ic_share);
+            //listIcons.add(R.drawable.notification_background);
+          //  listIcons.add(R.drawable.ic_share);
 //            listIcons.add(R.drawable.ic_g_translate_light);
 
             /*if (!loginBy.equalsIgnoreCase("facebook") &&

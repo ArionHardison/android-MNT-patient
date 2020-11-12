@@ -22,6 +22,10 @@ public class Otp {
     @Expose
     private String error;
 
+    @SerializedName("Message")
+    @Expose
+    private String messagenew;
+
     public String getMessage() {
         return message;
     }
@@ -60,5 +64,13 @@ public class Otp {
 
     public void setError(String error) {
         this.error = error;
+    }
+
+    public String getMessagenew() {
+        return messagenew;
+    }
+
+    public void setMessagenew(String messagenew) {
+        this.messagenew = messagenew;
     }
 }

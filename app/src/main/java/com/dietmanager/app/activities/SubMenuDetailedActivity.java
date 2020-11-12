@@ -1,9 +1,13 @@
 package com.dietmanager.app.activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +24,7 @@ import com.dietmanager.app.helper.GlobalData;
 import com.dietmanager.app.models.food.FoodItem;
 import com.dietmanager.app.utils.Utils;
 
+import java.lang.reflect.Field;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,10 +33,13 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.dietmanager.app.build.configure.BuildConfigure.BASE_URL;
+
 public class SubMenuDetailedActivity extends AppCompatActivity {
 
     @BindView(R.id.tv_name)
     TextView tv_name;
+
     @BindView(R.id.tv_description)
     TextView tv_description;
     @BindView(R.id.img_food)
@@ -52,7 +60,7 @@ public class SubMenuDetailedActivity extends AppCompatActivity {
             tv_description.setText(foodItem.getDescription());
             if (foodItem.getAvatar()!=null)
                 Glide.with(this)
-                        .load(foodItem.getAvatar())
+                        .load(BASE_URL +foodItem.getAvatar())
                         .apply(new RequestOptions()
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .placeholder(R.drawable.ic_banner_1)
@@ -95,6 +103,41 @@ public class SubMenuDetailedActivity extends AppCompatActivity {
         final View dialogView = inflater.inflate(R.layout.layout_schedule_date, null);
         DatePicker datePicker = dialogView.findViewById(R.id.datePicker);
         TimePicker timePicker = dialogView.findViewById(R.id.timePicker);
+        TextView tv_date = dialogView.findViewById(R.id.tv_date);
+        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                Calendar myCalendar = Calendar.getInstance();
+                myCalendar.set(Calendar.YEAR, datePicker.getYear());
+                myCalendar.set(Calendar.MONTH, datePicker.getMonth());
+                myCalendar.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
+                myCalendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
+                myCalendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
+                String date = Utils.getDayAndTimeFormat(myCalendar.getTime());
+                tv_date.setText(date);
+            }
+        });
+
+      /*  try {
+            Field f[] = datePicker.getClass().getDeclaredFields();
+            for (Field field : f) {
+                if (field.getName().equals("mYearPicker")) {
+                    field.setAccessible(true);
+                    Object yearPicker = new Object();
+                    yearPicker = field.get(datePicker);
+                    ((View) yearPicker).setVisibility(View.GONE);
+                }
+            }
+        }
+        catch (SecurityException e) {
+            Log.d("ERROR", e.getMessage());
+        }
+        catch (IllegalArgumentException e) {
+            Log.d("ERROR", e.getMessage());
+        }
+        catch (IllegalAccessException e) {
+            Log.d("ERROR", e.getMessage());
+        }*/
         dialogView.findViewById(R.id.close_img).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,6 +145,29 @@ public class SubMenuDetailedActivity extends AppCompatActivity {
             }
         });
 
+
+        myCalendar.set(Calendar.YEAR, datePicker.getYear());
+        myCalendar.set(Calendar.MONTH, datePicker.getMonth());
+        myCalendar.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
+        myCalendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
+        myCalendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
+        String date = Utils.getDayAndTimeFormat(myCalendar.getTime());
+        tv_date.setText(date);
+
+        datePicker.init(datePicker.getYear(),  datePicker.getMonth(), datePicker.getDayOfMonth(), new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar myCalendar = Calendar.getInstance();
+                myCalendar.set(Calendar.YEAR, datePicker.getYear());
+                myCalendar.set(Calendar.MONTH, datePicker.getMonth());
+                myCalendar.set(Calendar.DAY_OF_MONTH, datePicker.getDayOfMonth());
+                myCalendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
+                myCalendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
+                String date = Utils.getDayAndTimeFormat(myCalendar.getTime());
+                tv_date.setText(date);
+            }
+
+        });
         dialogView.findViewById(R.id.btnDone).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,7 +186,6 @@ public class SubMenuDetailedActivity extends AppCompatActivity {
                 schedule_time = f.format(myCalendar.getTime());
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 schedule_date = sdf.format(myCalendar.getTime());
-                //setText(Utils.getDayAndTimeFormat(myCalendar.getTime()));
                 dialogBuilder.cancel();
                 GlobalData.schedule_date = schedule_date;
                 GlobalData.schedule_time = schedule_time;
