@@ -69,17 +69,16 @@
 
         </LinearLayout>
 
-        <ImageView
+        <Button
             android:id="@+id/edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
-            android:gravity="end|center_vertical"
+            android:gravity="center"
             android:padding="8dp"
             android:text="@string/edit"
             android:textColor="@color/colorAccent"
-            android:textSize="@dimen/text_small"
-            app:srcCompat="@drawable/ic_edit" />
+            android:textSize="@dimen/text_small" />
 
     </LinearLayout>
 

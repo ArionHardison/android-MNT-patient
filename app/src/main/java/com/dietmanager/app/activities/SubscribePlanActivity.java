@@ -163,7 +163,7 @@ public class SubscribePlanActivity extends AppCompatActivity implements Subscrib
     }
     private void postsubscribe() {
         HashMap<String, String> map = new HashMap<>();
-        map.put("plan_id", String.valueOf(SubscribtionListAdapter.checkedPosition));
+        map.put("plan_id", String.valueOf(SubscribtionListAdapter.selectedposition));
         map.put("dietitian_id", String.valueOf(dietitian.getId()));
         Call<Otp> postsubscribe = apiInterface.postsubscribe(map);
         postsubscribe.enqueue(new Callback<Otp>() {

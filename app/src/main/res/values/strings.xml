@@ -401,15 +401,15 @@
       <!--  <item>@drawable/ic_banner_4</item>-->
     </array>
     <string-array name="walk_through_title">
-        <item>@string/welcome_title_1</item>
-        <item>@string/welcome_title_2</item>
-        <item>@string/welcome_title_3</item>
+        <item>@string/fresh</item>
+        <item>@string/search</item>
+        <item>@string/bookmark</item>
       <!--  <item>@string/welcome_title_4</item>-->
     </string-array>
     <string-array name="walk_through_description">
-        <item>@string/welcome_description_1</item>
-        <item>@string/welcome_description_2</item>
-        <item>@string/welcome_description_3</item>
+        <item>@string/fresh_description</item>
+        <item>@string/search_description</item>
+        <item>@string/bookmark_description</item>
        <!-- <item>@string/welcome_description_4</item>-->
     </string-array>
     <string name="welcome_title_1">Find local kitchens</string>

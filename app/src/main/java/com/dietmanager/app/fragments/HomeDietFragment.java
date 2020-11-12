@@ -104,7 +104,7 @@ import static com.dietmanager.app.helper.GlobalData.selectedAddress;
 
 
 public class HomeDietFragment extends Fragment implements AdapterView.OnItemSelectedListener,
-        CuisineSelectFragment.OnSuccessListener, DaysAdapter.IDayListener,TimeCategoryAdapter.ITimeCategoryListener {
+        CuisineSelectFragment.OnSuccessListener, DaysAdapter.IDayListener,TimeCategoryAdapter.ITimeCategoryListener,FoodAdapter.IClickListener {
 
     @BindView(R.id.animation_line_image)
     ImageView animationLineImage;
@@ -307,7 +307,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
 
 
         //food Adapter
-        foodAdapter = new FoodAdapter(getActivity());
+        foodAdapter = new FoodAdapter(getActivity(),this);
         foodRv.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         foodRv.setHasFixedSize(true);
         foodRv.setAdapter(foodAdapter);
@@ -722,7 +722,11 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         getFood();
         skeletonScreen.show();
     }
-
+    @Override
+    public void onRefreshClicked(int day) {
+        getFood();
+        skeletonScreen.show();
+    }
     private  List<Date> getDates(String dateString1, String dateString2)
     {
         ArrayList<Date> dates = new ArrayList<Date>();
@@ -820,4 +824,6 @@ dateString2 = "2020-12-06 19:11:33";
 
         return weekDay;
     }
+
+
 }

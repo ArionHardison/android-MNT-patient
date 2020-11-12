@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -59,6 +61,7 @@ public class ChangeFoodActivity extends AppCompatActivity {
             rv_suifoods.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             rv_suifoods.setHasFixedSize(true);
             rv_suifoods.setAdapter(suitableAdapter);
+            rv_suifoods.setItemAnimator(new DefaultItemAnimator());
             currentItems = GlobalData.foodItemList;
             currentItems.remove(0);
             suitableAdapter.setList(currentItems);
