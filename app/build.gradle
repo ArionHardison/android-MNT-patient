@@ -111,5 +111,8 @@ dependencies {
     implementation 'com.facebook.android:facebook-login:5.5.0' // Facebook Login
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+
+    implementation 'devs.mulham.horizontalcalendar:horizontalcalendar:1.1.7'
+
 }
 apply plugin: 'com.google.gms.google-services'
