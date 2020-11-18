@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -49,6 +51,7 @@ import com.dietmanager.app.build.api.ApiClient;
 import com.dietmanager.app.build.api.ApiInterface;
 import com.dietmanager.app.exception.ServerError;
 import com.dietmanager.app.helper.ConnectionHelper;
+import com.dietmanager.app.helper.CustomDialog;
 import com.dietmanager.app.helper.GlobalData;
 import com.dietmanager.app.helper.SharedHelper;
 import com.dietmanager.app.models.Address;
@@ -172,6 +175,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
     ConnectionHelper connectionHelper;
     boolean mIsFromSignUp = false;
     CuisineSelectFragment mFragment;
+    CustomDialog customDialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -229,6 +233,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_diet, container, false);
         ButterKnife.bind(this, view);
+        customDialog = new CustomDialog(getContext());
         mIsFromSignUp = getArguments().getBoolean("isFromSignUp");
         if (mIsFromSignUp) {
             mFragment.show(getFragmentManager(), "CuisineSelectFragment");
@@ -475,10 +480,12 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
     }
 
     private void getFood() {
+        customDialog.show();
         Call<List<FoodItem>> call =apiInterface.getFood(selectedDay,selectedTimeCategory);
         call.enqueue(new Callback<List<FoodItem>>() {
             @Override
             public void onResponse(@NonNull Call<List<FoodItem>> call, @NonNull Response<List<FoodItem>> response) {
+                customDialog.dismiss();
                 if (response.isSuccessful()) {
                     foodItems.clear();
                     List<FoodItem> ItemList = response.body();
@@ -510,6 +517,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
 
             @Override
             public void onFailure(Call<List<FoodItem>> call, Throwable t) {
+                customDialog.dismiss();
                 Utils.displayMessage(getActivity(), getActivity(), getString(R.string.something_went_wrong));
             }
         });
@@ -567,6 +575,21 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         HomeActivity.updateNotificationCount(getActivity(), GlobalData.notificationCount);
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
                 new IntentFilter("location"));
+
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (connectionHelper.isConnectingToInternet()) {
+                    getTimeCategory();
+                    getFood();
+                    skeletonScreen.show();
+                } else {
+                    Utils.displayMessage(getActivity(), getActivity(), getString(R.string.oops_connect_your_internet));
+                }
+            }
+        }, 500);
+
        /* if (!GlobalData.addressHeader.equalsIgnoreCase("")) {
             errorLoadingLayout.setVisibility(View.GONE);
             locationAddressLayout.setVisibility(View.VISIBLE);

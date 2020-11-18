@@ -12,6 +12,7 @@ import com.dietmanager.app.models.Card;
 import com.dietmanager.app.models.ChangePassword;
 import com.dietmanager.app.models.ClearCart;
 import com.dietmanager.app.models.Cuisine;
+import com.dietmanager.app.models.CustomerAddress;
 import com.dietmanager.app.models.DisputeMessage;
 import com.dietmanager.app.models.Favorite;
 import com.dietmanager.app.models.FavoriteList;
@@ -139,6 +140,9 @@ public interface ApiInterface {
 
     @GET("api/user/address")
     Call<List<Address>> getAddresses();
+
+    @GET("api/user/customer/address")
+    Call<List<CustomerAddress>> getCustomerAddresses();
 
     @POST("api/user/address")
     Call<Address> saveAddress(@Body Address address,@Query("update") String update);

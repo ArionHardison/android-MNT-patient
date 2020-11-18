@@ -63,8 +63,8 @@ public class SubMenuDetailedActivity extends AppCompatActivity {
                         .load(BASE_URL +foodItem.getAvatar())
                         .apply(new RequestOptions()
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                .placeholder(R.drawable.ic_banner_1)
-                                .error(R.drawable.ic_banner_1))
+                                .placeholder(R.drawable.shimmer_bg)
+                                .error(R.drawable.shimmer_bg))
                         .into(img_food);
         }
 

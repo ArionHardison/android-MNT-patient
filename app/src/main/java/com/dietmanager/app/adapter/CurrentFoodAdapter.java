@@ -75,10 +75,7 @@ holder.cardItem.setOnClickListener(new View.OnClickListener() {
 
                 } else {
 
-
                 }
-
-
 
             }
         });

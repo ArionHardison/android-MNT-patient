@@ -19,8 +19,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-//import com.facebook.stetho.okhttp3.StethoInterceptor;
-
 
 /**
  * Created by tamil@appoets.com on 30-08-2017.

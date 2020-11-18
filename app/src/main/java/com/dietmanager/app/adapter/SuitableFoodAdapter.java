@@ -30,7 +30,7 @@ public class SuitableFoodAdapter extends RecyclerView.Adapter<SuitableFoodAdapte
 
     public SuitableFoodAdapter(Context context) {
         foodItems = new ArrayList<>();
-        this.context=context;
+        this.context = context;
     }
 
     public void setList(List<FoodItem> itemList) {
@@ -54,17 +54,17 @@ public class SuitableFoodAdapter extends RecyclerView.Adapter<SuitableFoodAdapte
     public void onBindViewHolder(@NonNull SuitableFoodAdapter.MyViewHolder holder, final int position) {
         FoodItem foodItem = foodItems.get(position);
         holder.tvFoodTitle.setText(String.valueOf(foodItem.getName()));
-        if (foodItem.getAvatar()!=null)
+        if (foodItem.getAvatar() != null)
             Glide.with(context).load(foodItem.getAvatar())
-                .apply(new RequestOptions().centerCrop().placeholder(R.drawable.shimmer_bg).error(R.drawable.shimmer_bg).dontAnimate()).into(holder.imgFood);
-holder.cardItem.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        GlobalData.selectedfood = foodItem;
-        context.startActivity(new Intent(context, SubMenuDetailedActivity.class));
+                    .apply(new RequestOptions().centerCrop().placeholder(R.drawable.shimmer_bg).error(R.drawable.shimmer_bg).dontAnimate()).into(holder.imgFood);
+        holder.cardItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GlobalData.selectedfood = foodItem;
+                context.startActivity(new Intent(context, SubMenuDetailedActivity.class));
 
-    }
-});
+            }
+        });
         holder.check_food.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
@@ -74,7 +74,6 @@ holder.cardItem.setOnClickListener(new View.OnClickListener() {
 
 
                 }
-
 
 
             }
@@ -88,7 +87,7 @@ holder.cardItem.setOnClickListener(new View.OnClickListener() {
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvFoodTitle,tv_proteins,tv_fat,tv_carb;
+        TextView tvFoodTitle, tv_proteins, tv_fat, tv_carb;
         CardView cardItem;
         ImageView imgFood;
         CheckBox check_food;
