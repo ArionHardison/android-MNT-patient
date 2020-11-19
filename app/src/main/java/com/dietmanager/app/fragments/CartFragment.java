@@ -712,23 +712,23 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
             case R.id.add_address_txt:
                 /**  If address is empty */
                 if (addAddressTxt.getText().toString().equalsIgnoreCase(getResources().getString(R.string.change_address))) {
-                    startActivityForResult(new Intent(getActivity(), SetDeliveryLocationActivity.class).putExtra("get_address", true), ADDRESS_SELECTION);
+                    startActivityForResult(new Intent(getActivity(), SetDeliveryLocationActivity.class).putExtra("get_address", true).putExtra("isCustomer_address", false), ADDRESS_SELECTION);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                 }
                 /**  If address is filled */
                 else if (addAddressTxt.getText().toString().equalsIgnoreCase(getResources().getString(R.string.add_address))) {
-                    startActivityForResult(new Intent(getActivity(), SaveDeliveryLocationActivity.class).putExtra("get_address", true), ADDRESS_SELECTION);
+                    startActivityForResult(new Intent(getActivity(), SaveDeliveryLocationActivity.class).putExtra("get_address", true).putExtra("isCustomer_address", false), ADDRESS_SELECTION);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                 }
                 break;
             case R.id.add_address_btn:
                 /**  If address is empty */
-                startActivityForResult(new Intent(getActivity(), SaveDeliveryLocationActivity.class).putExtra("get_address", true), ADDRESS_SELECTION);
+                startActivityForResult(new Intent(getActivity(), SaveDeliveryLocationActivity.class).putExtra("get_address", true).putExtra("isCustomer_address", false), ADDRESS_SELECTION);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                 break;
             case R.id.selected_address_btn:
                 /**  If address is filled */
-                startActivityForResult(new Intent(getActivity(), SetDeliveryLocationActivity.class).putExtra("get_address", true), ADDRESS_SELECTION);
+                startActivityForResult(new Intent(getActivity(), SetDeliveryLocationActivity.class).putExtra("get_address", true).putExtra("isCustomer_address", false), ADDRESS_SELECTION);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
 
                 break;

@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dietmanager.app.HomeActivity;
 import com.dietmanager.app.R;
 import com.dietmanager.app.adapter.IngredientAdapter;
 import com.dietmanager.app.build.api.ApiClient;
@@ -26,6 +27,7 @@ import com.dietmanager.app.helper.CustomDialog;
 import com.dietmanager.app.helper.GlobalData;
 import com.dietmanager.app.models.Address;
 import com.dietmanager.app.models.AddressList;
+import com.dietmanager.app.models.CAddress;
 import com.dietmanager.app.models.ChangePassword;
 import com.dietmanager.app.models.CustomerAddress;
 import com.dietmanager.app.models.food.FoodIngredient;
@@ -68,6 +70,7 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
     TextView addAddressTxt;
     @BindView(R.id.address_header)
     TextView addressHeader;
+    @BindView(R.id.address_detail)
     TextView addressDetail;
     @BindView(R.id.address_delivery_time)
     TextView addressDeliveryTime;
@@ -87,6 +90,8 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
     boolean isActivityResultCalled = false;
 
     int ADDRESS_SELECTION = 1;
+
+    List<AddressList> modelList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +115,7 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
 
         }
 
-        getCustomerAddresses();
+        //getCustomerAddresses();
         initializeAddressDetails();
 
         tv_itemnamme.setText( GlobalData.selectedfood.getName());
@@ -126,7 +131,7 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
                     for (int i = 0; i < ingredientAdapter.getSelected().size(); i++) {
                         stringBuilder.append(ingredientAdapter.getSelected().get(i).getIngredient().getName());
                         stringBuilder.append("\n");
-                        map.put("ingredient["+i+"]", ingredientAdapter.getSelected().get(i).getId().toString());
+                        map.put("ingredient["+i+"]", String.valueOf(ingredientAdapter.getSelected().get(i).getIngredient().getId()));
                         ingredienttotal= ingredienttotal + Double.valueOf(ingredientAdapter.getSelected().get(i).getIngredient().getPrice()).doubleValue();
                     }
 
@@ -134,9 +139,11 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
 
 
                     map.put("food_id",  String.valueOf(GlobalData.selectedfood.getId()));
-                    map.put("schedule_date", GlobalData.schedule_date);
-                    map.put("schedule_time", GlobalData.schedule_time);
+                    map.put("date", GlobalData.schedule_date+" "+GlobalData.schedule_time);
+                    //map.put("schedule_date", GlobalData.schedule_date);
+                    //map.put("schedule_time", GlobalData.schedule_time);
                     map.put("dietitian_id",  String.valueOf(GlobalData.selectedfood.getDietitian().getId()));
+                    map.put("delivery_address_id", "" + GlobalData.selectedAddress.getId());
                     map.put("payable", String.valueOf(ingredienttotal));
                     placeorder(map);
                 } else {
@@ -161,12 +168,12 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
             @Override
             public void onClick(View v) {
                 if (addAddressTxt.getText().toString().equalsIgnoreCase(getResources().getString(R.string.change_address))) {
-                    startActivityForResult(new Intent(context, SetDeliveryLocationActivity.class).putExtra("get_address", true), ADDRESS_SELECTION);
+                    startActivityForResult(new Intent(context, SetDeliveryLocationActivity.class).putExtra("get_address", true).putExtra("isCustomer_address", true), ADDRESS_SELECTION);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                 }
                 /**  If address is filled */
                 else if (addAddressTxt.getText().toString().equalsIgnoreCase(getResources().getString(R.string.add_address))) {
-                    startActivityForResult(new Intent(context, SaveDeliveryLocationActivity.class).putExtra("get_address", true), ADDRESS_SELECTION);
+                    startActivityForResult(new Intent(context, SaveDeliveryLocationActivity.class).putExtra("get_address", true).putExtra("isCustomer_address", true), ADDRESS_SELECTION);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                 }
             }
@@ -174,14 +181,14 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
         findViewById(R.id.add_address_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(context, SaveDeliveryLocationActivity.class).putExtra("get_address", true), ADDRESS_SELECTION);
+                startActivityForResult(new Intent(context, SaveDeliveryLocationActivity.class).putExtra("get_address", true).putExtra("isCustomer_address", true), ADDRESS_SELECTION);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
             }
         });
         findViewById(R.id.selected_address_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(context, SetDeliveryLocationActivity.class).putExtra("get_address", true), ADDRESS_SELECTION);
+                startActivityForResult(new Intent(context, SetDeliveryLocationActivity.class).putExtra("get_address", true).putExtra("isCustomer_address", true), ADDRESS_SELECTION);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
             }
         });
@@ -197,7 +204,12 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
                 customDialog.dismiss();
                 if (response.isSuccessful()) {
                     Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    finish();
+                    Intent intent = new Intent(context, HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("isFromSignUp", false);
+                    startActivity(intent);
+                    finishAffinity();
+                    //finish();
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
@@ -229,6 +241,9 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
                 addAddressTxt.setText(getString(R.string.change_address));
 //            addAddressBtn.setBackgroundResource(R.drawable.button_corner_bg_green);
 //            addAddressBtn.setText(getResources().getString(R.string.proceed_to_pay));
+            locationErrorLayout.setVisibility(View.GONE);
+            locationInfoLayout.setVisibility(View.VISIBLE);
+            layoutOrderType.setVisibility(View.GONE);
             addressHeader.setText(GlobalData.selectedAddress.getType());
             addressDetail.setText((selectedAddress.getBuilding() != null ? selectedAddress.getBuilding() + ", " : "") +
                     GlobalData.selectedAddress.getMapAddress());
@@ -308,16 +323,16 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
         }
     }
 
-    private void getCustomerAddresses() {
-        Call<List<CustomerAddress>> call = apiInterface.getCustomerAddresses();
-        call.enqueue(new Callback<List<CustomerAddress>>() {
+    /*private void getCustomerAddresses() {
+        Call<List<Address>> call = apiInterface.getCustomerAddresses();
+        call.enqueue(new Callback<List<Address>>() {
             @Override
-            public void onResponse(@NonNull Call<List<CustomerAddress>> call, @NonNull Response<List<CustomerAddress>> response) {
+            public void onResponse(@NonNull Call<List<Address>> call, @NonNull Response<List<Address>> response) {
                 if (response.isSuccessful()) {
                     modelList.clear();
                     animationLineCartAdd.setVisibility(View.GONE);
                     avdProgress.stop();
-                    AddressList model = new AddressList();
+                    CustomerAddress model = new CustomerAddress();
                     model.setHeader(getResources().getString(R.string.saved_addresses));
                     model.setAddresses(response.body());
                     GlobalData.profileModel.setAddresses(response.body());
@@ -329,10 +344,10 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<CustomerAddress>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<List<Address>> call, @NonNull Throwable t) {
 
             }
         });
-    }
+    }*/
 
 }

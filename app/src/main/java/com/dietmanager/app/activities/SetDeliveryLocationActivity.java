@@ -61,6 +61,7 @@ public class SetDeliveryLocationActivity extends AppCompatActivity {
     AnimatedVectorDrawableCompat avdProgress;
 
     public static boolean isAddressSelection = false;
+    public static boolean isCustomerAddress = false;
     public static boolean isHomePage = false;
     Activity activity;
 
@@ -78,6 +79,7 @@ public class SetDeliveryLocationActivity extends AppCompatActivity {
         Places.initialize(getApplicationContext(), getResources().getString(R.string.google_maps_key));
 
         isAddressSelection = getIntent().getBooleanExtra("get_address", false);
+        isCustomerAddress = getIntent().getBooleanExtra("isCustomer_address", false);
         isHomePage = getIntent().getBooleanExtra("home_page", false);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_back);
@@ -105,7 +107,12 @@ public class SetDeliveryLocationActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        getAddress();
+        if (isCustomerAddress){
+            getCustomerAddress();
+        }else {
+            getAddress();
+        }
+
     }
 
 
@@ -119,6 +126,33 @@ public class SetDeliveryLocationActivity extends AppCompatActivity {
 
     private void getAddress() {
         Call<List<Address>> call = apiInterface.getAddresses();
+        call.enqueue(new Callback<List<Address>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Address>> call, @NonNull Response<List<Address>> response) {
+                if (response.isSuccessful()) {
+                    modelList.clear();
+                    animationLineCartAdd.setVisibility(View.GONE);
+                    avdProgress.stop();
+                    AddressList model = new AddressList();
+                    model.setHeader(getResources().getString(R.string.saved_addresses));
+                    model.setAddresses(response.body());
+                    GlobalData.profileModel.setAddresses(response.body());
+                    modelList.add(model);
+                    modelListReference.clear();
+                    modelListReference.addAll(modelList);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Address>> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
+     private void getCustomerAddress() {
+        Call<List<Address>> call = apiInterface.getCustomerAddresses();
         call.enqueue(new Callback<List<Address>>() {
             @Override
             public void onResponse(@NonNull Call<List<Address>> call, @NonNull Response<List<Address>> response) {
@@ -176,7 +210,7 @@ public class SetDeliveryLocationActivity extends AppCompatActivity {
                 findPlace();
                 break;
             case R.id.current_location_ll:
-                startActivity(new Intent(SetDeliveryLocationActivity.this, SaveDeliveryLocationActivity.class).putExtra("skip_visible", isHomePage));
+                startActivity(new Intent(SetDeliveryLocationActivity.this, SaveDeliveryLocationActivity.class).putExtra("skip_visible", isHomePage).putExtra("isCustomer_address", isCustomerAddress));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                 break;
         }

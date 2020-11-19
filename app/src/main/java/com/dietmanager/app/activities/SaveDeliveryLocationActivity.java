@@ -152,6 +152,7 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
     Animation slide_down, slide_up;
     boolean isAddressSave = false;
+    boolean isCustomerAddress = false;
     boolean isSkipVisible = false;
     Context context;
     LatLng latlng;
@@ -182,6 +183,7 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                 R.anim.slide_up);
 
         isAddressSave = getIntent().getBooleanExtra("get_address", false);
+        isCustomerAddress = getIntent().getBooleanExtra("isCustomer_address", false);
         isSkipVisible = getIntent().getBooleanExtra("skip_visible", false);
         if (isSkipVisible)
             skipTxt.setVisibility(View.VISIBLE);
@@ -649,6 +651,52 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
         }
     }
 
+    private void saveCustomerAddress(String update) {
+        if (address != null && address.getMapAddress() != null && validate()) {
+            customDialog.show();
+            apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
+            Call<com.dietmanager.app.models.Address> call = apiInterface.saveCustomerAddress(address, update);
+            call.enqueue(new Callback<com.dietmanager.app.models.Address>() {
+                @Override
+                public void onResponse(@NonNull Call<com.dietmanager.app.models.Address> call, @NonNull Response<com.dietmanager.app.models.Address> response) {
+                    customDialog.dismiss();
+                    if (response.isSuccessful()) {
+                        if (isAddressSave) {
+                            //select the address data and set to address in Cart fargment page
+                            Intent returnIntent = new Intent();
+                            GlobalData.selectedAddress = response.body();
+                            GlobalData.addressList.getAddresses().add(response.body());
+                            setResult(Activity.RESULT_OK, returnIntent);
+                            finish();
+                        } else {
+                            GlobalData.selectedAddress = response.body();
+                            GlobalData.addressList.getAddresses().add(response.body());
+                            setResult(Activity.RESULT_OK);
+                            finish();
+                        }
+                    } else {
+                        if (response.code() == 500) {
+                            CommonUtils.showToast(SaveDeliveryLocationActivity.this, getString(R.string.something_went_wrong));
+                        } else {
+                            APIError error = new Gson().fromJson(response.errorBody().charStream(), APIError.class);
+                            if (error != null && !JavaUtils.isNullOrEmpty(error.getType())) {
+                                if (error.getType().get(0).equalsIgnoreCase("replace"))
+                                    showUpdateAddressAlert();
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<com.dietmanager.app.models.Address> call, @NonNull Throwable t) {
+                    Log.e(TAG, t.toString());
+                    customDialog.dismiss();
+                    Toast.makeText(SaveDeliveryLocationActivity.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    }
+
     private void showUpdateAddressAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.update_address);
@@ -657,7 +705,11 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                saveAddress("YES");
+                if (isCustomerAddress) {
+                    saveCustomerAddress("YES");
+                }else {
+                    saveAddress("YES");
+                }
             }
         });
         builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
@@ -671,6 +723,41 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
+    }
+
+    private void updateCustomerAddress() {
+        if (address.getType().equalsIgnoreCase("other")) {
+            address.setType(otherAddressHeaderEt.getText().toString());
+        }
+        if (address != null && address.getId() != null && validate()) {
+            customDialog.show();
+            apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
+            Call<com.dietmanager.app.models.Address> call = apiInterface.updateAddress(address.getId(), address);
+            call.enqueue(new Callback<com.dietmanager.app.models.Address>() {
+                @Override
+                public void onResponse(@NonNull Call<com.dietmanager.app.models.Address> call, @NonNull Response<com.dietmanager.app.models.Address> response) {
+                    customDialog.dismiss();
+                    if (response.isSuccessful()) {
+                        GlobalData.selectedAddress = response.body();
+                        finish();
+                    } else {
+                        APIError error = ErrorUtils.parseError(response);
+                        if (error != null) {
+                            if (error.getType() != null) {
+                                Toast.makeText(SaveDeliveryLocationActivity.this, error.getType().get(0), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<com.dietmanager.app.models.Address> call, @NonNull Throwable t) {
+                    Log.e(TAG, t.toString());
+                    customDialog.dismiss();
+                    Toast.makeText(SaveDeliveryLocationActivity.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
     private void updateAddress() {
@@ -793,10 +880,17 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                 if (address.getType().equalsIgnoreCase(""))
                     address.setType("other");
 
-                if (address.getId() != null)
-                    updateAddress();
-                else
-                    saveAddress("NO");
+                if (isCustomerAddress) {
+                    if (address.getId() != null)
+                        updateCustomerAddress();
+                    else
+                        saveCustomerAddress("NO");
+                }else {
+                    if (address.getId() != null)
+                        updateAddress();
+                    else
+                        saveAddress("NO");
+                }
                 break;
             case R.id.skip_txt:
                 address.setMapAddress(addressEdit.getText().toString());

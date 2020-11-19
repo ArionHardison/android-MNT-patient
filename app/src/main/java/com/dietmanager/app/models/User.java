@@ -82,6 +82,8 @@ public class User {
     @Expose
     private List<Address> addresses = null;
 
+    private List<CAddress> cAddresses = null;
+
     public String getCurrency() {
         return currency;
     }
@@ -236,6 +238,14 @@ public class User {
 
     public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
+    }
+
+    public List<CAddress> getCAddresses() {
+        return cAddresses;
+    }
+
+    public void setCAddresses(List<CAddress> cAddresses) {
+        this.cAddresses = cAddresses;
     }
 
     public List<Cart> getCart() {
