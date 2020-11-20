@@ -15,11 +15,14 @@ import android.widget.Toast;
 
 import com.dietmanager.app.HomeActivity;
 import com.dietmanager.app.R;
+import com.dietmanager.app.adapter.FoodsOrdersAdapter;
 import com.dietmanager.app.adapter.OrdersAdapter;
 import com.dietmanager.app.build.api.ApiClient;
 import com.dietmanager.app.build.api.ApiInterface;
 import com.dietmanager.app.helper.ConnectionHelper;
 import com.dietmanager.app.helper.CustomDialog;
+import com.dietmanager.app.models.FoodOrder;
+import com.dietmanager.app.models.FoodOrderModel;
 import com.dietmanager.app.models.Order;
 import com.dietmanager.app.models.OrderModel;
 import com.dietmanager.app.utils.Utils;
@@ -49,13 +52,14 @@ public class OrdersActivity extends AppCompatActivity {
     @BindView(R.id.error_layout)
     LinearLayout errorLayout;
 
-    private OrdersAdapter adapter;
+    //private OrdersAdapter adapter;
+    private FoodsOrdersAdapter adapter;
     Activity activity = OrdersActivity.this;
-    private List<OrderModel> modelListReference = new ArrayList<>();
+    private List<FoodOrderModel> modelListReference = new ArrayList<>();
 
     Context context;
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
-    List<OrderModel> modelList = new ArrayList<>();
+    List<FoodOrderModel> modelList = new ArrayList<>();
     ConnectionHelper connectionHelper;
     CustomDialog customDialog;
 
@@ -82,12 +86,13 @@ public class OrdersActivity extends AppCompatActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         ordersRv.setLayoutManager(manager);
         modelListReference.clear();
-        adapter = new OrdersAdapter(this, activity, modelListReference);
+//        adapter = new OrdersAdapter(this, activity, modelListReference);
+        adapter = new FoodsOrdersAdapter(this, activity, modelListReference);
         ordersRv.setAdapter(adapter);
         ordersRv.setHasFixedSize(false);
     }
 
-    private void getPastOrders() {
+    /*private void getPastOrders() {
         Call<List<Order>> call = apiInterface.getPastOders();
         call.enqueue(new Callback<List<Order>>() {
             @Override
@@ -129,9 +134,9 @@ public class OrdersActivity extends AppCompatActivity {
                 Toast.makeText(OrdersActivity.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }*/
 
-    private void getOngoingOrders() {
+    /*private void getOngoingOrders() {
         Call<List<Order>> call = apiInterface.getOngoingOrders();
         call.enqueue(new Callback<List<Order>>() {
             @Override
@@ -171,6 +176,52 @@ public class OrdersActivity extends AppCompatActivity {
                 customDialog.dismiss();
             }
         });
+    }*/
+
+    private void getOngoingFoodOrders() {
+        Call<List<FoodOrder>> call = apiInterface.getOngoingFoodOrders();
+        call.enqueue(new Callback<List<FoodOrder>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<FoodOrder>> call, @NonNull Response<List<FoodOrder>> response) {
+                if (response.isSuccessful()) {
+                    onGoingOrderList.clear();
+                    modelListReference.clear();
+                    onGoingOrderList = response.body();
+                    /*Collections.sort(onGoingOrderList, new Comparator<Order>() {
+                        @Override
+                        public int compare(Order lhs, Order rhs) {
+                            return rhs.getCreatedAt().compareTo(lhs.getCreatedAt());
+                        }
+                    });*/
+                    //Collections.sort(onGoingOrderList);
+                    modelList.clear();
+                    FoodOrderModel model = new FoodOrderModel();
+                    model.setHeader("Current Orders");
+                    model.setOrders(onGoingOrderList);
+                    modelList.add(model);
+                    modelListReference.addAll(modelList);
+                    adapter.notifyDataSetChanged();
+                    customDialog.dismiss();
+//                    getPastOrders();
+                } else {
+//                    getPastOrders();
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
+                    }
+                    customDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<FoodOrder>> call, @NonNull Throwable t) {
+                Toast.makeText(OrdersActivity.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
+//                getPastOrders();
+                customDialog.dismiss();
+            }
+        });
     }
 
     @Override
@@ -181,7 +232,8 @@ public class OrdersActivity extends AppCompatActivity {
         //Get Ongoing Order list
         if (connectionHelper.isConnectingToInternet()) {
             customDialog.show();
-            getOngoingOrders();
+            //getOngoingOrders();
+            getOngoingFoodOrders();
         } else {
             Utils.displayMessage(activity, context, getString(R.string.oops_connect_your_internet));
         }

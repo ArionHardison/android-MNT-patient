@@ -11,6 +11,7 @@ import com.dietmanager.app.models.CartAddon;
 import com.dietmanager.app.models.Category;
 import com.dietmanager.app.models.Cuisine;
 import com.dietmanager.app.models.DisputeMessage;
+import com.dietmanager.app.models.FoodOrder;
 import com.dietmanager.app.models.Order;
 import com.dietmanager.app.models.Otp;
 import com.dietmanager.app.models.Product;
@@ -56,6 +57,7 @@ public class GlobalData {
     public static User profileModel = null;
     public static Address selectedAddress = null;
     public static Order isSelectedOrder = null;
+    public static FoodOrder isSelectedFoodOrder = null;
     public static Product isSelectedProduct = null;
     public static Cart isSelctedCart = null;
     public static List<CartAddon> cartAddons = null;
@@ -70,13 +72,14 @@ public class GlobalData {
     public static List<Shop> shopList;
     public static List<Cuisine> cuisineList;
     public static List<Category> categoryList = null;
-    public static List<Order> onGoingOrderList;
+    //public static List<Order> onGoingOrderList;
+    public static List<FoodOrder> onGoingOrderList;
     public static List<DisputeMessage> disputeMessageList;
     public static List<Order> pastOrderList;
     public static AddressList addressList = null;
-    public static List<String> ORDER_STATUS = Arrays.asList("ORDERED", "RECEIVED", "ASSIGNED",
+    public static List<String> ORDER_STATUS = Arrays.asList("ORDERED", "ASSIGNED", "RECEIVED",
             "PROCESSING", "REACHED", "PICKEDUP", "ARRIVED","SCHEDULED","PICKUP_USER","READY",
-            "COMPLETED","CANCELLED","'SEARCHING'");
+            "COMPLETED","CANCELLED","'SEARCHING'","'PREPARED'");
     public static Shop selectedShop;
     public static DisputeMessage isSelectedDispute;
 

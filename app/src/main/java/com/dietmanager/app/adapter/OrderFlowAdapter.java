@@ -17,6 +17,7 @@ import com.dietmanager.app.models.OrderFlow;
 
 import java.util.List;
 
+import static com.dietmanager.app.helper.GlobalData.isSelectedFoodOrder;
 import static com.dietmanager.app.helper.GlobalData.isSelectedOrder;
 
 /**
@@ -60,10 +61,10 @@ public class OrderFlowAdapter extends RecyclerView.Adapter<OrderFlowAdapter.MyVi
         holder.statusTitle.setText(orderFlow.statusTitle);
         holder.statusDescription.setText(orderFlow.statusDescription);
 //        holder.statusImage.setImageResource(orderFlow.statusImage);
-        if (orderFlow.status.contains(isSelectedOrder.getStatus())) {
+        if (orderFlow.status.contains(isSelectedFoodOrder.getStatus())) {
             holder.statusImage.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_dot_green));
             holder.statusTitle.setTextColor(ContextCompat.getColor(context, R.color.colorGreen));
-            if (isSelectedOrder.getStatus().equals(GlobalData.ORDER_STATUS.get(GlobalData.ORDER_STATUS.size() - 3))) {
+            if (isSelectedFoodOrder.getStatus().equals(GlobalData.ORDER_STATUS.get(GlobalData.ORDER_STATUS.size() - 3))) {
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -78,7 +79,7 @@ public class OrderFlowAdapter extends RecyclerView.Adapter<OrderFlowAdapter.MyVi
                 }, 5000);
 
             }
-            if (isSelectedOrder.getStatus().equals(GlobalData.ORDER_STATUS.get(0))) {
+            if (isSelectedFoodOrder.getStatus().equals(GlobalData.ORDER_STATUS.get(0))) {
                 CurrentOrderDetailActivity.orderCancelTxt.setVisibility(View.VISIBLE);
             } else {
                 CurrentOrderDetailActivity.orderCancelTxt.setVisibility(View.GONE);
@@ -91,7 +92,7 @@ public class OrderFlowAdapter extends RecyclerView.Adapter<OrderFlowAdapter.MyVi
         if (list.size() == position + 1)
             holder.viewLine.setVisibility(View.GONE);
         else
-            holder.viewLine.setVisibility(View.INVISIBLE);
+            holder.viewLine.setVisibility(View.VISIBLE);
     }
 
     @Override

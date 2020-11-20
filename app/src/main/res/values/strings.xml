@@ -121,16 +121,22 @@
     <string name="order_delivered_new">Arrived</string>
     <string name="order_cancelled_new">Order Cancelled</string>
 
-    <string name="pickup_order_received">Order Received</string>
+    <string name="pickup_order_received">Order Placed</string>
     <string name="pickup_order_accepted">Order Accepted</string>
+    <string name="order_accepted_arriving">Chef Arriving</string>
+    <string name="order_accepted_arrived">Chef Arrived</string>
     <string name="pickup_order_processed_new">Being Prepared</string>
+    <string name="pickup_order_processed">Your food Prepared</string>
     <string name="pickup_order_pickedup_new">Ready for Pickup</string>
     <string name="pickup_order_completed">Completed</string>
 
-    <string name="pickup_description_1">Your order has been received</string>
-    <string name="pickup_description_2">Your order has been confirmed by kitchen.</string>
-    <string name="pickup_description_3">Your order is being prepared by kitchen.</string>
+    <string name="pickup_description_1">Your order has been Placed</string>
+    <string name="pickup_description_2">Your order has been confirmed.</string>
+    <string name="arrived_description_2">Your Chef is on the way to your location.</string>
+    <string name="pickup_description_3">Your order is being prepared in your kitchen.</string>
+    <string name="arrived_description_3">Your Chef is Arrived to your location.</string>
     <string name="pickup_description_4">Your order is ready for pickup by delivery boy.</string>
+    <string name="prepared_description_4">Your order is ready to serve.</string>
     <string name="pickup_description_5">Your order has been successfully completed</string>
 
     <string name="delivery_order_received">Order Received</string>

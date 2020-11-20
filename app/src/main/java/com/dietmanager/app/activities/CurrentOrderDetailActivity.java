@@ -48,6 +48,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.dietmanager.app.models.FoodOrder;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -106,6 +107,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.dietmanager.app.helper.GlobalData.ORDER_STATUS;
+import static com.dietmanager.app.helper.GlobalData.isSelectedFoodOrder;
 import static com.dietmanager.app.helper.GlobalData.isSelectedOrder;
 
 public class CurrentOrderDetailActivity extends BaseActivity implements OnMapReadyCallback, LocationListener,
@@ -120,18 +122,18 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
     Toolbar toolbar;
     @BindView(R.id.order_otp)
     TextView orderOtp;
-    @BindView(R.id.order_eta)
-    TextView order_eta;
-    @BindView(R.id.transporter_image)
-    CircleImageView transporter_image;
-    @BindView(R.id.transporter_call)
-    ImageView transporter_call;
-    @BindView(R.id.transporter_details)
+    /*@BindView(R.id.order_eta)
+    TextView order_eta;*/
+    /*@BindView(R.id.transporter_image)
+    CircleImageView transporter_image;*/
+    /*@BindView(R.id.transporter_call)
+    ImageView transporter_call;*/
+    /*@BindView(R.id.transporter_details)
     LinearLayout transporter_details;
     @BindView(R.id.transporter_name)
-    TextView transporterName;
-    @BindView(R.id.call_transporter)
-    Button callTransporter;
+    TextView transporterName;*/
+    /*@BindView(R.id.call_transporter)
+    Button callTransporter;*/
     @BindView(R.id.order_status_txt)
     TextView orderStatusTxt;
     @BindView(R.id.order_succeess_image)
@@ -142,13 +144,13 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
     TextView orderIdTxt2;
     @BindView(R.id.order_placed_time)
     TextView orderPlacedTime;
-    @BindView(R.id.tvShopAddress)
-    TextView tvShopAddress;
+    /*@BindView(R.id.tvShopAddress)
+    TextView tvShopAddress;*/
 
     Fragment orderFullViewFragment;
     FragmentManager fragmentManager;
     double priceAmount = 0;
-    int itemQuantity = 0;
+    int itemQuantity = 1;
     String currency = "";
     @BindView(R.id.order_flow_rv)
     RecyclerView orderFlowRv;
@@ -187,7 +189,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_current_order_detail);
+        setContentView(R.layout.activity_current_order_detail2);
         ButterKnife.bind(this);
         context = CurrentOrderDetailActivity.this;
 
@@ -214,19 +216,19 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
             }
         });
 
-        callTransporter.setOnClickListener(new View.OnClickListener() {
+        /*callTransporter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goToCall();
             }
-        });
+        });*/
 
-        transporter_call.setOnClickListener(new View.OnClickListener() {
+        /*transporter_call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goToCall();
             }
-        });
+        });*/
 
         handler = new Handler();
         orderStatusRunnable = new Runnable() {
@@ -236,9 +238,9 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                 } else if (orderId != -1) {
                     getParticularOrders(orderId);
                 } else {
-//                    if (isSelectedOrder!=null) {
-                    getParticularOrders(isSelectedOrder.getId());
-//                    }
+                    if (isSelectedFoodOrder!=null) {
+                    getParticularOrders(isSelectedFoodOrder.getId());
+                    }
                 }
                 handler.postDelayed(this, 5000);
             }
@@ -266,20 +268,20 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
             }
         });
 
-        if (GlobalData.isSelectedOrder != null) {
+        if (GlobalData.isSelectedFoodOrder != null) {
             updateOrderDetail();
-/*            Order order = GlobalData.isSelectedOrder;
+            FoodOrder order = GlobalData.isSelectedFoodOrder;
             orderIdTxt.setText("ORDER #000" + order.getId().toString());
-            itemQuantity = order.getInvoice().getQuantity();
-            priceAmount = order.getInvoice().getPayable();
-            currency = order.getItems().get(0).getProduct().getPrices().getCurrency();
+//            itemQuantity = order.getInvoice().getQuantity();
+            priceAmount = order.getPayable();
+            currency = GlobalData.currencySymbol;
             if (itemQuantity == 1)
                 orderItemTxt.setText(String.valueOf(itemQuantity) + " Item, " + currency + String.valueOf(priceAmount));
             else
                 orderItemTxt.setText(String.valueOf(itemQuantity) + " Items, " + currency + String.valueOf(priceAmount));
 
             orderIdTxt2.setText("#000" + order.getId().toString());
-            orderOtp.setText(" : " + isSelectedOrder.getOrderOtp());
+            //orderOtp.setText(" : " + isSelectedFoodOrder.getOrderOtp());
             orderPlacedTime.setText(getTimeFromString(order.getCreatedAt()));
 
             //set Fragment
@@ -298,26 +300,11 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                 buildGoogleApiClient();
             }
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-            mapFragment.getMapAsync(this);*/
+            mapFragment.getMapAsync(this);
         }
     }
 
     private void goToCall() {
-      /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-                if (TransporterNumber != null && !TransporterNumber.isEmpty()) {
-                    Intent intent = new Intent(Intent.ACTION_CALL);
-                    intent.setData(Uri.parse("tel:" + TransporterNumber));
-                    startActivity(intent);
-                }
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
-            }
-        } else if (TransporterNumber != null && !TransporterNumber.isEmpty()) {
-            Intent intent = new Intent(Intent.ACTION_CALL);
-            intent.setData(Uri.parse("tel:" + TransporterNumber));
-            startActivity(intent);
-        }*/
         if (TransporterNumber != null && !TransporterNumber.isEmpty()) {
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel:" + TransporterNumber));
@@ -329,20 +316,14 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
 
     public void updateOrderDetail() {
         List<OrderFlow> orderFlowList = new ArrayList<>();
-        if (GlobalData.isSelectedOrder != null) {
-            if (GlobalData.isSelectedOrder.getPickUpRestaurant() == 0) {
-                orderFlowList.add(new OrderFlow(getString(R.string.delivery_order_received), getString(R.string.delivery_description_1), R.drawable.ic_order_placed, ORDER_STATUS.get(0)));
-                orderFlowList.add(new OrderFlow(getString(R.string.delivery_order_accepted), getString(R.string.delivery_description_2), R.drawable.ic_order_confirmed, ORDER_STATUS.get(1)));
-                orderFlowList.add(new OrderFlow(getString(R.string.delivery_order_processed_new), getString(R.string.delivery_description_3), R.drawable.ic_order_processed, ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4)));
-                orderFlowList.add(new OrderFlow(getString(R.string.delivery_order_pickedup_new), getString(R.string.delivery_description_4), R.drawable.ic_order_picked_up, ORDER_STATUS.get(5) + ORDER_STATUS.get(6)));
-                orderFlowList.add(new OrderFlow(getString(R.string.delivery_order_arrived), getString(R.string.delivery_description_5), R.drawable.ic_order_delivered, ORDER_STATUS.get(7) + ORDER_STATUS.get(10)));
-            } else {
+        if (GlobalData.isSelectedFoodOrder != null) {
                 orderFlowList.add(new OrderFlow(getString(R.string.pickup_order_received), getString(R.string.pickup_description_1), R.drawable.ic_order_placed, ORDER_STATUS.get(0)));
                 orderFlowList.add(new OrderFlow(getString(R.string.pickup_order_accepted), getString(R.string.pickup_description_2), R.drawable.ic_order_confirmed, ORDER_STATUS.get(1)));
-                orderFlowList.add(new OrderFlow(getString(R.string.pickup_order_processed_new), getString(R.string.pickup_description_3), R.drawable.ic_order_processed, ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4) + ORDER_STATUS.get(7) + ORDER_STATUS.get(8)));
-                orderFlowList.add(new OrderFlow(getString(R.string.pickup_order_pickedup_new), getString(R.string.pickup_description_4), R.drawable.ic_order_picked_up, ORDER_STATUS.get(5) + ORDER_STATUS.get(6) + ORDER_STATUS.get(9)));
+                orderFlowList.add(new OrderFlow(getString(R.string.order_accepted_arriving), getString(R.string.arrived_description_2), R.drawable.ic_order_confirmed, ORDER_STATUS.get(5)));
+                orderFlowList.add(new OrderFlow(getString(R.string.order_accepted_arrived), getString(R.string.arrived_description_3), R.drawable.ic_order_processed, ORDER_STATUS.get(6) /*+ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4) + ORDER_STATUS.get(7) + ORDER_STATUS.get(8)*/));
+                orderFlowList.add(new OrderFlow(getString(R.string.pickup_order_processed_new), getString(R.string.pickup_description_3), R.drawable.ic_order_processed, ORDER_STATUS.get(3) /*+ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4) + ORDER_STATUS.get(7) + ORDER_STATUS.get(8)*/));
+                orderFlowList.add(new OrderFlow(getString(R.string.pickup_order_processed), getString(R.string.prepared_description_4), R.drawable.ic_order_picked_up, ORDER_STATUS.get(13) /*+ ORDER_STATUS.get(6) + ORDER_STATUS.get(9)*/));
                 orderFlowList.add(new OrderFlow(getString(R.string.pickup_order_completed), getString(R.string.pickup_description_5), R.drawable.ic_order_delivered, ORDER_STATUS.get(7) + ORDER_STATUS.get(10)));
-            }
         }
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -371,12 +352,12 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
             if (isSelectedOrder.getOrderOtp() != null)
                 orderOtp.setText(getString(R.string.otp) + " : " + isSelectedOrder.getOrderOtp());
             orderPlacedTime.setText(getTimeFromString(order.getCreatedAt()));
-            if (order.getPickUpRestaurant() == 1) {
+            /*if (order.getPickUpRestaurant() == 1) {
                 tvShopAddress.setVisibility(View.VISIBLE);
                 tvShopAddress.setText((order.getShop().getMapsAddress() != null ? order.getShop().getMapsAddress() : ""));
             } else {
                 tvShopAddress.setVisibility(View.GONE);
-            }
+            }*/
 
             //set Fragment
             orderFullViewFragment = new OrderViewFragment();
@@ -432,10 +413,10 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
     @Override
     public void onLocationChanged(Location location) {
         currentLocation = location;
-        if (isSelectedOrder.getPickUpRestaurant() == 1) {
+//        if (isSelectedOrder.getPickUpRestaurant() == 1) {
             if (currentLocation != null) {
                 //Map
-                String url = getUrl(currentLocation.getLatitude(), currentLocation.getLongitude()
+                /*String url = getUrl(currentLocation.getLatitude(), currentLocation.getLongitude()
                         , isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
                 FetchUrl fetchUrl = new FetchUrl();
                 fetchUrl.execute(url);
@@ -448,9 +429,20 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_marker));
                 destinationMarker = mMap.addMarker(destMarker);
                 CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(destLatLng, 14);
+                mMap.moveCamera(cu);*/
+
+                destLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+                if (destinationMarker != null)
+                    destinationMarker.remove();
+                MarkerOptions destMarker = new MarkerOptions()
+                        .position(destLatLng).title("Destination").draggable(true)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_marker));
+                destinationMarker = mMap.addMarker(destMarker);
+                CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(destLatLng, 14);
                 mMap.moveCamera(cu);
+
             }
-        }
+//        }
     }
 
     @Override
@@ -509,7 +501,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
             mMap.getUiSettings().setRotateGesturesEnabled(false);
             mMap.getUiSettings().setTiltGesturesEnabled(false);
 
-            if (isSelectedOrder.getPickUpRestaurant() == 0) {
+            /*if (isSelectedOrder.getPickUpRestaurant() == 0) {
                 if (isSelectedOrder.getAddress() != null) {
                     //Map
                     String url = getUrl(isSelectedOrder.getAddress().getLatitude(), isSelectedOrder.getAddress().getLongitude()
@@ -517,15 +509,16 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                     FetchUrl fetchUrl = new FetchUrl();
                     fetchUrl.execute(url);
                 }
-            } else {
-                if (currentLocation != null) {
+            } else {*/
+                /*if (currentLocation != null) {
                     //Map
                     String url = getUrl(currentLocation.getLatitude(), currentLocation.getLongitude()
                             , isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
                     FetchUrl fetchUrl = new FetchUrl();
                     fetchUrl.execute(url);
-                } else {
-                    destLatLng = new LatLng(isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
+                } else {*/
+            if (currentLocation != null) {
+                    destLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                     if (destinationMarker != null)
                         destinationMarker.remove();
                     MarkerOptions destMarker = new MarkerOptions()
@@ -535,7 +528,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                     CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(destLatLng, 14);
                     mMap.moveCamera(cu);
                 }
-            }
+//            }
         }
     }
 
@@ -658,7 +651,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                             LatLng position = new LatLng(lat, lng);
                             points.add(position);
                         }
-                        if (isSelectedOrder.getAddress() != null) {
+                       /* if (isSelectedOrder.getAddress() != null) {
                             LatLng location = new LatLng(isSelectedOrder.getAddress().getLatitude(), isSelectedOrder.getAddress().getLongitude());
                             MarkerOptions markerOptions = new MarkerOptions()
                                     .position(location).title("Source").draggable(true)
@@ -714,7 +707,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                             lineOptions.width(5);
                             lineOptions.color(Color.BLACK);
                             Log.d("onPostExecute", "onPostExecute lineoptions decoded");
-                        }
+                        }*/
                     }
                 } else {
                     mMap.clear();
@@ -827,25 +820,25 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
     }
 
     private void getParticularOrders(int order_id) {
-        Call<Order> call = apiInterface.getParticularOrders(order_id);
-        call.enqueue(new Callback<Order>() {
+        Call<FoodOrder> call = apiInterface.getParticularOrders(order_id);
+        call.enqueue(new Callback<FoodOrder>() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(@NonNull Call<Order> call, @NonNull Response<Order> response) {
+            public void onResponse(@NonNull Call<FoodOrder> call, @NonNull Response<FoodOrder> response) {
                 if (response.isSuccessful()) {
-                    if (GlobalData.isSelectedOrder == null) {
-                        isSelectedOrder = response.body();
+                    if (GlobalData.isSelectedFoodOrder == null) {
+                        isSelectedFoodOrder = response.body();
                         updateOrderDetail();
-                    } else isSelectedOrder = response.body();
-                    Log.i("isSelectedOrder : ", isSelectedOrder.toString());
+                    } else isSelectedFoodOrder = response.body();
+                    Log.i("isSelectedFoodOrder : ", isSelectedFoodOrder.toString());
 
 //                    order_eta.setText(" : " + isSelectedOrder.getEta() + getResources().getString(R.string.order_minits));
 
-                    if (isSelectedOrder.getStatus().equalsIgnoreCase("received")) {
+                    /*if (isSelectedOrder.getStatus().equalsIgnoreCase("received")) {
                         order_eta.setText(getString(R.string.eta) + " : " + isSelectedOrder.getOrderReadyTime() + " " + getResources().getString(R.string.order_minits));
                     } else {
                         order_eta.setText(getString(R.string.eta) + " : " + isSelectedOrder.getShop().getEstimatedDeliveryTime() + " " + getResources().getString(R.string.order_minits));
-                    }
+                    }*/
 
                     /*if (isSelectedOrder.getEta() != null) {
                         order_eta.setText(getString(R.string.eta) + " : " + isSelectedOrder.getEta() + " " + getResources().getString(R.string.order_minits));
@@ -857,7 +850,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                         }
                     }*/
 
-                    if (isSelectedOrder.getTransporter() != null && context != null) {
+                    /*if (isSelectedOrder.getTransporter() != null && context != null) {
                         transporter_details.setVisibility(View.VISIBLE);
                         Glide.with(context)
                                 .load(isSelectedOrder.getTransporter().getAvatar())
@@ -870,17 +863,17 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                         TransporterNumber = isSelectedOrder.getTransporter().getPhone();
                     } else {
                         transporter_details.setVisibility(View.GONE);
+                    }*/
+                    if (isSelectedFoodOrder.getStatus().equals("PICKEDUP") ||
+                            isSelectedFoodOrder.getStatus().equals("ARRIVED") || isSelectedFoodOrder.getStatus().equals("ASSIGNED")) {
+                        liveNavigation(isSelectedFoodOrder.getChef().getLatitude(),
+                                isSelectedFoodOrder.getChef().getLongitude());
                     }
-                    if (isSelectedOrder.getStatus().equals("PICKEDUP") ||
-                            isSelectedOrder.getStatus().equals("ARRIVED") || isSelectedOrder.getStatus().equals("ASSIGNED")) {
-                        liveNavigation(isSelectedOrder.getTransporter().getLatitude(),
-                                isSelectedOrder.getTransporter().getLongitude());
-                    }
-                    if (!isSelectedOrder.getStatus().equalsIgnoreCase(previousStatus)) {
-                        previousStatus = isSelectedOrder.getStatus();
+                    if (!isSelectedFoodOrder.getStatus().equalsIgnoreCase(previousStatus)) {
+                        previousStatus = isSelectedFoodOrder.getStatus();
                         adapter.notifyDataSetChanged();
                     }
-                    if (isSelectedOrder.getStatus().equals("CANCELLED")) {
+                    if (isSelectedFoodOrder.getStatus().equals("CANCELLED")) {
                         orderStatusLayout.setVisibility(View.VISIBLE);
                         orderFlowRv.setVisibility(View.GONE);
                         orderStatusTxt.setText(getResources().getString(R.string.order_cancelled));
@@ -905,7 +898,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
             }
 
             @Override
-            public void onFailure(@NonNull Call<Order> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<FoodOrder> call, @NonNull Throwable t) {
 
             }
         });
@@ -1118,9 +1111,10 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
             feedbackSubmit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (GlobalData.isSelectedOrder != null && GlobalData.isSelectedOrder.getId() != null) {
+                    //if (GlobalData.isSelectedOrder != null && GlobalData.isSelectedOrder.getId() != null) {
+                    if (isSelectedFoodOrder != null && GlobalData.isSelectedFoodOrder.getId() != null) {
                         HashMap<String, String> map = new HashMap<>();
-                        map.put("order_id", String.valueOf(GlobalData.isSelectedOrder.getId()));
+                        map.put("order_id", String.valueOf(GlobalData.isSelectedFoodOrder.getId()));
                         map.put("rating", String.valueOf(rating));
                         map.put("comment", comment.getText().toString());
                         map.put("type", Constants.SHOP_RATING);

@@ -17,6 +17,7 @@ import com.dietmanager.app.models.CustomerAddress;
 import com.dietmanager.app.models.DisputeMessage;
 import com.dietmanager.app.models.Favorite;
 import com.dietmanager.app.models.FavoriteList;
+import com.dietmanager.app.models.FoodOrder;
 import com.dietmanager.app.models.ForgotPassword;
 import com.dietmanager.app.models.LoginModel;
 import com.dietmanager.app.models.Message;
@@ -174,8 +175,14 @@ public interface ApiInterface {
     @GET("api/user/ongoing/order")
     Call<List<Order>> getOngoingOrders();
 
-    @GET("api/user/order/{id}")
-    Call<Order> getParticularOrders(@Path("id") int id);
+    @GET("api/user/requests")
+    Call<List<FoodOrder>> getOngoingFoodOrders();
+
+    @GET("api/user/request/{id}")
+    Call<FoodOrder> getParticularOrders(@Path("id") int id);
+
+   /* @GET("api/user/order/{id}")
+    Call<Order> getParticularOrders(@Path("id") int id);*/
 
     @GET("api/user/order")
     Call<List<Order>> getPastOders();

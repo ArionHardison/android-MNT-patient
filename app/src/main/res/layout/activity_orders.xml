@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
         android:minHeight="?attr/actionBarSize"
-        app:elevation="4dp">
+        android:elevation="@dimen/_10sdp">
 
         <TextView
             android:layout_width="match_parent"
