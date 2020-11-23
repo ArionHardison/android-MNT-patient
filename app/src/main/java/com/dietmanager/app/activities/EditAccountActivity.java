@@ -55,6 +55,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.dietmanager.app.build.configure.BuildConfigure.BASE_URL;
+
 public class EditAccountActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
@@ -120,7 +122,7 @@ public class EditAccountActivity extends AppCompatActivity {
             phone.setText(GlobalData.profileModel.getPhone());
             System.out.println(GlobalData.profileModel.getAvatar());
             Glide.with(context)
-                    .load(GlobalData.profileModel.getAvatar())
+                    .load(BASE_URL+GlobalData.profileModel.getAvatar())
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.man)
@@ -242,7 +244,7 @@ public class EditAccountActivity extends AppCompatActivity {
             cursor.close();
             // Set the Image in ImageView after decoding the String
             Glide.with(this)
-                    .load(imgDecodableString)
+                    .load(BASE_URL+imgDecodableString)
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.man)

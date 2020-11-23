@@ -47,7 +47,7 @@
                     android:id="@+id/food_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_60sdp"
+                    android:layout_marginBottom="@dimen/_150sdp"
                     android:nestedScrollingEnabled="false"
                     tools:listitem="@layout/ingredients_item_list"
                     android:orientation="vertical" />

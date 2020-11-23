@@ -49,12 +49,15 @@ public class ChangeFoodActivity extends AppCompatActivity {
         });
 
         if (GlobalData.foodItemList!=null&& GlobalData.foodItemList.size()>0){
+
+
+
             //currentfood Adapter
             currentAdapter = new CurrentFoodAdapter(this);
             rv_curfoods.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             rv_curfoods.setHasFixedSize(true);
             rv_curfoods.setAdapter(currentAdapter);
-            currentAdapter.setList(GlobalData.foodItemList.get(0));
+            currentAdapter.setList(GlobalData.selectedfood);
 
             //suitablefood Adapter
             suitableAdapter = new SuitableFoodAdapter(this);
@@ -63,7 +66,8 @@ public class ChangeFoodActivity extends AppCompatActivity {
             rv_suifoods.setAdapter(suitableAdapter);
             rv_suifoods.setItemAnimator(new DefaultItemAnimator());
             currentItems = GlobalData.foodItemList;
-            currentItems.remove(0);
+            currentItems.remove(GlobalData.selectedfood);
+//            currentItems.remove(0);
             suitableAdapter.setList(currentItems);
 
 

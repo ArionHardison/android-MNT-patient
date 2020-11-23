@@ -6,8 +6,8 @@
     tools:context="com.dietmanager.app.activities.SplashActivity">
 
     <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_150sdp"
         android:layout_centerInParent="true"
         android:contentDescription="@string/image_view"
         android:scaleType="centerInside"

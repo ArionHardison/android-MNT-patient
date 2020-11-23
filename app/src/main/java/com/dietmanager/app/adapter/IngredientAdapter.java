@@ -75,7 +75,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
         FoodIngredient foodIngredient = list.get(position);
         holder.tv_name.setText(foodIngredient.getIngredient().getName());
         if (foodIngredient.getIngredient().getUnitType()!=null){
-            holder.tv_unit.setText(foodIngredient.getIngredient().getUnitType().getName());
+            holder.tv_unit.setText(foodIngredient.getQuantity()+" "+foodIngredient.getIngredient().getUnitType().getName());
         }
         if (foodIngredient.getIngredient().getAvatar()!=null)
             Glide.with(context).load(foodIngredient.getIngredient().getAvatar())
@@ -88,7 +88,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
                 if (checked) {
 
                 } else {
-                    
+
                 }
                 foodIngredient.setChecked(!foodIngredient.isChecked());
                 if (listener!=null)
@@ -96,11 +96,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
 
             }
         });
-
-
-
-
-
     }
     public ArrayList<FoodIngredient> getSelected() {
         ArrayList<FoodIngredient> selected = new ArrayList<>();

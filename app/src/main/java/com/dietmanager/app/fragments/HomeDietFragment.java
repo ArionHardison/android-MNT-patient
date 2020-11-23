@@ -268,7 +268,11 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         if (GlobalData.subscription!=null){
             SubscriptionPlan subscriptionPlan = GlobalData.subscription;
             List<Date> totalDateList = new ArrayList<>();
-            totalDateList =  getDates(subscriptionPlan.getCreatedAt(),subscriptionPlan.getExpiryDate());
+            //totalDateList =  getDates(subscriptionPlan.getCreatedAt(),subscriptionPlan.getExpiryDate());
+            Date today = new Date();
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String dateToStr = format.format(today);
+            totalDateList =  getDates(dateToStr,subscriptionPlan.getExpiryDate());
             for (int i = 0; i <totalDateList.size(); i++){
                 Days days = new Days();
                 days.setDate(totalDateList.get(i));

@@ -8,7 +8,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.multidex.MultiDex;
 
-import com.facebook.stetho.Stetho;
+//import com.facebook.stetho.Stetho;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
@@ -40,7 +40,7 @@ public class OyolaApplication extends Application {
     public void onCreate() {
         super.onCreate();
         appInstance = this;
-        Stetho.initializeWithDefaults(this);
+        //Stetho.initializeWithDefaults(this);
         gson = new GsonBuilder().serializeNulls().setLenient().create();
     }
 

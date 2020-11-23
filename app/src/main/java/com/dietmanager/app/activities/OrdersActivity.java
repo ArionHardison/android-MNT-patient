@@ -201,6 +201,10 @@ public class OrdersActivity extends AppCompatActivity {
                     modelList.add(model);
                     modelListReference.addAll(modelList);
                     adapter.notifyDataSetChanged();
+                    if (onGoingOrderList.size() == 0) {
+                        errorLayout.setVisibility(View.VISIBLE);
+                    } else
+                        errorLayout.setVisibility(View.GONE);
                     customDialog.dismiss();
 //                    getPastOrders();
                 } else {

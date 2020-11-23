@@ -29,9 +29,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
     private Context context;
     private IClickListener listener;
 
-    public FoodAdapter(Context context,IClickListener listener) {
+    public FoodAdapter(Context context, IClickListener listener) {
         foodItems = new ArrayList<>();
-        this.context=context;
+        this.context = context;
         this.listener = listener;
     }
 
@@ -56,23 +56,26 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull FoodAdapter.MyViewHolder holder, final int position) {
         FoodItem foodItem = foodItems.get(position);
         holder.tvFoodTitle.setText(String.valueOf(foodItem.getName()));
+        holder.tv_proteins.setText(String.valueOf(foodItem.getProtein()));
+        holder.tv_fat.setText(String.valueOf(foodItem.getFat()));
+        holder.tv_carb.setText(String.valueOf(foodItem.getCarbohydrates()));
        /* holder.tvFoodDescription.setText(String.valueOf(foodItem.getDescription()));
         holder.tvFoodPrice.setText(String.valueOf(foodItem.getPrice()));*/
-        if (foodItem.getAvatar()!=null)
-            Glide.with(context).load(BASE_URL +foodItem.getAvatar())
-                .apply(new RequestOptions().centerCrop().placeholder(R.drawable.shimmer_bg).error(R.drawable.shimmer_bg).dontAnimate()).into(holder.imgFood);
-holder.cardItem.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        GlobalData.selectedfood = foodItem;
-        //context.startActivity(new Intent(context, SubMenuDetailedActivity.class));
-        context.startActivity(new Intent(context, ChangeFoodActivity.class));
-    }
-});
+        if (foodItem.getAvatar() != null)
+            Glide.with(context).load(BASE_URL + foodItem.getAvatar())
+                    .apply(new RequestOptions().centerCrop().placeholder(R.drawable.shimmer_bg).error(R.drawable.shimmer_bg).dontAnimate()).into(holder.imgFood);
+        holder.cardItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GlobalData.selectedfood = foodItem;
+                //context.startActivity(new Intent(context, SubMenuDetailedActivity.class));
+                context.startActivity(new Intent(context, ChangeFoodActivity.class));
+            }
+        });
         holder.img_refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-listener.onRefreshClicked(position);
+                listener.onRefreshClicked(position);
             }
         });
     }
@@ -82,15 +85,15 @@ listener.onRefreshClicked(position);
         return foodItems.size();
     }
 
-    public interface IClickListener{
+    public interface IClickListener {
         public void onRefreshClicked(int day);
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvFoodTitle,tv_proteins,tv_fat,tv_carb;
+        TextView tvFoodTitle, tv_proteins, tv_fat, tv_carb;
         CardView cardItem;
-        ImageView imgFood,img_refresh;
+        ImageView imgFood, img_refresh;
 
         MyViewHolder(View view) {
             super(view);

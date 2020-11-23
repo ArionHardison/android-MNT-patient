@@ -36,6 +36,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
+import com.dietmanager.app.models.SaveCustomerAddress;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
@@ -655,22 +656,22 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
         if (address != null && address.getMapAddress() != null && validate()) {
             customDialog.show();
             apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
-            Call<com.dietmanager.app.models.Address> call = apiInterface.saveCustomerAddress(address, update);
-            call.enqueue(new Callback<com.dietmanager.app.models.Address>() {
+            Call<SaveCustomerAddress> call = apiInterface.saveCustomerAddress(address, update);
+            call.enqueue(new Callback<SaveCustomerAddress>() {
                 @Override
-                public void onResponse(@NonNull Call<com.dietmanager.app.models.Address> call, @NonNull Response<com.dietmanager.app.models.Address> response) {
+                public void onResponse(@NonNull Call<SaveCustomerAddress> call, @NonNull Response<SaveCustomerAddress> response) {
                     customDialog.dismiss();
                     if (response.isSuccessful()) {
                         if (isAddressSave) {
                             //select the address data and set to address in Cart fargment page
                             Intent returnIntent = new Intent();
-                            GlobalData.selectedAddress = response.body();
-                            GlobalData.addressList.getAddresses().add(response.body());
+                            GlobalData.selectedAddress = response.body().getAddress();
+                            GlobalData.addressList.getAddresses().add(response.body().getAddress());
                             setResult(Activity.RESULT_OK, returnIntent);
                             finish();
                         } else {
-                            GlobalData.selectedAddress = response.body();
-                            GlobalData.addressList.getAddresses().add(response.body());
+                            GlobalData.selectedAddress = response.body().getAddress();
+                            GlobalData.addressList.getAddresses().add(response.body().getAddress());
                             setResult(Activity.RESULT_OK);
                             finish();
                         }
@@ -688,7 +689,7 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<com.dietmanager.app.models.Address> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<SaveCustomerAddress> call, @NonNull Throwable t) {
                     Log.e(TAG, t.toString());
                     customDialog.dismiss();
                     Toast.makeText(SaveDeliveryLocationActivity.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();

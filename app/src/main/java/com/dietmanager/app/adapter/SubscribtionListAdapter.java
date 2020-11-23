@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dietmanager.app.R;
+import com.dietmanager.app.helper.GlobalData;
 import com.dietmanager.app.models.SubscriptionList;
 
 import java.util.List;
@@ -48,7 +49,7 @@ public class SubscribtionListAdapter extends RecyclerView.Adapter<SubscribtionLi
 
         foodIngredient = list.get(position);
         holder.rd_text.setText(foodIngredient.getTitle());
-        holder.tv_price.setText(foodIngredient.getPrice());
+        holder.tv_price.setText(GlobalData.currency+foodIngredient.getPrice());
         if (checkedPosition == -1) {
             holder.rd_text.setChecked(false);
         } else {

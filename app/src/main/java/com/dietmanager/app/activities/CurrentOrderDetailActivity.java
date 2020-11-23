@@ -61,11 +61,15 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Dash;
+import com.google.android.gms.maps.model.Dot;
+import com.google.android.gms.maps.model.Gap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.dietmanager.app.HomeActivity;
 import com.dietmanager.app.R;
@@ -94,6 +98,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -106,6 +111,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.dietmanager.app.build.configure.BuildConfigure.BASE_URL;
 import static com.dietmanager.app.helper.GlobalData.ORDER_STATUS;
 import static com.dietmanager.app.helper.GlobalData.isSelectedFoodOrder;
 import static com.dietmanager.app.helper.GlobalData.isSelectedOrder;
@@ -184,6 +190,8 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
     String TransporterNumber = "";
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     private Location currentLocation;
+    boolean isImageOpened = true;
+    boolean isRateOpened = true;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -324,6 +332,21 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                 orderFlowList.add(new OrderFlow(getString(R.string.pickup_order_processed_new), getString(R.string.pickup_description_3), R.drawable.ic_order_processed, ORDER_STATUS.get(3) /*+ORDER_STATUS.get(2) + ORDER_STATUS.get(3) + ORDER_STATUS.get(4) + ORDER_STATUS.get(7) + ORDER_STATUS.get(8)*/));
                 orderFlowList.add(new OrderFlow(getString(R.string.pickup_order_processed), getString(R.string.prepared_description_4), R.drawable.ic_order_picked_up, ORDER_STATUS.get(13) /*+ ORDER_STATUS.get(6) + ORDER_STATUS.get(9)*/));
                 orderFlowList.add(new OrderFlow(getString(R.string.pickup_order_completed), getString(R.string.pickup_description_5), R.drawable.ic_order_delivered, ORDER_STATUS.get(7) + ORDER_STATUS.get(10)));
+
+        /*if (GlobalData.isSelectedFoodOrder.getStatus().equalsIgnoreCase("PREPARED")){
+            if (isImageOpened){
+                ((CurrentOrderDetailActivity) context).showImage();
+                isImageOpened = false;
+            }
+        }*/
+
+        /*if (GlobalData.isSelectedFoodOrder.getStatus().equalsIgnoreCase("COMPLETED")){
+            if (isRateOpened){
+                ((CurrentOrderDetailActivity) context).rate();
+                isRateOpened = false;
+            }
+        }*/
+
         }
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -377,6 +400,31 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
         }
     }
 
+    private void updateOrder(HashMap<String, String> map) {
+        System.out.println(map.toString());
+        Call<Order> call = apiInterface.updateOrder(isSelectedFoodOrder.getId(),map);
+        call.enqueue(new Callback<Order>() {
+            @Override
+            public void onResponse(@NonNull Call<Order> call, @NonNull Response<Order> response) {
+                if (response.errorBody() != null) {
+                    //finish();
+                } else if (response.isSuccessful()) {
+                    //Message message = response.body();
+                    Toast.makeText(context, "Approved", Toast.LENGTH_SHORT).show();
+                    //startActivity(new Intent(context, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    //finish();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Order> call, @NonNull Throwable t) {
+                Toast.makeText(context, "Something wrong - updateOrder", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(context, OrdersActivity.class));
+                finish();
+            }
+        });
+    }
+
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -414,14 +462,14 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
     public void onLocationChanged(Location location) {
         currentLocation = location;
 //        if (isSelectedOrder.getPickUpRestaurant() == 1) {
-            if (currentLocation != null) {
+            /*if (currentLocation != null) {
                 //Map
-                /*String url = getUrl(currentLocation.getLatitude(), currentLocation.getLongitude()
+                String url = getUrl(currentLocation.getLatitude(), currentLocation.getLongitude()
                         , isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
                 FetchUrl fetchUrl = new FetchUrl();
                 fetchUrl.execute(url);
-            } else {
-                destLatLng = new LatLng(isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
+            } else {*/
+                /*destLatLng = new LatLng(isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
                 if (destinationMarker != null)
                     destinationMarker.remove();
                 MarkerOptions destMarker = new MarkerOptions()
@@ -431,18 +479,19 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                 CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(destLatLng, 14);
                 mMap.moveCamera(cu);*/
 
-                destLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-                if (destinationMarker != null)
-                    destinationMarker.remove();
-                MarkerOptions destMarker = new MarkerOptions()
-                        .position(destLatLng).title("Destination").draggable(true)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_marker));
-                destinationMarker = mMap.addMarker(destMarker);
-                CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(destLatLng, 14);
-                mMap.moveCamera(cu);
+                if (isSelectedFoodOrder.getCustomerAddress()!=null) {
+                    destLatLng = new LatLng(isSelectedFoodOrder.getCustomerAddress().getLatitude(), isSelectedFoodOrder.getCustomerAddress().getLongitude());
+                    if (destinationMarker != null)
+                        destinationMarker.remove();
+                    MarkerOptions destMarker = new MarkerOptions()
+                            .position(destLatLng).title("Home").draggable(true)
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_home_marker));
+                    destinationMarker = mMap.addMarker(destMarker);
+                    CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(destLatLng, 14);
+                    mMap.moveCamera(cu);
+                }
 
-            }
-//        }
+//
     }
 
     @Override
@@ -517,8 +566,27 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                     FetchUrl fetchUrl = new FetchUrl();
                     fetchUrl.execute(url);
                 } else {*/
-            if (currentLocation != null) {
-                    destLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+            //if (currentLocation != null) {
+
+            if (isSelectedFoodOrder.getChef()!=null) {
+                if (isSelectedFoodOrder.getCustomerAddress() != null) {
+                    String url = getUrl(isSelectedFoodOrder.getCustomerAddress().getLatitude(), isSelectedFoodOrder.getCustomerAddress().getLongitude()
+                            , isSelectedFoodOrder.getChef().getLatitude(), isSelectedFoodOrder.getChef().getLongitude());
+                    FetchUrl fetchUrl = new FetchUrl();
+                    fetchUrl.execute(url);
+                } else {
+                    if (currentLocation != null) {
+                        String url = getUrl(currentLocation.getLatitude(), currentLocation.getLongitude()
+                                , isSelectedFoodOrder.getChef().getLatitude(), isSelectedFoodOrder.getChef().getLongitude());
+                        FetchUrl fetchUrl = new FetchUrl();
+                        fetchUrl.execute(url);
+                    }
+                }
+            }
+
+            if (isSelectedFoodOrder.getCustomerAddress() != null) {
+                //Map
+                    destLatLng = new LatLng(isSelectedFoodOrder.getCustomerAddress().getLatitude(), isSelectedFoodOrder.getCustomerAddress().getLongitude());
                     if (destinationMarker != null)
                         destinationMarker.remove();
                     MarkerOptions destMarker = new MarkerOptions()
@@ -529,6 +597,48 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                     mMap.moveCamera(cu);
                 }
 //            }
+        }
+    }
+
+    public void showImage() {
+        try {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+            final FrameLayout frameView = new FrameLayout(this);
+            builder.setView(frameView);
+
+            final AlertDialog alertDialog = builder.create();
+            LayoutInflater inflater = alertDialog.getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.image_popup, frameView);
+            alertDialog.show();
+
+            ImageView feedbackImage = dialogView.findViewById(R.id.cooked_image);
+            if (isSelectedFoodOrder != null) {
+                Glide.with(context)
+                        .load(BASE_URL +isSelectedFoodOrder.getPreparedImage())
+                        .apply(new RequestOptions()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .placeholder(R.drawable.ic_banner)
+                                .error(R.drawable.ic_banner))
+                        .into(feedbackImage);
+            }
+            Button feedbackSubmit = dialogView.findViewById(R.id.feedback_confirm);
+            feedbackSubmit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //if (GlobalData.isSelectedOrder != null && GlobalData.isSelectedOrder.getId() != null) {
+                    if (isSelectedFoodOrder != null && GlobalData.isSelectedFoodOrder.getId() != null) {
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("_method", "PUT");
+                        map.put("status", "COMPLETED");
+                        updateOrder(map);
+                        alertDialog.dismiss();
+                    }
+                }
+            });
+            alertDialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -651,18 +761,18 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                             LatLng position = new LatLng(lat, lng);
                             points.add(position);
                         }
-                       /* if (isSelectedOrder.getAddress() != null) {
-                            LatLng location = new LatLng(isSelectedOrder.getAddress().getLatitude(), isSelectedOrder.getAddress().getLongitude());
+                        if (isSelectedFoodOrder.getCustomerAddress() != null) {
+                            LatLng location = new LatLng(isSelectedFoodOrder.getCustomerAddress().getLatitude(), isSelectedFoodOrder.getCustomerAddress().getLongitude());
                             MarkerOptions markerOptions = new MarkerOptions()
-                                    .position(location).title("Source").draggable(true)
+                                    .position(location).title("Home").draggable(true)
                                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_home_marker));
                             sourceMarker = mMap.addMarker(markerOptions);
 
-                            destLatLng = new LatLng(isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
+                            destLatLng = new LatLng(isSelectedFoodOrder.getChef().getLatitude(), isSelectedFoodOrder.getChef().getLongitude());
                             if (destinationMarker != null)
                                 destinationMarker.remove();
                             MarkerOptions destMarker = new MarkerOptions()
-                                    .position(destLatLng).title("Destination").draggable(true)
+                                    .position(destLatLng).title("Chef").draggable(true)
                                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_marker));
                             destinationMarker = mMap.addMarker(destMarker);
                             LatLngBounds.Builder builder = new LatLngBounds.Builder();
@@ -686,11 +796,11 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_home_marker));
                             sourceMarker = mMap.addMarker(markerOptions);
 
-                            destLatLng = new LatLng(isSelectedOrder.getShop().getLatitude(), isSelectedOrder.getShop().getLongitude());
+                            destLatLng = new LatLng(isSelectedFoodOrder.getChef().getLatitude(), isSelectedFoodOrder.getChef().getLongitude());
                             if (destinationMarker != null)
                                 destinationMarker.remove();
                             MarkerOptions destMarker = new MarkerOptions()
-                                    .position(destLatLng).title("Destination").draggable(true)
+                                    .position(destLatLng).title("Chef").draggable(true)
                                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_marker));
                             destinationMarker = mMap.addMarker(destMarker);
                             LatLngBounds.Builder builder = new LatLngBounds.Builder();
@@ -707,7 +817,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                             lineOptions.width(5);
                             lineOptions.color(Color.BLACK);
                             Log.d("onPostExecute", "onPostExecute lineoptions decoded");
-                        }*/
+                        }
                     }
                 } else {
                     mMap.clear();
@@ -715,7 +825,8 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
             }
             // Drawing polyline in the Google Map for the i-th route
             if (lineOptions != null) {
-                mMap.addPolyline(lineOptions);
+                List<PatternItem> pattern = Arrays.asList(new Dash(30), new Gap(20));
+                mMap.addPolyline(lineOptions).setPattern(pattern);
             } else {
                 Log.d("onPostExecute", "without Polylines drawn");
             }
@@ -820,16 +931,32 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
     }
 
     private void getParticularOrders(int order_id) {
-        Call<FoodOrder> call = apiInterface.getParticularOrders(order_id);
-        call.enqueue(new Callback<FoodOrder>() {
+        Call<List<FoodOrder>> call = apiInterface.getParticularOrders(order_id);
+        call.enqueue(new Callback<List<FoodOrder>>() {
             @SuppressLint("SetTextI18n")
             @Override
-            public void onResponse(@NonNull Call<FoodOrder> call, @NonNull Response<FoodOrder> response) {
+            public void onResponse(@NonNull Call<List<FoodOrder>> call, @NonNull Response<List<FoodOrder>> response) {
                 if (response.isSuccessful()) {
                     if (GlobalData.isSelectedFoodOrder == null) {
-                        isSelectedFoodOrder = response.body();
+                        isSelectedFoodOrder = response.body().get(0);
                         updateOrderDetail();
-                    } else isSelectedFoodOrder = response.body();
+                    } else isSelectedFoodOrder = response.body().get(0);
+
+                    if (GlobalData.isSelectedFoodOrder.getStatus().equalsIgnoreCase("PREPARED")){
+                        if (isImageOpened){
+                            ((CurrentOrderDetailActivity) context).showImage();
+                            isImageOpened = false;
+                        }
+                    }
+
+                    if (GlobalData.isSelectedFoodOrder.getStatus().equalsIgnoreCase("COMPLETED")){
+                        if (GlobalData.isSelectedFoodOrder.getRating().isEmpty())
+                        if (isRateOpened){
+                            ((CurrentOrderDetailActivity) context).rate();
+                            isRateOpened = false;
+                        }
+                    }
+
                     Log.i("isSelectedFoodOrder : ", isSelectedFoodOrder.toString());
 
 //                    order_eta.setText(" : " + isSelectedOrder.getEta() + getResources().getString(R.string.order_minits));
@@ -898,7 +1025,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
             }
 
             @Override
-            public void onFailure(@NonNull Call<FoodOrder> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<List<FoodOrder>> call, @NonNull Throwable t) {
 
             }
         });
@@ -1032,9 +1159,9 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
         return value;
     }
 
-    private void rateTransporter(HashMap<String, String> map) {
+    private void rateTransporter(int Id,HashMap<String, String> map) {
         System.out.println(map.toString());
-        Call<Message> call = apiInterface.rate(map);
+        Call<Message> call = apiInterface.chefRate(Id,map);
         call.enqueue(new Callback<Message>() {
             @Override
             public void onResponse(@NonNull Call<Message> call, @NonNull Response<Message> response) {
@@ -1042,7 +1169,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                     finish();
                 } else if (response.isSuccessful()) {
                     Message message = response.body();
-                    Toast.makeText(context, message.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Rating submitted su", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(context, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     finish();
                 }
@@ -1114,11 +1241,11 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                     //if (GlobalData.isSelectedOrder != null && GlobalData.isSelectedOrder.getId() != null) {
                     if (isSelectedFoodOrder != null && GlobalData.isSelectedFoodOrder.getId() != null) {
                         HashMap<String, String> map = new HashMap<>();
-                        map.put("order_id", String.valueOf(GlobalData.isSelectedFoodOrder.getId()));
+                        //map.put("order_id", String.valueOf(GlobalData.isSelectedFoodOrder.getId()));
                         map.put("rating", String.valueOf(rating));
                         map.put("comment", comment.getText().toString());
-                        map.put("type", Constants.SHOP_RATING);
-                        rateTransporter(map);
+                        //map.put("type", Constants.SHOP_RATING);
+                        rateTransporter(GlobalData.isSelectedFoodOrder.getId(),map);
                         alertDialog.dismiss();
                     }
                 }

@@ -8,7 +8,7 @@ public class Ingredient {
 	private Object dietitianId;
 
 	@SerializedName("price")
-	private String price;
+	private double price;
 
 	@SerializedName("name")
 	private String name;
@@ -35,7 +35,7 @@ public class Ingredient {
 		return dietitianId;
 	}
 
-	public String getPrice(){
+	public double getPrice(){
 		return price;
 	}
 

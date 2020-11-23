@@ -255,6 +255,7 @@
     <string name="item_total">مجموع الاشياء</string>
     <string name="delivery_fees">رسوم التوصيل</string>
     <string name="service_tax">ضريبة الخدمة</string>
+    <string name="incredient_amount">Ingredient amount</string>
     <string name="promo_code">رمز ترويجي</string>
     <string name="shop_discount">متجر الخصم</string>
     <string name="delivery_charges">رسوم التوصيل</string>

@@ -58,6 +58,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.dietmanager.app.build.configure.BuildConfigure.BASE_URL;
 import static com.dietmanager.app.fragments.HomeDietFragment.isFilterApplied;
 
 
@@ -236,7 +237,7 @@ public class SubscribePlanActivity extends AppCompatActivity implements Subscrib
         tv_city.setText(dietitian.getEmail());
         if (dietitian.getAvatar()!=null)
         Glide.with(context)
-                .load(dietitian.getAvatar())
+                .load(BASE_URL+dietitian.getAvatar())
                 .apply(new RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .placeholder(R.drawable.man)

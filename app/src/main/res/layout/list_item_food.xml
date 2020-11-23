@@ -51,6 +51,7 @@
                 android:textColor="@color/colorPrimaryText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone"
                />
             <ImageView
                 android:id="@+id/img_refresh"

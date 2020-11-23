@@ -128,6 +128,7 @@ public class FoodsOrdersAdapter extends SectionedRecyclerViewAdapter<FoodsOrders
         holder.restaurantNameTxt.setText(object.getFood().getName());
         holder.reorderBtn.setText(object.getStatus());
 
+        if (object.getFood().getTimeCategory()!=null)
         holder.restaurantAddressTxt.setText(object.getFood().getTimeCategory().getName());
         int lastPostion = relativePosition + 1;
         if (list.get(section).getOrders().size() == 1) {
@@ -141,11 +142,19 @@ public class FoodsOrdersAdapter extends SectionedRecyclerViewAdapter<FoodsOrders
         itemList = new ArrayList<>();
         itemList.addAll(object.getOrderingredient());
         String dishNameValue = "";
-        for (int i = 0; i < itemList.size(); i++) {
-            if (i == 0)
-                dishNameValue = object.getOrderingredient().get(i).getFoodingredient().getIngredient().getName()+ " (" + object.getOrderingredient().get(i).getFoodingredient().getQuantity() +" "+ object.getOrderingredient().get(i).getFoodingredient().getIngredient().getUnitType().getName() + ")";
-            else
-                dishNameValue = dishNameValue + ", " + object.getOrderingredient().get(i).getFoodingredient().getIngredient().getName() + " (" + object.getOrderingredient().get(i).getFoodingredient().getQuantity() +" "+ object.getOrderingredient().get(i).getFoodingredient().getIngredient().getUnitType().getName() + ")";
+
+            for (int i = 0; i < itemList.size(); i++) {
+                if (object.getOrderingredient().get(i).getFoodingredient().getIngredient().getUnitType()!=null) {
+                    if (i == 0)
+                        dishNameValue = object.getOrderingredient().get(i).getFoodingredient().getIngredient().getName() + " (" + object.getOrderingredient().get(i).getFoodingredient().getQuantity() + " " + object.getOrderingredient().get(i).getFoodingredient().getIngredient().getUnitType().getName() + ")";
+                    else
+                        dishNameValue = dishNameValue + ", " + object.getOrderingredient().get(i).getFoodingredient().getIngredient().getName() + " (" + object.getOrderingredient().get(i).getFoodingredient().getQuantity() + " " + object.getOrderingredient().get(i).getFoodingredient().getIngredient().getUnitType().getName() + ")";
+                }else {
+                    if (i == 0)
+                        dishNameValue = object.getOrderingredient().get(i).getFoodingredient().getIngredient().getName() + " (" + object.getOrderingredient().get(i).getFoodingredient().getQuantity() + ")";
+                    else
+                        dishNameValue = dishNameValue + ", " + object.getOrderingredient().get(i).getFoodingredient().getIngredient().getName() + " (" + object.getOrderingredient().get(i).getFoodingredient().getQuantity() + ")";
+                }
         }
         holder.dishNameTxt.setText(dishNameValue);
         holder.dateTimeTxt.setText(getTimeFromString(object.getCreatedAt()));

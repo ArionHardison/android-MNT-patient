@@ -42,8 +42,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="@dimen/_12sdp">
+                    android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="wrap_content"
@@ -167,19 +166,22 @@
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_2sdp"
                         android:textSize="@dimen/_11sdp"
-                        android:text="@string/healthy_foods"/>
+                        android:text="@string/healthy_foods"
+                        android:visibility="gone"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_11sdp"
                         android:padding="@dimen/_2sdp"
-                        android:text="@string/planned_diet"/>
+                        android:text="@string/planned_diet"
+                        android:visibility="gone"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_2sdp"
                         android:textSize="@dimen/_11sdp"
-                        android:text="@string/healthy_foods"/>
+                        android:text="@string/healthy_foods"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
                 <View
@@ -196,7 +198,6 @@
             android:textColor="@color/colorBlack"
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginEnd="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_16sdp"
             android:text="@string/subscribe_for"/>
 
       <!--  <LinearLayout

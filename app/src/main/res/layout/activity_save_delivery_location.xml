@@ -34,7 +34,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentStart="true" />
 
-                    <ImageView
+                    <!--<ImageView
                         android:id="@+id/imgCurrentLoc"
                         android:layout_width="@dimen/_35sdp"
                         android:layout_height="@dimen/_40sdp"
@@ -43,7 +43,7 @@
                         android:layout_gravity="end"
                         android:layout_margin="@dimen/_10sdp"
                         android:src="@drawable/ic_locator"
-                        android:tint="@color/colorTextBlack" />
+                        android:tint="@color/colorTextBlack" />-->
 
                     <ImageView
                         android:id="@+id/current_loc_img"
@@ -74,6 +74,17 @@
 
         </RelativeLayout>
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imgCurrentLoc"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
+        android:layout_margin="@dimen/_10sdp"
+        android:src="@drawable/ic_locator"
+        android:tint="@color/colorTextBlack" />
 
     <include layout="@layout/bottom_sheet_save_delivery_location" />
 

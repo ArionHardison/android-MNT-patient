@@ -21,7 +21,8 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:tabIndicatorColor="@color/colorPrimary"
             app:tabSelectedTextColor="@color/colorTextBlack"
-            app:tabTextColor="@color/colorSecondaryText" />
+            app:tabTextColor="@color/colorSecondaryText"
+            android:visibility="gone"/>
 
         <View
             android:id="@+id/view_line4"

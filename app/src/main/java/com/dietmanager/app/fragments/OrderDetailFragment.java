@@ -14,8 +14,10 @@ import android.widget.TextView;
 import com.dietmanager.app.R;
 import com.dietmanager.app.adapter.OrderDetailAdapter;
 import com.dietmanager.app.helper.GlobalData;
+import com.dietmanager.app.models.FoodOrder;
 import com.dietmanager.app.models.Item;
 import com.dietmanager.app.models.Order;
+import com.dietmanager.app.models.Orderingredient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,15 +35,21 @@ public class OrderDetailFragment extends Fragment {
     @BindView(R.id.order_recycler_view)
     RecyclerView orderRecyclerView;
     Unbinder unbinder;
+    @BindView(R.id.item_food_name)
+    TextView itemFoodName;
     @BindView(R.id.item_total_amount)
     TextView itemTotalAmount;
     @BindView(R.id.service_tax)
     TextView serviceTax;
     @BindView(R.id.delivery_charges)
     TextView deliveryCharges;
+    @BindView(R.id.item_tax_amount)
+    TextView itemTaxAmount;
     @BindView(R.id.total_amount)
     TextView totalAmount;
-    List<Item> itemList;
+    @BindView(R.id.item_incredient_amount)
+    TextView item_incredient_amount;
+    List<Orderingredient> itemList;
 
     int totalAmountValue = 0;
     double discount = 0;
@@ -69,33 +77,37 @@ public class OrderDetailFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
 
-        Order order = GlobalData.isSelectedOrder;
+//        Order order = GlobalData.isSelectedOrder;
+        FoodOrder order = GlobalData.isSelectedFoodOrder;
         //set Item List Values
         itemList = new ArrayList<>();
         if (order != null) {
-            itemList.addAll(order.getItems());
+            itemList.addAll(order.getOrderingredient());
             //Offer Restaurant Adapter
             orderRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
             orderRecyclerView.setItemAnimator(new DefaultItemAnimator());
             orderRecyclerView.setHasFixedSize(true);
             OrderDetailAdapter orderItemListAdapter = new OrderDetailAdapter(itemList, getContext());
-            orderRecyclerView.setAdapter(orderItemListAdapter);
+//            orderRecyclerView.setAdapter(orderItemListAdapter);
 
-            if (order.getItems() != null && order.getItems().size() > 0) {
+            /*if (order.getItems() != null && order.getItems().size() > 0) {
                 currency = order.getItems().get(0).getProduct().getPrices().getCurrency();
-            }
-            itemQuantity = order.getInvoice().getQuantity();
-            itemTotalAmount.setText(currency + /*String.format("%.2f", */order.getInvoice().getGross());
-            serviceTax.setText(currency + order.getInvoice().getTax() + "");
-            deliveryCharges.setText(currency + order.getInvoice().getDeliveryCharge());
+            }*/
+            //itemQuantity = order.getPayable();
+            itemTotalAmount.setText(GlobalData.currency + order.getFoodAmount());
+            itemFoodName.setText(order.getFood().getName());
+            serviceTax.setText(GlobalData.currency + order.getTax());
+            deliveryCharges.setText(GlobalData.currency + order.getPayable());
+            itemTaxAmount.setText(GlobalData.currency + order.getTax());
+            item_incredient_amount.setText(GlobalData.currency + order.getIngredientAmount());
 
-            discount = order.getInvoice().getDiscount();
+            //discount = order.getInvoice().getDiscount();
 
-            discountAmount.setText(currency + "-" +/*GlobalData.roundoff(*/discount/*)*/);
+            //discountAmount.setText(currency + "-" +/*GlobalData.roundoff(*/discount/*)*/);
 
-            promocodeAmount.setText("" + currency + "-" + order.getInvoice().getPromocode_amount());
-            walletAmountDetection.setText(currency + order.getInvoice().getWalletAmount() + "");
-            totalAmount.setText(currency + order.getInvoice().getPayable());
+            /*promocodeAmount.setText("" + currency + "-" + order.getInvoice().getPromocode_amount());
+            walletAmountDetection.setText(currency + order.getInvoice().getWalletAmount() + "");*/
+            totalAmount.setText(GlobalData.currency + order.getTotal());
         }
 
 

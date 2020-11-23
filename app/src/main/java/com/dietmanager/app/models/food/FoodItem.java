@@ -44,6 +44,15 @@ public class FoodItem {
 	@SerializedName("who")
 	private String who;
 
+	@SerializedName("protein")
+	private String protein;
+
+	@SerializedName("fat")
+	private String fat;
+
+	@SerializedName("carbohydrates")
+	private String carbohydrates;
+
 	@SerializedName("food_ingredients")
 	@Expose
 	private List<FoodIngredient> foodIngredients = null;
@@ -94,6 +103,18 @@ public class FoodItem {
 
 	public String getWho(){
 		return who;
+	}
+
+	public String getCarbohydrates(){
+		return carbohydrates;
+	}
+
+	public String getProtein(){
+		return protein;
+	}
+
+	public String getFat(){
+		return fat;
 	}
 
 	public List<FoodIngredient> getFoodIngredients() {

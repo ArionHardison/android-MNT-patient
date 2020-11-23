@@ -23,11 +23,13 @@ import com.dietmanager.app.models.LoginModel;
 import com.dietmanager.app.models.Message;
 import com.dietmanager.app.models.Order;
 import com.dietmanager.app.models.Otp;
+import com.dietmanager.app.models.PlaceOrderResponse;
 import com.dietmanager.app.models.PromotionResponse;
 import com.dietmanager.app.models.Promotions;
 import com.dietmanager.app.models.RegisterModel;
 import com.dietmanager.app.models.ResetPassword;
 import com.dietmanager.app.models.RestaurantsData;
+import com.dietmanager.app.models.SaveCustomerAddress;
 import com.dietmanager.app.models.Search;
 import com.dietmanager.app.models.ShopDetail;
 import com.dietmanager.app.models.SubscriptionList;
@@ -51,6 +53,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
@@ -150,7 +153,7 @@ public interface ApiInterface {
     Call<Address> saveAddress(@Body Address address,@Query("update") String update);
 
     @POST("api/user/customer/address")
-    Call<Address> saveCustomerAddress(@Body Address address,@Query("update") String update);
+    Call<SaveCustomerAddress> saveCustomerAddress(@Body Address address, @Query("update") String update);
 
     @PATCH("api/user/address/{id}")
     Call<Address> updateAddress(@Path("id") int id, @Body Address address);
@@ -179,7 +182,7 @@ public interface ApiInterface {
     Call<List<FoodOrder>> getOngoingFoodOrders();
 
     @GET("api/user/request/{id}")
-    Call<FoodOrder> getParticularOrders(@Path("id") int id);
+    Call<List<FoodOrder>> getParticularOrders(@Path("id") int id);
 
    /* @GET("api/user/order/{id}")
     Call<Order> getParticularOrders(@Path("id") int id);*/
@@ -190,9 +193,21 @@ public interface ApiInterface {
     @DELETE("api/user/order/{id}")
     Call<Order> cancelOrder(@Path("id") int id, @Query("reason") String reason);
 
+
+    @FormUrlEncoded
+    @POST("api/user/order/{id}")
+    Call<Order> updateOrder(@Path("id") int id, @FieldMap HashMap<String, String> params);
+
+    @DELETE("api/user/order/{id}")
+    Call<Order> completeOrder(@Path("id") int id, @Query("reason") String reason);
+
     @FormUrlEncoded
     @POST("api/user/rating")
     Call<Message> rate(@FieldMap HashMap<String, String> params);
+
+    @FormUrlEncoded
+    @POST("/api/user/order/{id}/rate")
+    Call<Message> chefRate(@Path("id") int id,@FieldMap HashMap<String, String> params);
 
     @FormUrlEncoded
     @POST("api/user/reorder")
@@ -279,6 +294,6 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("api/user/place/order")
-    Call<ChangePassword> placeorder(@FieldMap HashMap<String, String> params);
+    Call<PlaceOrderResponse> placeorder(@FieldMap HashMap<String, String> params);
 
 }

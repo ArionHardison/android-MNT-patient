@@ -30,6 +30,7 @@ import com.dietmanager.app.models.AddressList;
 import com.dietmanager.app.models.CAddress;
 import com.dietmanager.app.models.ChangePassword;
 import com.dietmanager.app.models.CustomerAddress;
+import com.dietmanager.app.models.PlaceOrderResponse;
 import com.dietmanager.app.models.food.FoodIngredient;
 import com.dietmanager.app.utils.Utils;
 
@@ -117,38 +118,57 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
 
         //getCustomerAddresses();
         initializeAddressDetails();
-
-        tv_itemnamme.setText( GlobalData.selectedfood.getName());
-        tv_total.setText(GlobalData.currency  +" "+  Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue());
+        if (ingredientAdapter.getSelected().size() > 0) {
+            StringBuilder stringBuilder = new StringBuilder();
+            HashMap<String, String> map = new HashMap<>();
+            double ingredienttotal= Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue();
+            stringBuilder.append(GlobalData.selectedfood.getName());
+            for (int i = 0; i < ingredientAdapter.getSelected().size(); i++) {
+                stringBuilder.append("+");
+                stringBuilder.append(ingredientAdapter.getSelected().get(i).getIngredient().getName());
+                //stringBuilder.append("\n");
+                map.put("ingredient["+i+"]", ingredientAdapter.getSelected().get(i).getId().toString());
+                ingredienttotal= ingredienttotal + Double.valueOf(ingredientAdapter.getSelected().get(i).getIngredient().getPrice()).doubleValue();
+            }
+            tv_itemnamme.setText(stringBuilder.toString().trim());
+            tv_total.setText(GlobalData.currency +" "+ingredienttotal);
+        } else {
+            tv_itemnamme.setText(GlobalData.selectedfood.getName());
+            tv_total.setText(GlobalData.currency + " " + Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue());
+        }
 
         findViewById(R.id.next_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ingredientAdapter.getSelected().size() > 0) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    HashMap<String, String> map = new HashMap<>();
-                    double ingredienttotal=  Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue();
-                    for (int i = 0; i < ingredientAdapter.getSelected().size(); i++) {
-                        stringBuilder.append(ingredientAdapter.getSelected().get(i).getIngredient().getName());
-                        stringBuilder.append("\n");
-                        map.put("ingredient["+i+"]", String.valueOf(ingredientAdapter.getSelected().get(i).getIngredient().getId()));
-                        ingredienttotal= ingredienttotal + Double.valueOf(ingredientAdapter.getSelected().get(i).getIngredient().getPrice()).doubleValue();
+                //if (ingredientAdapter.getSelected().size() > 0) {
+                    if (GlobalData.selectedAddress != null) {
+                        StringBuilder stringBuilder = new StringBuilder();
+                        HashMap<String, String> map = new HashMap<>();
+                        double ingredienttotal = Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue();
+                        for (int i = 0; i < ingredientAdapter.getSelected().size(); i++) {
+                            stringBuilder.append(ingredientAdapter.getSelected().get(i).getIngredient().getName());
+                            stringBuilder.append("\n");
+                            map.put("ingredient[" + i + "]", String.valueOf(ingredientAdapter.getSelected().get(i).getIngredient().getId()));
+                            ingredienttotal = ingredienttotal + Double.valueOf(ingredientAdapter.getSelected().get(i).getIngredient().getPrice()).doubleValue();
+                        }
+
+                        //Toast.makeText(context, stringBuilder.toString().trim(), Toast.LENGTH_LONG).show();
+
+
+                        map.put("food_id", String.valueOf(GlobalData.selectedfood.getId()));
+                        map.put("date", GlobalData.schedule_date + " " + GlobalData.schedule_time);
+                        //map.put("schedule_date", GlobalData.schedule_date);
+                        //map.put("schedule_time", GlobalData.schedule_time);
+                        map.put("dietitian_id", String.valueOf(GlobalData.selectedfood.getDietitian().getId()));
+                        map.put("delivery_address_id", "" + GlobalData.selectedAddress.getId());
+                        map.put("payable", String.valueOf(ingredienttotal));
+                        placeorder(map);
+                    }else {
+                        Toast.makeText(context, getString(R.string.add_address_error), Toast.LENGTH_LONG).show();
                     }
-
-                    //Toast.makeText(context, stringBuilder.toString().trim(), Toast.LENGTH_LONG).show();
-
-
-                    map.put("food_id",  String.valueOf(GlobalData.selectedfood.getId()));
-                    map.put("date", GlobalData.schedule_date+" "+GlobalData.schedule_time);
-                    //map.put("schedule_date", GlobalData.schedule_date);
-                    //map.put("schedule_time", GlobalData.schedule_time);
-                    map.put("dietitian_id",  String.valueOf(GlobalData.selectedfood.getDietitian().getId()));
-                    map.put("delivery_address_id", "" + GlobalData.selectedAddress.getId());
-                    map.put("payable", String.valueOf(ingredienttotal));
-                    placeorder(map);
-                } else {
+                /*} else {
                     Toast.makeText(context, "No Selection", Toast.LENGTH_LONG).show();
-                }
+                }*/
                 //startActivity(new Intent(IngredientsActivity.this, HowYouLikeToOrderActivity.class));
             }
         });
@@ -197,18 +217,23 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
     private void placeorder(HashMap<String, String> map) {
         customDialog = new CustomDialog(context);
         customDialog.show();
-        Call<ChangePassword> call = apiInterface.placeorder(map);
-        call.enqueue(new Callback<ChangePassword>() {
+        Call<PlaceOrderResponse> call = apiInterface.placeorder(map);
+        call.enqueue(new Callback<PlaceOrderResponse>() {
             @Override
-            public void onResponse(@NonNull Call<ChangePassword> call, @NonNull Response<ChangePassword> response) {
+            public void onResponse(@NonNull Call<PlaceOrderResponse> call, @NonNull Response<PlaceOrderResponse> response) {
                 customDialog.dismiss();
                 if (response.isSuccessful()) {
                     Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(context, HomeActivity.class);
+                    /*Intent intent = new Intent(context, HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.putExtra("isFromSignUp", false);
                     startActivity(intent);
-                    finishAffinity();
+                    finishAffinity();*/
+
+                    startActivity(new Intent(context, OrdersActivity.class));
+
+//                    startActivity(new Intent(context, CurrentOrderDetailActivity.class).putExtra("orderId",response.body().getOrderId()));
+
                     //finish();
                 } else {
                     try {
@@ -224,7 +249,7 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
             }
 
             @Override
-            public void onFailure(@NonNull Call<ChangePassword> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<PlaceOrderResponse> call, @NonNull Throwable t) {
                 customDialog.dismiss();
                 Toast.makeText(context, getResources().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
 
@@ -235,9 +260,9 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
     private void initializeAddressDetails() {
 //        if (GlobalData.selectedAddress != null && GlobalData.selectedAddress.getLandmark() != null) {
         if (GlobalData.selectedAddress != null) {
-            if (GlobalData.addressList.getAddresses().size() == 1)
+            /*if (GlobalData.addressList.getAddresses().size() == 0)
                 addAddressTxt.setText(getString(R.string.add_address));
-            else
+            else*/
                 addAddressTxt.setText(getString(R.string.change_address));
 //            addAddressBtn.setBackgroundResource(R.drawable.button_corner_bg_green);
 //            addAddressBtn.setText(getResources().getString(R.string.proceed_to_pay));
@@ -303,9 +328,9 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
                 layoutOrderType.setVisibility(View.GONE);
                 //Intialize address Value
                 if (GlobalData.selectedAddress != null) {
-                    if (GlobalData.addressList.getAddresses().size() == 1)
+                    /*if (GlobalData.addressList.getAddresses().size() == 0)
                         addAddressTxt.setText(getString(R.string.add_address));
-                    else
+                    else*/
                         addAddressTxt.setText(getString(R.string.change_address));
                 }
                 addressHeader.setText(GlobalData.selectedAddress.getType());

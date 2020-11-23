@@ -74,6 +74,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.dietmanager.app.adapter.HotelCatagoeryAdapter.bottomSheetDialogFragment;
+import static com.dietmanager.app.build.configure.BuildConfigure.BASE_URL;
 
 public class HotelViewActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener,
         CategoryAdapter.OnSelectedListener {
@@ -211,7 +212,7 @@ public class HotelViewActivity extends AppCompatActivity implements AppBarLayout
             });
 
             Glide.with(context)
-                    .load(shops.getAvatar())
+                    .load(BASE_URL+shops.getAvatar())
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.ic_restaurant_place_holder)

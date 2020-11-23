@@ -29,6 +29,7 @@ public class OrderFlowAdapter extends RecyclerView.Adapter<OrderFlowAdapter.MyVi
     private Context context;
     public String orderStatus = "";
     boolean isRateOpened = true;
+    boolean isImageOpened = true;
 
 
     public OrderFlowAdapter(List<OrderFlow> list, Context con) {
@@ -64,7 +65,7 @@ public class OrderFlowAdapter extends RecyclerView.Adapter<OrderFlowAdapter.MyVi
         if (orderFlow.status.contains(isSelectedFoodOrder.getStatus())) {
             holder.statusImage.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ic_dot_green));
             holder.statusTitle.setTextColor(ContextCompat.getColor(context, R.color.colorGreen));
-            if (isSelectedFoodOrder.getStatus().equals(GlobalData.ORDER_STATUS.get(GlobalData.ORDER_STATUS.size() - 3))) {
+            /*if (isSelectedFoodOrder.getStatus().equals(GlobalData.ORDER_STATUS.get(GlobalData.ORDER_STATUS.size() - 3))) {
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -79,8 +80,23 @@ public class OrderFlowAdapter extends RecyclerView.Adapter<OrderFlowAdapter.MyVi
                 }, 5000);
 
             }
+            if (isSelectedFoodOrder.getStatus().equalsIgnoreCase("PREPARED")) {
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Do something after 100ms
+                        if (isImageOpened){
+                            ((CurrentOrderDetailActivity) context).showImage();
+                            isImageOpened = false;
+                        }
+
+                    }
+                }, 5000);
+
+            }*/
             if (isSelectedFoodOrder.getStatus().equals(GlobalData.ORDER_STATUS.get(0))) {
-                CurrentOrderDetailActivity.orderCancelTxt.setVisibility(View.VISIBLE);
+                CurrentOrderDetailActivity.orderCancelTxt.setVisibility(View.GONE);
             } else {
                 CurrentOrderDetailActivity.orderCancelTxt.setVisibility(View.GONE);
             }

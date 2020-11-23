@@ -237,6 +237,7 @@ public class MobileNumberActivity extends AppCompatActivity {
                     GlobalData.addressList = new AddressList();
                     GlobalData.addressList.setAddresses(response.body().getAddresses());
                     GlobalData.subscription = profileModel.getSubscriptionPlan();
+                    GlobalData.currency =profileModel.getCurrency();
 //                    Toast.makeText(context, getResources().getString(R.string.regsiter_success), Toast.LENGTH_SHORT).show();
                     if (   GlobalData.subscription !=null) {
                         if (mIsFromSocial) {
@@ -381,15 +382,15 @@ public class MobileNumberActivity extends AppCompatActivity {
 
     private void getUserCountryInfo() {
         Country country = Country.getCountryFromSIM(this);
-        if (country != null) {
+        /*if (country != null) {
             mCountryFlagImageView.setImageResource(country.getFlag());
             mCountryDialCodeTextView.setText(country.getDialCode());
             country_code = country.getDialCode();
-        } else {
-            mCountryFlagImageView.setImageResource(R.drawable.flag_in);
-            mCountryDialCodeTextView.setText("+91");
-            country_code = "+91";
-        }
+        } else {*/
+            mCountryFlagImageView.setImageResource(R.drawable.flag_us);
+            mCountryDialCodeTextView.setText("+1");
+            country_code = "+1";
+        //}
     }
 
     @OnClick({R.id.back_img, R.id.next_btn/*, R.id.already_have_aacount_txt*/, R.id.et_current_password_eye_img, R.id.facebook_login, R.id.google_login})

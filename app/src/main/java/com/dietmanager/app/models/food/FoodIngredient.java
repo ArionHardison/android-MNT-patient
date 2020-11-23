@@ -21,6 +21,9 @@ public class FoodIngredient {
     @SerializedName("status")
     @Expose
     private String status;
+    @SerializedName("quantity")
+    @Expose
+    private double quantity;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -75,6 +78,14 @@ public class FoodIngredient {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(double quantity) {
+        this.quantity = quantity;
     }
 
     public String getCreatedAt() {

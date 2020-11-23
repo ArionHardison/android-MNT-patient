@@ -64,6 +64,9 @@ public class FoodOrder {
     @SerializedName("promocode_id")
     @Expose
     private Object promocodeId;
+    @SerializedName("prepared_image")
+    @Expose
+    private String preparedImage;
     @SerializedName("promocode_amount")
     @Expose
     private String promocodeAmount;
@@ -109,6 +112,12 @@ public class FoodOrder {
     @SerializedName("chef")
     @Expose
     private Chef chef;
+    @SerializedName("customer_address")
+    @Expose
+    private CustomerAddresss customerAddress;
+    @SerializedName("rating")
+    @Expose
+    private List<CustomerRating> rating = null;
 
     public Integer getId() {
         return id;
@@ -266,6 +275,14 @@ public class FoodOrder {
         return promocodeAmount;
     }
 
+    public void setPreparedImage(String preparedImage) {
+        this.preparedImage = preparedImage;
+    }
+
+    public String getPreparedImage() {
+        return preparedImage;
+    }
+
     public void setPromocodeAmount(String promocodeAmount) {
         this.promocodeAmount = promocodeAmount;
     }
@@ -382,4 +399,18 @@ public class FoodOrder {
         this.chef = chef;
     }
 
+    public CustomerAddresss getCustomerAddress() {
+        return customerAddress;
+    }
+
+    public void setCustomerAddress(CustomerAddresss customerAddress) {
+        this.customerAddress = customerAddress;
+    }
+    public List<CustomerRating> getRating() {
+        return rating;
+    }
+
+    public void setRating(List<CustomerRating> rating) {
+        this.rating = rating;
+    }
 }
