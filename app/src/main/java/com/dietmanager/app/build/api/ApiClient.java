@@ -2,7 +2,7 @@ package com.dietmanager.app.build.api;
 
 import android.util.Log;
 
-//import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.dietmanager.app.OyolaApplication;
 import com.dietmanager.app.build.configure.BuildConfigure;
 import com.dietmanager.app.helper.SharedHelper;
@@ -46,7 +46,7 @@ public class ApiClient {
         OkHttpClient client = new OkHttpClient.Builder()
                 .addNetworkInterceptor(interceptor)
                 .addNetworkInterceptor(new AddHeaderInterceptor())
-                //.addNetworkInterceptor(new StethoInterceptor())
+                .addNetworkInterceptor(new StethoInterceptor())
                 .connectTimeout(1, TimeUnit.MINUTES)
                 .readTimeout(1, TimeUnit.MINUTES)
                 .retryOnConnectionFailure(true)

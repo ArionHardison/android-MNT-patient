@@ -1169,7 +1169,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                     finish();
                 } else if (response.isSuccessful()) {
                     Message message = response.body();
-                    Toast.makeText(context, "Rating submitted su", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Rating submitted successfully", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(context, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     finish();
                 }

@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.dietmanager.app.OyolaApplication.currency;
+import static com.dietmanager.app.build.configure.BuildConfigure.BASE_URL;
 import static com.dietmanager.app.helper.GlobalData.isSelectedProduct;
 
 /**
@@ -77,10 +78,17 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
         if (foodIngredient.getIngredient().getUnitType()!=null){
             holder.tv_unit.setText(foodIngredient.getQuantity()+" "+foodIngredient.getIngredient().getUnitType().getName());
         }
-        if (foodIngredient.getIngredient().getAvatar()!=null)
-            Glide.with(context).load(foodIngredient.getIngredient().getAvatar())
-                    .apply(new RequestOptions().centerCrop().placeholder(R.drawable.shimmer_bg)
-                            .error(R.drawable.shimmer_bg).dontAnimate()).into(holder.img_item);
+        if (foodIngredient.getIngredient().getAvatar()!=null) {
+            if (foodIngredient.getIngredient().getAvatar().toString().startsWith("http")) {
+                Glide.with(context).load(foodIngredient.getIngredient().getAvatar())
+                        .apply(new RequestOptions().centerCrop().placeholder(R.drawable.shimmer_bg)
+                                .error(R.drawable.shimmer_bg).dontAnimate()).into(holder.img_item);
+            }else {
+                Glide.with(context).load(BASE_URL+foodIngredient.getIngredient().getAvatar())
+                        .apply(new RequestOptions().centerCrop().placeholder(R.drawable.shimmer_bg)
+                                .error(R.drawable.shimmer_bg).dontAnimate()).into(holder.img_item);
+            }
+        }
         holder.check_food.setChecked(foodIngredient.isChecked());
         holder.check_food.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
