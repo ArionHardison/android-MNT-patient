@@ -19,7 +19,8 @@ public class BuildConfigure {
     public static String PUBNUB_CHANNEL_NAME = "21";
 
     //Stripe for card payment
-    public static String STRIPE_PK = "pk_test_39kly6aEfUEfvMpRnN6BnxLb";
+    public static String STRIPE_PK = "pk_test_CIE0zFyRShoaZHYjGUiEoEz4";
+    //public static String STRIPE_PK = "pk_test_39kly6aEfUEfvMpRnN6BnxLb";
 //    public static String STRIPE_PK = "pk_test_pAqnif8mJ1kwh16JXuApB3Y5";
 
 
