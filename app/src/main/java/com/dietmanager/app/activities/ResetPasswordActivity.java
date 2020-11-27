@@ -159,7 +159,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 /*    SharedHelper.putKey(context, "access_token", "Bearer" + " " + response.body().getAccessToken());
                     getProfile();*/
 
-                    startActivity(new Intent(context, LoginActivity.class)
+                    startActivity(new Intent(context, MobileNumberActivity.class)
                             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                 } else {

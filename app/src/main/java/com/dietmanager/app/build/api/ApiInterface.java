@@ -95,7 +95,7 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("api/user/forgot/password")
-    Call<ForgotPassword> forgotPassword(@Field("phone") String mobile, @Field("hashcode") String hashcode);
+    Call<ForgotPassword> forgotPassword(@Field("phone") String mobile);
 
     @FormUrlEncoded
     @POST("api/user/reset/password")

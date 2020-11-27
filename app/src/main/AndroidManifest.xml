@@ -219,9 +219,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.dietmanager.app.activities.ForgotPasswordActivity"
+        android:name="com.dietmanager.app.activities.ForgotPasswordActivity"
+        android:label="@string/forgot_password"
+        android:parentActivityName="com.dietmanager.app.activities.LoginActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.dietmanager.app.activities.ForgotPasswordActivity_New"
             android:label="@string/forgot_password"
-            android:parentActivityName="com.dietmanager.app.activities.LoginActivity"
+            android:parentActivityName="com.dietmanager.app.activities.MobileNumberActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

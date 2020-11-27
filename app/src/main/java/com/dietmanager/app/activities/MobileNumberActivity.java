@@ -393,7 +393,7 @@ public class MobileNumberActivity extends AppCompatActivity {
         //}
     }
 
-    @OnClick({R.id.back_img, R.id.next_btn/*, R.id.already_have_aacount_txt*/, R.id.et_current_password_eye_img, R.id.facebook_login, R.id.google_login})
+    @OnClick({R.id.back_img, R.id.next_btn/*, R.id.already_have_aacount_txt*/, R.id.forgot_password, R.id.et_current_password_eye_img, R.id.facebook_login, R.id.google_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_img:
@@ -420,7 +420,9 @@ public class MobileNumberActivity extends AppCompatActivity {
                 break;
             case R.id.google_login:
                 break;
-
+            case R.id.forgot_password:
+                startActivity(new Intent(context, ForgotPasswordActivity_New.class));
+                break;
             case R.id.next_btn:
                 mobileNumber = country_code + etMobileNumber.getText().toString();
                 if (!isValidMobile(mobileNumber)) {

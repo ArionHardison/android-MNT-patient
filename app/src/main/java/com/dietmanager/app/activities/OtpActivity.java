@@ -120,7 +120,7 @@ public class OtpActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
             isSignUp = bundle.getBoolean("signup", true);
-            mOtp = bundle.getInt("otp");
+            mOtp =Integer.parseInt( bundle.getString("otp"));
             mIsUserExists = bundle.getBoolean("isUserExist");
             mIsFromSocial = bundle.getBoolean("mIsFromSocial");
             mMobile = bundle.getString("mobile");
@@ -448,11 +448,17 @@ public class OtpActivity extends AppCompatActivity {
                             map.put("accessToken", mModel.getmAccessToken());
                             signup(map);
                         } else {
-                            Intent intent = new Intent(OtpActivity.this, SignUpActivity.class);
+                            //hide by arun for new forgotpassword customization
+
+                           /* Intent intent = new Intent(OtpActivity.this, SignUpActivity.class);
                             intent.putExtra("mobile", mMobile);
                             startActivity(intent);
                             overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
+                            finish();*/
+                            startActivity(new Intent(OtpActivity.this, ResetPasswordActivity.class));
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.anim_nothing);
                             finish();
+
                         }
                     }
                 } else {
