@@ -28,6 +28,7 @@ import com.dietmanager.app.helper.GlobalData;
 import com.dietmanager.app.helper.SharedHelper;
 import com.dietmanager.app.models.ForgotPassword;
 import com.dietmanager.app.models.LoginModel;
+import com.dietmanager.app.utils.Utils;
 
 import org.json.JSONObject;
 
@@ -139,7 +140,11 @@ public class ForgotPasswordActivity_New extends AppCompatActivity {
                     Toast.makeText(this, getResources().getString(R.string.please_enter_valid_number), Toast.LENGTH_SHORT).show();
 //                    startActivity(new Intent(this,OtpActivity.class));
                 }else {
-                    apicall();
+                    if (isInternet) {
+                        apicall();
+                    } else
+                        Utils.displayMessage(ForgotPasswordActivity_New.this,this ,getString(R.string.oops_no_internet));
+
                 }
                 break;
             case R.id.back_img:
@@ -174,6 +179,9 @@ public class ForgotPasswordActivity_New extends AppCompatActivity {
                     customDialog.dismiss();
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        if (jObjError.has("phone"))
+                            Toast.makeText(context, jObjError.optString("phone"), Toast.LENGTH_LONG).show();
+                        else
                         Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
