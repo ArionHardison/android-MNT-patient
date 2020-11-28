@@ -213,6 +213,36 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/use_wallet_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/use_wallet_chk_box"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:fontFamily="@font/nunito_semibold"
+                        android:text="@string/is_wallet"
+                        android:padding="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_6sdp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/text_small" />
+
+                    <TextView
+                        android:id="@+id/amount_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:fontFamily="@font/nunito_regular"
+                        android:textColor="@color/theme"
+                        android:textSize="@dimen/text_medium"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
             </LinearLayout>
 
             <Button

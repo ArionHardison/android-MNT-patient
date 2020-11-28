@@ -11,6 +11,7 @@ import android.os.PersistableBundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -33,6 +34,7 @@ import com.dietmanager.app.helper.GlobalData;
 import com.dietmanager.app.models.Card;
 import com.dietmanager.app.models.Message;
 import com.dietmanager.app.models.Order;
+import com.dietmanager.app.models.PlaceOrderResponse;
 import com.dietmanager.app.utils.CommonUtils;
 import com.dietmanager.app.utils.TextUtils;
 
@@ -96,6 +98,10 @@ public class AccountPaymentActivity extends AppCompatActivity {
     TextView walletAmtTxt;
     @BindView(R.id.wallet_layout)
     RelativeLayout walletLayout;
+    @BindView(R.id.use_wallet_layout)
+    LinearLayout useWalletLayout;
+    @BindView(R.id.use_wallet_chk_box)
+    CheckBox useWalletChkBox;
     NumberFormat numberFormat = GlobalData.getNumberFormat();
     @BindView(R.id.add_new_cart)
     TextView addNewCart;
@@ -139,6 +145,7 @@ public class AccountPaymentActivity extends AppCompatActivity {
     String mRestaurantType = "";
     boolean mIsImmediate = false;
     private boolean isWithoutCache = false;
+    boolean isFromProfile = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,12 +175,22 @@ public class AccountPaymentActivity extends AppCompatActivity {
             isWalletVisible = getIntent().getBooleanExtra("is_show_wallet", false);
             isCashVisible = getIntent().getBooleanExtra("is_show_cash", false);
             mIsImmediate = getIntent().getBooleanExtra("is_immediate", false);
+            isFromProfile = getIntent().getBooleanExtra("isFromProfile", false);
             mEstimatedDeliveryTime = getIntent().getIntExtra("est_delivery_time", 0);
             mRestaurantType = getIntent().getStringExtra("delivery_type");
 
+            if(GlobalData.profileModel.getWalletBalance() != null && Double.parseDouble(GlobalData.profileModel.getWalletBalance()) > 0)
+                useWalletLayout.setVisibility(VISIBLE);
+            else
+                useWalletLayout.setVisibility(GONE);
+
+            if(isFromProfile){
+                useWalletLayout.setVisibility(GONE);
+                proceedToPayBtn.setVisibility(GONE);
+            }
 
             cardArrayList = new ArrayList<>();
-            accountPaymentAdapter = new AccountPaymentAdapter(AccountPaymentActivity.this, cardArrayList, !isCashVisible);
+            accountPaymentAdapter = new AccountPaymentAdapter(AccountPaymentActivity.this, cardArrayList, isFromProfile);
             paymentMethodLv.setAdapter(accountPaymentAdapter);
 
             if (isWalletVisible)
@@ -206,11 +223,19 @@ public class AccountPaymentActivity extends AppCompatActivity {
                         for (int i = 0; i < cardArrayList.size(); i++) {
                             if (cardArrayList.get(i).isChecked()) {
                                 Card card = cardArrayList.get(i);
-                                if (CartFragment.checkoutMap != null) {
+                                /*if (CartFragment.checkoutMap != null) {
                                     CartFragment.checkoutMap.put("payment_mode", "stripe");
                                     CartFragment.checkoutMap.put("card_id", String.valueOf(card.getId()));
                                     checkOut(CartFragment.checkoutMap);
-                                }
+                                }*/
+                                GlobalData.orderMap.put("card_id", String.valueOf(card.getId()));
+
+                                if (useWalletChkBox.isChecked())
+                                    GlobalData.orderMap.put("is_wallet", "1");
+                                else
+                                    GlobalData.orderMap.put("is_wallet", "0");
+
+                                placeorder(GlobalData.orderMap);
                                 return;
                             }
                         }
@@ -230,6 +255,51 @@ public class AccountPaymentActivity extends AppCompatActivity {
 //            }
 //        }
         }
+    }
+
+    private void placeorder(HashMap<String, String> map) {
+        customDialog = new CustomDialog(context);
+        customDialog.show();
+        Call<PlaceOrderResponse> call = apiInterface.placeorder(map);
+        call.enqueue(new Callback<PlaceOrderResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<PlaceOrderResponse> call, @NonNull Response<PlaceOrderResponse> response) {
+                customDialog.dismiss();
+                GlobalData.orderMap.clear();
+                if (response.isSuccessful()) {
+                    Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    /*Intent intent = new Intent(context, HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("isFromSignUp", false);
+                    startActivity(intent);
+                    finishAffinity();*/
+
+                    startActivity(new Intent(context, OrdersActivity.class));
+
+//                    startActivity(new Intent(context, CurrentOrderDetailActivity.class).putExtra("orderId",response.body().getOrderId()));
+
+                    //finish();
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        if (jObjError.has("password"))
+                            Toast.makeText(context, jObjError.optJSONArray("password").get(0).toString(), Toast.LENGTH_LONG).show();
+                        else
+                            Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<PlaceOrderResponse> call, @NonNull Throwable t) {
+                GlobalData.orderMap.clear();
+                customDialog.dismiss();
+                Toast.makeText(context, getResources().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     private void checkOut(HashMap<String, String> map) {
@@ -302,9 +372,11 @@ public class AccountPaymentActivity extends AppCompatActivity {
                     accountPaymentAdapter.notifyDataSetChanged();
                     if (cardArrayList.size() == 1) {
                         cardArrayList.get(0).setChecked(true);
-                        GlobalData.isCardChecked = true;
+                        if(!isFromProfile)
+                            proceedToPayBtn.setVisibility(VISIBLE);
+                        GlobalData.isCardChecked = true;/*
                         if (!isWithoutCache)
-                            proceedToPayBtn.performClick();
+                            proceedToPayBtn.performClick();*/
                     }
                 } else {
                     try {

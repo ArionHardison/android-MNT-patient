@@ -45,7 +45,7 @@ public class FoodOrder {
     private double payable;
     @SerializedName("total")
     @Expose
-    private String total;
+    private Double total;
     @SerializedName("discount")
     @Expose
     private String discount;
@@ -215,11 +215,11 @@ public class FoodOrder {
         this.payable = payable;
     }
 
-    public String getTotal() {
+    public Double getTotal() {
         return total;
     }
 
-    public void setTotal(String total) {
+    public void setTotal(Double total) {
         this.total = total;
     }
 

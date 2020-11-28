@@ -189,6 +189,7 @@
     <string name="promocode">Promo Code</string>
     <string name="promo_expires_on">Expires on : </string>
     <string name="use_wallet">DietManager Credit</string>
+    <string name="is_wallet">Use Wallet</string>
     <string name="google_login_failed">Google login failed</string>
     <string name="dispute">Dispute</string>
     <string name="email_us">Email Us</string>

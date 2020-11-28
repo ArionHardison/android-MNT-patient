@@ -32,10 +32,11 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.MyViewHolder> 
         this.selectedIndex=selectedIndex;
     }
 
-    public void setList(List<Days> itemList) {
+    public void setList(List<Days> itemList,int selectedIndex) {
         if (itemList == null) {
             return;
         }
+        this.selectedIndex=selectedIndex;
         dayList.clear();
         dayList.addAll(itemList);
         notifyDataSetChanged();

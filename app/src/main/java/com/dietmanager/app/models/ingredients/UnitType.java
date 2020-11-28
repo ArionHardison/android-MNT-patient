@@ -3,7 +3,9 @@ package com.dietmanager.app.models.ingredients;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UnitType{
+import java.io.Serializable;
+
+public class UnitType implements Serializable {
 
 	@SerializedName("name")
 	private String name;

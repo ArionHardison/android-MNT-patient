@@ -122,7 +122,7 @@ public class EditAccountActivity extends AppCompatActivity {
             phone.setText(GlobalData.profileModel.getPhone());
             System.out.println(GlobalData.profileModel.getAvatar());
             Glide.with(context)
-                    .load(BASE_URL+GlobalData.profileModel.getAvatar())
+                    .load(GlobalData.profileModel.getAvatar())
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.man)
@@ -244,7 +244,7 @@ public class EditAccountActivity extends AppCompatActivity {
             cursor.close();
             // Set the Image in ImageView after decoding the String
             Glide.with(this)
-                    .load(BASE_URL+imgDecodableString)
+                    .load(imgDecodableString)
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.man)

@@ -2,7 +2,9 @@ package com.dietmanager.app.models.ingredients;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Ingredient {
+import java.io.Serializable;
+
+public class Ingredient implements Serializable {
 
 	@SerializedName("dietitian_id")
 	private Object dietitianId;

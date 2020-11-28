@@ -32,6 +32,7 @@ import com.dietmanager.app.models.ChangePassword;
 import com.dietmanager.app.models.CustomerAddress;
 import com.dietmanager.app.models.PlaceOrderResponse;
 import com.dietmanager.app.models.food.FoodIngredient;
+import com.dietmanager.app.models.ingredients.Ingredient;
 import com.dietmanager.app.utils.Utils;
 
 import org.json.JSONObject;
@@ -142,27 +143,36 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
             public void onClick(View v) {
                 //if (ingredientAdapter.getSelected().size() > 0) {
                     if (GlobalData.selectedAddress != null) {
+                        GlobalData.orderMap.clear();
+
                         StringBuilder stringBuilder = new StringBuilder();
                         HashMap<String, String> map = new HashMap<>();
                         double ingredienttotal = Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue();
                         for (int i = 0; i < ingredientAdapter.getSelected().size(); i++) {
                             stringBuilder.append(ingredientAdapter.getSelected().get(i).getIngredient().getName());
                             stringBuilder.append("\n");
-                            map.put("ingredient[" + i + "]", String.valueOf(ingredientAdapter.getSelected().get(i).getIngredient().getId()));
+                            GlobalData.orderMap.put("ingredient[" + i + "]", String.valueOf(ingredientAdapter.getSelected().get(i).getIngredient().getId()));
+                            //map.put("ingredient[" + i + "]", String.valueOf(ingredientAdapter.getSelected().get(i).getIngredient().getId()));
                             ingredienttotal = ingredienttotal + Double.valueOf(ingredientAdapter.getSelected().get(i).getIngredient().getPrice()).doubleValue();
+
                         }
 
                         //Toast.makeText(context, stringBuilder.toString().trim(), Toast.LENGTH_LONG).show();
 
 
-                        map.put("food_id", String.valueOf(GlobalData.selectedfood.getId()));
-                        map.put("date", GlobalData.schedule_date + " " + GlobalData.schedule_time);
+                        GlobalData.orderMap.put("food_id", String.valueOf(GlobalData.selectedfood.getId()));
+                        GlobalData.orderMap.put("date", GlobalData.schedule_date + " " + GlobalData.schedule_time);
                         //map.put("schedule_date", GlobalData.schedule_date);
                         //map.put("schedule_time", GlobalData.schedule_time);
-                        map.put("dietitian_id", String.valueOf(GlobalData.selectedfood.getDietitian().getId()));
-                        map.put("delivery_address_id", "" + GlobalData.selectedAddress.getId());
-                        map.put("payable", String.valueOf(ingredienttotal));
-                        placeorder(map);
+                        GlobalData.orderMap.put("dietitian_id", String.valueOf(GlobalData.selectedfood.getDietitian().getId()));
+                        GlobalData.orderMap.put("delivery_address_id", "" + GlobalData.selectedAddress.getId());
+                        GlobalData.orderMap.put("payable", String.valueOf(ingredienttotal));
+                        //placeorder(map);
+
+
+                        startActivity(new Intent(IngredientsActivity.this, AccountPaymentActivity.class)
+                                .putExtra("is_show_wallet", true)
+                                .putExtra("is_show_cash", false));
                     }else {
                         Toast.makeText(context, getString(R.string.add_address_error), Toast.LENGTH_LONG).show();
                     }

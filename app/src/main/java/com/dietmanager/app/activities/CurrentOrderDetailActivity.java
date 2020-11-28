@@ -281,7 +281,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
             FoodOrder order = GlobalData.isSelectedFoodOrder;
             orderIdTxt.setText("ORDER #000" + order.getId().toString());
 //            itemQuantity = order.getInvoice().getQuantity();
-            priceAmount = order.getPayable();
+            priceAmount = order.getTotal();
             currency = GlobalData.currencySymbol;
             if (itemQuantity == 1)
                 orderItemTxt.setText(String.valueOf(itemQuantity) + " Item, " + currency + String.valueOf(priceAmount));
@@ -364,7 +364,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
             Order order = GlobalData.isSelectedOrder;
             orderIdTxt.setText(getResources().getString(R.string.order_details_page) + " #000" + order.getId().toString());
             itemQuantity = order.getItems().size();
-            priceAmount = order.getInvoice().getPayable();
+            priceAmount = order.getInvoice().getTotalPay();
             currency = order.getItems().get(0).getProduct().getPrices().getCurrency();
             if (itemQuantity == 1)
                 orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.item_count) + " , " + currency + priceAmount);

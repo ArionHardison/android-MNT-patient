@@ -237,7 +237,7 @@ public class SubscribePlanActivity extends AppCompatActivity implements Subscrib
         tv_city.setText(dietitian.getEmail());
         if (dietitian.getAvatar()!=null)
         Glide.with(context)
-                .load(BASE_URL+dietitian.getAvatar())
+                .load(dietitian.getAvatar())
                 .apply(new RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .placeholder(R.drawable.man)

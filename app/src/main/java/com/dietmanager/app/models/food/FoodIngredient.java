@@ -4,7 +4,9 @@ import com.dietmanager.app.models.ingredients.Ingredient;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class FoodIngredient {
+import java.io.Serializable;
+
+public class FoodIngredient implements Serializable {
 
     @SerializedName("id")
     @Expose

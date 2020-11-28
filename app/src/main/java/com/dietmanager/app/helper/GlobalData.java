@@ -44,6 +44,9 @@ public class GlobalData {
     public static Location CURRENT_LOCATION = null;
 
     /*------------Filter--------*/
+
+    public static HashMap<String, String> orderMap=new HashMap<>();
+
     public static boolean isPureVegApplied = false;
     public static boolean isOfferApplied = false;
     public static boolean shouldContinueService = false;
