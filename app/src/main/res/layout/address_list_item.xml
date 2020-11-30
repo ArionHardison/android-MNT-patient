@@ -72,6 +72,7 @@
                     android:minHeight="0dp"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
+                    android:visibility="gone"
                     android:text="@string/edit"
                     android:textColor="@color/colorAccent" />
 

@@ -125,7 +125,7 @@ public class SetDeliveryLocationActivity extends AppCompatActivity {
 
 
     private void getAddress() {
-        Call<List<Address>> call = apiInterface.getAddresses();
+        Call<List<Address>> call = apiInterface.getCustomerAddresses();
         call.enqueue(new Callback<List<Address>>() {
             @Override
             public void onResponse(@NonNull Call<List<Address>> call, @NonNull Response<List<Address>> response) {

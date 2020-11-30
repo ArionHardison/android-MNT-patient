@@ -8,7 +8,7 @@ public class BuildConfigure {
 
 
     /*   Dev Mode*/
-    public static String BASE_URL = "https://www.dietmanager.com/";
+    public static String BASE_URL = "https://dietmanager.com/";
 
     public static String CLIENT_SECRET = "jHwkBi09BdDHCIswdhYszBT78tRc2LBmttngQ1A0";
     public static String CLIENT_ID = "2";

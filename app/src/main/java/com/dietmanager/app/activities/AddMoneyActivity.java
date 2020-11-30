@@ -41,6 +41,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.view.View.VISIBLE;
 import static com.dietmanager.app.helper.GlobalData.cardArrayList;
 import static com.dietmanager.app.helper.GlobalData.isCardChecked;
 
@@ -102,6 +103,13 @@ public class AddMoneyActivity extends AppCompatActivity {
                     cardArrayList.clear();
                     cardArrayList.addAll(response.body());
                     accountPaymentAdapter.notifyDataSetChanged();
+                    if (cardArrayList.size() == 1) {
+                        cardArrayList.get(0).setChecked(true);
+                        GlobalData.isCardChecked = true;
+                    }
+                    else {
+                        GlobalData.isCardChecked = false;
+                    }
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());

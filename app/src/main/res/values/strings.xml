@@ -317,6 +317,7 @@
     <string name="lang_english">English</string>
     <string name="lang_arabic">Arabic</string>
     <string name="alert_logout">Are you sure you want to logout?</string>
+    <string name="alert_unsubscribe">Are you sure you want to unsubscribe?</string>
     <string name="chage_password">Change Password</string>
     <string name="my_account_profile">Manage Address, Favorites, Payment, Orders</string>
     <string name="item_total">Item Total</string>
@@ -530,5 +531,7 @@
     <string name="current_food">Current food</string>
     <string name="suitable_food">Suitable food</string>
     <string name="payable">Payable</string>
+    <string name="unsubscribe">Unsubscribe</string>
+    <string name="waiting_for_new_dietitian_to_invite">Waiting for new dietitian to invite</string>
 
 </resources>

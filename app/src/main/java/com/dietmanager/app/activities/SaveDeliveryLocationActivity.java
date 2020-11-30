@@ -652,11 +652,11 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
         }
     }
 
-    private void saveCustomerAddress(String update) {
+    private void saveCustomerAddress() {
         if (address != null && address.getMapAddress() != null && validate()) {
             customDialog.show();
             apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
-            Call<SaveCustomerAddress> call = apiInterface.saveCustomerAddress(address, update);
+            Call<SaveCustomerAddress> call = apiInterface.saveCustomerAddress(address);
             call.enqueue(new Callback<SaveCustomerAddress>() {
                 @Override
                 public void onResponse(@NonNull Call<SaveCustomerAddress> call, @NonNull Response<SaveCustomerAddress> response) {
@@ -707,7 +707,7 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
             public void onClick(DialogInterface dialog, int which) {
 
                 if (isCustomerAddress) {
-                    saveCustomerAddress("YES");
+                    saveCustomerAddress();
                 }else {
                     saveAddress("YES");
                 }
@@ -885,7 +885,7 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
                     if (address.getId() != null)
                         updateCustomerAddress();
                     else
-                        saveCustomerAddress("NO");
+                        saveCustomerAddress();
                 }else {
                     if (address.getId() != null)
                         updateAddress();

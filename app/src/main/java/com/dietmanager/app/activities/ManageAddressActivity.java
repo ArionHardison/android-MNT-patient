@@ -94,7 +94,7 @@ public class ManageAddressActivity extends AppCompatActivity {
                 .angle(0)
                 .show();
 
-        Call<List<Address>> getres = apiInterface.getAddresses();
+        Call<List<Address>> getres = apiInterface.getCustomerAddresses();
         getres.enqueue(new Callback<List<Address>>() {
             @Override
             public void onResponse(@NonNull Call<List<Address>> call, @NonNull Response<List<Address>> response) {
@@ -123,7 +123,7 @@ public class ManageAddressActivity extends AppCompatActivity {
 
     @OnClick(R.id.add_new_address)
     public void onViewClicked() {
-        startActivity(new Intent(ManageAddressActivity.this, SaveDeliveryLocationActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        startActivity(new Intent(ManageAddressActivity.this, SaveDeliveryLocationActivity.class).putExtra("isCustomer_address", true).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
     }
 
     @Override

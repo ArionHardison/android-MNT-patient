@@ -195,9 +195,10 @@ public class WalletActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<List<WalletHistory>> call, @NonNull Response<List<WalletHistory>> response) {
                 customDialog.dismiss();
                 if (response.isSuccessful()) {
+                    walletHistoryHistoryList.clear();
+                    walletHistoryHistoryList.addAll(response.body());
+                    walletHistoryRecyclerView.getAdapter().notifyDataSetChanged();
                     if (response.body() != null && response.body().size() > 0) {
-                        walletHistoryHistoryList.addAll(response.body());
-                        walletHistoryRecyclerView.getAdapter().notifyDataSetChanged();
                         errorLayout.setVisibility(View.GONE);
                     } else {
                         errorLayout.setVisibility(View.VISIBLE);

@@ -55,7 +55,9 @@ import com.dietmanager.app.helper.ConnectionHelper;
 import com.dietmanager.app.helper.CustomDialog;
 import com.dietmanager.app.helper.GlobalData;
 import com.dietmanager.app.helper.SharedHelper;
+import com.dietmanager.app.models.AddCart;
 import com.dietmanager.app.models.Address;
+import com.dietmanager.app.models.AddressList;
 import com.dietmanager.app.models.Banner;
 import com.dietmanager.app.models.Cuisine;
 import com.dietmanager.app.models.Days;
@@ -64,6 +66,7 @@ import com.dietmanager.app.models.Restaurant;
 import com.dietmanager.app.models.RestaurantsData;
 import com.dietmanager.app.models.Shop;
 import com.dietmanager.app.models.SubscriptionPlan;
+import com.dietmanager.app.models.User;
 import com.dietmanager.app.models.food.FoodItem;
 import com.dietmanager.app.models.food.FoodResponse;
 import com.dietmanager.app.models.timecategory.TimeCategoryItem;
@@ -72,6 +75,7 @@ import com.dietmanager.app.utils.TextUtils;
 import com.dietmanager.app.utils.Utils;
 import com.ethanhua.skeleton.Skeleton;
 import com.ethanhua.skeleton.SkeletonScreen;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
@@ -97,9 +101,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.dietmanager.app.OyolaApplication.commonAccess;
+import static com.dietmanager.app.helper.GlobalData.addCart;
 import static com.dietmanager.app.helper.GlobalData.addressList;
 import static com.dietmanager.app.helper.GlobalData.cuisineIdArrayList;
 import static com.dietmanager.app.helper.GlobalData.cuisineList;
+import static com.dietmanager.app.helper.GlobalData.currencySymbol;
 import static com.dietmanager.app.helper.GlobalData.isOfferApplied;
 import static com.dietmanager.app.helper.GlobalData.isPureVegApplied;
 import static com.dietmanager.app.helper.GlobalData.latitude;
@@ -116,6 +122,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
     ImageView img_reverse;
     @BindView(R.id.img_forward)
     ImageView img_forward;
+    String TAG = "HomeDietFragment";
 
     @BindView(R.id.error_layout)
     LinearLayout errorLayout;
@@ -155,6 +162,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
 
     String[] catagoery = {"Relevance", "Cost for Two", "Delivery Time", "Rating"};
 
+    String device_token, device_UDID;
     ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
 
     public static boolean isFilterApplied = false;
@@ -183,6 +191,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         super.onCreate(savedInstanceState);
         mFragment = new CuisineSelectFragment();
         mFragment.setListener(this);
+        getDeviceToken();
     }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -594,6 +603,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         if (connectionHelper.isConnectingToInternet()) {
             getTimeCategory();
             getFood();
+            getProfile();
             skeletonScreen.show();
         } else {
             Utils.displayMessage(getActivity(), getActivity(), getString(R.string.oops_connect_your_internet));
@@ -687,6 +697,57 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         }
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mMessageReceiver);
         super.onDestroy();
+    }
+    private Context context;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+    public void getDeviceToken() {
+        try {
+            if (!SharedHelper.getKey(context, "device_token").equals("") && SharedHelper.getKey(context, "device_token") != null) {
+                device_token = SharedHelper.getKey(context, "device_token");
+                Log.d(TAG, "GCM Registration Token: " + device_token);
+            } else {
+                device_token = "" + FirebaseInstanceId.getInstance().getToken();
+                SharedHelper.putKey(context, "device_token", "" + FirebaseInstanceId.getInstance().getToken());
+                Log.d(TAG, "Failed to complete token refresh: " + device_token);
+            }
+        } catch (Exception e) {
+            device_token = "COULD NOT GET FCM TOKEN";
+            Log.d(TAG, "Failed to complete token refresh");
+        }
+
+        try {
+            device_UDID = android.provider.Settings.Secure.getString(context.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+            Log.d(TAG, "Device UDID:" + device_UDID);
+        } catch (Exception e) {
+            device_UDID = "COULD NOT GET UDID";
+            e.printStackTrace();
+            Log.d(TAG, "Failed to complete device UDID");
+        }
+    }
+    private void getProfile() {
+//        retryCount++;
+        HashMap<String, String> map = new HashMap<>();
+        map.put("device_type", "android");
+        map.put("device_id", device_UDID);
+        map.put("device_token", device_token);
+        Call<User> getprofile = apiInterface.getProfile(map);
+        getprofile.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                if (response.isSuccessful()) {
+                    GlobalData.profileModel = response.body();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+            }
+        });
     }
 
     @Override

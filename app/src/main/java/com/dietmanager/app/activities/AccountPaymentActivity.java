@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -31,12 +32,17 @@ import com.dietmanager.app.build.api.ApiInterface;
 import com.dietmanager.app.fragments.CartFragment;
 import com.dietmanager.app.helper.CustomDialog;
 import com.dietmanager.app.helper.GlobalData;
+import com.dietmanager.app.helper.SharedHelper;
+import com.dietmanager.app.models.AddCart;
+import com.dietmanager.app.models.AddressList;
 import com.dietmanager.app.models.Card;
 import com.dietmanager.app.models.Message;
 import com.dietmanager.app.models.Order;
 import com.dietmanager.app.models.PlaceOrderResponse;
+import com.dietmanager.app.models.User;
 import com.dietmanager.app.utils.CommonUtils;
 import com.dietmanager.app.utils.TextUtils;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -151,6 +157,7 @@ public class AccountPaymentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = AccountPaymentActivity.this;
+        getDeviceToken();
         customDialog = new CustomDialog(context);
         if (checkoutMap != null && checkoutMap.containsKey("wallet") && checkoutMap.get("wallet").equals("1")
                 && addCart.getPayable() < Double.parseDouble(GlobalData.profileModel.getWalletBalance())) {
@@ -255,6 +262,76 @@ public class AccountPaymentActivity extends AppCompatActivity {
 //            }
 //        }
         }
+    }
+
+
+    String TAG = "AccountPaymentActivity";
+    String device_token, device_UDID;
+    public void getDeviceToken() {
+        try {
+            if (!SharedHelper.getKey(context, "device_token").equals("") && SharedHelper.getKey(context, "device_token") != null) {
+                device_token = SharedHelper.getKey(context, "device_token");
+                Log.d(TAG, "GCM Registration Token: " + device_token);
+            } else {
+                device_token = "" + FirebaseInstanceId.getInstance().getToken();
+                SharedHelper.putKey(context, "device_token", "" + FirebaseInstanceId.getInstance().getToken());
+                Log.d(TAG, "Failed to complete token refresh: " + device_token);
+            }
+        } catch (Exception e) {
+            device_token = "COULD NOT GET FCM TOKEN";
+            Log.d(TAG, "Failed to complete token refresh");
+        }
+
+        try {
+            device_UDID = android.provider.Settings.Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+            Log.d(TAG, "Device UDID:" + device_UDID);
+        } catch (Exception e) {
+            device_UDID = "COULD NOT GET UDID";
+            e.printStackTrace();
+            Log.d(TAG, "Failed to complete device UDID");
+        }
+    }
+
+    private void getProfile() {
+//        retryCount++;
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("device_type", "android");
+        map.put("device_id", device_UDID);
+        map.put("device_token", device_token);
+        Call<User> getprofile = apiInterface.getProfile(map);
+        getprofile.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                if (response.isSuccessful()) {
+                    GlobalData.profileModel = response.body();
+                    if (GlobalData.profileModel.getWalletBalance() != null) {
+                        String walletMoney = GlobalData.profileModel.getWalletBalance();
+                        walletAmtTxt.setText(currencySymbol + " " + walletMoney);
+                    }
+                } else {
+                    if (response.code() == 401) {
+                        Toast.makeText(context, "UnAuthenticated", Toast.LENGTH_LONG).show();
+                        SharedHelper.putKey(context, "logged", "false");
+                        startActivity(new Intent(context, MobileNumberActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finish();
+                    }
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().toString());
+                        Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+
+            }
+        });
     }
 
     private void placeorder(HashMap<String, String> map) {
@@ -511,6 +588,7 @@ public class AccountPaymentActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        getProfile();
         isWithoutCache = getIntent().getBooleanExtra("without_cache", false);
         if (checkoutMap == null || !checkoutMap.containsKey("wallet") ||
                 !checkoutMap.get("wallet").equals("1")

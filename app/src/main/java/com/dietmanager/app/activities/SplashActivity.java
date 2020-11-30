@@ -205,7 +205,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void checkActivity() {
-        if (   GlobalData.subscription !=null) {
+        if (GlobalData.subscription !=null) {
             if (getIntent().getSerializableExtra("customdata") != null &&
                     getIntent().getStringExtra("order_staus").equalsIgnoreCase("ongoing")) {
                 startActivity(new Intent(SplashActivity.this, CurrentOrderDetailActivity.class)
@@ -226,7 +226,13 @@ public class SplashActivity extends AppCompatActivity {
                 }
                 finish();
             }
-        }else {
+        }
+        else if (GlobalData.subscription ==null && GlobalData.profileModel.getUnsubscribe()==1) {
+            startActivity(new Intent(context, WaitingForNewDietitianActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            finishAffinity();
+        }
+        else {
             startActivity(new Intent(context, SubscribePlanActivity.class)
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         }

@@ -99,6 +99,7 @@ public class ManageAddressAdapter extends RecyclerView.Adapter<ManageAddressAdap
                 GlobalData.selectedAddress = list.get(position);
                 Intent intent = new Intent(context, SaveDeliveryLocationActivity.class);
                 intent.putExtra("edit", "yes");
+                intent.putExtra("isCustomer_address", true);
                 context.startActivity(intent);
             } else if (v.getId() == deleteBtn.getId()) {
                 deleteAddress(list.get(position).getId(), position);

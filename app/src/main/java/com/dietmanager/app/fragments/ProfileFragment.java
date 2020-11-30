@@ -26,10 +26,20 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.dietmanager.app.activities.SaveDeliveryLocationActivity;
+import com.dietmanager.app.activities.WaitingForNewDietitianActivity;
+import com.dietmanager.app.build.api.APIError;
+import com.dietmanager.app.build.api.ApiClient;
+import com.dietmanager.app.build.api.ApiInterface;
+import com.dietmanager.app.build.api.ErrorUtils;
+import com.dietmanager.app.helper.CustomDialog;
+import com.dietmanager.app.models.Address;
+import com.dietmanager.app.models.Message;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -59,6 +69,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProfileFragment extends BaseFragment {
 
@@ -99,6 +112,7 @@ public class ProfileFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         this.context = getContext();
         this.activity = getActivity();
+        customDialog=new CustomDialog(context);
     }
 
     @Override
@@ -140,7 +154,7 @@ public class ProfileFragment extends BaseFragment {
             case 2:
                 startActivity(new Intent(context, AccountPaymentActivity.class).putExtra("is_show_wallet", true)
                         .putExtra("is_show_cash", false)
-                        .putExtra("isFromProfile", false).putExtra("without_cache", true));
+                        .putExtra("isFromProfile", true).putExtra("without_cache", true));
                 break;
             case 3:
                 startActivity(new Intent(context, OrdersActivity.class));
@@ -324,7 +338,7 @@ public class ProfileFragment extends BaseFragment {
         }
     }
 
-    @OnClick({R.id.arrow_image, R.id.logout, R.id.myaccount_layout, R.id.login_btn})
+    @OnClick({R.id.arrow_image, R.id.logout, R.id.myaccount_layout, R.id.login_btn, R.id.unsubscribe})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.myaccount_layout:
@@ -348,6 +362,9 @@ public class ProfileFragment extends BaseFragment {
                 break;
             case R.id.logout:
                 alertDialog();
+                break;
+            case R.id.unsubscribe:
+                alertDialogUnsubscribe();
                 break;
             case R.id.login_btn:
                 SharedHelper.putKey(context, "logged", "false");
@@ -463,5 +480,63 @@ public class ProfileFragment extends BaseFragment {
         Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
         pbutton.setTextColor(ContextCompat.getColor(context, R.color.theme));
         pbutton.setTypeface(pbutton.getTypeface(), Typeface.BOLD);
+    }
+
+    public void alertDialogUnsubscribe() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(getResources().getString(R.string.alert_unsubscribe))
+                .setPositiveButton(getResources().getString(R.string.unsubscribe), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        unsubscribeAPI();
+                    }
+                })
+                .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+        nbutton.setTextColor(ContextCompat.getColor(context, R.color.theme));
+        nbutton.setTypeface(nbutton.getTypeface(), Typeface.BOLD);
+        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+        pbutton.setTextColor(ContextCompat.getColor(context, R.color.theme));
+        pbutton.setTypeface(pbutton.getTypeface(), Typeface.BOLD);
+    }
+    public CustomDialog customDialog;
+    public ApiInterface apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
+
+    private void unsubscribeAPI() {
+                customDialog.show();
+                apiInterface = ApiClient.getRetrofit().create(ApiInterface.class);
+                Call<Message> call = apiInterface.unsubscribe();
+                call.enqueue(new Callback<Message>() {
+                    @Override
+                    public void onResponse(@NonNull Call<Message> call, @NonNull Response<Message> response) {
+                        customDialog.dismiss();
+                        if (response.isSuccessful()) {
+                            Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                            activity.startActivity(new Intent(activity, WaitingForNewDietitianActivity.class));
+                            activity.finishAffinity();
+                        } else {
+                            APIError error = ErrorUtils.parseError(response);
+                            if (error != null) {
+                                if (error.getType() != null) {
+                                    Toast.makeText(context, error.getType().get(0), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<Message> call, @NonNull Throwable t) {
+                        customDialog.dismiss();
+                        Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
+                    }
+                });
+
     }
 }

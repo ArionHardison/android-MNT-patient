@@ -44,6 +44,21 @@ public class User {
     @SerializedName("device_id")
     @Expose
     private String deviceId;
+    @SerializedName("invites")
+    @Expose
+    private int invites;
+    @SerializedName("unsubscribe")
+    @Expose
+    private int unsubscribe;
+
+    public int getInvites() {
+        return invites;
+    }
+
+    public int getUnsubscribe() {
+        return unsubscribe;
+    }
+
     @SerializedName("device_type")
     @Expose
     private String deviceType;

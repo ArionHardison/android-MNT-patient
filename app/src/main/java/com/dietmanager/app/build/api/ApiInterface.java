@@ -153,7 +153,10 @@ public interface ApiInterface {
     Call<Address> saveAddress(@Body Address address,@Query("update") String update);
 
     @POST("api/user/customer/address")
-    Call<SaveCustomerAddress> saveCustomerAddress(@Body Address address, @Query("update") String update);
+    Call<SaveCustomerAddress> saveCustomerAddress(@Body Address address);
+
+    @GET("api/user/unsubscribe")
+    Call<Message> unsubscribe();
 
     @PATCH("api/user/address/{id}")
     Call<Address> updateAddress(@Path("id") int id, @Body Address address);
