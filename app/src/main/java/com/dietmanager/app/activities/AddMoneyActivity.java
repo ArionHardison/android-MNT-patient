@@ -135,7 +135,7 @@ public class AddMoneyActivity extends AppCompatActivity {
         super.onBackPressed();
         startActivity(new Intent(this, WalletActivity.class));
         overridePendingTransition(R.anim.anim_nothing, R.anim.slide_out_right);
-        finish();
+        //finish();
     }
 
     @OnClick({R.id.back, R.id.promo_layout, R.id.pay_btn})

@@ -21,6 +21,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -125,7 +126,7 @@ public class SaveDeliveryLocationActivity extends FragmentActivity implements On
     @BindView(R.id.cancel_txt)
     TextView cancelTxt;
     @BindView(R.id.other_address_title_layout)
-    RelativeLayout otherAddressTitleLayout;
+    LinearLayout otherAddressTitleLayout;
     @BindView(R.id.skip_txt)
     TextView skipTxt;
 

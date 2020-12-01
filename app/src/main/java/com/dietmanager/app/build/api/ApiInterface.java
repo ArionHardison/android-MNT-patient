@@ -201,6 +201,9 @@ public interface ApiInterface {
     @POST("api/user/order/{id}")
     Call<Order> updateOrder(@Path("id") int id, @FieldMap HashMap<String, String> params);
 
+    @GET("api/user/respond/invite")
+    Call<Message> acceptOrRejectDietitian(@Query("accept") int accept);
+
     @DELETE("api/user/order/{id}")
     Call<Order> completeOrder(@Path("id") int id, @Query("reason") String reason);
 

@@ -31,7 +31,7 @@ public class Dietitian {
     private String mobile;
     @SerializedName("address")
     @Expose
-    private Object address;
+    private String address="";
     @SerializedName("latitude")
     @Expose
     private Object latitude;
@@ -124,11 +124,11 @@ public class Dietitian {
         this.mobile = mobile;
     }
 
-    public Object getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(Object address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 

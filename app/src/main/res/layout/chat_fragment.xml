@@ -49,6 +49,7 @@
                     android:layout_height="60dp"
                     android:layout_alignParentEnd="true"
                     android:padding="12dp"
+                    android:tint="@color/colorAccent"
                     android:src="@drawable/send" />
             </RelativeLayout>
 

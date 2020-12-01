@@ -223,10 +223,10 @@ public class WalletActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(this, AccountPaymentActivity.class)
-                .putExtra("is_show_wallet", true).putExtra("is_show_cash", false).putExtra("without_cache", true));
-        finish();
-        overridePendingTransition(R.anim.anim_nothing, R.anim.slide_out_right);
+        /*startActivity(new Intent(this, AccountPaymentActivity.class)
+                .putExtra("is_show_wallet", true).putExtra("is_show_cash", false).putExtra("without_cache", true));*/
+        //finish();
+        //overridePendingTransition(R.anim.anim_nothing, R.anim.slide_out_right);
     }
 
     @OnClick(R.id.add_btn)

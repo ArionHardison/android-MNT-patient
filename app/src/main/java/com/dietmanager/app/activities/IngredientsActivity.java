@@ -315,7 +315,7 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
                 stringBuilder.append(ingredientAdapter.getSelected().get(i).getIngredient().getName());
                 //stringBuilder.append("\n");
                 map.put("ingredient["+i+"]", ingredientAdapter.getSelected().get(i).getId().toString());
-                ingredienttotal= ingredienttotal + Double.valueOf(ingredientAdapter.getSelected().get(i).getIngredient().getPrice()).doubleValue();
+                ingredienttotal= ingredienttotal + Double.valueOf(ingredientAdapter.getSelected().get(i).getQuantity()*ingredientAdapter.getSelected().get(i).getIngredient().getPrice()).doubleValue();
             }
             tv_itemnamme.setText(stringBuilder.toString().trim());
             tv_total.setText(GlobalData.currency +" "+ingredienttotal);

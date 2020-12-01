@@ -110,7 +110,7 @@
                     android:textColor="@color/biscay"
                     android:textSize="@dimen/_10sdp"
                     android:drawableStart="@drawable/ic_fill_circle"
-                    android:drawableTint="@color/biscay"
+                    android:drawableTint="#6c55e5"
                     android:drawablePadding="@dimen/_4sdp"
                     android:text="@string/proteins"
                     android:textStyle="normal" />
@@ -145,7 +145,7 @@
                         android:textColor="@color/biscay"
                         android:textSize="@dimen/_10sdp"
                         android:drawableStart="@drawable/ic_fill_circle"
-                        android:drawableTint="@color/colorGoogleLogin"
+                        android:drawableTint="#fd7791"
                         android:drawablePadding="@dimen/_4sdp"
                         android:text="@string/fat"
                         android:textStyle="normal" />
@@ -180,7 +180,7 @@
                         android:textColor="@color/biscay"
                         android:textSize="@dimen/_12sdp"
                         android:drawableStart="@drawable/ic_fill_circle"
-                        android:drawableTint="@color/colorPinkLight"
+                        android:drawableTint="#feb761"
                         android:drawablePadding="@dimen/_4sdp"
                         android:text="@string/carb"
                         android:textStyle="normal" />

@@ -47,7 +47,8 @@
             android:background="@drawable/button_curved"
             android:backgroundTint="@color/colorFacebookLogin"
             android:foreground="?attr/selectableItemBackground"
-            android:padding="12dp">
+            android:padding="12dp"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="18dp"
@@ -81,7 +82,8 @@
             android:background="@drawable/button_curved"
             android:backgroundTint="@color/colorGoogleLogin"
             android:foreground="?attr/selectableItemBackground"
-            android:padding="12dp">
+            android:padding="12dp"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="18dp"
