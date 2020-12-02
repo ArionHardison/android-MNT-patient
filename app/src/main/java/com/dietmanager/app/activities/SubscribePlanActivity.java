@@ -103,8 +103,13 @@ public class SubscribePlanActivity extends AppCompatActivity implements Subscrib
         findViewById(R.id.subscribe_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               if (dietitian!=null)
-                   postsubscribe();
+               if (dietitian!=null){
+                   startActivity(new Intent(SubscribePlanActivity.this, AccountPaymentActivity.class)
+                           .putExtra("is_show_wallet", true).putExtra("isFromSubscribe",true)
+                           .putExtra("is_show_cash", false).putExtra("plan_id",String.valueOf(SubscribtionListAdapter.selectedposition))
+                   .putExtra("dietitian_id",String.valueOf(dietitian.getId())));
+               }
+                   //postsubscribe();
 
             }
         });

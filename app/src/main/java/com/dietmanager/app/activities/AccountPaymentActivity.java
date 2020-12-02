@@ -27,6 +27,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.dietmanager.app.R;
 import com.dietmanager.app.adapter.AccountPaymentAdapter;
+import com.dietmanager.app.adapter.SubscribtionListAdapter;
 import com.dietmanager.app.build.api.ApiClient;
 import com.dietmanager.app.build.api.ApiInterface;
 import com.dietmanager.app.fragments.CartFragment;
@@ -38,6 +39,7 @@ import com.dietmanager.app.models.AddressList;
 import com.dietmanager.app.models.Card;
 import com.dietmanager.app.models.Message;
 import com.dietmanager.app.models.Order;
+import com.dietmanager.app.models.Otp;
 import com.dietmanager.app.models.PlaceOrderResponse;
 import com.dietmanager.app.models.User;
 import com.dietmanager.app.utils.CommonUtils;
@@ -149,9 +151,12 @@ public class AccountPaymentActivity extends AppCompatActivity {
     boolean isCashVisible = false;
     Integer mEstimatedDeliveryTime = 0;
     String mRestaurantType = "";
+    String planId = "";
+    String dietitianId = "";
     boolean mIsImmediate = false;
     private boolean isWithoutCache = false;
     boolean isFromProfile = false;
+    boolean isFromSubscribe = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,15 +188,20 @@ public class AccountPaymentActivity extends AppCompatActivity {
             isCashVisible = getIntent().getBooleanExtra("is_show_cash", false);
             mIsImmediate = getIntent().getBooleanExtra("is_immediate", false);
             isFromProfile = getIntent().getBooleanExtra("isFromProfile", false);
+            isFromSubscribe = getIntent().getBooleanExtra("isFromSubscribe", false);
+            if (isFromSubscribe) {
+                planId = getIntent().getStringExtra("plan_id");
+                dietitianId = getIntent().getStringExtra("dietitian_id");
+            }
             mEstimatedDeliveryTime = getIntent().getIntExtra("est_delivery_time", 0);
             mRestaurantType = getIntent().getStringExtra("delivery_type");
 
-            if(GlobalData.profileModel.getWalletBalance() != null && Double.parseDouble(GlobalData.profileModel.getWalletBalance()) > 0)
+            if (GlobalData.profileModel.getWalletBalance() != null && Double.parseDouble(GlobalData.profileModel.getWalletBalance()) > 0)
                 useWalletLayout.setVisibility(VISIBLE);
             else
                 useWalletLayout.setVisibility(GONE);
 
-            if(isFromProfile){
+            if (isFromProfile) {
                 useWalletLayout.setVisibility(GONE);
                 proceedToPayBtn.setVisibility(GONE);
             }
@@ -230,19 +240,28 @@ public class AccountPaymentActivity extends AppCompatActivity {
                         for (int i = 0; i < cardArrayList.size(); i++) {
                             if (cardArrayList.get(i).isChecked()) {
                                 Card card = cardArrayList.get(i);
+                                if (isFromSubscribe) {
+                                    postsubscribe(String.valueOf(card.getId()));
+                                } else {
                                 /*if (CartFragment.checkoutMap != null) {
                                     CartFragment.checkoutMap.put("payment_mode", "stripe");
                                     CartFragment.checkoutMap.put("card_id", String.valueOf(card.getId()));
                                     checkOut(CartFragment.checkoutMap);
                                 }*/
-                                GlobalData.orderMap.put("card_id", String.valueOf(card.getId()));
+                                    GlobalData.orderMap.put("card_id", String.valueOf(card.getId()));
 
-                                if (useWalletChkBox.isChecked())
-                                    GlobalData.orderMap.put("is_wallet", "1");
-                                else
-                                    GlobalData.orderMap.put("is_wallet", "0");
+                                    if (useWalletChkBox.isChecked())
+                                        GlobalData.orderMap.put("is_wallet", "1");
+                                    else
+                                        GlobalData.orderMap.put("is_wallet", "0");
 
-                                placeorder(GlobalData.orderMap);
+                                    if (cashCheckBox.isChecked())
+                                        GlobalData.orderMap.put("payment_mode", "cash");
+                                    else
+                                        GlobalData.orderMap.put("payment_mode", "card");
+
+                                    placeorder(GlobalData.orderMap);
+                                }
                                 return;
                             }
                         }
@@ -265,8 +284,57 @@ public class AccountPaymentActivity extends AppCompatActivity {
     }
 
 
+    private void postsubscribe(String cardId) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("card_id", cardId);
+
+        if (useWalletChkBox.isChecked())
+            map.put("is_wallet", "1");
+        else
+            map.put("is_wallet", "0");
+
+        map.put("plan_id", planId);
+        map.put("dietitian_id", dietitianId);
+        Call<Otp> postsubscribe = apiInterface.postsubscribe(map);
+        postsubscribe.enqueue(new Callback<Otp>() {
+            @Override
+            public void onResponse(@NonNull Call<Otp> call, @NonNull Response<Otp> response) {
+                if (response.isSuccessful()) {
+                    Otp data = response.body();
+                    Toast.makeText(context, data.getMessagenew(), Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(AccountPaymentActivity.this, SplashActivity.class));
+                    finishAffinity();
+                } else {
+                    if (response.code() == 401) {
+                        Toast.makeText(context, "UnAuthenticated", Toast.LENGTH_LONG).show();
+                        SharedHelper.putKey(context, "logged", "false");
+                        startActivity(new Intent(context, MobileNumberActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finish();
+                    }
+
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        if (jObjError.has("Message"))
+                            Toast.makeText(context, jObjError.optString("Message"), Toast.LENGTH_LONG).show();
+                        else
+                            Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Otp> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
     String TAG = "AccountPaymentActivity";
     String device_token, device_UDID;
+
     public void getDeviceToken() {
         try {
             if (!SharedHelper.getKey(context, "device_token").equals("") && SharedHelper.getKey(context, "device_token") != null) {
@@ -449,7 +517,7 @@ public class AccountPaymentActivity extends AppCompatActivity {
                     accountPaymentAdapter.notifyDataSetChanged();
                     if (cardArrayList.size() == 1) {
                         cardArrayList.get(0).setChecked(true);
-                        if(!isFromProfile)
+                        if (!isFromProfile)
                             proceedToPayBtn.setVisibility(VISIBLE);
                         GlobalData.isCardChecked = true;/*
                         if (!isWithoutCache)
