@@ -72,6 +72,9 @@ public interface ApiInterface {
     Call<User> getProfile(@QueryMap HashMap<String, String> params);
 
 
+    @FormUrlEncoded
+    @POST("api/user/chat/push")
+    Call<Object> chatPost(@FieldMap HashMap<String, String> paramss);
 
     @Multipart
     @POST("api/user/profile")

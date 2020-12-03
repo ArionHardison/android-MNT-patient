@@ -533,5 +533,6 @@
     <string name="payable">Payable</string>
     <string name="unsubscribe">Unsubscribe</string>
     <string name="waiting_for_new_dietitian_to_invite">Waiting for new dietitian to invite</string>
+    <string name="chat">Chat</string>
 
 </resources>

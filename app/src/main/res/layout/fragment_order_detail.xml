@@ -34,7 +34,14 @@
             <!-- Order Payment Detail Layout -->
 
             <include layout="@layout/order_payment_detail_item" />
-
+            <Button
+                android:id="@+id/btnChat"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:background="@drawable/button_border_theme_color"
+                android:text="@string/chat"
+                android:textColor="@color/theme" />
         </LinearLayout>
 
 

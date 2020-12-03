@@ -1,6 +1,7 @@
 package com.dietmanager.app.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -9,9 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.dietmanager.app.R;
+import com.dietmanager.app.activities.fcm_chat.ChatActivity;
 import com.dietmanager.app.adapter.OrderDetailAdapter;
 import com.dietmanager.app.helper.GlobalData;
 import com.dietmanager.app.models.FoodOrder;
@@ -47,6 +50,8 @@ public class OrderDetailFragment extends Fragment {
     TextView itemTaxAmount;
     @BindView(R.id.total_amount)
     TextView totalAmount;
+    @BindView(R.id.btnChat)
+    Button btnChat;
     @BindView(R.id.item_incredient_amount)
     TextView item_incredient_amount;
     List<Orderingredient> itemList;
@@ -110,7 +115,17 @@ public class OrderDetailFragment extends Fragment {
             totalAmount.setText(GlobalData.currency + order.getTotal());
         }
 
-
+        btnChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("channel_name", "" + order.getId());
+                intent.putExtra("channel_sender_id", "" + order.getUserId());
+                intent.putExtra("is_push", false);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
