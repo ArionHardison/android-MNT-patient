@@ -74,6 +74,9 @@ public class User {
     @SerializedName("wallet_balance")
     @Expose
     private String walletBalance;
+    @SerializedName("diet_tax")
+    @Expose
+    private String dietTax;
     @SerializedName("otp")
     @Expose
     private String otp;
@@ -125,6 +128,30 @@ public class User {
 
     public String getPrivacy() {
         return privacy;
+    }
+
+    public void setInvites(int invites) {
+        this.invites = invites;
+    }
+
+    public void setUnsubscribe(int unsubscribe) {
+        this.unsubscribe = unsubscribe;
+    }
+
+    public String getDietTax() {
+        return dietTax;
+    }
+
+    public void setDietTax(String diet_tax) {
+        this.dietTax = diet_tax;
+    }
+
+    public List<CAddress> getcAddresses() {
+        return cAddresses;
+    }
+
+    public void setcAddresses(List<CAddress> cAddresses) {
+        this.cAddresses = cAddresses;
     }
 
     public void setPrivacy(String privacy) {

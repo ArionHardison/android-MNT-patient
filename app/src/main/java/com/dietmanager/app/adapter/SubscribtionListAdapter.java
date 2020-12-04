@@ -49,7 +49,10 @@ public class SubscribtionListAdapter extends RecyclerView.Adapter<SubscribtionLi
 
         foodIngredient = list.get(position);
         holder.rd_text.setText(foodIngredient.getTitle());
-        holder.tv_price.setText(GlobalData.currency+foodIngredient.getPrice());
+
+        double price=0.0;
+        price=Double.parseDouble(foodIngredient.getPrice())+(Double.parseDouble(foodIngredient.getPrice())*Double.parseDouble(GlobalData.profileModel.getDietTax())/100);
+        holder.tv_price.setText(GlobalData.currency+price);
         if (checkedPosition == -1) {
             holder.rd_text.setChecked(false);
         } else {

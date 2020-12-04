@@ -24,6 +24,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:padding="8dp"
+                android:visibility="gone"
                 android:src="@drawable/logo_app"
                 android:tint="@color/colorPrimary" />
 

@@ -123,6 +123,8 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
             StringBuilder stringBuilder = new StringBuilder();
             HashMap<String, String> map = new HashMap<>();
             double ingredienttotal= Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue();
+            double ingredienttotalWithTax= Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue();
+
             stringBuilder.append(GlobalData.selectedfood.getName());
             for (int i = 0; i < ingredientAdapter.getSelected().size(); i++) {
                 stringBuilder.append("+");
@@ -131,11 +133,15 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
                 map.put("ingredient["+i+"]", ingredientAdapter.getSelected().get(i).getId().toString());
                 ingredienttotal= ingredienttotal + Double.valueOf(ingredientAdapter.getSelected().get(i).getIngredient().getPrice()).doubleValue();
             }
+            ingredienttotalWithTax=ingredienttotal+ingredienttotal*Double.parseDouble(GlobalData.profileModel.getDietTax())/100;
+
             tv_itemnamme.setText(stringBuilder.toString().trim());
-            tv_total.setText(GlobalData.currency +" "+ingredienttotal);
+            tv_total.setText(GlobalData.currency +" "+ingredienttotalWithTax);
         } else {
+            double totalWithTax= Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue();
+            totalWithTax=totalWithTax+totalWithTax*Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue()/100;
             tv_itemnamme.setText(GlobalData.selectedfood.getName());
-            tv_total.setText(GlobalData.currency + " " + Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue());
+            tv_total.setText(GlobalData.currency + " " + totalWithTax);
         }
 
         findViewById(R.id.next_btn).setOnClickListener(new View.OnClickListener() {
@@ -148,6 +154,8 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
                         StringBuilder stringBuilder = new StringBuilder();
                         HashMap<String, String> map = new HashMap<>();
                         double ingredienttotal = Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue();
+                        double ingredienttotalWithTax= Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue();
+
                         for (int i = 0; i < ingredientAdapter.getSelected().size(); i++) {
                             stringBuilder.append(ingredientAdapter.getSelected().get(i).getIngredient().getName());
                             stringBuilder.append("\n");
@@ -156,6 +164,7 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
                             ingredienttotal = ingredienttotal + Double.valueOf(ingredientAdapter.getSelected().get(i).getIngredient().getPrice()).doubleValue();
 
                         }
+                        ingredienttotalWithTax=ingredienttotal+ingredienttotal*Double.parseDouble(GlobalData.profileModel.getDietTax())/100;
 
                         //Toast.makeText(context, stringBuilder.toString().trim(), Toast.LENGTH_LONG).show();
 
@@ -166,7 +175,7 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
                         //map.put("schedule_time", GlobalData.schedule_time);
                         GlobalData.orderMap.put("dietitian_id", String.valueOf(GlobalData.selectedfood.getDietitian().getId()));
                         GlobalData.orderMap.put("delivery_address_id", "" + GlobalData.selectedAddress.getId());
-                        GlobalData.orderMap.put("payable", String.valueOf(ingredienttotal));
+                        GlobalData.orderMap.put("payable", String.valueOf(ingredienttotalWithTax));
                         //placeorder(map);
 
 
@@ -309,6 +318,7 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
             StringBuilder stringBuilder = new StringBuilder();
             HashMap<String, String> map = new HashMap<>();
             double ingredienttotal= Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue();
+            double ingredienttotalWithTax= Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue();
             stringBuilder.append(GlobalData.selectedfood.getName());
             for (int i = 0; i < ingredientAdapter.getSelected().size(); i++) {
                 stringBuilder.append("+");
@@ -317,10 +327,15 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
                 map.put("ingredient["+i+"]", ingredientAdapter.getSelected().get(i).getId().toString());
                 ingredienttotal= ingredienttotal + Double.valueOf(ingredientAdapter.getSelected().get(i).getQuantity()*ingredientAdapter.getSelected().get(i).getIngredient().getPrice()).doubleValue();
             }
+            ingredienttotalWithTax=ingredienttotal+ingredienttotal*Double.parseDouble(GlobalData.profileModel.getDietTax())/100;
+
             tv_itemnamme.setText(stringBuilder.toString().trim());
-            tv_total.setText(GlobalData.currency +" "+ingredienttotal);
+            tv_total.setText(GlobalData.currency +" "+ingredienttotalWithTax);
         } else {
-            tv_total.setText(GlobalData.currency +" "+Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue());
+            double totalWithTax= Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue();
+            totalWithTax=totalWithTax+totalWithTax*Double.parseDouble(GlobalData.profileModel.getDietTax())/100;
+
+            tv_total.setText(GlobalData.currency +" "+totalWithTax);
             tv_itemnamme.setText(GlobalData.selectedfood.getName());
         }
     }

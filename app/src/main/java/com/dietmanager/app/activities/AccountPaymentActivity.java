@@ -376,6 +376,10 @@ public class AccountPaymentActivity extends AppCompatActivity {
                     if (GlobalData.profileModel.getWalletBalance() != null) {
                         String walletMoney = GlobalData.profileModel.getWalletBalance();
                         walletAmtTxt.setText(currencySymbol + " " + walletMoney);
+                        if (!isFromProfile&&GlobalData.profileModel.getWalletBalance() != null && Double.parseDouble(GlobalData.profileModel.getWalletBalance()) > 0)
+                            useWalletLayout.setVisibility(VISIBLE);
+                        else
+                            useWalletLayout.setVisibility(GONE);
                     }
                 } else {
                     if (response.code() == 401) {
