@@ -64,7 +64,7 @@ public class ChatMessageAdapter extends ArrayAdapter<Chat> {
                 TextView textView = (TextView) convertView.findViewById(R.id.text);
                 textView.setText(getItem(position).getText());
                 TextView tvSenderName = (TextView) convertView.findViewById(R.id.tvSenderName);
-                tvSenderName.setText(chat.getSender());
+                tvSenderName.setText(chat.getName()+" ("+chat.getSender()+")");
                 //TextView timestamp = (TextView) convertView.findViewById(R.id.timestamp);
                 //timestamp.setText(String.valueOf(getDisplayableTime(chat.getTimestamp())));
             }
