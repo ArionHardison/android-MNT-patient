@@ -105,7 +105,8 @@ public class OrderDetailFragment extends Fragment {
             deliveryCharges.setText(GlobalData.currency + order.getPayable());
             itemTaxAmount.setText(GlobalData.currency + order.getTax());
             item_incredient_amount.setText(GlobalData.currency + order.getIngredientAmount());
-
+            if(order.getStatus().equalsIgnoreCase("COMPLETED"))
+                btnChat.setVisibility(View.GONE);
             //discount = order.getInvoice().getDiscount();
 
             //discountAmount.setText(currency + "-" +/*GlobalData.roundoff(*/discount/*)*/);

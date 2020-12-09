@@ -35,6 +35,8 @@ import com.dietmanager.app.models.ShopDetail;
 import com.dietmanager.app.models.SubscriptionList;
 import com.dietmanager.app.models.User;
 import com.dietmanager.app.models.WalletHistory;
+import com.dietmanager.app.models.dietitiandetail.DietitianDetailedResponse;
+import com.dietmanager.app.models.dietitianlist.DietitianListItem;
 import com.dietmanager.app.models.food.FoodItem;
 import com.dietmanager.app.models.food.FoodResponse;
 import com.dietmanager.app.models.timecategory.TimeCategoryItem;
@@ -70,6 +72,9 @@ public interface ApiInterface {
 
     @GET("api/user/profile")
     Call<User> getProfile(@QueryMap HashMap<String, String> params);
+
+    @GET("api/user/dietitian/{id}/profile")
+    Call<DietitianDetailedResponse> getDietitianDetailed(@Path("id")int id);
 
 
     @FormUrlEncoded
@@ -305,4 +310,6 @@ public interface ApiInterface {
     @POST("api/user/place/order")
     Call<PlaceOrderResponse> placeorder(@FieldMap HashMap<String, String> params);
 
+    @GET("api/user/search/dietitian")
+    Call<List<DietitianListItem>> getDietitianList(@Query("page") int page,@Query("dietitian") String dietitian);
 }

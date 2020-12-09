@@ -1,0 +1,74 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.DietitianListActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+
+        <LinearLayout
+            android:id="@+id/llSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar"
+            android:orientation="horizontal"
+            android:padding="@dimen/_8sdp">
+
+            <EditText
+                android:id="@+id/search_et"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_weight="1"
+                android:background="@drawable/border_primary"
+                android:drawableEnd="@drawable/places_ic_search"
+                android:hint="@string/search_here"
+                android:textColor="@color/colorBlack"
+                android:padding="@dimen/_5sdp"
+                android:textSize="@dimen/_10sdp" />
+
+        </LinearLayout>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/llSearch"
+            android:id="@+id/mNestedScrollView"
+            android:descendantFocusability="blocksDescendants">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dietitian_list_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+            android:id="@+id/llNoRecords"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:src="@drawable/order_is_empty"/>
+            <TextView
+                android:id="@+id/lblNoRecords"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="@dimen/_13sdp"
+                android:fontFamily="@font/nunito_semibold"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="@string/dietitian_not_found"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

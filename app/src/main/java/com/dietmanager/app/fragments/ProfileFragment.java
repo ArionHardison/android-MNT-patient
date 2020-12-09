@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.dietmanager.app.activities.DietitianListActivity;
 import com.dietmanager.app.activities.SaveDeliveryLocationActivity;
 import com.dietmanager.app.activities.WaitingForNewDietitianActivity;
 import com.dietmanager.app.build.api.APIError;
@@ -159,11 +160,14 @@ public class ProfileFragment extends BaseFragment {
             case 3:
                 startActivity(new Intent(context, OrdersActivity.class));
                 break;
-            case 4:
+            /*case 4:
                 startActivity(new Intent(context, PromotionActivity.class));
                 break;
             case 5:
                 startActivity(new Intent(context, ReferralActivity.class));
+                break;*/
+            case 4:
+                startActivity(new Intent(context, DietitianListActivity.class));
                 break;
 //            case 3:
 //                changeLanguage();
@@ -222,6 +226,7 @@ public class ProfileFragment extends BaseFragment {
             listIcons.add(R.drawable.ic_favorite_light);
             listIcons.add(R.drawable.payment);
             listIcons.add(R.drawable.ic_orders_light);
+            listIcons.add(R.drawable.ic_diet);
             //listIcons.add(R.drawable.notification_background);
           //  listIcons.add(R.drawable.ic_share);
 //            listIcons.add(R.drawable.ic_g_translate_light);

@@ -534,5 +534,19 @@
     <string name="unsubscribe">Unsubscribe</string>
     <string name="waiting_for_new_dietitian_to_invite">Waiting for new dietitian to invite</string>
     <string name="chat">Chat</string>
+    <string name="dietitians">Dietitians</string>
+    <string name="dietitian_not_found">Dietitian not found</string>
+    <string name="no_experience">No experience</string>
+    <string name="years_experience">%d year experience</string>
+    <string name="years_experience_plural">%d years experience</string>
+    <string name="count_years_experience">%d+ years</string>
+    <string name="dietitian_profile">Dietitian Profile</string>
+    <string name="subscription_plan">Subscription Plan</string>
+    <string name="not_found">Not Found</string>
+    <string name="experience_colon">Experience :</string>
+    <string name="age_colon">Age :</string>
+    <string name="mail_colon">Mail :</string>
+    <string name="phone_colon">Phone :</string>
+    <string name="name_colon">Name :</string>
 
 </resources>

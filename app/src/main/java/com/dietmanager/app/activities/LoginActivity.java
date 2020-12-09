@@ -360,6 +360,7 @@ public class LoginActivity extends BaseActivity {
                     GlobalData.addressList.setAddresses(response.body().getAddresses());
                     GlobalData.subscription = profileModel.getSubscriptionPlan();
                     GlobalData.currency =profileModel.getCurrency();
+                    GlobalData.currencySymbol =profileModel.getCurrency();
 //                    Toast.makeText(context, getResources().getString(R.string.regsiter_success), Toast.LENGTH_SHORT).show();
                     if (   GlobalData.subscription !=null) {
                         Intent intent = new Intent(context, HomeActivity.class);

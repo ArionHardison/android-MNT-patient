@@ -139,7 +139,7 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
             tv_total.setText(GlobalData.currency +" "+ingredienttotalWithTax);
         } else {
             double totalWithTax= Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue();
-            totalWithTax=totalWithTax+totalWithTax*Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue()/100;
+            totalWithTax=totalWithTax+totalWithTax*Double.valueOf(GlobalData.profileModel.getDietTax()).doubleValue()/100;
             tv_itemnamme.setText(GlobalData.selectedfood.getName());
             tv_total.setText(GlobalData.currency + " " + totalWithTax);
         }
