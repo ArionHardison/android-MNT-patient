@@ -272,6 +272,10 @@ public interface ApiInterface {
     Call<Message> addCard(@Field("stripe_token") String stripeToken);
 
     @FormUrlEncoded
+    @POST("api/user/follow/dietitian")
+    Call<Message> followOrUnFollow(@Field("dietitian_id") int dietitianId);
+
+    @FormUrlEncoded
     @POST("api/user/add/money")
     Call<AddMoney> addMoney(@FieldMap HashMap<String, String> params);
 
@@ -312,4 +316,7 @@ public interface ApiInterface {
 
     @GET("api/user/search/dietitian")
     Call<List<DietitianListItem>> getDietitianList(@Query("page") int page,@Query("dietitian") String dietitian);
+
+    @GET("api/user/following/dietitian")
+    Call<List<DietitianListItem>> getFollowingsList();
 }

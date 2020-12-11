@@ -488,7 +488,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_home_marker));
                     destinationMarker = mMap.addMarker(destMarker);
                     CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(destLatLng, 14);
-                    mMap.moveCamera(cu);
+                    //mMap.moveCamera(cu);
                 }
 
 //

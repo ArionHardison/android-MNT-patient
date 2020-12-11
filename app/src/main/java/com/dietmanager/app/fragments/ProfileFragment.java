@@ -32,14 +32,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.dietmanager.app.activities.DietitianListActivity;
-import com.dietmanager.app.activities.SaveDeliveryLocationActivity;
+import com.dietmanager.app.activities.FollowingsActivity;
 import com.dietmanager.app.activities.WaitingForNewDietitianActivity;
 import com.dietmanager.app.build.api.APIError;
 import com.dietmanager.app.build.api.ApiClient;
 import com.dietmanager.app.build.api.ApiInterface;
 import com.dietmanager.app.build.api.ErrorUtils;
+import com.dietmanager.app.build.configure.BuildConfigure;
 import com.dietmanager.app.helper.CustomDialog;
-import com.dietmanager.app.models.Address;
 import com.dietmanager.app.models.Message;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -55,8 +55,6 @@ import com.dietmanager.app.activities.FavouritesActivity;
 import com.dietmanager.app.activities.LoginActivity;
 import com.dietmanager.app.activities.ManageAddressActivity;
 import com.dietmanager.app.activities.OrdersActivity;
-import com.dietmanager.app.activities.PromotionActivity;
-import com.dietmanager.app.activities.ReferralActivity;
 import com.dietmanager.app.adapter.ProfileSettingsAdapter;
 import com.dietmanager.app.helper.GlobalData;
 import com.dietmanager.app.helper.SharedHelper;
@@ -150,7 +148,7 @@ public class ProfileFragment extends BaseFragment {
                 startActivity(new Intent(context, ManageAddressActivity.class));
                 break;
             case 1:
-                startActivity(new Intent(context, FavouritesActivity.class));
+                startActivity(new Intent(context, FollowingsActivity.class));
                 break;
             case 2:
                 startActivity(new Intent(context, AccountPaymentActivity.class).putExtra("is_show_wallet", true)
@@ -331,7 +329,7 @@ public class ProfileFragment extends BaseFragment {
     private void initView() {
         if (GlobalData.profileModel != null) {
             Glide.with(context)
-                    .load(GlobalData.profileModel.getAvatar())
+                    .load(BuildConfigure.BASE_URL+GlobalData.profileModel.getAvatar())
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.man)

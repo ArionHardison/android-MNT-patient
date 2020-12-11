@@ -129,6 +129,7 @@ public class ChatActivity extends AppCompatActivity {
         chat.setRead(0);
         chat.setReadedMembers(readedMembers);
         chat.setType("text");
+        chat.setImage(GlobalData.profileModel.getAvatar());
         chat.setName(GlobalData.profileModel.getName());
         chat.setText(messageStr);
         myRef.push().setValue(chat);

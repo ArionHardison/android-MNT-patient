@@ -29,6 +29,7 @@ import com.dietmanager.app.R;
 import com.dietmanager.app.adapter.SubscribtionListAdapter;
 import com.dietmanager.app.build.api.ApiClient;
 import com.dietmanager.app.build.api.ApiInterface;
+import com.dietmanager.app.build.configure.BuildConfigure;
 import com.dietmanager.app.helper.ConnectionHelper;
 import com.dietmanager.app.helper.GlobalData;
 import com.dietmanager.app.helper.SharedHelper;
@@ -242,7 +243,7 @@ public class SubscribePlanActivity extends AppCompatActivity implements Subscrib
         tv_city.setText(dietitian.getEmail());
         if (dietitian.getAvatar()!=null)
         Glide.with(context)
-                .load(dietitian.getAvatar())
+                .load(BuildConfigure.BASE_URL+dietitian.getAvatar())
                 .apply(new RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .placeholder(R.drawable.man)

@@ -2,11 +2,22 @@ package com.dietmanager.app.models.dietitiandetail;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Dietitian{
 
 	@SerializedName("flickr_link")
 	private String flickrLink;
+	@SerializedName("followers")
+	private List<FollowersItem> followers;
 
+	public void setFollowers(List<FollowersItem> followers){
+		this.followers = followers;
+	}
+
+	public List<FollowersItem> getFollowers(){
+		return followers;
+	}
 	@SerializedName("gender")
 	private String gender;
 

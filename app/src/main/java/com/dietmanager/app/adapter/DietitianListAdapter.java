@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.dietmanager.app.R;
+import com.dietmanager.app.build.configure.BuildConfigure;
 import com.dietmanager.app.models.dietitianlist.DietitianListItem;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class DietitianListAdapter extends RecyclerView.Adapter<DietitianListAdap
         DietitianListItem item = list.get(position);
         holder.userName.setText(item.getName());
             Glide.with(context)
-                    .load(item.getAvatar())
+                    .load(BuildConfigure.BASE_URL+item.getAvatar())
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.man)

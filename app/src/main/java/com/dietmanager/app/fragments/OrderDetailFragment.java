@@ -105,7 +105,7 @@ public class OrderDetailFragment extends Fragment {
             deliveryCharges.setText(GlobalData.currency + order.getPayable());
             itemTaxAmount.setText(GlobalData.currency + order.getTax());
             item_incredient_amount.setText(GlobalData.currency + order.getIngredientAmount());
-            if(order.getStatus().equalsIgnoreCase("COMPLETED"))
+            if(order.getStatus().equalsIgnoreCase("COMPLETED")||order.getStatus().equalsIgnoreCase("CANCELLED"))
                 btnChat.setVisibility(View.GONE);
             //discount = order.getInvoice().getDiscount();
 

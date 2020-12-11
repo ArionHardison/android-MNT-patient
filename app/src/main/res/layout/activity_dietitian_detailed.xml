@@ -20,20 +20,37 @@
             android:layout_height="match_parent"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
-            android:padding="@dimen/_7sdp"
             android:contentDescription="@string/app_name"
+            android:padding="@dimen/_7sdp"
             android:src="@drawable/ic_back" />
 
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center_vertical"
             android:padding="@dimen/_7sdp"
             android:text="@string/dietitian_profile"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/text_large" />
+
+        <Button
+            android:id="@+id/follow_unfollow_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_28sdp"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:background="@drawable/button_corner_bg_theme"
+            android:drawableStart="@drawable/ic_follow"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/follow"
+            android:padding="@dimen/_6sdp"
+            android:textAllCaps="false"
+            android:textColor="@color/colorTextWhite"
+            android:textSize="@dimen/_11sdp" />
 
 
     </LinearLayout>
@@ -72,156 +89,160 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_28sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_marginEnd="@dimen/_28sdp"
                         android:layout_marginBottom="@dimen/_8sdp"
-                        android:layout_marginTop="@dimen/_8sdp"
                         android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/nunito_semibold"
-                            android:textColor="@color/colorSecondaryText"
-                            android:text="@string/name_colon"
-                            android:textSize="@dimen/_13sdp" />
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/tvName"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:layout_weight="1"
-                            android:layout_marginStart="@dimen/_4sdp"
-                            android:textStyle="bold"
-                            android:paddingTop="@dimen/_4sdp"
-                            android:fontFamily="@font/nunito_semibold"
-                            android:singleLine="true"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_13sdp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:text="@string/name_colon"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textSize="@dimen/_13sdp" />
+
+                            <TextView
+                                android:id="@+id/tvName"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_4sdp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:maxLines="1"
+                                android:paddingTop="@dimen/_4sdp"
+                                android:singleLine="true"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/_13sdp"
+                                android:textStyle="bold" />
 
 
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        </LinearLayout>
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/nunito_semibold"
-                            android:textColor="@color/colorSecondaryText"
-                            android:text="@string/phone_colon"
-                            android:textSize="@dimen/_13sdp" />
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/tvPhone"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/nunito_semibold"
-                            android:layout_marginStart="@dimen/_4sdp"
-                            android:paddingTop="@dimen/_4sdp"
-                            android:textStyle="bold"
-                            android:singleLine="true"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_13sdp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:text="@string/phone_colon"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textSize="@dimen/_13sdp" />
+
+                            <TextView
+                                android:id="@+id/tvPhone"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_4sdp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:maxLines="1"
+                                android:paddingTop="@dimen/_4sdp"
+                                android:singleLine="true"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/_13sdp"
+                                android:textStyle="bold" />
 
 
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        </LinearLayout>
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/nunito_semibold"
-                            android:textColor="@color/colorSecondaryText"
-                            android:text="@string/mail_colon"
-                            android:textSize="@dimen/_13sdp" />
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/tvMail"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:fontFamily="@font/nunito_semibold"
-                            android:layout_weight="1"
-                            android:textStyle="bold"
-                            android:layout_marginStart="@dimen/_4sdp"
-                            android:paddingTop="@dimen/_4sdp"
-                            android:singleLine="true"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_13sdp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:text="@string/mail_colon"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textSize="@dimen/_13sdp" />
+
+                            <TextView
+                                android:id="@+id/tvMail"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_4sdp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:maxLines="1"
+                                android:paddingTop="@dimen/_4sdp"
+                                android:singleLine="true"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/_13sdp"
+                                android:textStyle="bold" />
 
 
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        </LinearLayout>
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/nunito_semibold"
-                            android:textColor="@color/colorSecondaryText"
-                            android:text="@string/age_colon"
-                            android:textSize="@dimen/_13sdp" />
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/tvAge"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:fontFamily="@font/nunito_semibold"
-                            android:textStyle="bold"
-                            android:layout_weight="1"
-                            android:layout_marginStart="@dimen/_4sdp"
-                            android:paddingTop="@dimen/_4sdp"
-                            android:singleLine="true"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_13sdp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:text="@string/age_colon"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textSize="@dimen/_13sdp" />
+
+                            <TextView
+                                android:id="@+id/tvAge"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_4sdp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:maxLines="1"
+                                android:paddingTop="@dimen/_4sdp"
+                                android:singleLine="true"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/_13sdp"
+                                android:textStyle="bold" />
 
 
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        </LinearLayout>
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/nunito_semibold"
-                            android:textColor="@color/colorSecondaryText"
-                            android:text="@string/experience_colon"
-                            android:textSize="@dimen/_13sdp" />
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/tvExperience"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:layout_weight="1"
-                            android:textStyle="bold"
-                            android:layout_marginStart="@dimen/_4sdp"
-                            android:paddingTop="@dimen/_4sdp"
-                            android:singleLine="true"
-                            android:fontFamily="@font/nunito_semibold"
-                            android:textColor="@color/colorBlack"
-                            android:textSize="@dimen/_13sdp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:text="@string/experience_colon"
+                                android:textColor="@color/colorSecondaryText"
+                                android:textSize="@dimen/_13sdp" />
+
+                            <TextView
+                                android:id="@+id/tvExperience"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_4sdp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/nunito_semibold"
+                                android:maxLines="1"
+                                android:paddingTop="@dimen/_4sdp"
+                                android:singleLine="true"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/_13sdp"
+                                android:textStyle="bold" />
 
 
-                    </LinearLayout>
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -231,10 +252,10 @@
                         android:layout_height="match_parent"
                         android:layout_margin="@dimen/_18sdp"
                         android:background="@color/colorWhite"
+                        android:padding="@dimen/_8sdp"
                         android:text="No description found"
-                        android:visibility="gone"
                         android:textSize="@dimen/_13sdp"
-                        android:padding="@dimen/_8sdp"/>
+                        android:visibility="gone" />
 
                 </LinearLayout>
             </RelativeLayout>
@@ -245,13 +266,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
                 android:layout_marginBottom="@dimen/_6sdp"
-                android:layout_marginTop="@dimen/_8sdp"
                 android:text="@string/subscription_plan"
                 android:textAllCaps="true"
                 android:textColor="@color/colorBlack"
                 android:textSize="@dimen/_12sdp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -272,14 +294,13 @@
                         android:paddingBottom="@dimen/_12sdp">
 
 
-
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/subscription_percentage_rv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:nestedScrollingEnabled="false"
-                            tools:listitem="@layout/list_item_subscription_percentage"
-                            android:orientation="vertical" />
+                            android:orientation="vertical"
+                            tools:listitem="@layout/list_item_subscription_percentage" />
 
                     </LinearLayout>
                 </LinearLayout>

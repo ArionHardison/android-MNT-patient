@@ -500,6 +500,7 @@
     <string name="no_FoodItem_found">No Food Item found</string>
     <string name="no_dietitian_found_in_your_location">No dietitian found in your location</string>
     <string name="follow">Follow</string>
+    <string name="followings">Followings</string>
     <string name="subscribe_now">Subscribe Now</string>
     <string name="healthy_foods">Healthy Foods</string>
     <string name="planned_diet">Planned Diet</string>
@@ -548,5 +549,6 @@
     <string name="mail_colon">Mail :</string>
     <string name="phone_colon">Phone :</string>
     <string name="name_colon">Name :</string>
+    <string name="unfollow">Unfollow</string>
 
 </resources>

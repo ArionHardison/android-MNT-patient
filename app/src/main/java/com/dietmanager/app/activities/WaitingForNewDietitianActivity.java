@@ -22,6 +22,7 @@ import com.dietmanager.app.R;
 import com.dietmanager.app.build.api.ApiClient;
 import com.dietmanager.app.build.api.ApiInterface;
 import com.dietmanager.app.helper.CustomDialog;
+import com.dietmanager.app.helper.GlobalData;
 import com.dietmanager.app.helper.SharedHelper;
 import com.dietmanager.app.models.Dietitian_;
 import com.dietmanager.app.models.Message;
@@ -36,6 +37,8 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.dietmanager.app.helper.GlobalData.profileModel;
 
 public class WaitingForNewDietitianActivity extends AppCompatActivity {
     ScheduledExecutorService scheduler;
@@ -74,6 +77,7 @@ private CustomDialog customDialog;
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 if (response.isSuccessful()) {
+                    GlobalData.currencySymbol = response.body().getCurrency();
                     if(response.body().getInvites()==1){
                         if (!isNewIncomingRequestShowing) {
                             newIncomingDietitianPopup(response.body().getDietitian());

@@ -6,12 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.dietmanager.app.R;
+import com.dietmanager.app.build.configure.BuildConfigure;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -65,8 +72,17 @@ public class ChatMessageAdapter extends ArrayAdapter<Chat> {
                 textView.setText(getItem(position).getText());
                 TextView tvSenderName = (TextView) convertView.findViewById(R.id.tvSenderName);
                 tvSenderName.setText(chat.getName()+" ("+chat.getSender()+")");
+                CircleImageView profilePic = (CircleImageView) convertView.findViewById(R.id.profilePic);
+                Glide.with(context)
+                        .load(BuildConfigure.BASE_URL+chat.getImage())
+                        .apply(new RequestOptions()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .placeholder(R.drawable.logo_app)
+                                .error(R.drawable.logo_app))
+                        .into(profilePic);
                 //TextView timestamp = (TextView) convertView.findViewById(R.id.timestamp);
                 //timestamp.setText(String.valueOf(getDisplayableTime(chat.getTimestamp())));
+
             }
         }
 

@@ -11,6 +11,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import androidx.annotation.NonNull;
+
+import com.dietmanager.app.build.configure.BuildConfigure;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -122,7 +124,7 @@ public class EditAccountActivity extends AppCompatActivity {
             phone.setText(GlobalData.profileModel.getPhone());
             System.out.println(GlobalData.profileModel.getAvatar());
             Glide.with(context)
-                    .load(GlobalData.profileModel.getAvatar())
+                    .load(BuildConfigure.BASE_URL+GlobalData.profileModel.getAvatar())
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.man)

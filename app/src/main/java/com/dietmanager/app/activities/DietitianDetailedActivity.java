@@ -1,7 +1,10 @@
 package com.dietmanager.app.activities;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +25,11 @@ import com.dietmanager.app.build.api.ApiInterface;
 import com.dietmanager.app.build.configure.BuildConfigure;
 import com.dietmanager.app.helper.CustomDialog;
 import com.dietmanager.app.helper.GlobalData;
+import com.dietmanager.app.models.Message;
 import com.dietmanager.app.models.dietitiandetail.DietitianDetailedResponse;
+import com.google.android.gms.common.util.CollectionUtils;
+
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,6 +56,8 @@ public class DietitianDetailedActivity extends AppCompatActivity {
     TextView mobileNo;
     @BindView(R.id.tvMail)
     TextView tvMail;
+    @BindView(R.id.follow_unfollow_btn)
+    Button followUnfollowBtn;
     @BindView(R.id.tvSubscription)
     TextView tvSubscription;
     @BindView(R.id.tvAge)
@@ -79,6 +88,41 @@ public class DietitianDetailedActivity extends AppCompatActivity {
             dietitianId = bundle.getInt("dietitianId");
         }
         getDietitianProfile(dietitianId);
+        followUnfollowBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                followOrUnFollow();
+            }
+        });
+    }
+
+    public void followOrUnFollow() {
+        customDialog.show();
+        Call<Message> call = apiInterface.followOrUnFollow(dietitianId);
+        call.enqueue(new Callback<Message>() {
+            @Override
+            public void onResponse(@NonNull Call<Message> call, @NonNull Response<Message> response) {
+                customDialog.dismiss();
+                if (response.isSuccessful()) {
+                    Toast.makeText(DietitianDetailedActivity.this, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    getDietitianProfile(dietitianId);
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(DietitianDetailedActivity.this, jObjError.optString("error"), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(DietitianDetailedActivity.this, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Message> call, @NonNull Throwable t) {
+                Toast.makeText(DietitianDetailedActivity.this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
+                customDialog.dismiss();
+            }
+        });
+
     }
 
     @Override
@@ -131,6 +175,16 @@ public class DietitianDetailedActivity extends AppCompatActivity {
             } else {
                 tvDescription.setVisibility(View.GONE);
             }
+            if(CollectionUtils.isEmpty(dietitianDetailedResponse.getDietitian().getFollowers())){
+                followUnfollowBtn.setText(getString(R.string.follow));
+                Drawable img = getResources().getDrawable(R.drawable.ic_follow);
+                followUnfollowBtn.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+            }
+            else{
+                followUnfollowBtn.setText(getString(R.string.unfollow));
+                Drawable img = getResources().getDrawable(R.drawable.ic_unfollow);
+                followUnfollowBtn.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
+            }
             if(dietitianDetailedResponse.getDietitian().getDob()!=null) {
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                 Date birthdate = null;
@@ -171,7 +225,7 @@ public class DietitianDetailedActivity extends AppCompatActivity {
                 tvExperience.setText(getString(R.string.no_experience));
 
             Glide.with(this)
-                    .load(dietitianDetailedResponse.getDietitian().getAvatar())
+                    .load(BuildConfigure.BASE_URL+dietitianDetailedResponse.getDietitian().getAvatar())
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.shimmer_bg)

@@ -190,6 +190,7 @@ public class SetDeliveryLocationActivity extends AppCompatActivity {
                 }else{
                     intent.putExtra("place_address", place.getName() + ", " + place.getAddress());
                 }
+                intent.putExtra("isCustomer_address", isCustomerAddress);
                 intent.putExtra("latitude", ""+place.getLatLng().latitude);
                 intent.putExtra("longitude", ""+place.getLatLng().longitude);
                 startActivityForResult(intent,SET_COMPLETE);

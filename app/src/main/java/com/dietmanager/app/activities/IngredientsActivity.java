@@ -136,12 +136,12 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
             ingredienttotalWithTax=ingredienttotal+ingredienttotal*Double.parseDouble(GlobalData.profileModel.getDietTax())/100;
 
             tv_itemnamme.setText(stringBuilder.toString().trim());
-            tv_total.setText(GlobalData.currency +" "+ingredienttotalWithTax);
+            tv_total.setText(String.format("%s %.2f",GlobalData.currency,ingredienttotalWithTax));
         } else {
             double totalWithTax= Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue();
             totalWithTax=totalWithTax+totalWithTax*Double.valueOf(GlobalData.profileModel.getDietTax()).doubleValue()/100;
             tv_itemnamme.setText(GlobalData.selectedfood.getName());
-            tv_total.setText(GlobalData.currency + " " + totalWithTax);
+            tv_total.setText(String.format("%s %.2f",GlobalData.currency,totalWithTax));
         }
 
         findViewById(R.id.next_btn).setOnClickListener(new View.OnClickListener() {
@@ -330,12 +330,12 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
             ingredienttotalWithTax=ingredienttotal+ingredienttotal*Double.parseDouble(GlobalData.profileModel.getDietTax())/100;
 
             tv_itemnamme.setText(stringBuilder.toString().trim());
-            tv_total.setText(GlobalData.currency +" "+ingredienttotalWithTax);
+            tv_total.setText(String.format("%s %.2f",GlobalData.currency,ingredienttotalWithTax));
         } else {
             double totalWithTax= Double.valueOf(GlobalData.selectedfood.getPrice()).doubleValue();
             totalWithTax=totalWithTax+totalWithTax*Double.parseDouble(GlobalData.profileModel.getDietTax())/100;
 
-            tv_total.setText(GlobalData.currency +" "+totalWithTax);
+            tv_total.setText(String.format("%s %.2f",GlobalData.currency,totalWithTax));
             tv_itemnamme.setText(GlobalData.selectedfood.getName());
         }
     }
