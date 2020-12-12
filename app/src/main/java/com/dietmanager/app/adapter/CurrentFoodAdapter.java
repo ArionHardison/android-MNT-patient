@@ -59,7 +59,6 @@ public class CurrentFoodAdapter extends RecyclerView.Adapter<CurrentFoodAdapter.
         holder.tv_proteins.setText(String.valueOf(foodItem.getProtein()));
         holder.tv_fat.setText(String.valueOf(foodItem.getFat()));
         holder.tv_carb.setText(String.valueOf(foodItem.getCarbohydrates()));
-        if (foodItem.getAvatar()!=null)
             Glide.with(context).load(BASE_URL +foodItem.getAvatar())
                 .apply(new RequestOptions().centerCrop().placeholder(R.drawable.shimmer_bg).error(R.drawable.shimmer_bg).dontAnimate()).into(holder.imgFood);
 holder.cardItem.setOnClickListener(new View.OnClickListener() {

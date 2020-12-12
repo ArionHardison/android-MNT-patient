@@ -179,6 +179,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
     String previousStatus = "";
     CustomDialog customDialog;
     GoogleMap mMap;
+    boolean isPolyLineAdded=false;
     private GoogleApiClient mGoogleApiClient;
 
     private Marker sourceMarker;
@@ -827,6 +828,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
             if (lineOptions != null) {
                 List<PatternItem> pattern = Arrays.asList(new Dash(30), new Gap(20));
                 mMap.addPolyline(lineOptions).setPattern(pattern);
+                isPolyLineAdded=true;
             } else {
                 Log.d("onPostExecute", "without Polylines drawn");
             }
@@ -1049,6 +1051,34 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                     providerMarker = mMap.addMarker(markerOptions);
                 } catch (Exception e) {
                     e.printStackTrace();
+                }
+            }
+
+            if(!isPolyLineAdded){
+                if (isSelectedFoodOrder.getChef()!=null) {
+                    if (isSelectedFoodOrder.getCustomerAddress() != null) {
+                        String url = getUrl(isSelectedFoodOrder.getCustomerAddress().getLatitude(), isSelectedFoodOrder.getCustomerAddress().getLongitude()
+                                , isSelectedFoodOrder.getChef().getLatitude(), isSelectedFoodOrder.getChef().getLongitude());
+                        FetchUrl fetchUrl = new FetchUrl();
+                        fetchUrl.execute(url);
+                    } else {
+                        if (currentLocation != null) {
+                            String url = getUrl(currentLocation.getLatitude(), currentLocation.getLongitude()
+                                    , isSelectedFoodOrder.getChef().getLatitude(), isSelectedFoodOrder.getChef().getLongitude());
+                            FetchUrl fetchUrl = new FetchUrl();
+                            fetchUrl.execute(url);
+                        }
+                    }
+                }
+
+                if (isSelectedFoodOrder.getCustomerAddress() != null) {
+                    destLatLng = new LatLng(isSelectedFoodOrder.getCustomerAddress().getLatitude(), isSelectedFoodOrder.getCustomerAddress().getLongitude());
+                    MarkerOptions destMarker = new MarkerOptions()
+                            .position(destLatLng).title("Destination").draggable(true)
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_marker));
+                    destinationMarker = mMap.addMarker(destMarker);
+                    CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(destLatLng, 14);
+                    mMap.moveCamera(cu);
                 }
             }
         }

@@ -36,7 +36,7 @@ public class FoodItem {
 	private int id;
 
 	@SerializedName("avatar")
-	private Object avatar;
+	private String avatar="";
 
 	@SerializedName("status")
 	private String status;
@@ -93,7 +93,7 @@ public class FoodItem {
 		return id;
 	}
 
-	public Object getAvatar(){
+	public String getAvatar(){
 		return avatar;
 	}
 

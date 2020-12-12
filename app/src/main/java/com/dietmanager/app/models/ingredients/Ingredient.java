@@ -25,7 +25,7 @@ public class Ingredient implements Serializable {
 	private int id;
 
 	@SerializedName("avatar")
-	private Object avatar;
+	private String avatar;
 
 	@SerializedName("unit_type")
 	private UnitType unitType;
@@ -57,7 +57,7 @@ public class Ingredient implements Serializable {
 		return id;
 	}
 
-	public Object getAvatar(){
+	public String getAvatar(){
 		return avatar;
 	}
 

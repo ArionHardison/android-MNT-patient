@@ -55,6 +55,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -79,7 +80,7 @@ public class SubscribePlanActivity extends AppCompatActivity implements Subscrib
     @BindView(R.id.tv_city)
     TextView tv_city;
     @BindView(R.id.diet_img)
-    ImageView diet_img;
+    CircleImageView diet_img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

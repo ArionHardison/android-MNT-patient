@@ -75,19 +75,17 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
 
         FoodIngredient foodIngredient = list.get(position);
         holder.tv_name.setText(foodIngredient.getIngredient().getName());
-        if (foodIngredient.getIngredient().getUnitType()!=null){
-            holder.tv_unit.setText(foodIngredient.getQuantity()+" "+foodIngredient.getIngredient().getUnitType().getName());
+        if (foodIngredient.getIngredient().getUnitType() != null) {
+            holder.tv_unit.setText(foodIngredient.getQuantity() + " " + foodIngredient.getIngredient().getUnitType().getName());
         }
-        if (foodIngredient.getIngredient().getAvatar()!=null) {
-            if (foodIngredient.getIngredient().getAvatar().toString().startsWith("http")) {
-                Glide.with(context).load(foodIngredient.getIngredient().getAvatar())
-                        .apply(new RequestOptions().centerCrop().placeholder(R.drawable.shimmer_bg)
-                                .error(R.drawable.shimmer_bg).dontAnimate()).into(holder.img_item);
-            }else {
-                Glide.with(context).load(BASE_URL+foodIngredient.getIngredient().getAvatar())
-                        .apply(new RequestOptions().centerCrop().placeholder(R.drawable.shimmer_bg)
-                                .error(R.drawable.shimmer_bg).dontAnimate()).into(holder.img_item);
-            }
+        if (foodIngredient.getIngredient().getAvatar().toString().startsWith("http")) {
+            Glide.with(context).load(foodIngredient.getIngredient().getAvatar())
+                    .apply(new RequestOptions().centerCrop().placeholder(R.drawable.shimmer_bg)
+                            .error(R.drawable.shimmer_bg).dontAnimate()).into(holder.img_item);
+        } else {
+            Glide.with(context).load(BASE_URL + foodIngredient.getIngredient().getAvatar())
+                    .apply(new RequestOptions().centerCrop().placeholder(R.drawable.shimmer_bg)
+                            .error(R.drawable.shimmer_bg).dontAnimate()).into(holder.img_item);
         }
         holder.check_food.setChecked(foodIngredient.isChecked());
         holder.check_food.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -99,12 +97,13 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
 
                 }
                 foodIngredient.setChecked(!foodIngredient.isChecked());
-                if (listener!=null)
+                if (listener != null)
                     listener.onClicked(position);
 
             }
         });
     }
+
     public ArrayList<FoodIngredient> getSelected() {
         ArrayList<FoodIngredient> selected = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
@@ -119,13 +118,14 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
     public int getItemCount() {
         return list.size();
     }
-    public interface ICheckclickListener{
+
+    public interface ICheckclickListener {
         public void onClicked(int day);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView img_item;
-        private TextView tv_name,tv_unit;
+        private TextView tv_name, tv_unit;
         CheckBox check_food;
 
 
