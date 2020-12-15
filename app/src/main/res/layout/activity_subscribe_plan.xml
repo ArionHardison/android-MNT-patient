@@ -259,6 +259,20 @@
             android:orientation="vertical"
             tools:listitem="@layout/list_item_subscribe"/>
     </LinearLayout>
+    <TextView
+        android:id="@+id/tvNotFound"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8sp"
+        android:fontFamily="@font/nunito_semibold"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:maxLines="3"
+        android:text="@string/plan_not_available_please_contact_dietitian"
+        android:textColor="@color/colorBlack"
+        android:textSize="14sp"
+        tools:ignore="MissingPrefix" />
     <Button
         android:id="@+id/subscribe_btn"
         android:layout_width="match_parent"

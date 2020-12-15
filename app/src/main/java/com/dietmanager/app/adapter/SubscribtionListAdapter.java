@@ -25,13 +25,14 @@ public class SubscribtionListAdapter extends RecyclerView.Adapter<SubscribtionLi
     private Context context;
     SubscriptionList foodIngredient;
     private SubscribtionListAdapter.OnSelectedListener mListener;
-    public static int checkedPosition = 0;
+    public int checkedPosition = 0;
     public static int selectedposition = 0;
 
 
     public SubscribtionListAdapter(List<SubscriptionList> list, Context con) {
         this.list = list;
         this.context = con;
+        selectedposition=0;
 
     }
 
@@ -70,7 +71,7 @@ public class SubscribtionListAdapter extends RecyclerView.Adapter<SubscribtionLi
                     if (checkedPosition != position) {
                         notifyItemChanged(checkedPosition);
                         checkedPosition = position;
-                        selectedposition = foodIngredient.getId();
+                        selectedposition = list.get(position).getId();
                     }
 
                 }

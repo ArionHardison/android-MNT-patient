@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -33,9 +34,11 @@ public class SubscriptionPercentageAdapter extends RecyclerView.Adapter<Subscrip
     private List<SubscriptionItem> list;
     private Context context;
     private int totalSubscribers;
+    private ISubscriptionPercentageListener listener;
 
-    public SubscriptionPercentageAdapter(Context context,int totalSubscribers) {
+    public SubscriptionPercentageAdapter(Context context,int totalSubscribers,ISubscriptionPercentageListener listener) {
         this.totalSubscribers = totalSubscribers;
+        this.listener = listener;
         list = new ArrayList<>();
         this.context = context;
     }
@@ -61,8 +64,18 @@ public class SubscriptionPercentageAdapter extends RecyclerView.Adapter<Subscrip
     public void onBindViewHolder(@NonNull SubscriptionPercentageAdapter.MyViewHolder holder, final int position) {
         SubscriptionItem item = list.get(position);
         holder.tvSubscriptionTitle.setText(String.valueOf(item.getTitle()));
-        int percentage=item.getPlanCount()*totalSubscribers/100;
+        int percentage=0;
+        if(item.getTotalPlanCount()!=0) {
+            double value=item.getPlanCount() / item.getTotalPlanCount()*100;
+            percentage=(int)value;
+        }
         holder.progressSubscribe.setProgress(percentage);
+        holder.itemLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onPercentageClicked(item);
+            }
+        });
     }
 
     @Override
@@ -72,6 +85,7 @@ public class SubscriptionPercentageAdapter extends RecyclerView.Adapter<Subscrip
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
+        LinearLayout itemLayout;
         TextView tvSubscriptionTitle;
         ProgressBar progressSubscribe;
 
@@ -79,6 +93,11 @@ public class SubscriptionPercentageAdapter extends RecyclerView.Adapter<Subscrip
             super(view);
             tvSubscriptionTitle = view.findViewById(R.id.tvSubscriptionTitle);
             progressSubscribe = view.findViewById(R.id.progressSubscribe);
+            itemLayout = view.findViewById(R.id.item_layout);
         }
+    }
+
+    public interface ISubscriptionPercentageListener{
+        void onPercentageClicked(SubscriptionItem item);
     }
 }

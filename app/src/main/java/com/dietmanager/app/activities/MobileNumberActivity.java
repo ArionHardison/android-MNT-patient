@@ -248,6 +248,11 @@ public class MobileNumberActivity extends AppCompatActivity {
                         } else {
                             startActivity(new Intent(context, HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                         }
+                    }
+                    else if (GlobalData.subscription ==null && GlobalData.profileModel.getUnsubscribe()==1) {
+                        startActivity(new Intent(context, WaitingForNewDietitianActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finishAffinity();
                     }else {
                         startActivity(new Intent(context, SubscribePlanActivity.class)
                                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));

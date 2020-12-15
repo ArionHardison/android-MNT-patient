@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -42,17 +43,27 @@ public class SubMenuDetailedActivity extends AppCompatActivity {
 
     @BindView(R.id.tv_description)
     TextView tv_description;
+    @BindView(R.id.llBookingButton)
+    LinearLayout llBookingButton;
     @BindView(R.id.img_food)
     ImageView img_food;
     public String schedule_time = "";
     public String schedule_date = "";
     Calendar myCalendar = Calendar.getInstance();
+    private boolean dontShowBookingButton=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_menu_detailed);
         ButterKnife.bind(this);
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            dontShowBookingButton = bundle.getBoolean("dontShowBookingButton",false);
+            if(dontShowBookingButton)
+                llBookingButton.setVisibility(View.GONE);
+        }
         if (GlobalData.selectedfood!=null){
             FoodItem foodItem = GlobalData.selectedfood;
             ((TextView)findViewById(R.id.toolbar).findViewById(R.id.title)).setText(GlobalData.selectedTimeCategoryName);

@@ -38,10 +38,12 @@ import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 import com.dietmanager.app.HomeActivity;
 import com.dietmanager.app.OyolaApplication;
 import com.dietmanager.app.R;
+import com.dietmanager.app.activities.ChangeFoodActivity;
 import com.dietmanager.app.activities.FilterActivity;
 import com.dietmanager.app.activities.LoginActivity;
 import com.dietmanager.app.activities.MobileNumberActivity;
 import com.dietmanager.app.activities.SetDeliveryLocationActivity;
+import com.dietmanager.app.activities.SubMenuDetailedActivity;
 import com.dietmanager.app.activities.SubscribePlanActivity;
 import com.dietmanager.app.adapter.DaysAdapter;
 import com.dietmanager.app.adapter.DaysAdapter;
@@ -316,7 +318,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
                 days.setId(totaldaysList.get(i).getId());
                 daysList.add(days);
             }
-            daysAdapter.setList(daysList, selectedIndex);
+            daysAdapter.setList(daysList, selectedIndex,true);
         }
 
 
@@ -455,6 +457,11 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
         }
     }
 
+    @Override
+    public void onFoodClicked() {
+        context.startActivity(new Intent(context, ChangeFoodActivity.class));
+    }
+
     private void loadmore() {
         daysList.clear();
         setDates(totaldaysList.get(startposition).getDate(), totaldaysList.get(lastposition - 1).getDate());
@@ -468,7 +475,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
             days.setId(totaldaysList.get(i).getId());
             daysList.add(days);
         }
-        daysAdapter.setList(daysList, selectedIndex);
+        daysAdapter.setList(daysList, selectedIndex,true);
     }
 
 
@@ -517,7 +524,7 @@ public class HomeDietFragment extends Fragment implements AdapterView.OnItemSele
 
     private void getFood() {
         customDialog.show();
-        Call<List<FoodItem>> call = apiInterface.getFood(selectedDay, selectedTimeCategory);
+        Call<List<FoodItem>> call = apiInterface.getFood(selectedDay, selectedTimeCategory,null);
         call.enqueue(new Callback<List<FoodItem>>() {
             @Override
             public void onResponse(@NonNull Call<List<FoodItem>> call, @NonNull Response<List<FoodItem>> response) {

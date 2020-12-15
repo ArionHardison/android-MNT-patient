@@ -24,6 +24,7 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.MyViewHolder> 
     private int selectedIndex=0;
     private Context context;
     private IDayListener listener;
+    private boolean isShowDate=true;
 
     public DaysAdapter(Context context, int selectedIndex, IDayListener listener) {
         this.listener = listener;
@@ -32,7 +33,8 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.MyViewHolder> 
         this.selectedIndex=selectedIndex;
     }
 
-    public void setList(List<Days> itemList,int selectedIndex) {
+    public void setList(List<Days> itemList,int selectedIndex,boolean isShowDate) {
+        this.isShowDate = isShowDate;
         if (itemList == null) {
             return;
         }
@@ -56,7 +58,8 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.MyViewHolder> 
 
         Days day = dayList.get(position);
        // holder.tvDay.setText(String.valueOf(day.getId()));
-        holder.tvDayDummy.setText(day.getDay());
+        if(isShowDate)
+            holder.tvDayDummy.setText(day.getDay());
         holder.tvDay.setText(day.getName());
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -550,5 +550,6 @@
     <string name="phone_colon">Phone :</string>
     <string name="name_colon">Name :</string>
     <string name="unfollow">Unfollow</string>
+    <string name="plan_not_available_please_contact_dietitian">Plan not available. Please contact dietitian.</string>
 
 </resources>

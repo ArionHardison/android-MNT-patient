@@ -1,11 +1,13 @@
 package com.dietmanager.app.activities;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,10 +29,12 @@ import com.dietmanager.app.helper.CustomDialog;
 import com.dietmanager.app.helper.GlobalData;
 import com.dietmanager.app.models.Message;
 import com.dietmanager.app.models.dietitiandetail.DietitianDetailedResponse;
+import com.dietmanager.app.models.dietitiandetail.SubscriptionItem;
 import com.google.android.gms.common.util.CollectionUtils;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -45,7 +49,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DietitianDetailedActivity extends AppCompatActivity {
+public class DietitianDetailedActivity extends AppCompatActivity implements SubscriptionPercentageAdapter.ISubscriptionPercentageListener {
 
 
     @BindView(R.id.user_img)
@@ -54,6 +58,8 @@ public class DietitianDetailedActivity extends AppCompatActivity {
     TextView tvName;
     @BindView(R.id.tvPhone)
     TextView mobileNo;
+    @BindView(R.id.llPlan)
+    LinearLayout llPlan;
     @BindView(R.id.tvMail)
     TextView tvMail;
     @BindView(R.id.follow_unfollow_btn)
@@ -175,17 +181,18 @@ public class DietitianDetailedActivity extends AppCompatActivity {
             } else {
                 tvDescription.setVisibility(View.GONE);
             }
-            if(CollectionUtils.isEmpty(dietitianDetailedResponse.getDietitian().getFollowers())){
+            if (CollectionUtils.isEmpty(dietitianDetailedResponse.getDietitian().getFollowers())) {
+                llPlan.setVisibility(View.GONE);
                 followUnfollowBtn.setText(getString(R.string.follow));
                 Drawable img = getResources().getDrawable(R.drawable.ic_follow);
                 followUnfollowBtn.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
-            }
-            else{
+            } else {
+                llPlan.setVisibility(View.VISIBLE);
                 followUnfollowBtn.setText(getString(R.string.unfollow));
                 Drawable img = getResources().getDrawable(R.drawable.ic_unfollow);
                 followUnfollowBtn.setCompoundDrawablesWithIntrinsicBounds(img, null, null, null);
             }
-            if(dietitianDetailedResponse.getDietitian().getDob()!=null) {
+            if (dietitianDetailedResponse.getDietitian().getDob() != null) {
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                 Date birthdate = null;
                 try {
@@ -195,21 +202,19 @@ public class DietitianDetailedActivity extends AppCompatActivity {
                     tvAge.setText(R.string.not_found);
                     e.printStackTrace();
                 }
-            }
-            else {
+            } else {
                 tvAge.setText(R.string.not_found);
             }
 
-            if(dietitianDetailedResponse.getSubscription().size()>0) {
+            if (dietitianDetailedResponse.getSubscription().size() > 0) {
                 tvSubscription.setVisibility(View.VISIBLE);
                 subscriptionPercentageRv.setVisibility(View.VISIBLE);
-                SubscriptionPercentageAdapter adapter = new SubscriptionPercentageAdapter(this, dietitianDetailedResponse.getTotalSubscribers());
+                SubscriptionPercentageAdapter adapter = new SubscriptionPercentageAdapter(this, dietitianDetailedResponse.getTotalSubscribers(), this);
                 subscriptionPercentageRv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
                 subscriptionPercentageRv.setHasFixedSize(true);
                 subscriptionPercentageRv.setAdapter(adapter);
                 adapter.setList(dietitianDetailedResponse.getSubscription());
-            }
-            else {
+            } else {
                 subscriptionPercentageRv.setVisibility(View.GONE);
                 tvSubscription.setVisibility(View.GONE);
             }
@@ -225,7 +230,7 @@ public class DietitianDetailedActivity extends AppCompatActivity {
                 tvExperience.setText(getString(R.string.no_experience));
 
             Glide.with(this)
-                    .load(BuildConfigure.BASE_URL+dietitianDetailedResponse.getDietitian().getAvatar())
+                    .load(BuildConfigure.BASE_URL + dietitianDetailedResponse.getDietitian().getAvatar())
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.shimmer_bg)
@@ -234,7 +239,19 @@ public class DietitianDetailedActivity extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    public void onPercentageClicked(SubscriptionItem item) {
+        if(item.getId()==GlobalData.subscription.getPlanId()||item.getAccessMethod().equalsIgnoreCase("PUBLIC")){
+            Intent intent=new Intent(DietitianDetailedActivity.this,DietitianMealPlanActivity.class);
+            intent.putExtra("planId",item.getId());
+            intent.putExtra("planNoOfDays",item.getNoOfDays());
+            intent.putExtra("planName",item.getTitle());
+            startActivity(intent);
+        }
+        else {
+            Toast.makeText(DietitianDetailedActivity.this,"This is private plan. Please subscribe to view",Toast.LENGTH_LONG).show();
+        }
+    }
 
     private void getDietitianProfile(int dietitianId) {
         customDialog.show();

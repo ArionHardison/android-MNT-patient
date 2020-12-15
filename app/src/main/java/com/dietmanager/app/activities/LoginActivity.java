@@ -362,12 +362,17 @@ public class LoginActivity extends BaseActivity {
                     GlobalData.currency =profileModel.getCurrency();
                     GlobalData.currencySymbol =profileModel.getCurrency();
 //                    Toast.makeText(context, getResources().getString(R.string.regsiter_success), Toast.LENGTH_SHORT).show();
-                    if (   GlobalData.subscription !=null) {
+                    if (GlobalData.subscription !=null) {
                         Intent intent = new Intent(context, HomeActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         intent.putExtra("isFromSignUp", true);
                         startActivity(intent);
                         finish();
+                    }
+                    else if (GlobalData.subscription ==null && GlobalData.profileModel.getUnsubscribe()==1) {
+                        startActivity(new Intent(context, WaitingForNewDietitianActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finishAffinity();
                     }else {
                         startActivity(new Intent(context, SubscribePlanActivity.class)
                                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));

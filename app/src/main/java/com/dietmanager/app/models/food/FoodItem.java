@@ -17,6 +17,10 @@ public class FoodItem {
 	@SerializedName("time_category_id")
 	private String timeCategoryId;
 
+
+	@SerializedName("dietitian_food")
+	private DietitianFood dietitianFood;
+
 	@SerializedName("name")
 	private String name;
 
@@ -63,6 +67,14 @@ public class FoodItem {
 
 	public Dietitian getDietitian() {
 		return dietitian;
+	}
+
+	public DietitianFood getDietitianFood() {
+		return dietitianFood;
+	}
+
+	public void setDietitianFood(DietitianFood dietitianFood) {
+		this.dietitianFood = dietitianFood;
 	}
 
 	public String getPrice(){

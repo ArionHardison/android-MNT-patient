@@ -13,7 +13,7 @@ public class WalletHistory {
     private Integer userId;
     @SerializedName("amount")
     @Expose
-    private String amount;
+    private Double amount;
     @SerializedName("message")
     @Expose
     private String message;
@@ -43,11 +43,11 @@ public class WalletHistory {
         this.userId = userId;
     }
 
-    public String getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 

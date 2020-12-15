@@ -20,6 +20,7 @@ import com.dietmanager.app.R;
 import com.dietmanager.app.activities.SubMenuDetailedActivity;
 import com.dietmanager.app.helper.GlobalData;
 import com.dietmanager.app.models.food.FoodItem;
+import com.dietmanager.app.utils.IOnClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,10 @@ import static com.dietmanager.app.build.configure.BuildConfigure.BASE_URL;
 public class SuitableFoodAdapter extends RecyclerView.Adapter<SuitableFoodAdapter.MyViewHolder> {
     private List<FoodItem> foodItems;
     private Context context;
+    private IOnClickListener listener;
 
-    public SuitableFoodAdapter(Context context) {
+    public SuitableFoodAdapter(Context context, IOnClickListener listener) {
+        this.listener = listener;
         foodItems = new ArrayList<>();
         this.context = context;
     }
@@ -66,8 +69,7 @@ public class SuitableFoodAdapter extends RecyclerView.Adapter<SuitableFoodAdapte
             @Override
             public void onClick(View v) {
                 GlobalData.selectedfood = foodItem;
-                context.startActivity(new Intent(context, SubMenuDetailedActivity.class));
-
+                listener.onItemClicked();
             }
         });
         holder.check_food.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

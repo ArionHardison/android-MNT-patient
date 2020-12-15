@@ -304,7 +304,7 @@ public interface ApiInterface {
    Call<List<TimeCategoryItem>> getTimeCategory();
 
     @GET("api/user/diet/meal")
-    Call<List<FoodItem>> getFood(@Query("day") Integer param1, @Query("category_id") Integer param2);
+    Call<List<FoodItem>> getFood(@Query("day") Integer param1, @Query("category_id") Integer param2, @Query("plan") Integer param3);
 
     @FormUrlEncoded
     @POST("api/user/subscription")

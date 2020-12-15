@@ -26,7 +26,10 @@ public class SubscriptionItem{
 	private String createdAt;
 
 	@SerializedName("plan_count")
-	private int planCount;
+	private double planCount;
+
+	@SerializedName("total_plan_count")
+	private double totalPlanCount;
 
 	@SerializedName("id")
 	private int id;
@@ -36,6 +39,14 @@ public class SubscriptionItem{
 
 	@SerializedName("status")
 	private String status;
+
+	public double getTotalPlanCount() {
+		return totalPlanCount;
+	}
+
+	public void setTotalPlanCount(double totalPlanCount) {
+		this.totalPlanCount = totalPlanCount;
+	}
 
 	public void setDietitianId(int dietitianId){
 		this.dietitianId = dietitianId;
@@ -97,7 +108,7 @@ public class SubscriptionItem{
 		this.planCount = planCount;
 	}
 
-	public int getPlanCount(){
+	public double getPlanCount(){
 		return planCount;
 	}
 

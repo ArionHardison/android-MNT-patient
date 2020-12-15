@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,8 +78,14 @@ public class SubscribePlanActivity extends AppCompatActivity implements Subscrib
     Dietitian dietitian;
     @BindView(R.id.tv_name)
     TextView tv_name;
+    @BindView(R.id.subscribe_btn)
+    Button subscribeBtn;
     @BindView(R.id.tv_city)
     TextView tv_city;
+    @BindView(R.id.subscribe_layout)
+    LinearLayout subscribe_layout;
+    @BindView(R.id.tvNotFound)
+    TextView tvNotFound;
     @BindView(R.id.diet_img)
     CircleImageView diet_img;
 
@@ -199,7 +206,6 @@ public class SubscribePlanActivity extends AppCompatActivity implements Subscrib
                         Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
                     }
                 }
-
             }
 
             @Override
@@ -228,6 +234,17 @@ public class SubscribePlanActivity extends AppCompatActivity implements Subscrib
                         SubscribtionList.clear();
                         SubscribtionList.addAll(SubscriptionList);
                         SubscribtionAdapter.notifyDataSetChanged();
+                        subscribeBtn.setVisibility(View.VISIBLE);
+                        subscribe_layout.setVisibility(View.VISIBLE);
+                        rvsubscribtion.setVisibility(View.VISIBLE);
+                        tvNotFound.setVisibility(View.GONE);
+                    }
+                    else {
+                        subscribeBtn.setVisibility(View.GONE);
+                        subscribe_layout.setVisibility(View.GONE);
+                        rvsubscribtion.setVisibility(View.GONE);
+                        tvNotFound.setVisibility(View.VISIBLE);
+                        Toast.makeText(SubscribePlanActivity.this,"Plan not available. Please contact dietitian.",Toast.LENGTH_LONG).show();
                     }
                 }
             }

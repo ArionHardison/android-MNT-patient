@@ -1,10 +1,13 @@
 package com.dietmanager.app.activities;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.dietmanager.app.HomeActivity;
 import com.dietmanager.app.OyolaApplication;
@@ -27,6 +31,12 @@ import com.dietmanager.app.helper.SharedHelper;
 import com.dietmanager.app.models.Dietitian_;
 import com.dietmanager.app.models.Message;
 import com.dietmanager.app.models.User;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 
 import java.util.HashMap;
 import java.util.concurrent.Executors;
@@ -38,6 +48,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.dietmanager.app.fragments.HomeDietFragment.isFilterApplied;
 import static com.dietmanager.app.helper.GlobalData.profileModel;
 
 public class WaitingForNewDietitianActivity extends AppCompatActivity {
@@ -56,6 +67,14 @@ private CustomDialog customDialog;
                 getProfileAPI();
             }
         }, 0, 5, TimeUnit.SECONDS);
+        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //finish();
+                alertDialog();
+            }
+        });
+
     }
 
     public void onDestroy() {
@@ -91,7 +110,82 @@ private CustomDialog customDialog;
             }
         });
     }
+    public void alertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getResources().getString(R.string.alert_logout))
+                .setPositiveButton(getResources().getString(R.string.logout), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                        logout();
+                    }
+                })
+                .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+        nbutton.setTextColor(ContextCompat.getColor(this, R.color.theme));
+        nbutton.setTypeface(nbutton.getTypeface(), Typeface.BOLD);
+        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+        pbutton.setTextColor(ContextCompat.getColor(this, R.color.theme));
+        pbutton.setTypeface(pbutton.getTypeface(), Typeface.BOLD);
+    }
+    protected void logout() {
+        if (SharedHelper.getKey(this, "login_by").equals("facebook"))
+            LoginManager.getInstance().logOut();
+        if (SharedHelper.getKey(this, "login_by").equals("google"))
+            signOutFromGoogle();
+        SharedHelper.clearSharedPreferences(this);
+        SharedHelper.putKey(this, "logged", "false");
+        isFilterApplied = false;
+        startActivity(new Intent(this, WelcomeActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        GlobalData.profileModel = null;
+        GlobalData.addCart = null;
+        GlobalData.address = "";
+        GlobalData.selectedAddress = null;
+        GlobalData.notificationCount = 0;
+        finish();
+    }
 
+    private void signOutFromGoogle() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                //taken from google api console (Web api client id)
+//                .requestIdToken("795253286119-p5b084skjnl7sll3s24ha310iotin5k4.apps.googleusercontent.com")
+                .requestEmail()
+                .build();
+        GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+        mGoogleApiClient.connect();
+        mGoogleApiClient.registerConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+            @Override
+            public void onConnected(@Nullable Bundle bundle) {
+//                FirebaseAuth.getInstance().signOut();
+                if (mGoogleApiClient.isConnected()) {
+                    Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
+                        @Override
+                        public void onResult(@NonNull Status status) {
+                            if (status.isSuccess()) {
+                                Log.d("MainAct", "Google User Logged out");
+                               /* Intent intent = new Intent(LogoutActivity.this, LoginActivity.class);
+                                startActivity(intent);
+                                finish();*/
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onConnectionSuspended(int i) {
+                Log.d("MAin", "Google API Client Connection Suspended");
+            }
+        });
+    }
     private void newIncomingDietitianPopup(Dietitian_ dietitian_) {
         try {
             AlertDialog.Builder builder = new AlertDialog.Builder(WaitingForNewDietitianActivity.this);

@@ -173,7 +173,7 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
                         GlobalData.orderMap.put("date", GlobalData.schedule_date + " " + GlobalData.schedule_time);
                         //map.put("schedule_date", GlobalData.schedule_date);
                         //map.put("schedule_time", GlobalData.schedule_time);
-                        GlobalData.orderMap.put("dietitian_id", String.valueOf(GlobalData.selectedfood.getDietitian().getId()));
+                        GlobalData.orderMap.put("dietitian_id", String.valueOf(GlobalData.selectedfood.getDietitianFood().getDietitianId()));
                         GlobalData.orderMap.put("delivery_address_id", "" + GlobalData.selectedAddress.getId());
                         GlobalData.orderMap.put("payable", String.valueOf(ingredienttotalWithTax));
                         //placeorder(map);

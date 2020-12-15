@@ -68,7 +68,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
             public void onClick(View v) {
                 GlobalData.selectedfood = foodItem;
                 //context.startActivity(new Intent(context, SubMenuDetailedActivity.class));
-                context.startActivity(new Intent(context, ChangeFoodActivity.class));
+                listener.onFoodClicked();
             }
         });
         holder.img_refresh.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +86,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
 
     public interface IClickListener {
         public void onRefreshClicked(int day);
+        public void onFoodClicked();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
