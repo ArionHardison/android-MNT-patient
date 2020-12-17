@@ -84,7 +84,7 @@
                     android:id="@+id/add_instruction_"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:gravity="center"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -95,14 +95,14 @@
                         android:layout_width="@dimen/_120sdp"
                         android:layout_height="wrap_content"
                         android:datePickerMode="spinner"
-                        android:layout_marginStart="10dp"
+                        style="@style/PickerTheme"
                         android:calendarViewShown="false"/>
                     <TimePicker
                         android:id="@+id/timePicker"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:timePickerMode="spinner"
-                        android:layout_marginStart="-20dp"
+                        style="@style/PickerTheme"
                         android:calendarViewShown="false"/>
                 </LinearLayout>
 

@@ -16,7 +16,15 @@
         <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <style name="PickerTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:editTextStyle">@style/PickerEditText</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:layout_margin">2dp</item>
+    </style>
 
+    <style name="PickerEditText" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:textSize">@dimen/_9sdp</item>
+    </style>
     <!-- Base application theme. -->
     <style name="Mytheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimaryText</item>
