@@ -67,6 +67,18 @@ public class Order {
     @SerializedName("created_at")
     @Expose
     private String createdAt;
+    @SerializedName("schedule_at")
+    @Expose
+    private String schedule_at;
+
+    public String getSchedule_at() {
+        return schedule_at;
+    }
+
+    public void setSchedule_at(String schedule_at) {
+        this.schedule_at = schedule_at;
+    }
+
     @SerializedName("user")
     @Expose
     private User user;

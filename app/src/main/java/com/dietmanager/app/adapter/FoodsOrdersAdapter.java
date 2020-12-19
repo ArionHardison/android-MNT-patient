@@ -143,27 +143,31 @@ public class FoodsOrdersAdapter extends SectionedRecyclerViewAdapter<FoodsOrders
         itemList.addAll(object.getOrderingredient());
         String dishNameValue = "";
 
-            for (int i = 0; i < itemList.size(); i++) {
-                if (object.getOrderingredient().get(i).getFoodingredient().getIngredient().getUnitType()!=null) {
-                    if (i == 0)
-                        dishNameValue = object.getOrderingredient().get(i).getFoodingredient().getIngredient().getName() + " (" + object.getOrderingredient().get(i).getFoodingredient().getQuantity() + " " + object.getOrderingredient().get(i).getFoodingredient().getIngredient().getUnitType().getName() + ")";
-                    else
-                        dishNameValue = dishNameValue + ", " + object.getOrderingredient().get(i).getFoodingredient().getIngredient().getName() + " (" + object.getOrderingredient().get(i).getFoodingredient().getQuantity() + " " + object.getOrderingredient().get(i).getFoodingredient().getIngredient().getUnitType().getName() + ")";
-                }else {
-                    if (i == 0)
-                        dishNameValue = object.getOrderingredient().get(i).getFoodingredient().getIngredient().getName() + " (" + object.getOrderingredient().get(i).getFoodingredient().getQuantity() + ")";
-                    else
-                        dishNameValue = dishNameValue + ", " + object.getOrderingredient().get(i).getFoodingredient().getIngredient().getName() + " (" + object.getOrderingredient().get(i).getFoodingredient().getQuantity() + ")";
-                }
+        for (int i = 0; i < itemList.size(); i++) {
+            if (object.getOrderingredient().get(i).getFoodingredient().getIngredient().getUnitType() != null) {
+                if (i == 0)
+                    dishNameValue = object.getOrderingredient().get(i).getFoodingredient().getIngredient().getName() + " (" + object.getOrderingredient().get(i).getFoodingredient().getQuantity() + " " + object.getOrderingredient().get(i).getFoodingredient().getIngredient().getUnitType().getName() + ")";
+                else
+                    dishNameValue = dishNameValue + ", " + object.getOrderingredient().get(i).getFoodingredient().getIngredient().getName() + " (" + object.getOrderingredient().get(i).getFoodingredient().getQuantity() + " " + object.getOrderingredient().get(i).getFoodingredient().getIngredient().getUnitType().getName() + ")";
+            } else {
+                if (i == 0)
+                    dishNameValue = object.getOrderingredient().get(i).getFoodingredient().getIngredient().getName() + " (" + object.getOrderingredient().get(i).getFoodingredient().getQuantity() + ")";
+                else
+                    dishNameValue = dishNameValue + ", " + object.getOrderingredient().get(i).getFoodingredient().getIngredient().getName() + " (" + object.getOrderingredient().get(i).getFoodingredient().getQuantity() + ")";
+            }
         }
         holder.dishNameTxt.setText(dishNameValue);
-        holder.dateTimeTxt.setText(getTimeFromString(object.getCreatedAt()));
+        if (object.getScheduleAt() != null)
+            holder.dateTimeTxt.setText(getTimeFromString(object.getScheduleAt()));
+        else
+            holder.dateTimeTxt.setText(getTimeFromString(object.getCreatedAt()));
+
         holder.itemLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (list.get(section).getHeader().equalsIgnoreCase("Current Orders")) {
                     GlobalData.isSelectedFoodOrder = list.get(section).getOrders().get(relativePosition);
-                    context1.startActivity(new Intent(context1, CurrentOrderDetailActivity.class).putExtra("is_order_page",true));
+                    context1.startActivity(new Intent(context1, CurrentOrderDetailActivity.class).putExtra("is_order_page", true));
                 } else {
                     GlobalData.isSelectedFoodOrder = list.get(section).getOrders().get(relativePosition);
                     context1.startActivity(new Intent(context1, PastOrderDetailActivity.class));
@@ -176,12 +180,13 @@ public class FoodsOrdersAdapter extends SectionedRecyclerViewAdapter<FoodsOrders
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView headerTxt;
-        TextView restaurantNameTxt,disputeTxt, restaurantAddressTxt, totalAmount, dishNameTxt,
-                dateTimeTxt,orderType;
+        TextView restaurantNameTxt, disputeTxt, restaurantAddressTxt, totalAmount, dishNameTxt,
+                dateTimeTxt, orderType;
         Button reorderBtn;
         ImageView disputeStatusImage;
         View dividerLine;
-        LinearLayout itemLayout,disputeLayout;
+        LinearLayout itemLayout, disputeLayout;
+
         public ViewHolder(View itemView, boolean isHeader) {
             super(itemView);
             if (isHeader) {

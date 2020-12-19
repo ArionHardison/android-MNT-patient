@@ -36,7 +36,7 @@ public class FoodOrder {
     private Integer isScheduled;
     @SerializedName("schedule_at")
     @Expose
-    private Object scheduleAt;
+    private String scheduleAt;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -191,11 +191,11 @@ public class FoodOrder {
         this.isScheduled = isScheduled;
     }
 
-    public Object getScheduleAt() {
+    public String getScheduleAt() {
         return scheduleAt;
     }
 
-    public void setScheduleAt(Object scheduleAt) {
+    public void setScheduleAt(String scheduleAt) {
         this.scheduleAt = scheduleAt;
     }
 

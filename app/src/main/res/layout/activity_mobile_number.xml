@@ -13,7 +13,7 @@
         android:src="@drawable/ic_back"
         android:visibility="gone" />
 
-    <!--   App Icon Image-->s
+    <!--   App Icon Image-->
 
     <ImageView
         android:id="@+id/app_logo"

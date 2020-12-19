@@ -77,8 +77,8 @@ public class ChatMessageAdapter extends ArrayAdapter<Chat> {
                         .load(BuildConfigure.BASE_URL+chat.getImage())
                         .apply(new RequestOptions()
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                .placeholder(R.drawable.logo_app)
-                                .error(R.drawable.logo_app))
+                                .placeholder(R.drawable.man)
+                                .error(R.drawable.man))
                         .into(profilePic);
                 //TextView timestamp = (TextView) convertView.findViewById(R.id.timestamp);
                 //timestamp.setText(String.valueOf(getDisplayableTime(chat.getTimestamp())));
