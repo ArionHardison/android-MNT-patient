@@ -85,7 +85,7 @@ private CustomDialog customDialog;
 
     public void getProfileAPI() {
         String device_id = Settings.Secure.getString(OyolaApplication.getAppInstance().getContentResolver(), Settings.Secure.ANDROID_ID);
-        String device_type = "Android";
+        String device_type = "android";
         String device_token = SharedHelper.getKey(OyolaApplication.getAppInstance(), "device_token");
         HashMap<String, String> params = new HashMap<>();
         params.put("device_id", device_id);
