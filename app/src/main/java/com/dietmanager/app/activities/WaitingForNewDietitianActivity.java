@@ -96,6 +96,7 @@ private CustomDialog customDialog;
             @Override
             public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 if (response.isSuccessful()) {
+                    profileModel = response.body();
                     GlobalData.currencySymbol = response.body().getCurrency();
                     if(response.body().getInvites()==1){
                         if (!isNewIncomingRequestShowing) {

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+
+import com.dietmanager.app.helper.GlobalData;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -106,7 +108,7 @@ public class AddCardActivity extends AppCompatActivity {
 
                         Card card = new Card(cardNumber, month, year, cvv);
                         try {
-                            Stripe stripe = new Stripe(AddCardActivity.this, BuildConfigure.STRIPE_PK);
+                            Stripe stripe = new Stripe(AddCardActivity.this, GlobalData.profileModel.getStripe_publishable_key());
                             stripe.createToken(
                                     card,
                                     new TokenCallback() {

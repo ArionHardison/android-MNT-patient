@@ -17,6 +17,29 @@ public class User {
     @SerializedName("currency")
     @Expose
     private String currency;
+    @SerializedName("stripe_secret_key")
+    @Expose
+    private String stripe_secret_key;
+    @SerializedName("stripe_publishable_key")
+    @Expose
+    private String stripe_publishable_key;
+
+    public String getStripe_publishable_key() {
+        return stripe_publishable_key;
+    }
+
+    public void setStripe_publishable_key(String stripe_publishable_key) {
+        this.stripe_publishable_key = stripe_publishable_key;
+    }
+
+    public String getStripe_secret_key() {
+        return stripe_secret_key;
+    }
+
+    public void setStripe_secret_key(String stripe_secret_key) {
+        this.stripe_secret_key = stripe_secret_key;
+    }
+
     @SerializedName("currency_code")
     @Expose
     private String currency_code;
