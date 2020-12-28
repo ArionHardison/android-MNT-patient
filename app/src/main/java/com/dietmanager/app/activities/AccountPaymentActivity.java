@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -157,15 +158,16 @@ public class AccountPaymentActivity extends AppCompatActivity {
     private boolean isWithoutCache = false;
     boolean isFromProfile = false;
     boolean isFromSubscribe = false;
-
+    double amountToBePaid = 0.0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = AccountPaymentActivity.this;
         getDeviceToken();
         customDialog = new CustomDialog(context);
+
         if (checkoutMap != null && checkoutMap.containsKey("wallet") && checkoutMap.get("wallet").equals("1")
-                && addCart.getPayable() < Double.parseDouble(GlobalData.profileModel.getWalletBalance())) {
+                && addCart.getPayable() < GlobalData.profileModel.getWalletBalance()) {
             checkOut(checkoutMap);
         } else {
             setContentView(R.layout.activity_account_payment);
@@ -193,10 +195,12 @@ public class AccountPaymentActivity extends AppCompatActivity {
                 planId = getIntent().getStringExtra("plan_id");
                 dietitianId = getIntent().getStringExtra("dietitian_id");
             }
+
+            amountToBePaid = getIntent().getDoubleExtra("amountToBePaid", 0.0);
             mEstimatedDeliveryTime = getIntent().getIntExtra("est_delivery_time", 0);
             mRestaurantType = getIntent().getStringExtra("delivery_type");
 
-            if (GlobalData.profileModel.getWalletBalance() != null && Double.parseDouble(GlobalData.profileModel.getWalletBalance()) > 0)
+            if (GlobalData.profileModel.getWalletBalance() != null && GlobalData.profileModel.getWalletBalance() > 0)
                 useWalletLayout.setVisibility(VISIBLE);
             else
                 useWalletLayout.setVisibility(GONE);
@@ -232,10 +236,21 @@ public class AccountPaymentActivity extends AppCompatActivity {
                     accountPaymentAdapter.notifyDataSetChanged();
                 }
             });
+            useWalletChkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked){
+                        if(GlobalData.profileModel.getWalletBalance()>=amountToBePaid)
+                            proceedToPayBtn.setVisibility(VISIBLE);
+                    }
+                }
+            });
+
 
             proceedToPayBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     if (isCardChecked) {
                         for (int i = 0; i < cardArrayList.size(); i++) {
                             if (cardArrayList.get(i).isChecked()) {
@@ -265,7 +280,21 @@ public class AccountPaymentActivity extends AppCompatActivity {
                                 return;
                             }
                         }
-                    } else if (cashCheckBox.isChecked()) {
+                    }
+                    else if(useWalletChkBox.isChecked()&&GlobalData.profileModel.getWalletBalance()>=amountToBePaid){
+                        if (isFromSubscribe) {
+                            postsubscribe(null);
+                        } else {
+                            GlobalData.orderMap.put("is_wallet", "1");
+
+                            if (cashCheckBox.isChecked())
+                                GlobalData.orderMap.put("payment_mode", "cash");
+                            else
+                                GlobalData.orderMap.put("payment_mode", "card");
+
+                            placeorder(GlobalData.orderMap);
+                        }
+                    }else if (cashCheckBox.isChecked()) {
                         CartFragment.checkoutMap.put("payment_mode", "cash");
                         checkOut(CartFragment.checkoutMap);
                     } else {
@@ -286,7 +315,9 @@ public class AccountPaymentActivity extends AppCompatActivity {
 
     private void postsubscribe(String cardId) {
         HashMap<String, String> map = new HashMap<>();
-        map.put("card_id", cardId);
+
+        if(cardId!=null)
+            map.put("card_id", cardId);
 
         if (useWalletChkBox.isChecked())
             map.put("is_wallet", "1");
@@ -374,9 +405,9 @@ public class AccountPaymentActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     GlobalData.profileModel = response.body();
                     if (GlobalData.profileModel.getWalletBalance() != null) {
-                        String walletMoney = GlobalData.profileModel.getWalletBalance();
+                        Double walletMoney = GlobalData.profileModel.getWalletBalance();
                         walletAmtTxt.setText(currencySymbol + " " + walletMoney);
-                        if (!isFromProfile&&GlobalData.profileModel.getWalletBalance() != null && Double.parseDouble(GlobalData.profileModel.getWalletBalance()) > 0)
+                        if (!isFromProfile&&GlobalData.profileModel.getWalletBalance() != null && GlobalData.profileModel.getWalletBalance() > 0)
                             useWalletLayout.setVisibility(VISIBLE);
                         else
                             useWalletLayout.setVisibility(GONE);
@@ -664,8 +695,8 @@ public class AccountPaymentActivity extends AppCompatActivity {
         isWithoutCache = getIntent().getBooleanExtra("without_cache", false);
         if (checkoutMap == null || !checkoutMap.containsKey("wallet") ||
                 !checkoutMap.get("wallet").equals("1")
-                || !(addCart.getPayable() < Double.parseDouble(GlobalData.profileModel.getWalletBalance()))) {
-            String walletMoney = GlobalData.profileModel.getWalletBalance();
+                || !(addCart.getPayable() < GlobalData.profileModel.getWalletBalance())) {
+            Double walletMoney = GlobalData.profileModel.getWalletBalance();
             walletAmtTxt.setText(currencySymbol + " " + walletMoney);
             getCardList();
 //        if (mPurchased) {

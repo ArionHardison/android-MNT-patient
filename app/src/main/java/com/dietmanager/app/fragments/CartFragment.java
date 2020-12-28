@@ -592,7 +592,7 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
         itemCount = 0;
         itemQuantity = 0;
         if (GlobalData.profileModel != null) {
-            String money = GlobalData.profileModel.getWalletBalance();
+            Double money = GlobalData.profileModel.getWalletBalance();
             dataLayout.setVisibility(View.VISIBLE);
             errorLayout.setVisibility(View.GONE);
             skeleton.show();
@@ -630,7 +630,7 @@ public class CartFragment extends BaseFragment implements OrderDeliveryTypeFragm
             walletLayout.setVisibility(View.INVISIBLE);
 
             if (GlobalData.profileModel.getWalletBalance() != null) {
-                float fd = Float.parseFloat(GlobalData.profileModel.getWalletBalance());
+                Double fd = GlobalData.profileModel.getWalletBalance();
                 if (fd > 0) {
                     amountTxt.setText(GlobalData.currencySymbol + "" + money);
                     walletLayout.setVisibility(View.VISIBLE);

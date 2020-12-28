@@ -27,6 +27,7 @@ public class SubscribtionListAdapter extends RecyclerView.Adapter<SubscribtionLi
     private SubscribtionListAdapter.OnSelectedListener mListener;
     public int checkedPosition = 0;
     public static int selectedposition = 0;
+    public static double amount = 0.0;
 
 
     public SubscribtionListAdapter(List<SubscriptionList> list, Context con) {
@@ -60,10 +61,12 @@ public class SubscribtionListAdapter extends RecyclerView.Adapter<SubscribtionLi
             if (checkedPosition == position) {
                 holder.rd_text.setChecked(true);
                 selectedposition =foodIngredient.getId();
+                amount =price;
             } else {
                 holder.rd_text.setChecked(false);
             }
         }
+        double finalPrice = price;
         holder.rd_text.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
@@ -72,6 +75,7 @@ public class SubscribtionListAdapter extends RecyclerView.Adapter<SubscribtionLi
                         notifyItemChanged(checkedPosition);
                         checkedPosition = position;
                         selectedposition = list.get(position).getId();
+                        amount = finalPrice;
                     }
 
                 }

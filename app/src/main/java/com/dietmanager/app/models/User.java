@@ -96,7 +96,7 @@ public class User {
     private Object stripeCustId;
     @SerializedName("wallet_balance")
     @Expose
-    private String walletBalance;
+    private Double walletBalance;
     @SerializedName("diet_tax")
     @Expose
     private String dietTax;
@@ -273,11 +273,11 @@ public class User {
         this.stripeCustId = stripeCustId;
     }
 
-    public String getWalletBalance() {
+    public Double getWalletBalance() {
         return walletBalance;
     }
 
-    public void setWalletBalance(String walletBalance) {
+    public void setWalletBalance(Double walletBalance) {
         this.walletBalance = walletBalance;
     }
 

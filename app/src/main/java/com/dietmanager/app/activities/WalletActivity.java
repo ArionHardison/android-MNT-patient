@@ -77,7 +77,7 @@ public class WalletActivity extends AppCompatActivity {
     LinearLayout errorLayout;
 
     WalletHistoryAdapter walletHistoryAdapter;
-    String walletMoney = "0";
+    Double walletMoney = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

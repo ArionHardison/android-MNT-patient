@@ -44,7 +44,7 @@ public class AddMoney {
     private String stripeCustId;
     @SerializedName("wallet_balance")
     @Expose
-    private String walletBalance;
+    private Double walletBalance;
     @SerializedName("otp")
     @Expose
     private String otp;
@@ -146,11 +146,11 @@ public class AddMoney {
         this.stripeCustId = stripeCustId;
     }
 
-    public String getWalletBalance() {
+    public Double getWalletBalance() {
         return walletBalance;
     }
 
-    public void setWalletBalance(String walletBalance) {
+    public void setWalletBalance(Double walletBalance) {
         this.walletBalance = walletBalance;
     }
 

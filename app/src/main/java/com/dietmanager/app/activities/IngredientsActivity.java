@@ -181,7 +181,8 @@ public class IngredientsActivity  extends AppCompatActivity implements Ingredien
 
                         startActivity(new Intent(IngredientsActivity.this, AccountPaymentActivity.class)
                                 .putExtra("is_show_wallet", true)
-                                .putExtra("is_show_cash", false));
+                                .putExtra("is_show_cash", false)
+                                .putExtra("amountToBePaid", String.valueOf(ingredienttotalWithTax)));
                     }else {
                         Toast.makeText(context, getString(R.string.add_address_error), Toast.LENGTH_LONG).show();
                     }
