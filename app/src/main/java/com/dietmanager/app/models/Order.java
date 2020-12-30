@@ -13,6 +13,18 @@ public class Order {
     @SerializedName("invoice_id")
     @Expose
     private String invoiceId;
+    @SerializedName("cancel_message")
+    @Expose
+    private String cancelMessage="";
+
+    public String getCancelMessage() {
+        return cancelMessage;
+    }
+
+    public void setCancelMessage(String cancelMessage) {
+        this.cancelMessage = cancelMessage;
+    }
+
     @SerializedName("user_id")
     @Expose
     private Integer userId;

@@ -268,6 +268,7 @@
     <string name="order_list_empty_description">There are a lot of yummy stuff out there. Pick some.</string>
     <string name="past_orders">Past Orders</string>
     <string name="reason">Reason</string>
+    <string name="reason_colon">Reason :</string>
     <string name="dispute_reason_description">Are you facing any issue which we can assist with? Please reach out to us we will be happy to help !</string>
     <string name="chat_us">Chat us</string>
     <string name="call_us">Call us</string>

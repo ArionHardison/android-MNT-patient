@@ -10,6 +10,17 @@ public class FoodOrder {
     @SerializedName("id")
     @Expose
     private Integer id;
+    @SerializedName("cancel_message")
+    @Expose
+    private String cancelMessage="";
+
+    public String getCancelMessage() {
+        return cancelMessage;
+    }
+
+    public void setCancelMessage(String cancelMessage) {
+        this.cancelMessage = cancelMessage;
+    }
     @SerializedName("food_id")
     @Expose
     private Integer foodId;

@@ -152,16 +152,48 @@
                     android:layout_marginEnd="20dp"
                     android:src="@drawable/ic_circle_tick" />
 
-                <TextView
-                    android:id="@+id/order_status_txt"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@id/order_succeess_image"
+                    android:orientation="vertical">
+                <TextView
+                    android:id="@+id/order_status_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/order_delivered_successfully"
                     android:textColor="@color/colorGreen"
                     android:textSize="@dimen/text_medium" />
 
+                    <RelativeLayout
+                        android:id="@+id/rlCancelReason"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="10dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tvDummyReason"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/reason_colon"
+                            android:textSize="@dimen/text_medium"
+                            android:textColor="@color/colorBlack"
+                            android:layout_marginEnd="6dp"/>
+
+                        <TextView
+                            android:id="@+id/tvCancelReason"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@id/tvDummyReason"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/text_medium" />
+
+                    </RelativeLayout>
+                </LinearLayout>
             </RelativeLayout>
 
             <View

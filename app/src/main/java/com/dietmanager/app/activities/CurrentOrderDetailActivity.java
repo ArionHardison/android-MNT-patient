@@ -142,6 +142,10 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
     Button callTransporter;*/
     @BindView(R.id.order_status_txt)
     TextView orderStatusTxt;
+    @BindView(R.id.tvCancelReason)
+    TextView tvCancelReason;
+    @BindView(R.id.rlCancelReason)
+    RelativeLayout rlCancelReason;
     @BindView(R.id.order_succeess_image)
     ImageView order_succeess_image;
     @BindView(R.id.order_status_layout)
@@ -1005,7 +1009,9 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                     if (isSelectedFoodOrder.getStatus().equals("CANCELLED")) {
                         orderStatusLayout.setVisibility(View.VISIBLE);
                         orderFlowRv.setVisibility(View.GONE);
+                        rlCancelReason.setVisibility(View.VISIBLE);
                         orderStatusTxt.setText(getResources().getString(R.string.order_cancelled));
+                        tvCancelReason.setText(isSelectedFoodOrder.getCancelMessage());
                         order_succeess_image.setImageResource(R.drawable.order_cancelled_img);
 //                        dotLineImg.setBackgroundResource(R.drawable.order_cancelled_line);
                         orderStatusTxt.setTextColor(ContextCompat.getColor(context, R.color.colorRed));
