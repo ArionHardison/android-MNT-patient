@@ -297,13 +297,13 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
             //orderOtp.setText(" : " + isSelectedFoodOrder.getOrderOtp());
             orderPlacedTime.setText(getTimeFromString(order.getCreatedAt()));
 
-            //set Fragment
+/*            //set Fragment
             orderFullViewFragment = new OrderViewFragment();
             fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add(R.id.order_detail_fargment, orderFullViewFragment).commit();
+            transaction.add(R.id.order_detail_fargment, orderFullViewFragment).commit();*/
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+/*            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     buildGoogleApiClient();
                 } else {
@@ -313,7 +313,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                 buildGoogleApiClient();
             }
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-            mapFragment.getMapAsync(this);
+            mapFragment.getMapAsync(this);*/
         }
     }
 
@@ -364,21 +364,21 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
         orderFlowRv.setLayoutAnimation(controller);
         orderFlowRv.scheduleLayoutAnimation();
 
-        if (GlobalData.isSelectedOrder != null) {
+        if (GlobalData.isSelectedFoodOrder != null) {
 //            updateOrderDeatail();
-            Order order = GlobalData.isSelectedOrder;
+            FoodOrder order = GlobalData.isSelectedFoodOrder;
             orderIdTxt.setText(getResources().getString(R.string.order_details_page) + " #000" + order.getId().toString());
-            itemQuantity = order.getItems().size();
-            priceAmount = order.getInvoice().getTotalPay();
-            currency = order.getItems().get(0).getProduct().getPrices().getCurrency();
+            itemQuantity = 1;
+            priceAmount = order.getPayable();
+            currency = GlobalData.profileModel.getCurrency();
             if (itemQuantity == 1)
                 orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.item_count) + " , " + currency + priceAmount);
             else
                 orderItemTxt.setText(itemQuantity + " " + getResources().getString(R.string.items_counts) + " , " + currency + priceAmount);
 
             orderIdTxt2.setText("#000" + order.getId().toString());
-            if (isSelectedOrder.getOrderOtp() != null)
-                orderOtp.setText(getString(R.string.otp) + " : " + isSelectedOrder.getOrderOtp());
+/*            if (isSelectedOrder.getOrderOtp() != null)
+                orderOtp.setText(getString(R.string.otp) + " : " + isSelectedOrder.getOrderOtp());*/
             orderPlacedTime.setText(getTimeFromString(order.getCreatedAt()));
             /*if (order.getPickUpRestaurant() == 1) {
                 tvShopAddress.setVisibility(View.VISIBLE);
@@ -898,7 +898,7 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
     private void cancelOrder(String reason) {
         customDialog = new CustomDialog(context);
         customDialog.setCancelable(false);
-        Call<Order> call = apiInterface.cancelOrder(isSelectedOrder.getId(), reason);
+        Call<Order> call = apiInterface.cancelOrder(isSelectedFoodOrder.getId(), reason);
         call.enqueue(new Callback<Order>() {
             @Override
             public void onResponse(@NonNull Call<Order> call, @NonNull Response<Order> response) {
@@ -1082,9 +1082,11 @@ public class CurrentOrderDetailActivity extends BaseActivity implements OnMapRea
                     MarkerOptions destMarker = new MarkerOptions()
                             .position(destLatLng).title("Destination").draggable(true)
                             .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_restaurant_marker));
-                    destinationMarker = mMap.addMarker(destMarker);
-                    CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(destLatLng, 14);
-                    mMap.moveCamera(cu);
+                    if(mMap!=null) {
+                        destinationMarker = mMap.addMarker(destMarker);
+                        CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(destLatLng, 14);
+                        mMap.moveCamera(cu);
+                    }
                 }
             }
         }
