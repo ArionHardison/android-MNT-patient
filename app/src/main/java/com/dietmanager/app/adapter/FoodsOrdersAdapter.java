@@ -128,8 +128,11 @@ public class FoodsOrdersAdapter extends SectionedRecyclerViewAdapter<FoodsOrders
         holder.restaurantNameTxt.setText(object.getFood().getName());
         holder.reorderBtn.setText(object.getStatus());
 
-        //if (object.getFood().getTimeCategory()!=null)
-        holder.restaurantAddressTxt.setText(object.getCustomerAddress().getMapAddress());
+        if (object.getCustomerAddress()!=null&&object.getCustomerAddress().getMapAddress()!=null)
+            holder.restaurantAddressTxt.setText(object.getCustomerAddress().getMapAddress());
+        else
+            holder.restaurantAddressTxt.setText("");
+
         int lastPostion = relativePosition + 1;
         if (list.get(section).getOrders().size() == 1) {
             holder.dividerLine.setVisibility(View.GONE);

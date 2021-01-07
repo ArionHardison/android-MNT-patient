@@ -39,7 +39,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_regular"
-                android:text="Washington. DC"
                 android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/text_tiny" />
 
