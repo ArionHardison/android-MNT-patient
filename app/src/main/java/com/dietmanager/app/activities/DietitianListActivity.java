@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -15,7 +13,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,8 +26,6 @@ import com.dietmanager.app.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,7 +82,7 @@ public class DietitianListActivity extends AppCompatActivity implements Dietitia
         setupAdapter();
 
         customDialog.show();
-        getAssignChefList(false);
+        getDietitianList(false);
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -102,7 +97,7 @@ public class DietitianListActivity extends AppCompatActivity implements Dietitia
                     @Override
                     public void run() {
                         dietitianItems.clear();*/
-                        getAssignChefList(true);
+                        getDietitianList(true);
                     /*}
                 }, 1000);*/
 
@@ -135,7 +130,7 @@ public class DietitianListActivity extends AppCompatActivity implements Dietitia
                             loading = true;
                             mNestedScrollView.fullScroll(View.FOCUS_DOWN);
                             customDialog.show();
-                            getAssignChefList(false);
+                            getDietitianList(false);
                         }
                     }
                 }
@@ -157,7 +152,7 @@ public class DietitianListActivity extends AppCompatActivity implements Dietitia
         dietitianListRv.setAdapter(dietitianListAdapter);
     }
 
-    private void getAssignChefList(final boolean clear) {
+    private void getDietitianList(final boolean clear) {
         Call<List<DietitianListItem>> call = apiInterface.getDietitianList(currentPage, searchText);
         call.enqueue(new Callback<List<DietitianListItem>>() {
             @Override
