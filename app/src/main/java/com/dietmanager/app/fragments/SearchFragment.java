@@ -146,7 +146,7 @@ public class SearchFragment extends Fragment {
         viewPager.setAdapter(adapter);
         //set ViewPager
         tabLayout.setupWithViewPager(viewPager);
-        searchEt.addTextChangedListener(new TextWatcher() {
+        /*searchEt.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -180,7 +180,7 @@ public class SearchFragment extends Fragment {
                     RestaurantSearchFragment.restaurantsAdapter.notifyDataSetChanged();
                 }
             }
-        });
+        });*/
         toolbar.addView(toolbarLayout);
         HomeActivity.updateNotificationCount(context, GlobalData.notificationCount);
         searchCloseImg.setOnClickListener(new View.OnClickListener() {

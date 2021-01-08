@@ -81,6 +81,9 @@ public interface ApiInterface {
     @POST("api/user/chat/push")
     Call<Object> chatPost(@FieldMap HashMap<String, String> paramss);
 
+    @POST("api/user/diet-order/{id}/chat")
+    Call<Message> chatPost(@Path("id") String id);
+
     @Multipart
     @POST("api/user/profile")
     Call<User> updateProfileWithImage(@PartMap() Map<String, RequestBody> partMap, @Part MultipartBody.Part filename);

@@ -18,6 +18,7 @@ import com.dietmanager.app.build.api.ApiClient;
 import com.dietmanager.app.build.api.ApiInterface;
 import com.dietmanager.app.helper.GlobalData;
 import com.dietmanager.app.helper.SharedHelper;
+import com.dietmanager.app.models.Message;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -137,7 +138,7 @@ public class ChatActivity extends AppCompatActivity {
         etMessage.setText("");
     }
 
-    private void sendMessageToServer(String message) {
+/*    private void sendMessageToServer(String message) {
         GlobalData.access_token = SharedHelper.getKey(getApplicationContext(), "access_token");
         HashMap<String, String> param = new HashMap<>();
         param.put("id", senderID);
@@ -152,6 +153,22 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
+                System.out.println(TAG + "Chat Failed");
+            }
+        });
+    }*/
+
+    private void sendMessageToServer(String message) {
+        GlobalData.access_token = SharedHelper.getKey(getApplicationContext(), "access_token");
+        Call<Message> call = apiInterface.chatPost(chatPath);
+        call.enqueue(new Callback<Message>() {
+            @Override
+            public void onResponse(Call<Message> call, Response<Message> response) {
+                System.out.println(TAG + "Chat Success");
+            }
+
+            @Override
+            public void onFailure(Call<Message> call, Throwable t) {
                 System.out.println(TAG + "Chat Failed");
             }
         });
