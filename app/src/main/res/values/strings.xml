@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Client - DietManager</string>
+    <string name="app_name" translatable="false">DietManager</string>
     <string name="facebook_app_id" translatable="false">3378872082173952</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb3378872082173952</string>
     <string name="google_client_id" translatable="false">236334629405-ptkugsh78ti2a9hj3lhtcolhn5te86an.apps.googleusercontent.com</string>

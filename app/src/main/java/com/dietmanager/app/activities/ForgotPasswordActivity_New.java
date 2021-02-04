@@ -182,7 +182,7 @@ public class ForgotPasswordActivity_New extends AppCompatActivity {
                         if (jObjError.has("phone"))
                             Toast.makeText(context, jObjError.optString("phone"), Toast.LENGTH_LONG).show();
                         else
-                        Toast.makeText(context, jObjError.optString("error"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, jObjError.optString("message"), Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         Toast.makeText(context, R.string.something_went_wrong, Toast.LENGTH_LONG).show();
                     }
